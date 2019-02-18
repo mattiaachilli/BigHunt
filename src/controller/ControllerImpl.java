@@ -20,14 +20,9 @@ public final class ControllerImpl implements Controller {
 	//Command list, mouse
 
 	
-	public ControllerImpl() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	@Override
 	public void initGame() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -47,41 +42,41 @@ public final class ControllerImpl implements Controller {
 	}
 	
 	private class GameLoop extends Thread { 
-		private volatile boolean running;
-		
-		public GameLoop() {
-			super();
-			running = true;
-		}
-		
-		public void run() {
-			long lastTime = System.currentTimeMillis();
-			while(running && !model.checkGameOver()) { /* Running and not gameover */
-				final long current = System.currentTimeMillis();
-                final int elapsed = (int) (current - lastTime);
-                processInput();
-                //model.update(elapsed);
-                //view.setStateGame(getEntitiesForView(), model.getGameData());
-                Utilities.waitForNextFrame(PERIOD, current);
-                lastTime = current;
-			}
-			if(model.checkGameOver()) {
-				ControllerImpl.this.endGame();
-			}
-		}
-		
-		private void processInput() {
-			//Input from mouse command example
-		}
-		
-		public void stopGameLoop() {
-            this.running = false;
-        }
+	    private volatile boolean running;
 
-        @Override
-        public void start() {
-            this.running = true;
-            super.start();
-        }
+	    public GameLoop() {
+		super();
+		running = true;
+	    }
+
+	    public void run() {
+		long lastTime = System.currentTimeMillis();
+		while (running && !model.checkGameOver()) { /* Running and not gameover */
+		    final long current = System.currentTimeMillis();
+		    final int elapsed = (int) (current - lastTime);
+		    processInput();
+		    //model.update(elapsed);
+		    //view.setStateGame(getEntitiesForView(), model.getGameData());
+		    Utilities.waitForNextFrame(PERIOD, current);
+		    lastTime = current;
+		}
+		if (model.checkGameOver()) {
+		    ControllerImpl.this.endGame();
+		}
+	    }
+
+	    private void processInput() {
+		//Input from mouse command example
+	    }
+
+	    public void stopGameLoop() {
+		this.running = false;
+	    }
+
+	    @Override
+	    public void start() {
+		this.running = true;
+		super.start();
+	    }
 	}
 }

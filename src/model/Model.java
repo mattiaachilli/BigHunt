@@ -12,7 +12,7 @@ public interface Model {
      * Initialize state of model to start the game.
      * 
      */
-	public void initGame();
+    public void initGame();
 	
 	/**
      * Update the state of the application.
