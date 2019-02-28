@@ -1,22 +1,27 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.entities.Dog;
 import model.entities.DogImpl;
+import model.entities.Duck;
+import model.entities.Entity;
 
-public class ModelImpl implements Model {
+public final class ModelImpl implements Model {
     
-    private Dog dog;
+    private final Dog dog;
+    private final List<Duck> ducks;
     
     public ModelImpl() {
 	super();
-	//Inizializzare tutti i campi
+	this.ducks = new ArrayList<>();
+	//this.dog = new DogImpl();
     }
 
     @Override
     public void initGame() {
-	//this.dog = new DogImpl();
+
 
     }
 
@@ -58,8 +63,10 @@ public class ModelImpl implements Model {
 
     @Override
     public List<Entity> getEntities() {
-	// TODO Auto-generated method stub
-	return null;
+	final List<Entity> listEntity = new ArrayList<>();
+	listEntity.add(dog);
+	listEntity.addAll(ducks);
+	return listEntity;
     }
 
     @Override

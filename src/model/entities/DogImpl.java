@@ -1,9 +1,15 @@
 package model.entities;
 
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import model.properties.Velocity;
 
 public final class DogImpl extends AbstractEntity implements Dog {
+    
+    private static final int INIT_POS_X = 0;
+    private static final int INIT_POS_Y = 0;
+    private static final int FINAL_POS_X = 0;
+    private static final int FINAL_POS_Y = 0;
     
     private boolean inGrass;
     
