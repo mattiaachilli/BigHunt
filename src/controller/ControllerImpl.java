@@ -11,7 +11,7 @@ import view.View;
  */
 
 public final class ControllerImpl implements Controller {
-    private final static int PERIOD = 24; //60 FPS
+    private final static int PERIOD = 16; //60 FPS
 	
 	
     private GameLoop gameLoop;

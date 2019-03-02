@@ -16,6 +16,26 @@ public interface Duck extends Character {
      */
     Optional<PowerUp> getPowerUp();
     
+    /**
+     * Attach a powerUp to this duck
+     * 
+     * @param powerUp
+     * 		powerUp to attach
+     */
+    void attachPowerUp(PowerUp powerUp);
+    
+    /**
+     * Get the time in seconds since the duck was created, the duck may be died.
+     * @return time.
+     */
+    long getTimeFromBirth();
+    
+    /**
+     * Check if this duck is flew away
+     * 
+     * @return true if the duck flew away
+     */
+    boolean canFlyAway();
     
     /**
      * Check if this duck has a PowerUp.

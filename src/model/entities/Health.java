@@ -6,7 +6,12 @@ package model.entities;
  *
  */
 public interface Health extends Entity {
-   
+    
+   /**
+    * Kill this entity.
+    */
+    void kill();
+    
     /**
      * Indicate if an entity is alive or died.
      * 

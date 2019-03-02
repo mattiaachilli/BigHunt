@@ -23,6 +23,11 @@ public class AbstractCharacter extends AbstractEntity implements Character {
 	this.alive = true;
 	this.timeElapsed = 0;
     }
+    
+    @Override
+    public void kill() {
+	this.alive = false;
+    }
 
     @Override
     public boolean isAlive() {
@@ -36,6 +41,6 @@ public class AbstractCharacter extends AbstractEntity implements Character {
 
     @Override
     public void addTimeElapsed(int timeElapsed) {
-	this.timeElapsed += timeElapsed; 
+	this.timeElapsed = timeElapsed; 
     }
 }

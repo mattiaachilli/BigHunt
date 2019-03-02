@@ -16,13 +16,12 @@ public final class ModelImpl implements Model {
     public ModelImpl() {
 	super();
 	this.ducks = new ArrayList<>();
-	//this.dog = new DogImpl();
+	this.dog = new DogImpl();
     }
 
     @Override
     public void initGame() {
-
-
+	ducks.clear();
     }
 
     @Override

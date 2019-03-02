@@ -2,7 +2,7 @@ package model.entities;
 
 /**
  * 
- * Represents the characters of the entities, their counter time.
+ * Represents the characters of the entities.
  *
  */
 public interface Character extends Health {
