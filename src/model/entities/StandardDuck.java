@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javafx.scene.shape.Shape;
 import model.conversions.TimeConversion;
-import model.decorator.RedDuck;
 import model.entities.powerup.PowerUp;
 import model.entities.utilities.EntityUtilties;
 import model.properties.Velocity;

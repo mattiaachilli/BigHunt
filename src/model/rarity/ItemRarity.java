@@ -10,11 +10,10 @@ public enum ItemRarity {
     /**
     * Type of rarity
     */
-	
-    VERY_COMMON(80),
-    COMMON(60),
-    RARE(40),
-    VERY_RARE(5);
+    VERY_COMMON(40),
+    COMMON(30),
+    RARE(20),
+    VERY_RARE(10);
 	
     private final int value;
 	

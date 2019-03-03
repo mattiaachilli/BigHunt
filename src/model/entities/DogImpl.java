@@ -1,6 +1,5 @@
 package model.entities;
 
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import model.properties.Velocity;
 
@@ -18,13 +17,14 @@ public final class DogImpl extends AbstractEntity implements Dog {
 	this.inGrass = false;
     }
     
-    public DogImpl() {
+    /*public DogImpl() {
 	//this();
     }
+    */
 
     @Override
     public boolean isInGrass() {
-	return this.inGrass;
+	return this.inGrass; 
     }
 
     @Override
