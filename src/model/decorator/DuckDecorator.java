@@ -5,7 +5,7 @@ import java.util.Optional;
 import javafx.scene.shape.Shape;
 import model.conversions.TimeConversion;
 import model.entities.Duck;
-import model.entities.PowerUp;
+import model.entities.powerup.PowerUp;
 import model.properties.Position;
 import model.properties.Velocity;
 
@@ -75,7 +75,7 @@ public abstract class DuckDecorator implements Duck {
 	this.lastVelocityUpdate += this.getTimeElapsed();
 	if(this.canUpdateVelocity()) {
 	    this.setNewVelocity();
-	    this.lastVelocityUpdate -= 1;
+	    this.lastVelocityUpdate -= 1; 
 	}
 	this.duck.update(timeElapsed);
     }
@@ -87,11 +87,6 @@ public abstract class DuckDecorator implements Duck {
     @Override
     public Optional<PowerUp> getPowerUp() {
 	return this.duck.getPowerUp();
-    }
-    
-    @Override
-    public void attachPowerUp(final PowerUp powerUp) {
-	this.duck.attachPowerUp(powerUp);
     }
 
     @Override
