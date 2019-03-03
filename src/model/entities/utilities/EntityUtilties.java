@@ -1,6 +1,6 @@
 package model.entities.utilities;
 
-import model.decorator.GreenDuck;
+import model.decorator.YellowDuck;
 import model.decorator.OrangeDuck;
 import model.decorator.RedDuck;
 import model.entities.Duck;
@@ -21,8 +21,8 @@ public final class EntityUtilties {
 	int time;
 	if(duck instanceof StandardDuck) {
 	    time = DuckProperty.STANDARD_DUCK.getTimeFlyAway();
-	} else if(duck instanceof GreenDuck) {
-	    time = DuckProperty.GREEN_DUCK.getTimeFlyAway();
+	} else if(duck instanceof YellowDuck) {
+	    time = DuckProperty.YELLOW_DUCK.getTimeFlyAway();
 	} else if(duck instanceof OrangeDuck) {
 	    time = DuckProperty.ORANGE_DUCK.getTimeFlyAway();
 	} else if(duck instanceof RedDuck) {

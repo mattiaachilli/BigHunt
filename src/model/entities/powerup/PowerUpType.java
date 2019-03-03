@@ -9,22 +9,22 @@ import model.rarity.ItemRarity;
  *
  */
 public enum PowerUpType {
-	INFINITE_AMMO("infinite ammo", COMMON),
-	KILL_ALL("all the duck die", VERY_RARE);
+    INFINITE_AMMO("Infinite ammo", COMMON),
+    KILL_ALL("All the duck die", VERY_RARE);
 	
-	private final ItemRarity powerUpRarity;
-	private final String powerUpBio;
+    private final ItemRarity powerUpRarity;
+    private final String powerUpBio;
 	
-	private PowerUpType(final String actualBio, final ItemRarity rarity) {
-		this.powerUpRarity = rarity;
-		this.powerUpBio = actualBio;
-	}
+    private PowerUpType(final String actualBio, final ItemRarity rarity) {
+	this.powerUpRarity = rarity;
+	this.powerUpBio = actualBio;
+    }
 	
-	public ItemRarity getPowerUpRarity() {
-		return this.powerUpRarity;
-	}
+    public ItemRarity getPowerUpRarity() {
+	return this.powerUpRarity;
+    }
 	
-	public String toString() {
-		return this.powerUpBio;
-	}
+    public String toString() {
+	return this.powerUpBio;
+    }
 }

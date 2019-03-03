@@ -11,7 +11,7 @@ public enum DuckProperty {
     
     STANDARD_DUCK(1, 1.0, 15, "Standard Duck"),
     
-    GREEN_DUCK(2, 1.50, 12, "Green Duck"),
+    YELLOW_DUCK(2, 1.50, 12, "Yellow Duck"),
     
     ORANGE_DUCK(3, 2.0, 10, "Orange Duck"),
     

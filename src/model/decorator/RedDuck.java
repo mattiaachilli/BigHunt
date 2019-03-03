@@ -1,13 +1,10 @@
 package model.decorator;
 
-import java.util.Optional;
-
 import model.entities.Duck;
 import model.entities.DuckProperty;
-import model.entities.PowerUp;
 import model.properties.Velocity;
 
-public class RedDuck extends DuckDecorator {
+public final class RedDuck extends DuckDecorator {
   
     public RedDuck(final Duck duck) {
 	super(duck);

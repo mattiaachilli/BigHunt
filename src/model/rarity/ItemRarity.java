@@ -7,23 +7,22 @@ package model.rarity;
  */
 public enum ItemRarity {
 	
-	/**
-	 * Type of rarity
-	 */
+    /**
+    * Type of rarity
+    */
 	
-	VERY_COMMON(80),
-	COMMON(60),
-	RARE(40),
-	VERY_RARE(5);
+    VERY_COMMON(80),
+    COMMON(60),
+    RARE(40),
+    VERY_RARE(5);
 	
-	private final int value;
+    private final int value;
 	
-	private ItemRarity(final int newValue) {
-		this.value = newValue;
-	}
+    private ItemRarity(final int newValue) {
+	this.value = newValue;
+    }
 	
-	public int getValue() {
-		return this.value;
-	}
-	
+    public int getValue() {
+	return this.value;
+    }
 }

@@ -2,6 +2,8 @@ package model.entities;
 
 import java.util.Optional;
 
+import model.entities.powerup.PowerUp;
+
 /**
  * 
  * Represents a duck in the game, a Duck may have a Power Up.
@@ -15,14 +17,6 @@ public interface Duck extends Character {
      * @return optional of PowerUp
      */
     Optional<PowerUp> getPowerUp();
-    
-    /**
-     * Attach a powerUp to this duck
-     * 
-     * @param powerUp
-     * 		powerUp to attach
-     */
-    void attachPowerUp(PowerUp powerUp);
     
     /**
      * Get the time in seconds since the duck was created, the duck may be died.

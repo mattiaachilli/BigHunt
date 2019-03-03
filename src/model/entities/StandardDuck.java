@@ -5,6 +5,7 @@ import java.util.Optional;
 import javafx.scene.shape.Shape;
 import model.conversions.TimeConversion;
 import model.decorator.RedDuck;
+import model.entities.powerup.PowerUp;
 import model.entities.utilities.EntityUtilties;
 import model.properties.Velocity;
 
@@ -29,7 +30,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 	super(shape, velocity);
 	this.initTime = TimeConversion.getSecondsByMillis(System.currentTimeMillis());
 	this.flyAway = false;
-	this.powerUp = Optional.empty();
+	this.powerUp = this.getRandomPowerUp();
+    }
+    
+    private Optional<PowerUp> getRandomPowerUp() {
+	return Optional.empty();
     }
 
     @Override
@@ -74,13 +79,5 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 	final int penaltyTime = (int) this.getTimeFromBirth() / TIME_FOR_PENALTY_SCORE;
 	final int penaltyScore = penaltyTime * PENALTY_SCORE_FOR_FIVE_SECOND;
 	return DEFAULT_SCORE - penaltyScore;
-    }
-
-    @Override
-    public void attachPowerUp(final PowerUp powerUp) {
-	if(this.hasPowerUp()) {
-	    throw new IllegalStateException();
-	}
-	this.powerUp = powerUp; //Se non è già presente un powerUp
     }
 }
