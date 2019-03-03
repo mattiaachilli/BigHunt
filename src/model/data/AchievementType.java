@@ -15,7 +15,7 @@ public enum AchievementType {
     /**
      * The number of matches that the player has played
      */
-    PLAYED_MATCHES(1, 2, 5, 10, 20),
+    MATCHES_PLAYED(1, 2, 5, 10, 20),
     
     /**
      * The number of killed ducks by the player
@@ -25,7 +25,12 @@ public enum AchievementType {
     /**
      * The number of power-ups used by the player
      */
-    USED_POWERUPS(2, 5, 10, 20, 50);
+    POWERUPS_USED(2, 5, 10, 20, 50), 
+    
+    /**
+     * The sum of all the scores of the games played by the player
+     */
+    SUM_OF_SCORES(100, 200, 500, 1000, 5000);
     
     /**
      * A set representing the targets (steps) of a single achievement

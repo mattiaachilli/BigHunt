@@ -6,9 +6,11 @@ import java.util.Set;
 public class AchievementImpl implements Achievement {
     
     private final AchievementType type;
+    private int value;
     
-    public AchievementImpl(final AchievementType type) {
+    public AchievementImpl(final AchievementType type, int value) {
         this.type = type;
+        this.value = value;
     }
     
     @Override
@@ -32,7 +34,7 @@ public class AchievementImpl implements Achievement {
     @Override
     public int getCurrentValueOfAchievement() {
         // TODO Auto-generated method stub
-        return 0;
+        return this.value;
     }
 
 }

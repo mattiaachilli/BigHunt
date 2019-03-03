@@ -60,6 +60,12 @@ public interface MatchData {
     
     /**
      * 
+     * @return the number of powerups used int the match
+     */
+    public int getNumberOfUsedPowerUps();
+    
+    /**
+     * 
      * @return true if the player has already a power up
      */
     public boolean hasPowerUp();

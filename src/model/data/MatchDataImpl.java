@@ -7,12 +7,14 @@ public class MatchDataImpl implements MatchData {
     private int score;
     private int killedDucks;
     private int timer;
+    private int usedPowerUps;
     private Optional<PowerUpType> powerUp;
     
     public MatchDataImpl(){
         this.score = 0;
         this.killedDucks = 0;
         this.timer = 0;
+        this.usedPowerUps = 0;
         this.powerUp = Optional.empty();
     }
     
@@ -61,6 +63,7 @@ public class MatchDataImpl implements MatchData {
     @Override
     public void powerUpCollected(PowerUpType type) {
         // TODO Auto-generated method stub
+        this.usedPowerUps++;
         if(!this.hasPowerUp()) {
             this.powerUp = Optional.of(type);
         }
@@ -76,6 +79,12 @@ public class MatchDataImpl implements MatchData {
     public void powerUpEnded() {
         // TODO Auto-generated method stub
         this.powerUp = Optional.empty();
+    }
+
+    @Override
+    public int getNumberOfUsedPowerUps() {
+        // TODO Auto-generated method stub
+        return this.usedPowerUps;
     }
 
 }
