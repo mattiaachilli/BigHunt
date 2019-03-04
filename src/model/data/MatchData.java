@@ -75,4 +75,11 @@ public interface MatchData {
      * Removes the power up
      */
     public void powerUpEnded();
+    
+    /**
+     * 
+     * @param matchdata, the match to be copied
+     * @return an unmodifiable copy of a match
+     */
+    public UnmodifiableMatchData unmodifiableCopy(final MatchData matchdata);
 }

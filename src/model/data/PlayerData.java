@@ -23,4 +23,10 @@ public interface PlayerData extends Serializable {
      * @param matchdata, data of the just ended match 
      */
     public void addMatchData(final MatchData matchdata);
+    
+    /**
+     * 
+     * @return the username of the player
+     */
+    public String getName();
 }

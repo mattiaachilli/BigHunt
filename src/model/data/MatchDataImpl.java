@@ -87,4 +87,10 @@ public class MatchDataImpl implements MatchData {
         return this.usedPowerUps;
     }
 
+    @Override
+    public UnmodifiableMatchData unmodifiableCopy(MatchData matchdata) {
+        // TODO Auto-generated method stub
+        return new UnmodifiableMatchData(matchdata);
+    }
+
 }

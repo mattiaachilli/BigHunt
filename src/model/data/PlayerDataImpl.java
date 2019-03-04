@@ -6,6 +6,13 @@ import java.util.Map;
 
 public class PlayerDataImpl implements PlayerData {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+    private final String name;
+    
     private int matchesPlayed;
     private int killedDucks;
     private int powerUpsUsed;
@@ -14,7 +21,9 @@ public class PlayerDataImpl implements PlayerData {
     /**
      * Constructor to be used when a new account is created
      */
-    public PlayerDataImpl() {
+    public PlayerDataImpl(final String name) {
+        this.name = name;
+        
         this.matchesPlayed = 0;
         this.killedDucks = 0;
         this.powerUpsUsed = 0;
@@ -58,6 +67,12 @@ public class PlayerDataImpl implements PlayerData {
         this.killedDucks += matchdata.getNumberOfKilledDucks();
         this.globalScore += matchdata.getGlobalScore();
         this.powerUpsUsed += matchdata.getNumberOfUsedPowerUps();
+    }
+
+    @Override
+    public String getName() {
+        // TODO Auto-generated method stub
+        return this.name;
     }
 
 }
