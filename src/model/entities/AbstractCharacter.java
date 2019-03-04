@@ -2,36 +2,34 @@ package model.entities;
 
 import javafx.scene.shape.Shape;
 import model.properties.Velocity;
+import model.utilities.ExceptionRuntimeUtility;
 
 public class AbstractCharacter extends AbstractEntity implements Character {
     
     private int timeElapsed;
-    private boolean alive;
+    private EntityStatus status;
     
     /**
      * @param shape
      * 		entity's shape
      * @param velocity
      * 		entity's velocity
-     * @param life	
-     * 		initial entity's life
-     * @param maxLife
-     * 		max entity's life
      */
     public AbstractCharacter(final Shape shape, final Velocity velocity) {
-	super(shape, velocity);
-	this.alive = true;
+        super(shape, velocity);
 	this.timeElapsed = 0;
+	this.status = EntityStatus.ALIVE;
     }
     
     @Override
     public void kill() {
-	this.alive = false;
+        ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
+	this.status = EntityStatus.DEAD;
     }
 
     @Override
     public boolean isAlive() {
-	return this.alive;
+	return this.status == EntityStatus.ALIVE;
     }
 
     @Override
@@ -40,7 +38,18 @@ public class AbstractCharacter extends AbstractEntity implements Character {
     }
 
     @Override
-    public void addTimeElapsed(int timeElapsed) {
+    public void addTimeElapsed(final int timeElapsed) {
 	this.timeElapsed = timeElapsed; 
+    }
+    
+    @Override
+    public void setStatus(final EntityStatus status) {
+        ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
+        this.status = status;
+    }
+
+    @Override
+    public EntityStatus getStatus() {
+        return this.status;
     }
 }

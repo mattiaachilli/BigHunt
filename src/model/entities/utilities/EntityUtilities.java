@@ -5,19 +5,18 @@ import model.decorator.OrangeDuck;
 import model.decorator.PinkDuck;
 import model.entities.Duck;
 import model.entities.DuckProperty;
+import model.entities.EntityStatus;
 import model.entities.StandardDuck;
 
-public final class EntityUtilties {
+public final class EntityUtilities {
     
     /**
+     * Compute fly away of the duck, if possible.
      * 
      * @param duck
      * 		duck's type
-     * @param time
-     * 		time is the time after that duck must fly away.
-     * @return true if duck can fly away.
      */
-    public static boolean computeFlyAway(final Duck duck) {
+    public static void computeFlyAway(final Duck duck) {
 	int time;
 	if(duck instanceof StandardDuck) {
 	    time = DuckProperty.STANDARD_DUCK.getTimeFlyAway();
@@ -30,6 +29,8 @@ public final class EntityUtilties {
 	} else {
 	    throw new IllegalArgumentException();
 	}
-	return duck.getTimeFromBirth() >= time;
+	if(duck.getTimeFromBirth() >= time) {
+	    duck.setStatus(EntityStatus.FLOWN_AWAY);
+	}
     }
 }

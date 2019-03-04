@@ -5,6 +5,7 @@ import java.util.Optional;
 import javafx.scene.shape.Shape;
 import model.conversions.TimeConversion;
 import model.entities.Duck;
+import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.properties.Position;
 import model.properties.Velocity;
@@ -16,6 +17,8 @@ import model.properties.Velocity;
  */
 
 public abstract class DuckDecorator implements Duck {
+    
+    private static final int SECONDS_UPDATE = 1;
     
     private final Duck duck;
     private int lastVelocityUpdate;
@@ -72,16 +75,16 @@ public abstract class DuckDecorator implements Duck {
 
     @Override
     public void update(final int timeElapsed) {
-	this.lastVelocityUpdate += this.getTimeElapsed();
+	this.lastVelocityUpdate += TimeConversion.getSecondsByMillis(this.getTimeElapsed());
 	if(this.canUpdateVelocity()) {
 	    this.setNewVelocity();
-	    this.lastVelocityUpdate -= 1; 
+	    this.lastVelocityUpdate -= SECONDS_UPDATE; 
 	}
 	this.duck.update(timeElapsed);
     }
     
     private boolean canUpdateVelocity() {
-	return TimeConversion.getSecondsByMillis(this.lastVelocityUpdate) >= 1;
+	return TimeConversion.getSecondsByMillis(this.lastVelocityUpdate) >= SECONDS_UPDATE;
     }
     
     @Override
@@ -100,13 +103,23 @@ public abstract class DuckDecorator implements Duck {
     }
 
     @Override
-    public boolean canFlyAway() {
-	return this.duck.canFlyAway();
+    public void kill() {
+	this.duck.kill();
+    }
+    
+    @Override
+    public void computeFlyAway() {
+        this.duck.computeFlyAway();
     }
 
     @Override
-    public void kill() {
-	this.duck.kill();
+    public void setStatus(EntityStatus status) {
+        this.duck.setStatus(status);
+    }
+
+    @Override
+    public EntityStatus getStatus() {
+        return this.duck.getStatus();
     }
 
     @Override
