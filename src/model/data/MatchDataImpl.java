@@ -10,6 +10,10 @@ public class MatchDataImpl implements MatchData {
     private int usedPowerUps;
     private Optional<PowerUpType> powerUp;
     
+    /**
+     * 
+     * Constructor do be called when the player starts a new match
+     */
     public MatchDataImpl(){
         this.score = 0;
         this.killedDucks = 0;
