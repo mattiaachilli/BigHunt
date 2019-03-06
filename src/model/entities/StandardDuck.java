@@ -3,7 +3,6 @@ package model.entities;
 import java.util.Optional;
 
 import javafx.scene.shape.Shape;
-import model.conversions.TimeConversion;
 import model.entities.powerup.PowerUp;
 import model.entities.utilities.EntityUtilities;
 import model.properties.Velocity;
@@ -18,7 +17,7 @@ import model.utilities.ExceptionRuntimeUtility;
 public class StandardDuck extends AbstractCharacter implements Duck {
     
     private static final int DEFAULT_SCORE = 50;
-    private static final int TIME_FOR_PENALTY_SCORE = 5;
+    private static final int TIME_FOR_PENALTY_SCORE = 5000;
     private static final int PENALTY_SCORE_FOR_FIVE_SECOND = 5;
     
     private final long initTime; //Duck's creation time
@@ -27,7 +26,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 
     public StandardDuck(final Shape shape, final Velocity velocity) {
 	super(shape, velocity);
-	this.initTime = TimeConversion.getSecondsByMillis(System.currentTimeMillis());
+	this.initTime = System.currentTimeMillis();
 	this.powerUp = this.getRandomPowerUp();
     }
     
@@ -49,14 +48,14 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     public void kill() {
         ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
 	super.kill();
-	this.dieTime = TimeConversion.getSecondsByMillis(System.currentTimeMillis());
+	this.dieTime = System.currentTimeMillis();
     }
     
     @Override
     public long getTimeFromBirth() {
 	long time;
 	if(this.isAlive()) {
-	    time = TimeConversion.getSecondsByMillis(System.currentTimeMillis()) -
+	    time = System.currentTimeMillis() -
 		    this.initTime;
 	} else { //Died
 	    time = this.dieTime - this.initTime;
