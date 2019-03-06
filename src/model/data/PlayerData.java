@@ -3,6 +3,9 @@ package model.data;
 import java.io.Serializable;
 import java.util.Map;
 
+import model.achievements.Achievement;
+import model.achievements.AchievementType;
+
 /**
  * 
  * @author simone

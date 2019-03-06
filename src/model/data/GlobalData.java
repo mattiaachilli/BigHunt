@@ -3,6 +3,8 @@ package model.data;
 import java.io.Serializable;
 import java.util.List;
 
+import model.achievements.HighScore;
+
 /**
  * 
  * @author simone

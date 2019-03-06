@@ -8,5 +8,5 @@ package utility;
  */
 public enum GameMode {
     
-    SURVIVAL_MODE;
+    SURVIVAL_MODE, STORY_MODE;
 }

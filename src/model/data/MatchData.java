@@ -56,7 +56,7 @@ public interface MatchData {
      * 
      * @param type, the type of the power up just collected
      */
-    public void powerUpCollected(PowerUpType type);
+   // public void powerUpCollected(PowerUpType type);
     
     /**
      * 
@@ -68,13 +68,41 @@ public interface MatchData {
      * 
      * @return true if the player has already a power up
      */
-    public boolean hasPowerUp();
+    //public boolean hasPowerUp();
     
     /**
      * 
      * Removes the power up
      */
-    public void powerUpEnded();
+    //public void powerUpEnded();
+    
+    /**
+     * 
+     * @return true if the match is going;
+     * @return false if it is paused or the round is changing.
+     */
+    public boolean isMatchGoing();
+    
+    /**
+     * Pauses the match
+     */
+    public void pauseMatch();
+    
+    /**
+     * Unpauses the match
+     */
+    public void unpauseMatch();
+    
+    /**
+     * 
+     * @return the number of the current round
+     */
+    public int getCurrentRound();
+    
+    /**
+     * Go to the next round
+     */
+    public void incrementRound();
     
     /**
      * 

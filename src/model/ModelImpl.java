@@ -56,7 +56,7 @@ public final class ModelImpl implements Model {
     @Override
     public void endMatch() {
 	// TODO Auto-generated method stub
-        this.matchdata.empty();
+        this.matchdata = Optional.empty();
     }
 
     @Override

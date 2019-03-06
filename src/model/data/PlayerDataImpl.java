@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 
+import model.achievements.Achievement;
+import model.achievements.AchievementImpl;
+import model.achievements.AchievementType;
+
 public class PlayerDataImpl implements PlayerData {
 
     /**

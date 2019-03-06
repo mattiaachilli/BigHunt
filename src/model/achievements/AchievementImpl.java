@@ -1,8 +1,13 @@
-package model.data;
+package model.achievements;
 
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * 
+ * @author simone
+ *
+ */
 public class AchievementImpl implements Achievement {
     
     private final AchievementType type;
@@ -28,7 +33,7 @@ public class AchievementImpl implements Achievement {
     @Override
     public Optional<Integer> getNextTarget() {
         // TODO Auto-generated method stub
-        return null;
+        return this.getAllTargets().stream().filter(t -> t > this.value).findFirst();
     }
 
     @Override

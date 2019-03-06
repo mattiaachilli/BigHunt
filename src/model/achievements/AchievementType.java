@@ -1,4 +1,4 @@
-package model.data;
+package model.achievements;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import model.achievements.HighScore;
+import model.achievements.HighScoreImpl;
+
 public class GlobalDataImpl implements GlobalData {
 
     /**

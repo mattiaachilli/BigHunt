@@ -1,8 +1,13 @@
-package model.data;
+package model.achievements;
 
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * 
+ * @author simone
+ *
+ */
 public interface Achievement {
     
     /**
