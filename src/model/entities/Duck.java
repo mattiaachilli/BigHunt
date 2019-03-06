@@ -25,23 +25,21 @@ public interface Duck extends Character {
     long getTimeFromBirth();
     
     /**
-     * Check if this duck is flew away
-     * 
-     * @return true if the duck flew away
-     */
-    boolean canFlyAway();
-    
-    /**
      * Check if this duck has a PowerUp.
      * 
-     * @return true if this duck has a PowerUp
+     * @return true if this duck has a PowerUp.
      */
     boolean hasPowerUp();
     
     /**
-     * Get the score that can be obtained killing this duck
+     * Get the score that can be obtained killing this duck.
      * 
      * @return score of this duck.
      */
     int getScore();
+    
+    /**
+     * Check if fly away is possible, if is possible change duck's status.
+     */
+    void computeFlyAway();
 }

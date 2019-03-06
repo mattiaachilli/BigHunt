@@ -5,8 +5,9 @@ import java.util.Optional;
 import javafx.scene.shape.Shape;
 import model.conversions.TimeConversion;
 import model.entities.powerup.PowerUp;
-import model.entities.utilities.EntityUtilties;
+import model.entities.utilities.EntityUtilities;
 import model.properties.Velocity;
+import model.utilities.ExceptionRuntimeUtility;
 
 /**
  * 
@@ -22,13 +23,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     
     private final long initTime; //Duck's creation time
     private long dieTime; //Duck's died time
-    private boolean flyAway;
     private Optional<PowerUp> powerUp;
 
     public StandardDuck(final Shape shape, final Velocity velocity) {
 	super(shape, velocity);
 	this.initTime = TimeConversion.getSecondsByMillis(System.currentTimeMillis());
-	this.flyAway = false;
 	this.powerUp = this.getRandomPowerUp();
     }
     
@@ -47,16 +46,8 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     }
     
     @Override
-    public boolean canFlyAway() {
-	if(!this.isAlive()) {
-	    throw new IllegalStateException();
-	}
-	this.flyAway = EntityUtilties.computeFlyAway(this)? true: false;
-	return this.flyAway;
-    }
-    
-    @Override
     public void kill() {
+        ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
 	super.kill();
 	this.dieTime = TimeConversion.getSecondsByMillis(System.currentTimeMillis());
     }
@@ -75,8 +66,15 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 
     @Override
     public int getScore() {
+        ExceptionRuntimeUtility.checkException(this.isAlive(), new IllegalStateException());
 	final int penaltyTime = (int) this.getTimeFromBirth() / TIME_FOR_PENALTY_SCORE;
 	final int penaltyScore = penaltyTime * PENALTY_SCORE_FOR_FIVE_SECOND;
 	return DEFAULT_SCORE - penaltyScore;
+    }
+
+    @Override
+    public void computeFlyAway() {
+        ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
+        EntityUtilities.computeFlyAway(this);
     }
 }

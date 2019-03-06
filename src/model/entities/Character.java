@@ -5,7 +5,7 @@ package model.entities;
  * Represents the characters of the entities.
  *
  */
-public interface Character extends Health {
+public interface Character extends Status {
     
     /**
      * Represents the time elapsed.

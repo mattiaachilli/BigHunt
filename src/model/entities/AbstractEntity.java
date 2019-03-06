@@ -26,7 +26,7 @@ public class AbstractEntity implements Entity {
     }
 
     @Override
-    public void setPosition(Position position) {
+    public void setPosition(final Position position) {
 	ShapeUtility.setShapePosition(this.shape, position);
     }
 
@@ -36,7 +36,7 @@ public class AbstractEntity implements Entity {
     }
 
     @Override
-    public void setVelocity(Velocity velocity) {
+    public void setVelocity(final Velocity velocity) {
 	this.velocity = velocity;
     }
 
@@ -46,12 +46,12 @@ public class AbstractEntity implements Entity {
     }
 
     @Override
-    public void setShape(Shape shape) {
+    public void setShape(final Shape shape) {
 	this.shape = shape;
     }
 
     @Override
-    public void update(int timeElapsed) {
+    public void update(final int timeElapsed) {
 	final Velocity velocity = this.getVelocity().mul(timeElapsed);
 	final Position shapePosition = this.getPosition();
 	this.setPosition(new PositionImpl(shapePosition.getX() + velocity.getX(), 
