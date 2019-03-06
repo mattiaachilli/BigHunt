@@ -4,23 +4,26 @@ import java.util.Optional;
 
 import model.entities.Duck;
 
-public class FirstRoundState extends AbstractDuckState {
-   
-    private static final int FIRST_WAVE = 12;
+public class ThirdRoundState extends AbstractDuckState{
+
+    private static final int FIRST_WAVE = 8;
+    private static final int SECOND_WAVE = 3;
     
-    public FirstRoundState() {
+    public ThirdRoundState() {
         super();
         super.resetDuckSpawned();
     }
-    
     @Override
     public Duck spawnDuck() {
         super.incDuckSpawned();
         final Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity);
         if(super.getDuckSpawned() <= FIRST_WAVE) {
             return standardDuck;
-        } else {
+        } else if(super.getDuckSpawned() > FIRST_WAVE && 
+            super.getDuckSpawned() <= FIRST_WAVE + SECOND_WAVE) {
             return super.getDuckFactory().createYellowDuck(standardDuck);
+        } else { //Last wave of four ducks
+            return super.getDuckFactory().createOrangeDuck(standardDuck);
         }
     }
 
@@ -31,12 +34,11 @@ public class FirstRoundState extends AbstractDuckState {
 
     @Override
     public Optional<DuckState> getNextState() {
-       return Optional.of(new SecondRoundState());
+        return Optional.of(new FourthRoundState());
     }
 
     @Override
     public int getSpawnDelay() {
-        return DelayDuckSpawner.FIRST_ROUND_DELAY.getSecondDelay();
+        return DelayDuckSpawner.THIRD_ROUND_DELAY.getSecondDelay();
     }
-
 }

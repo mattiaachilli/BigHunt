@@ -21,6 +21,11 @@ public interface DuckState {
     Duck spawnDuck();
     
     /**
+     * Reset the number of duck spawned.
+     */
+    void resetDuckSpawned();
+    
+    /**
      * 
      * @return true if all this state's ducks have spawned.
      */

@@ -9,20 +9,15 @@ public class RoundModeSpawner implements DuckSpawner {
     private static final int ROUND_DELAY = DelayDuckSpawner.ROUND_DELAY.getSecondDelay();
     
     private int spawnDelay;
-    private int ducksSpawned;
+    private int ducksSpawned; //Total in round
     private int timeElapsed;
-    private int lastTimeElapsedRound;
-    private boolean canSpawn;
     
     private Optional<DuckState> actualState;
     
     public RoundModeSpawner() {
         this.spawnDelay = INIT_DELAY;
-        this.spawnDelay = 0;
         this.ducksSpawned = 0;
         this.timeElapsed = 0;
-        this.lastTimeElapsedRound = 0;
-        this.canSpawn = true;
         this.actualState = Optional.of(new FirstRoundState());
     }
 
@@ -33,7 +28,7 @@ public class RoundModeSpawner implements DuckSpawner {
 
     @Override
     public boolean canSpawnDuck() {
-        return this.canSpawn && this.actualState.isPresent();
+        return this.timeElapsed >= this.spawnDelay && this.actualState.isPresent();
     }
 
     @Override
@@ -44,7 +39,6 @@ public class RoundModeSpawner implements DuckSpawner {
     @Override
     public Optional<Duck> spawnDuck() {
         this.timeElapsed = 0;
-        this.lastTimeElapsedRound = 0;
         
         final Optional<Duck> duckSpawned;
         if(this.actualState.isPresent()) {
@@ -55,7 +49,9 @@ public class RoundModeSpawner implements DuckSpawner {
             this.ducksSpawned += 1;
             
             if(duckState.isStateEnded()) {
+                duckState.resetDuckSpawned();
                 this.setState(duckState.getNextState());
+                this.setSpawnDelay(ROUND_DELAY);
             } 
         } else {
             duckSpawned = Optional.empty();
