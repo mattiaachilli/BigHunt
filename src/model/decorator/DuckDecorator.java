@@ -18,7 +18,7 @@ import model.properties.Velocity;
 
 public abstract class DuckDecorator implements Duck {
     
-    private static final int SECONDS_UPDATE = 1;
+    private static final int MILLIS_UPDATE = 1000;
     
     private final Duck duck;
     private int lastVelocityUpdate;
@@ -75,16 +75,16 @@ public abstract class DuckDecorator implements Duck {
 
     @Override
     public void update(final int timeElapsed) {
-	this.lastVelocityUpdate += TimeConversion.getSecondsByMillis(this.getTimeElapsed());
+	this.lastVelocityUpdate += this.getTimeElapsed();
 	if(this.canUpdateVelocity()) {
 	    this.setNewVelocity();
-	    this.lastVelocityUpdate -= SECONDS_UPDATE; 
+	    this.lastVelocityUpdate -= MILLIS_UPDATE; 
 	}
 	this.duck.update(timeElapsed);
     }
     
     private boolean canUpdateVelocity() {
-	return TimeConversion.getSecondsByMillis(this.lastVelocityUpdate) >= SECONDS_UPDATE;
+	return this.lastVelocityUpdate >= MILLIS_UPDATE;
     }
     
     @Override

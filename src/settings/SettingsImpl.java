@@ -47,7 +47,7 @@ public final class SettingsImpl implements Settings {
     }
     
     @Override
-    public void setSelectedResolution(Pair<Integer, Integer> selectedResolution) {
+    public void setSelectedResolution(final Pair<Integer, Integer> selectedResolution) {
         if(this.supportedResolutions.isEmpty()) {
             this.setScreenResolutions();
         }
@@ -99,7 +99,7 @@ public final class SettingsImpl implements Settings {
     }
     
     @Override
-    public void setFullScreen(boolean fullScreen) {
+    public void setFullScreen(final boolean fullScreen) {
         this.fullScreen = fullScreen;        
     }
     
@@ -114,7 +114,7 @@ public final class SettingsImpl implements Settings {
     }
 
     @Override
-    public void setBackgroundAudio(boolean backgroundAudio) {
+    public void setBackgroundAudio(final boolean backgroundAudio) {
         this.backgroundAudio = backgroundAudio;
     }
     

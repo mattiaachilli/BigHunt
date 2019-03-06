@@ -1,6 +1,5 @@
 package model.factories;
 
-import javafx.scene.shape.Shape;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
 import model.properties.Position;

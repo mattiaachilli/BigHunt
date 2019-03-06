@@ -17,13 +17,13 @@ public class PowerUpFactoryImpl implements PowerUpFactory {
     private static final double POWER_UP_SIDE = 20.0;
     
     @Override
-    public PowerUp createPowerUp(PowerUpType type, Position position) {
+    public PowerUp createPowerUp(final PowerUpType type, final Position position) {
         final Shape shape = new Rectangle(position.getX(), position.getY(), POWER_UP_SIDE, POWER_UP_SIDE);
         return new PowerUpImpl(type, shape, POWER_UP_VELOCITY);
     }
 
     @Override
-    public PowerUp createRandomPowerUp(Position position) {
+    public PowerUp createRandomPowerUp(final Position position) {
         /*
          * da fare in base alle rarità
          */

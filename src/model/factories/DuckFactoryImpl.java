@@ -8,30 +8,36 @@ import model.entities.Duck;
 import model.entities.StandardDuck;
 import model.properties.Velocity;
 
+/**
+ * 
+ * Implementation of DuckFactory.
+ *
+ */
+
 public class DuckFactoryImpl implements DuckFactory {
    
     @Override
-    public Duck createRandomDuck(Shape shape, Velocity velocity) {
+    public Duck createRandomDuck(final Shape shape, final Velocity velocity) {
        return null;
     }
 
     @Override
-    public StandardDuck createStandardDuck(Shape shape, Velocity velocity) {
+    public StandardDuck createStandardDuck(final Shape shape, final Velocity velocity) {
         return new StandardDuck(shape, velocity);
     }
 
     @Override
-    public YellowDuck createYellowDuck(Duck duck) {
+    public YellowDuck createYellowDuck(final Duck duck) {
         return new YellowDuck(duck);
     }
 
     @Override
-    public OrangeDuck createOrangeDuck(Duck duck) {
+    public OrangeDuck createOrangeDuck(final Duck duck) {
         return new OrangeDuck(duck);
     }
 
     @Override
-    public PinkDuck createPinkDuck(Duck duck) {
+    public PinkDuck createPinkDuck(final Duck duck) {
         return new PinkDuck(duck);
     }
 }
