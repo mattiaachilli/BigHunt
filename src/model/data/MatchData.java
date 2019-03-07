@@ -1,5 +1,7 @@
 package model.data;
 
+import utility.GameMode;
+
 /**
  * 
  * @author simone
@@ -106,8 +108,14 @@ public interface MatchData {
     
     /**
      * 
+     * @return the game mode of the match
+     */
+    public GameMode getMode();
+    
+    /**
+     * 
      * @param matchdata, the match to be copied
      * @return an unmodifiable copy of a match
      */
-    public UnmodifiableMatchData unmodifiableCopy(final MatchData matchdata);
+    public UnmodifiableMatchData unmodifiableCopy();
 }

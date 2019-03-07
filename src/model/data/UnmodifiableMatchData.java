@@ -1,5 +1,7 @@
 package model.data;
 
+import utility.GameMode;
+
 /**
  * 
  * @author simone
@@ -107,8 +109,14 @@ public class UnmodifiableMatchData implements MatchData {
     }
 
     @Override
-    public UnmodifiableMatchData unmodifiableCopy(final MatchData matchdata) {
+    public UnmodifiableMatchData unmodifiableCopy() {
         // TODO Auto-generated method stub
         return this;
+    }
+
+    @Override
+    public GameMode getMode() {
+        // TODO Auto-generated method stub
+        return this.matchdata.getMode();
     }
 }

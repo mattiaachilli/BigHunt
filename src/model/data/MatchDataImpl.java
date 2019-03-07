@@ -8,6 +8,7 @@ import utility.GameMode;
 public class MatchDataImpl implements MatchData {
 
     private final RoundUtility MAX_OF_ROUNDS;
+    private final GameMode GAME_MODE;
 
     private boolean isMatchPaused;
     private int currentRound;
@@ -29,6 +30,8 @@ public class MatchDataImpl implements MatchData {
         this.timer = 0;
         this.usedPowerUps = 0;
         // this.powerUp = Optional.empty();
+        
+        this.GAME_MODE = gameMode;
 
         switch (gameMode) {
         case STORY_MODE:
@@ -146,9 +149,15 @@ public class MatchDataImpl implements MatchData {
     }
 
     @Override
-    public UnmodifiableMatchData unmodifiableCopy(final MatchData matchdata) {
+    public GameMode getMode() {
         // TODO Auto-generated method stub
-        return new UnmodifiableMatchData(matchdata);
+        return this.GAME_MODE;
+    }
+    
+    @Override
+    public UnmodifiableMatchData unmodifiableCopy() {
+        // TODO Auto-generated method stub
+        return new UnmodifiableMatchData(new MatchDataImpl(this.GAME_MODE));
     }
 
 }
