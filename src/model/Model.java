@@ -2,7 +2,10 @@ package model;
 
 import java.util.List;
 
+import model.data.GlobalData;
+import model.data.MatchData;
 import model.entities.Entity;
+import utility.GameMode;
 
 /**
  * 
@@ -16,7 +19,7 @@ public interface Model {
      * Initialize state of model to start the game.
      * 
      */
-    public void initGame();
+    public void initGame(final GameMode gameMode);
 	
     /**
      * Update the state of the application.
