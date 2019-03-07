@@ -18,7 +18,6 @@ public class UnmodifiableMatchData implements MatchData {
 
     @Override
     public int getGlobalScore() {
-        // TODO Auto-generated method stub
         return this.matchdata.getGlobalScore();
     }
 
@@ -42,13 +41,11 @@ public class UnmodifiableMatchData implements MatchData {
     
     @Override
     public int getCurrentRound() {
-        // TODO Auto-generated method stub
         return this.matchdata.getCurrentRound();
     }
 
     @Override
     public boolean isMatchGoing() {
-        // TODO Auto-generated method stub
         return this.matchdata.isMatchGoing();
     }
 
@@ -58,25 +55,21 @@ public class UnmodifiableMatchData implements MatchData {
      */
     @Override
     public void incrementNumberOdKilledDucks() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void incrementScoreOf(int score) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void decrementScoreOf(int negativeScore) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void addTimeToTimer(int timeElapsed) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
     /*
@@ -92,25 +85,21 @@ public class UnmodifiableMatchData implements MatchData {
 
     @Override
     public void pauseMatch() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void unpauseMatch() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void incrementRound() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
     public UnmodifiableMatchData unmodifiableCopy() {
-        // TODO Auto-generated method stub
         return this;
     }
 

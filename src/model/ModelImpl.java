@@ -30,7 +30,7 @@ public final class ModelImpl implements Model {
 
     @Override
     public void initGame(final GameMode gameMode) {
-        this.matchdata = Optional.of(new MatchDataImpl());
+        this.matchdata = Optional.of(new MatchDataImpl(gameMode));
         
 	ducks.clear();
     }
@@ -49,13 +49,11 @@ public final class ModelImpl implements Model {
 
     @Override
     public boolean isHighScore() {
-	// TODO Auto-generated method stub
 	return this.globaldata.isHighScore(this.matchdata.get().getGlobalScore());
     }
 
     @Override
     public void endMatch() {
-	// TODO Auto-generated method stub
         this.matchdata = Optional.empty();
     }
 
@@ -81,19 +79,16 @@ public final class ModelImpl implements Model {
 
     @Override
     public MatchData getMatchData() {
-	// TODO Auto-generated method stub
 	return this.matchdata.get();
     }
 
     @Override
     public GlobalData getGlobalData() {
-	// TODO Auto-generated method stub
 	return this.globaldata;
     }
 
     @Override
     public List<Bullet> getBullets() {
-	// TODO Auto-generated method stub
 	return null;
     }
 }

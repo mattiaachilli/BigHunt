@@ -8,7 +8,6 @@ import model.achievements.AchievementType;
 
 /**
  * 
- * @author simone
  * 
  * Represents the data of a single player's account
  */

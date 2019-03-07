@@ -25,7 +25,7 @@ public class GlobalDataImpl implements GlobalData {
     
     public GlobalDataImpl() {
         this.highScores = Stream.generate( () -> new HighScoreImpl("---", 0))
-                .limit(this.MAX_OF_HIGH_SCORES).collect(Collectors.toList());
+                .limit(MAX_OF_HIGH_SCORES).collect(Collectors.toList());
         this.players = new ArrayList<PlayerData>();
     }
     
@@ -38,7 +38,7 @@ public class GlobalDataImpl implements GlobalData {
     @Override
     public boolean isHighScore(final int score) {
         // TODO Auto-generated method stub
-        return this.highScores.size() < this.MAX_OF_HIGH_SCORES
+        return this.highScores.size() < MAX_OF_HIGH_SCORES
                 || score > this.highScores.get(MAX_OF_HIGH_SCORES).getScore();
     }
 
@@ -67,10 +67,10 @@ public class GlobalDataImpl implements GlobalData {
         // TODO Auto-generated method stub
         if(this.isHighScore(score)) {
             this.highScores.add(new HighScoreImpl(name, score));
-            if(this.highScores.size() > this.MAX_OF_HIGH_SCORES) {
-                this.highScores.remove(this.highScores.stream().min(this.COMPARATOR).get());
+            if(this.highScores.size() > MAX_OF_HIGH_SCORES) {
+                this.highScores.remove(this.highScores.stream().min(COMPARATOR).get());
             }
-            this.highScores.sort(this.COMPARATOR);
+            this.highScores.sort(COMPARATOR);
         }
     }
 

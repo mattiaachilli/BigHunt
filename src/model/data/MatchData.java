@@ -4,7 +4,6 @@ import utility.GameMode;
 
 /**
  * 
- * @author simone
  * 
  * Represents the information of the current match
  *

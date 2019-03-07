@@ -2,7 +2,6 @@ package utility;
 
 /**
  * 
- * @author simone
  *
  * Enumeration that contains all the game modes
  */

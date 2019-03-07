@@ -37,9 +37,7 @@ public abstract class AbstractDuckState implements DuckState {
     }
     
     public final void incDuckSpawned() {
-        if(this.duckSpawned < NUM_DUCK_ROUND) {
-            this.duckSpawned++;
-        }
+        this.duckSpawned++;
     }
 
     @Override

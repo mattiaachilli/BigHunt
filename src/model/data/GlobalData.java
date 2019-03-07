@@ -7,7 +7,6 @@ import model.achievements.HighScore;
 
 /**
  * 
- * @author simone
  * 
  * Keeps the game data, such as players and high scores
  */

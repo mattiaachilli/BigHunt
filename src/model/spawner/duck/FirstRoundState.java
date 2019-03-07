@@ -2,7 +2,14 @@ package model.spawner.duck;
 
 import java.util.Optional;
 
+
 import model.entities.Duck;
+
+/**
+ * 
+ * First round state.
+ *
+ */
 
 public class FirstRoundState extends AbstractDuckState {
    
@@ -38,5 +45,4 @@ public class FirstRoundState extends AbstractDuckState {
     public int getSpawnDelay() {
         return DelayDuckSpawner.FIRST_ROUND_DELAY.getSecondDelay();
     }
-
 }
