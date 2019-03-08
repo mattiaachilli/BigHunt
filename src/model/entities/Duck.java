@@ -3,6 +3,7 @@ package model.entities;
 import java.util.Optional;
 
 import model.entities.powerup.PowerUp;
+import model.properties.DuckDirection;
 
 /**
  * 
@@ -42,4 +43,11 @@ public interface Duck extends Character {
      * Check if fly away is possible, if is possible change duck's status.
      */
     void computeFlyAway();
+    
+    /**
+     * Get the actual direction of the duck.
+     * 
+     * @return duck's direction
+     */
+    DuckDirection getActualDirection();
 }
