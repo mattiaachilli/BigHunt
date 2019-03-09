@@ -10,6 +10,7 @@ import model.utilities.ShapeUtility;
  *
  */
 public class AbstractEntity implements Entity {
+    private static final double MILLISECOND_TO_SECOND = 0.001;
     
     private Shape shape;
     private Velocity velocity;
@@ -52,7 +53,7 @@ public class AbstractEntity implements Entity {
 
     @Override
     public void update(final int timeElapsed) {
-	final Velocity velocity = this.getVelocity().mul(timeElapsed);
+	final Velocity velocity = this.getVelocity().mul(MILLISECOND_TO_SECOND * timeElapsed);
 	final Position shapePosition = this.getPosition();
 	this.setPosition(new PositionImpl(shapePosition.getX() + velocity.getX(), 
 		shapePosition.getY() + velocity.getY()));

@@ -7,6 +7,11 @@ import model.decorator.YellowDuck;
 import model.entities.Duck;
 import model.entities.StandardDuck;
 
+/**
+ * 
+ * Second round state.
+ */
+
 public class SecondRoundState extends AbstractDuckState {
 
     private static final int FIRST_WAVE = 10;

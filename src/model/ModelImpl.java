@@ -2,25 +2,36 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import model.data.GlobalData;
+import model.data.MatchData;
+import model.data.GlobalDataImpl;
+import model.data.MatchDataImpl;
 import model.entities.Dog;
 import model.entities.DogImpl;
 import model.entities.Duck;
 import model.entities.Entity;
+import utility.GameMode;
 
 public final class ModelImpl implements Model {
     
     private final Dog dog;
     private final List<Duck> ducks;
+    private Optional<MatchData> matchdata;
+    private final GlobalData globaldata;
     
-    public ModelImpl() {
+    public ModelImpl(final GlobalData globaldata) {
 	super();
 	this.ducks = new ArrayList<>();
-	this.dog = new DogImpl();
+	this.dog = new DogImpl(null, null);
+	this.globaldata = globaldata;
     }
 
     @Override
-    public void initGame() {
+    public void initGame(final GameMode gameMode) {
+        this.matchdata = Optional.of(new MatchDataImpl(gameMode));
+        
 	ducks.clear();
     }
 
@@ -33,19 +44,17 @@ public final class ModelImpl implements Model {
     @Override
     public boolean isGameOver() {
 	// TODO Auto-generated method stub
-	return false;
+	return this.matchdata.isPresent();
     }
 
     @Override
     public boolean isHighScore() {
-	// TODO Auto-generated method stub
-	return false;
+	return this.globaldata.isHighScore(this.matchdata.get().getGlobalScore());
     }
 
     @Override
     public void endMatch() {
-	// TODO Auto-generated method stub
-
+        this.matchdata = Optional.empty();
     }
 
     @Override
@@ -70,19 +79,16 @@ public final class ModelImpl implements Model {
 
     @Override
     public MatchData getMatchData() {
-	// TODO Auto-generated method stub
-	return null;
+	return this.matchdata.get();
     }
 
     @Override
     public GlobalData getGlobalData() {
-	// TODO Auto-generated method stub
-	return null;
+	return this.globaldata;
     }
 
     @Override
     public List<Bullet> getBullets() {
-	// TODO Auto-generated method stub
 	return null;
     }
 }

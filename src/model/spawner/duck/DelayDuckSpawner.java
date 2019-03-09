@@ -18,6 +18,8 @@ public enum DelayDuckSpawner {
     
     ROUND_DELAY(2000), //Represents the delay between two rounds.
     
+    SURVIVAL_DELAY(6000),
+    
     FIRST_ROUND_DELAY(5000),
     
     SECOND_ROUND_DELAY(5000),

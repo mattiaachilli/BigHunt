@@ -4,6 +4,12 @@ import java.util.Optional;
 
 import model.entities.Duck;
 
+/**
+ * 
+ * Fifth round state.
+ *
+ */
+
 public class FifthRoundState extends AbstractDuckState {
     
     private static final int FIRST_WAVE = 1;

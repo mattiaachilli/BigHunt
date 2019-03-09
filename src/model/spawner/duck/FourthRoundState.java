@@ -1,8 +1,13 @@
 package model.spawner.duck;
 
 import java.util.Optional;
-
 import model.entities.Duck;
+
+/**
+ * 
+ * Fourth round state.
+ *
+ */
 
 public class FourthRoundState extends AbstractDuckState {
     
