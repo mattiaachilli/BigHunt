@@ -2,13 +2,13 @@ package settings.observers;
 
 /**
  * 
- * Interface that represents the setting changes observer
+ * Interface that represents the changes with observer
  *
  */
 public interface Observer {
     
     /**
-     * Update the Settings
+     * Update 
      */
     void update();
 
