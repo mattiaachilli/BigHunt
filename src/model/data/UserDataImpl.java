@@ -8,11 +8,8 @@ import model.achievements.Achievement;
 import model.achievements.AchievementImpl;
 import model.achievements.AchievementType;
 
-public class PlayerDataImpl implements PlayerData {
+public class UserDataImpl implements UserData {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private final String name;
@@ -25,7 +22,7 @@ public class PlayerDataImpl implements PlayerData {
     /**
      * Constructor to be used when a new account is created
      */
-    public PlayerDataImpl(final String name) {
+    public UserDataImpl(final String name) {
         this.name = name;
         
         this.matchesPlayed = 0;

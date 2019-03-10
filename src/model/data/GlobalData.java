@@ -37,7 +37,7 @@ public interface GlobalData extends Serializable {
      * 
      * @return all the players' data
      */
-    public List<PlayerData> getPlayers();
+    public List<UserData> getPlayers();
     
     /**
      * 

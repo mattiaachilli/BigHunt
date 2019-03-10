@@ -21,12 +21,12 @@ public class GlobalDataImpl implements GlobalData {
             .compare(second.getScore(), first.getScore());
 
     private List<HighScore> highScores;
-    private List<PlayerData> players;
+    private List<UserData> players;
     
     public GlobalDataImpl() {
         this.highScores = Stream.generate( () -> new HighScoreImpl("---", 0))
                 .limit(MAX_OF_HIGH_SCORES).collect(Collectors.toList());
-        this.players = new ArrayList<PlayerData>();
+        this.players = new ArrayList<UserData>();
     }
     
     @Override
@@ -43,7 +43,7 @@ public class GlobalDataImpl implements GlobalData {
     }
 
     @Override
-    public List<PlayerData> getPlayers() {
+    public List<UserData> getPlayers() {
         // TODO Auto-generated method stub
         return Collections.unmodifiableList(this.players);
     }
@@ -58,7 +58,7 @@ public class GlobalDataImpl implements GlobalData {
     public void addPlayer(final String name) {
         // TODO Auto-generated method stub
         if (!this.isPresent(name)) {
-            this.players.add(new PlayerDataImpl(name));
+            this.players.add(new UserDataImpl(name));
         }
     }
 

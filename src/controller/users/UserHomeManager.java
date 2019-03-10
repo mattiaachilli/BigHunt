@@ -1,4 +1,4 @@
-package controller;
+package controller.users;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -63,7 +63,7 @@ public final class UserHomeManager {
     * @param userName, the name of the user
     * @return the file of the user that contains his username and his hashcode password
     */
-   public String getUserFile(final String userName) {
+   public static String getUserFile(final String userName) {
        return USERS_DIR
            + SEPARATOR
            + userName

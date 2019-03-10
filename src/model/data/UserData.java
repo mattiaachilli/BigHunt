@@ -12,7 +12,7 @@ import model.achievements.AchievementType;
  * Represents the data of a single player's account
  */
 
-public interface PlayerData extends Serializable {
+public interface UserData extends Serializable {
     
     /** 
      * 
