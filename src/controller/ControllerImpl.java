@@ -19,6 +19,10 @@ public final class ControllerImpl implements Controller {
     private View view;
     //Command list, mouse
 
+    public ControllerImpl(Model model, View view) {
+        this.model = model;
+        this.view = view;
+    }
 	
     @Override
     public void initGame() {
