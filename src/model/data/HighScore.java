@@ -1,4 +1,4 @@
-package model.achievements;
+package model.data;
 
 import java.io.Serializable;
 

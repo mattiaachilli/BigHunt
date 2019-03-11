@@ -1,5 +1,8 @@
 package model.data;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
@@ -62,6 +65,12 @@ public class UserDataImpl implements UserData {
     }
 
     @Override
+    public String getName() {
+        // TODO Auto-generated method stub
+        return this.name;
+    }
+    
+    @Override
     public void addMatchData(final MatchData matchdata) {
         // TODO Auto-generated method stub
         this.matchesPlayed++;
@@ -69,11 +78,13 @@ public class UserDataImpl implements UserData {
         this.globalScore += matchdata.getGlobalScore();
         this.powerUpsUsed += matchdata.getNumberOfUsedPowerUps();
     }
-
-    @Override
-    public String getName() {
-        // TODO Auto-generated method stub
-        return this.name;
+    
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
+    
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
     }
 
 }

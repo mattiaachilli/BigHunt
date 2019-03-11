@@ -1,4 +1,4 @@
-package controller.users;
+package controller.files;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -63,7 +63,7 @@ public class UserManagerImpl implements UserManager {
         if(this.getUsersAndPasswords().filter(l -> l[0].equals(userName)).findFirst().isPresent()) {
             return Optional.empty();
         } else {
-            try (BufferedWriter write = new BufferedWriter(new FileWriter(UserHomeManager.USERS_LIST, true))) {
+            try (BufferedWriter write = new BufferedWriter(new FileWriter(FilesHomeManager.USERS_LIST, true))) {
                 write.write(userName + SEPARATOR + password.hashCode());
                 write.newLine();
                 final UserData newUser = new UserDataImpl(userName);
@@ -77,7 +77,7 @@ public class UserManagerImpl implements UserManager {
     
     private Stream<String[]> getUsersAndPasswords() {
         try {
-            return Files.lines(Paths.get(UserHomeManager.USERS_LIST))
+            return Files.lines(Paths.get(FilesHomeManager.USERS_LIST))
                 .map(list -> list.split(SEPARATOR));
         } catch (IOException e) {
             return Stream.empty();
@@ -85,7 +85,7 @@ public class UserManagerImpl implements UserManager {
     }
     
     private UserData load(final String userName) throws IOException {
-        try (InputStream file = new FileInputStream(UserHomeManager.getUserFile(userName));
+        try (InputStream file = new FileInputStream(FilesHomeManager.getUserFile(userName));
         InputStream buffStream = new BufferedInputStream(file);
         ObjectInputStream objectStream = new ObjectInputStream(buffStream);) {
             return (UserData) objectStream.readObject();
@@ -96,7 +96,7 @@ public class UserManagerImpl implements UserManager {
     }
     
     private void write(final UserData user) throws IOException {
-        try (OutputStream file = new FileOutputStream(UserHomeManager.getUserFile(user.getName()));
+        try (OutputStream file = new FileOutputStream(FilesHomeManager.getUserFile(user.getName()));
         OutputStream buffStream = new BufferedOutputStream(file);
         ObjectOutputStream objectStream = new ObjectOutputStream(buffStream);) {
             objectStream.writeObject(user);

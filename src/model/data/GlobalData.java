@@ -3,8 +3,6 @@ package model.data;
 import java.io.Serializable;
 import java.util.List;
 
-import model.achievements.HighScore;
-
 /**
  * 
  * 
@@ -37,7 +35,7 @@ public interface GlobalData extends Serializable {
      * 
      * @return all the players' data
      */
-    public List<UserData> getPlayers();
+    public List<UserData> getUsers();
     
     /**
      * 

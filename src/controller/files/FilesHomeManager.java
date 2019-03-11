@@ -1,4 +1,4 @@
-package controller.users;
+package controller.files;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +9,7 @@ import java.nio.file.Paths;
  * @author simone
  * A class containing constants used to find files in the user home directory
  */
-public final class UserHomeManager {
+public final class FilesHomeManager {
 
     public static final String SEPARATOR = System.getProperty("file.separator");
     

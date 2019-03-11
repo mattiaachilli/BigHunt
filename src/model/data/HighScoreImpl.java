@@ -1,4 +1,4 @@
-package model.achievements;
+package model.data;
 
 public class HighScoreImpl implements HighScore {
     

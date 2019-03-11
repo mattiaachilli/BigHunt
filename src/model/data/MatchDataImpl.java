@@ -1,5 +1,9 @@
 package model.data;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 //import java.util.Optional;
 
 import model.utilities.RoundUtility;
@@ -158,6 +162,14 @@ public class MatchDataImpl implements MatchData {
     public UnmodifiableMatchData unmodifiableCopy() {
         // TODO Auto-generated method stub
         return new UnmodifiableMatchData(new MatchDataImpl(this.GAME_MODE));
+    }
+    
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
+    
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
     }
 
 }
