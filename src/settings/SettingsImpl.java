@@ -29,7 +29,7 @@ public final class SettingsImpl implements Settings {
     private final List<Pair<Integer, Integer>> supportedResolutions = new ArrayList<>();
     
     private Pair<Integer, Integer> selectedResolution = new ImmutablePair<>(
-        SettingsImpl.SCREEN_RESOLUTION.getKey() * 3 / 4, SettingsImpl.SCREEN_RESOLUTION.getValue() * 3 / 4);
+        SettingsImpl.SCREEN_RESOLUTION.getKey(), SettingsImpl.SCREEN_RESOLUTION.getValue());
     
     private static final int DEFAULT_FPS = 60;
     
