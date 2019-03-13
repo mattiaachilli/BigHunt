@@ -1,6 +1,10 @@
 package controller;
 
+import java.util.Optional;
+
 import model.Model;
+import model.data.GlobalData;
+import model.data.UserData;
 import utility.Utilities;
 import view.View;
 
@@ -17,11 +21,14 @@ public final class ControllerImpl implements Controller {
     private GameLoop gameLoop;
     private Model model;
     private View view;
+    private GlobalData globaldata;
+    private Optional<UserData> user;
     //Command list, mouse
 
     public ControllerImpl(Model model, View view) {
         this.model = model;
         this.view = view;
+        //this.globaldata = 
     }
 	
     @Override

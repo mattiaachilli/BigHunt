@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import model.data.Podium;
 
-public interface ScoreManager {
+public interface PodiumManager {
 
     /**
      * If it is present

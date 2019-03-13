@@ -16,7 +16,7 @@ import java.util.Optional;
 import model.data.Podium;
 import model.data.PodiumImpl;
 
-public class ScoreManagerImpl implements ScoreManager {
+public class PodiumManagerImpl implements PodiumManager {
 
     @Override
     public Optional<Podium> loadStoryHighScores() {
