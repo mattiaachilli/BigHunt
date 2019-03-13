@@ -1,6 +1,6 @@
 package model.data;
 
-import utility.GameMode;
+import model.entities.powerup.PowerUpType;
 
 /**
  * 
@@ -22,9 +22,9 @@ public class UnmodifiableMatchData implements MatchData {
     }
 
     @Override
-    public int getNumberOfKilledDucks() {
+    public int getKilledDucks() {
         // TODO Auto-generated method stub
-        return this.matchdata.getNumberOfKilledDucks();
+        return this.matchdata.getKilledDucks();
     }
 
     @Override
@@ -38,23 +38,13 @@ public class UnmodifiableMatchData implements MatchData {
         // TODO Auto-generated method stub
         return this.matchdata.getNumberOfUsedPowerUps();
     }
-    
-    @Override
-    public int getCurrentRound() {
-        return this.matchdata.getCurrentRound();
-    }
-
-    @Override
-    public boolean isMatchGoing() {
-        return this.matchdata.isMatchGoing();
-    }
 
     /*
      * @Override public boolean hasPowerUp() { // TODO Auto-generated method stub
      * return this.matchdata.hasPowerUp(); }
      */
     @Override
-    public void incrementNumberOdKilledDucks() {
+    public void incrementKilledDucks() {
         throw new UnsupportedOperationException();
     }
 
@@ -72,29 +62,34 @@ public class UnmodifiableMatchData implements MatchData {
     public void addTimeToTimer(int timeElapsed) {
         throw new UnsupportedOperationException();
     }
-    /*
-     * @Override public void powerUpEnded() { // TODO Auto-generated method throw
-     * new UnsupportedOperationException();
-     * 
-     * }
-     * 
-     * @Override public void powerUpCollected(PowerUpType type) { // TODO
-     * Auto-generated method stub throw new UnsupportedOperationException(); }
-     */
-
-
+    
     @Override
-    public void pauseMatch() {
+    public void incrementFlownDucks() {
+        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void unpauseMatch() {
+    public int getFlownDucks() {
+        // TODO Auto-generated method stub
+        return this.matchdata.getFlownDucks();
+    }
+
+    @Override
+    public void powerUpCollected(PowerUpType type) {
+        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void incrementRound() {
+    public boolean hasPowerUp() {
+        // TODO Auto-generated method stub
+        return this.matchdata.hasPowerUp();
+    }
+
+    @Override
+    public void powerUpEnded() {
+        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
@@ -103,9 +98,5 @@ public class UnmodifiableMatchData implements MatchData {
         return this;
     }
 
-    @Override
-    public GameMode getMode() {
-        // TODO Auto-generated method stub
-        return this.matchdata.getMode();
-    }
+
 }

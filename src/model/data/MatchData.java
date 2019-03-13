@@ -1,6 +1,6 @@
 package model.data;
 
-import utility.GameMode;
+import model.entities.powerup.PowerUpType;
 
 /**
  * 
@@ -21,13 +21,24 @@ public interface MatchData {
      * 
      * Increments the number of killed ducks
      */
-    public void incrementNumberOdKilledDucks();
+    public void incrementKilledDucks();
     
     /**
      * 
      * @return the number of killed ducks in the actual match
      */
-    public int getNumberOfKilledDucks();
+    public int getKilledDucks();
+    
+    /**
+     * Increments the number of flown ducks
+     */
+    public void incrementFlownDucks();
+    
+    /**
+     * 
+     * @return the number of flown ducks in the actual match
+     */
+    public int getFlownDucks();
     
     /**
      * 
@@ -57,7 +68,7 @@ public interface MatchData {
      * 
      * @param type, the type of the power up just collected
      */
-   // public void powerUpCollected(PowerUpType type);
+    public void powerUpCollected(PowerUpType type);
     
     /**
      * 
@@ -69,47 +80,13 @@ public interface MatchData {
      * 
      * @return true if the player has already a power up
      */
-    //public boolean hasPowerUp();
+    public boolean hasPowerUp();
     
     /**
      * 
      * Removes the power up
      */
-    //public void powerUpEnded();
-    
-    /**
-     * 
-     * @return true if the match is going;
-     * @return false if it is paused or the round is changing.
-     */
-    public boolean isMatchGoing();
-    
-    /**
-     * Pauses the match
-     */
-    public void pauseMatch();
-    
-    /**
-     * Unpauses the match
-     */
-    public void unpauseMatch();
-    
-    /**
-     * 
-     * @return the number of the current round
-     */
-    public int getCurrentRound();
-    
-    /**
-     * Go to the next round
-     */
-    public void incrementRound();
-    
-    /**
-     * 
-     * @return the game mode of the match
-     */
-    public GameMode getMode();
+    public void powerUpEnded();
     
     /**
      * 

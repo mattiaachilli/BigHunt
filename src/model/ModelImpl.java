@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import controller.matches.GameMode;
 import model.data.GlobalData;
 import model.data.MatchData;
 import model.data.GlobalDataImpl;
@@ -12,7 +13,6 @@ import model.entities.Dog;
 import model.entities.DogImpl;
 import model.entities.Duck;
 import model.entities.Entity;
-import utility.GameMode;
 
 public final class ModelImpl implements Model {
     

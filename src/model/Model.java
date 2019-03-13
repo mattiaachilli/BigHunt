@@ -2,10 +2,10 @@ package model;
 
 import java.util.List;
 
+import controller.matches.GameMode;
 import model.data.GlobalData;
 import model.data.MatchData;
 import model.entities.Entity;
-import utility.GameMode;
 
 /**
  * 

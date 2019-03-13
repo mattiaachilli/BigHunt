@@ -8,9 +8,9 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
+import controller.matches.GameMode;
 import model.data.MatchData;
 import model.data.MatchDataImpl;
-import utility.GameMode;
 
 public class MatchDataTest {
     

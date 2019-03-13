@@ -74,7 +74,7 @@ public class UserDataImpl implements UserData {
     public void addMatchData(final MatchData matchdata) {
         // TODO Auto-generated method stub
         this.matchesPlayed++;
-        this.killedDucks += matchdata.getNumberOfKilledDucks();
+        this.killedDucks += matchdata.getKilledDucks();
         this.globalScore += matchdata.getGlobalScore();
         this.powerUpsUsed += matchdata.getNumberOfUsedPowerUps();
     }

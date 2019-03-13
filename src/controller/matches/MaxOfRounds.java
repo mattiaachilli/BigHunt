@@ -1,12 +1,12 @@
-package model.utilities;
+package controller.matches;
 
-public enum RoundUtility {
+public enum MaxOfRounds {
     
     FIVE_ROUNDS(5), UNIQUE_ROUND(1);
     
     private final int maxRounds;
     
-    RoundUtility(final int max) {
+    MaxOfRounds(final int max) {
         this.maxRounds = max;
     }
     
