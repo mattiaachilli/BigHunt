@@ -2,26 +2,26 @@ package controller.matches;
 
 import settings.GlobalDifficulty;
 
-public class StoryMatch extends AbstractMatch {
-    
+public class SurvivalMatch extends AbstractMatch {
+
     private final GameMode GAME_MODE;
     private final MaxOfRounds MAX_OF_ROUNDS;
     
     private MatchDifficulty difficulty;
     
-    public StoryMatch(final GlobalDifficulty globalDifficulty) {
-        this.GAME_MODE = GameMode.STORY_MODE;
+    public SurvivalMatch(final GlobalDifficulty globalDifficulty) {
+        this.GAME_MODE = GameMode.SURVIVAL_MODE;
         this.MAX_OF_ROUNDS = MaxOfRounds.FIVE_ROUNDS;
         
         switch(globalDifficulty.getGlobalDifficulty()) {
         case "EASY":
-            this.difficulty = MatchDifficulty.STORY_EASY;
+            this.difficulty = MatchDifficulty.SURVIVAL_EASY;
             
         case "MEDIUM":
-            this.difficulty = MatchDifficulty.STORY_MEDIUM;
+            this.difficulty = MatchDifficulty.SURVIVAL_MEDIUM;
             
         case "HARD":
-            this.difficulty = MatchDifficulty.STORY_HARD;
+            this.difficulty = MatchDifficulty.SURVIVAL_HARD;
             
             default:
                 throw new IllegalArgumentException();
@@ -44,7 +44,7 @@ public class StoryMatch extends AbstractMatch {
     public boolean isMatchOver() {
         // TODO Auto-generated method stub
         return this.currentRound >= this.MAX_OF_ROUNDS.getRounds()
-                || this.matchdata.getGlobalScore() < this.difficulty.getLimitOfDifficulty() * this.currentRound;
+                || this.matchdata.getFlownDucks() >= this.difficulty.getLimitOfDifficulty();
     }
 
     @Override

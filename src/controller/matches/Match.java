@@ -4,12 +4,28 @@ import model.data.MatchData;
 
 public interface Match {
     
+    /**
+     * 
+     * @return the game mode
+     */
     public GameMode getMode();
     
+    /**
+     * 
+     * @return the difficulty of the match
+     */
     public MatchDifficulty getDifficulty();
-    
+        
+    /**
+     * 
+     * @return the match data of the actual match
+     */
     public MatchData getMatchData();
     
+    /**
+     * 
+     * @return true if the match is over (winning or losing)
+     */
     public boolean isMatchOver(); 
     
     /**

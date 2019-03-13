@@ -7,5 +7,5 @@ package controller.matches;
  */
 public enum GameMode {
     
-    SURVIVAL_MODE, STORY_MODE;
+    DEFAULT, SURVIVAL_MODE, STORY_MODE;
 }
