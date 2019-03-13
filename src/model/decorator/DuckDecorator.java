@@ -3,10 +3,10 @@ package model.decorator;
 import java.util.Optional;
 
 import javafx.scene.shape.Shape;
-import model.conversions.TimeConversion;
 import model.entities.Duck;
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
+import model.properties.DuckDirection;
 import model.properties.Position;
 import model.properties.Velocity;
 
@@ -18,7 +18,7 @@ import model.properties.Velocity;
 
 public abstract class DuckDecorator implements Duck {
     
-    private static final int MILLIS_UPDATE = 1000;
+    private static final int MILLIS_UPDATE = 1000; //1 SECOND
     
     private final Duck duck;
     private int lastVelocityUpdate;
@@ -125,6 +125,11 @@ public abstract class DuckDecorator implements Duck {
     @Override
     public int getScore() {
 	return (this.duck.getScore() * this.getScoreMultiplier());
+    }
+    
+    @Override
+    public DuckDirection getActualDirection() {
+        return this.duck.getActualDirection();
     }
     
     public abstract int getScoreMultiplier();
