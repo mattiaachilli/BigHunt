@@ -1,5 +1,7 @@
 package model.entities;
 
+import java.awt.Graphics2D;
+
 import javafx.scene.shape.Shape;
 import model.properties.Position;
 import model.properties.Velocity;
@@ -55,4 +57,6 @@ public interface Entity {
      * @param timeElapsed is the time elapsed from the last update
      */
     void update(int timeElapsed);
+    
+    //void render(Graphics2D g);
 }

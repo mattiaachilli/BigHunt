@@ -16,7 +16,7 @@ import model.entities.utilities.EntityUtilities;
 public enum DelayDuckSpawner {
 
     
-    ROUND_DELAY(2000), //Represents the delay between two rounds.
+    ROUND_DELAY(5000), //Represents the delay between two rounds.
     
     SURVIVAL_DELAY(6000),
     

@@ -78,5 +78,5 @@ public interface Model {
      * 
      * @return the list of bullets
      */
-    List<Bullet> getBullets();
+    //List<Bullet> getBullets();
 }

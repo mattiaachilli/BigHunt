@@ -11,25 +11,25 @@ import model.rarity.ItemRarity;
 
 public enum DuckProperty {
     
-    STANDARD_DUCK(1, 1.0, 15, "Standard Duck", VERY_COMMON),
+    STANDARD_DUCK(1, 600, 8000, "Standard Duck", VERY_COMMON),
     
-    YELLOW_DUCK(2, 1.50, 12, "Yellow Duck", COMMON),
+    YELLOW_DUCK(2, 700, 7000, "Yellow Duck", COMMON),
     
-    ORANGE_DUCK(3, 2.0, 10, "Orange Duck", RARE),
+    ORANGE_DUCK(3, 800, 6000, "Orange Duck", RARE),
     
-    PINK_DUCK(4, 2.50, 8, "Pink Duck", VERY_RARE);
+    PINK_DUCK(4, 1000, 5000, "Pink Duck", VERY_RARE);
     
     
     private final int multiplierScore;
-    private final double velocitySpeedUp;
+    private final double velocity;
     private final int timeFlyAway;
     private final String duckType;
     private final ItemRarity duckRarity;
     
-    DuckProperty(final int multiplierScore, final double velocitySpeedUp, 
+    DuckProperty(final int multiplierScore, final double velocity, 
 	    final int timeFlyAway, final String duckType, final ItemRarity duckRarity) {
 	this.multiplierScore = multiplierScore;
-	this.velocitySpeedUp = velocitySpeedUp;
+	this.velocity = velocity;
 	this.timeFlyAway = timeFlyAway;
 	this.duckType = duckType;
 	this.duckRarity = duckRarity;
@@ -39,8 +39,8 @@ public enum DuckProperty {
 	return this.multiplierScore;
     }
     
-    public double getVelocitySpeedUp() {
-	return this.velocitySpeedUp;
+    public double getVelocity() {
+	return this.velocity;
     }
     
     public int getTimeFlyAway() {
@@ -58,7 +58,7 @@ public enum DuckProperty {
     public String toString() {
 	return this.duckType 
 		+ ", Multiplier score: " + this.multiplierScore 
-		+ ", Speed Up: " + this.velocitySpeedUp
+		+ ", Speed Up: " + this.velocity
 		+ ", Time fly away: " + this.timeFlyAway
 	        + ", Duck rarity: " + this.duckRarity;
     }

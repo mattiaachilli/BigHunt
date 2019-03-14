@@ -1,44 +1,93 @@
 package model;
 
+import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+import javafx.scene.shape.Rectangle;
 import model.data.GlobalData;
 import model.data.MatchData;
-import model.data.GlobalDataImpl;
 import model.data.MatchDataImpl;
+import model.decorator.OrangeDuck;
 import model.entities.Dog;
 import model.entities.DogImpl;
 import model.entities.Duck;
 import model.entities.Entity;
+import model.entities.StandardDuck;
+import model.properties.DuckDirection;
+import model.properties.VelocityImpl;
+import model.spawner.duck.DuckSpawner;
+import model.spawner.duck.StoryModeSpawner;
+import model.spawner.duck.SurvivalModeSpawner;
 import utility.GameMode;
 
-public final class ModelImpl implements Model {
+public final class ModelImpl extends Canvas implements Model {
     
+    
+    /**
+     * Game width
+     */
+    public static final int GAME_WIDTH = 1366;
+    /**
+     * Game height
+     */
+    public static final int GAME_HEIGHT = 1000;
+    
+    /**
+     * All objects of the game world.
+     */
     private final Dog dog;
     private final List<Duck> ducks;
     private Optional<MatchData> matchdata;
+    private DuckSpawner spawner;
     private final GlobalData globaldata;
+    private int lastRound;
     
     public ModelImpl(final GlobalData globaldata) {
 	super();
 	this.ducks = new ArrayList<>();
 	this.dog = new DogImpl(null, null);
 	this.globaldata = globaldata;
+	this.initGame(GameMode.STORY_MODE);
+	this.lastRound = this.spawner.getActualRound();
     }
 
     @Override
     public void initGame(final GameMode gameMode) {
         this.matchdata = Optional.of(new MatchDataImpl(gameMode));
-        
-	ducks.clear();
+        ducks.clear();
+        /*
+        switch(gameMode) {
+            case STORY_MODE:
+                this.spawner = new StoryModeSpawner();
+                break;
+            case SURVIVAL_MODE:
+                this.spawner = new SurvivalModeSpawner();
+                break;
+        }
+        */
+        this.spawner = new StoryModeSpawner();
+	
     }
 
     @Override
     public void update(int timeElapsed) {
-	// TODO Auto-generated method stub
-
+        spawner.update(timeElapsed);
+        if(spawner.canSpawnDuck()) {
+            this.ducks.add(spawner.spawnDuck().get());
+        }
+	for(Duck d: this.ducks) {
+	    if(d.canFlyAway()) {
+	        d.computeFlyAway();
+	    }
+	    d.update(timeElapsed);
+	}
+        if(this.spawner.getActualRound() != this.lastRound) {
+            this.ducks.clear();
+            this.lastRound = this.spawner.getActualRound();
+        }
     }
 
     @Override
@@ -72,7 +121,6 @@ public final class ModelImpl implements Model {
     @Override
     public List<Entity> getEntities() {
 	final List<Entity> listEntity = new ArrayList<>();
-	listEntity.add(dog);
 	listEntity.addAll(ducks);
 	return listEntity;
     }
@@ -87,8 +135,10 @@ public final class ModelImpl implements Model {
 	return this.globaldata;
     }
 
+    /*
     @Override
     public List<Bullet> getBullets() {
 	return null;
     }
+    */
 }

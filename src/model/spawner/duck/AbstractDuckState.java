@@ -15,15 +15,18 @@ import model.factories.DuckFactoryImpl;
 public abstract class AbstractDuckState implements DuckState {
     
     protected static final int NUM_DUCK_ROUND = 15; //Number ducks for round
+    protected static final int SPAWN_Y = 300;
     
     private int duckSpawned;
     private final DuckFactory duckFactory;
+    private int round;
     
     public AbstractDuckState() {
+        this.round = 1;
         this.duckSpawned = 0;
         this.duckFactory = new DuckFactoryImpl();
     }
-    
+  
     public final DuckFactory getDuckFactory() {
         return this.duckFactory;
     }
