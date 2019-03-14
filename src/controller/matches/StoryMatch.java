@@ -10,18 +10,22 @@ public class StoryMatch extends AbstractMatch {
     private MatchDifficulty difficulty;
     
     public StoryMatch(final GlobalDifficulty globalDifficulty) {
+        super();
         this.GAME_MODE = GameMode.STORY_MODE;
         this.MAX_OF_ROUNDS = MaxOfRounds.FIVE_ROUNDS;
         
         switch(globalDifficulty.getGlobalDifficulty()) {
         case "EASY":
             this.difficulty = MatchDifficulty.STORY_EASY;
+            break;
             
         case "MEDIUM":
             this.difficulty = MatchDifficulty.STORY_MEDIUM;
+            break;
             
         case "HARD":
             this.difficulty = MatchDifficulty.STORY_HARD;
+            break;
             
             default:
                 throw new IllegalArgumentException();

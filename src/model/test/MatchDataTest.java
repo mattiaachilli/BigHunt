@@ -8,14 +8,15 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import controller.matches.GameMode;
+import controller.matches.StoryMatch;
+import controller.matches.SurvivalMatch;
 import model.data.MatchData;
-import model.data.MatchDataImpl;
+import settings.GlobalDifficulty;
 
 public class MatchDataTest {
     
-    private final MatchData survivalMatch = new MatchDataImpl(GameMode.SURVIVAL_MODE);
-    private final MatchData storyMatch = new MatchDataImpl(GameMode.STORY_MODE);
+    private final SurvivalMatch survivalMatch = new SurvivalMatch(GlobalDifficulty.EASY);
+    private final StoryMatch storyMatch = new StoryMatch(GlobalDifficulty.EASY);
     
     /**
      * Tests the rounds related to the game mode
@@ -52,19 +53,19 @@ public class MatchDataTest {
         int score = 100;
         int deltaScore = 50;
         this.storyMatch.unpauseMatch();
-        this.storyMatch.incrementScoreOf(score);
-        assertEquals(this.storyMatch.getGlobalScore(), score);
+        this.storyMatch.getMatchData().incrementScoreOf(score);
+        assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
         score += deltaScore;
-        this.storyMatch.incrementScoreOf(deltaScore);
-        assertEquals(this.storyMatch.getGlobalScore(), score);
+        this.storyMatch.getMatchData().incrementScoreOf(deltaScore);
+        assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
         deltaScore = 20;
         score -= deltaScore;
-        this.storyMatch.decrementScoreOf(deltaScore);
-        assertEquals(this.storyMatch.getGlobalScore(), score);
+        this.storyMatch.getMatchData().decrementScoreOf(deltaScore);
+        assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
         this.storyMatch.pauseMatch();
         score += deltaScore;
-        this.storyMatch.incrementScoreOf(deltaScore);
-        assertNotEquals(this.storyMatch.getGlobalScore(), score);
+        this.storyMatch.getMatchData().incrementScoreOf(deltaScore);
+        assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
     }
     
     /**
@@ -93,7 +94,7 @@ public class MatchDataTest {
     
     @Test
     public final void testUnmodifiableData() {
-        final MatchData unmodifiable = this.storyMatch.unmodifiableCopy();
+        final MatchData unmodifiable = this.storyMatch.getMatchData().unmodifiableCopy();
         this.testUnsupported( () -> unmodifiable.incrementScoreOf(5));
     }
     

@@ -5,8 +5,8 @@ import model.data.MatchDataImpl;
 
 public abstract class AbstractMatch implements Match {
     
-    private static final int FIRST_ROUND = 1;
-    private static final boolean START_PAUSED = true;
+    protected static final int FIRST_ROUND = 1;
+    protected static final boolean START_PAUSED = true;
 
     protected MatchData matchdata;
     protected int currentRound;

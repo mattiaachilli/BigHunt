@@ -10,18 +10,22 @@ public class SurvivalMatch extends AbstractMatch {
     private MatchDifficulty difficulty;
     
     public SurvivalMatch(final GlobalDifficulty globalDifficulty) {
+        super();
         this.GAME_MODE = GameMode.SURVIVAL_MODE;
-        this.MAX_OF_ROUNDS = MaxOfRounds.FIVE_ROUNDS;
+        this.MAX_OF_ROUNDS = MaxOfRounds.UNIQUE_ROUND;
         
         switch(globalDifficulty.getGlobalDifficulty()) {
         case "EASY":
             this.difficulty = MatchDifficulty.SURVIVAL_EASY;
+            break;
             
         case "MEDIUM":
             this.difficulty = MatchDifficulty.SURVIVAL_MEDIUM;
+            break;
             
         case "HARD":
             this.difficulty = MatchDifficulty.SURVIVAL_HARD;
+            break;
             
             default:
                 throw new IllegalArgumentException();
