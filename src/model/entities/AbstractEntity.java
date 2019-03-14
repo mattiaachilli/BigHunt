@@ -1,6 +1,11 @@
 package model.entities;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
 import javafx.scene.shape.Shape;
+import model.ModelImpl;
 import model.properties.*;
 import model.utilities.ShapeUtility;
 
@@ -20,7 +25,7 @@ public class AbstractEntity implements Entity {
 	this.shape = shape;
 	this.velocity = velocity;
     }
-
+    
     @Override
     public Position getPosition() {
 	return ShapeUtility.getPositionbyShape(this.shape);
@@ -54,8 +59,14 @@ public class AbstractEntity implements Entity {
     @Override
     public void update(final int timeElapsed) {
 	final Velocity velocity = this.getVelocity().mul(MILLISECOND_TO_SECOND * timeElapsed);
-	final Position shapePosition = this.getPosition();
-	this.setPosition(new PositionImpl(shapePosition.getX() + velocity.getX(), 
-		shapePosition.getY() + velocity.getY()));
+        this.setPosition(this.getPosition().sum(velocity));
     }
+
+    /*
+    @Override
+    public void render(Graphics2D g) {
+        g.setColor(Color.green);
+        g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 50, 50));
+    }
+    */
 }

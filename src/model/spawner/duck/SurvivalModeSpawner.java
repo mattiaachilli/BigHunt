@@ -34,4 +34,9 @@ public class SurvivalModeSpawner extends AbstractSpawner {
     public boolean isSpawnFinished() {
         return false;
     }
+
+    @Override
+    public int getActualRound() {
+        throw new UnsupportedOperationException();
+    }
 }

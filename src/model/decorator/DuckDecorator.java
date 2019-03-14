@@ -1,5 +1,6 @@
 package model.decorator;
 
+import java.awt.Graphics2D;
 import java.util.Optional;
 
 import javafx.scene.shape.Shape;
@@ -18,14 +19,10 @@ import model.properties.Velocity;
 
 public abstract class DuckDecorator implements Duck {
     
-    private static final int MILLIS_UPDATE = 1000; //1 SECOND
-    
     private final Duck duck;
-    private int lastVelocityUpdate;
     
     public DuckDecorator(final Duck duck) {
 	this.duck = duck;
-	this.lastVelocityUpdate = 0;
     }
     
     @Override
@@ -75,16 +72,7 @@ public abstract class DuckDecorator implements Duck {
 
     @Override
     public void update(final int timeElapsed) {
-	this.lastVelocityUpdate += this.getTimeElapsed();
-	if(this.canUpdateVelocity()) {
-	    this.setNewVelocity();
-	    this.lastVelocityUpdate -= MILLIS_UPDATE; 
-	}
 	this.duck.update(timeElapsed);
-    }
-    
-    private boolean canUpdateVelocity() {
-	return this.lastVelocityUpdate >= MILLIS_UPDATE;
     }
     
     @Override
@@ -132,7 +120,26 @@ public abstract class DuckDecorator implements Duck {
         return this.duck.getActualDirection();
     }
     
+    public void setDirection(final DuckDirection direction) {
+        this.duck.setDirection(direction);
+    }
+   
+    @Override
+    public boolean canFlyAway() {
+        return this.duck.canFlyAway();
+    }
+    
+    @Override
+    public void setMovementChange(boolean change) {
+        this.duck.setMovementChange(change);
+    }
+    
     public abstract int getScoreMultiplier();
     
-    public abstract void setNewVelocity();
+    //DA TOGLIERE POI
+    /*
+    public void render(Graphics2D g) {
+        this.duck.render(g);
+    }
+    */
 }

@@ -33,6 +33,7 @@ public interface DuckSpawner {
     void setSpawnDelay(int delay);
     
     /**
+     * Spawn a duck
      * 
      * @return Optional of duck.
      */
@@ -64,4 +65,11 @@ public interface DuckSpawner {
      *            to set.
      */
     void setState(Optional<DuckState> state);
+    
+    /**
+     * Get actual round.
+     * 
+     * @return the actual round.
+     */
+    int getActualRound();
 }

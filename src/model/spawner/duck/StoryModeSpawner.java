@@ -2,20 +2,28 @@ package model.spawner.duck;
 
 import java.util.Optional;
 import model.entities.Duck;
+import model.utilities.RoundUtility;
 
 /**
  * 
  * This abstract class represents the story mode spawner in rounds.
  *
  */
-
 public class StoryModeSpawner extends AbstractSpawner {
     
     private static final int INIT_DELAY = DelayDuckSpawner.FIRST_ROUND_DELAY.getSecondDelay();
     private static final int ROUND_DELAY = DelayDuckSpawner.ROUND_DELAY.getSecondDelay();
+    private int round;
     
     public StoryModeSpawner() {
         super(INIT_DELAY, new FirstRoundState());
+        this.round = 1;
+    }
+    
+    private void incRound() {
+        if(this.round < RoundUtility.FIVE_ROUNDS.getRounds()) {
+            this.round++;
+        }
     }
 
     @Override
@@ -33,6 +41,7 @@ public class StoryModeSpawner extends AbstractSpawner {
             
             if(duckState.isStateEnded()) {
                 duckState.resetDuckSpawned();
+                this.incRound();
                 super.setState(duckState.getNextState());
                 super.clearDucksSpawned();
                 super.setSpawnDelay(ROUND_DELAY);
@@ -47,5 +56,10 @@ public class StoryModeSpawner extends AbstractSpawner {
     @Override
     public boolean isSpawnFinished() {
         return !super.getCurrentDuckState().isPresent();
+    }
+    
+    @Override
+    public int getActualRound() {
+        return this.round;
     }
 }

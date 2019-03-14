@@ -2,7 +2,13 @@ package model.spawner.duck;
 
 import java.util.Optional;
 
+import javafx.scene.shape.Rectangle;
+import model.ModelImpl;
 import model.entities.Duck;
+import model.entities.DuckProperty;
+import model.entities.StandardDuck;
+import model.properties.DuckDirection;
+import model.properties.Velocity;
 
 /**
  * 
@@ -22,7 +28,14 @@ public class ThirdRoundState extends AbstractDuckState{
     @Override
     public Duck spawnDuck() {
         super.incDuckSpawned();
-        final Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity);
+        final DuckDirection direction = SpawnSide.getSpawnSide(); //Init direction
+        int posX = SpawnSide.initPosX(direction);
+        final Velocity velocity = SpawnSide.getVelocity(direction, DuckProperty.STANDARD_DUCK);
+        final Duck standardDuck = super.getDuckFactory()
+                                       .createStandardDuck(
+                                       new Rectangle(posX, ModelImpl.GAME_HEIGHT / 2 - SPAWN_Y, StandardDuck.HEIGHT_DUCK, StandardDuck.HEIGHT_DUCK)
+                                       ,velocity 
+                                       ,direction);
         if(super.getDuckSpawned() <= FIRST_WAVE) {
             return standardDuck;
         } else if(super.getDuckSpawned() > FIRST_WAVE && 

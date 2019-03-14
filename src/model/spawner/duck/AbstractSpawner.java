@@ -7,6 +7,12 @@ import java.util.Optional;
 
 import model.entities.Duck;
 
+/**
+ * 
+ * AbstractSpwanwer: Survival and story.
+ *
+ */
+
 public abstract class AbstractSpawner implements DuckSpawner {
     
     private static final int NUMBER_MAX_DUCK = 3; //Max number of ducks at the same time
@@ -21,7 +27,7 @@ public abstract class AbstractSpawner implements DuckSpawner {
     public AbstractSpawner(final int initDelay, final DuckState initialState) {
         this.spawnDelay = initDelay;
         this.ducksSpawned = 0;
-        this.timeElapsed = 0;
+        this.timeElapsed = initDelay;
         this.actualState = Optional.of(initialState);
         this.listDucksSpawned = new ArrayList<>();
     }
@@ -47,12 +53,12 @@ public abstract class AbstractSpawner implements DuckSpawner {
 
     private boolean checkNumberDuck() {
         int numDuckAlive = 0;
-        for(Duck duck: listDucksSpawned) {
+        for(final Duck duck: this.listDucksSpawned) {
             if(duck.isAlive()) {
                 numDuckAlive++;
             }
         }
-        return numDuckAlive <= NUMBER_MAX_DUCK;
+        return numDuckAlive < NUMBER_MAX_DUCK;
     }
 
     @Override
@@ -91,4 +97,7 @@ public abstract class AbstractSpawner implements DuckSpawner {
     
     @Override
     public abstract boolean isSpawnFinished();
+    
+    @Override
+    public abstract int getActualRound();
 }

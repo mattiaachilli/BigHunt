@@ -39,6 +39,14 @@ public interface Duck extends Character {
      */
     int getScore();
     
+    
+    /**
+     * Chech if duck can fly away
+     * 
+     * @return true if duck can fly away.
+     */
+    boolean canFlyAway();
+    
     /**
      * Check if fly away is possible, if is possible change duck's status.
      */
@@ -50,4 +58,15 @@ public interface Duck extends Character {
      * @return duck's direction
      */
     DuckDirection getActualDirection();
+    
+    /**
+     * Set the new direction of the duck.
+     */
+    void setDirection(DuckDirection direction);
+    
+    /**
+     * Used for test.
+     * 
+     */
+    void setMovementChange(boolean change);
 }
