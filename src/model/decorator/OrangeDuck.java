@@ -1,7 +1,6 @@
 package model.decorator;
 
 import model.entities.Duck;
-import model.entities.DuckProperty;
 
 /**
  * 
@@ -9,6 +8,8 @@ import model.entities.DuckProperty;
  *
  */
 public final class OrangeDuck extends DuckDecorator {
+
+    private static final int SCORE_MULTIPLIER = 3;
 
     /**
      * 
@@ -21,6 +22,6 @@ public final class OrangeDuck extends DuckDecorator {
 
     @Override
     public int getScoreMultiplier() {
-        return DuckProperty.ORANGE_DUCK.getMultiplierScore();
+        return SCORE_MULTIPLIER;
     }
 }

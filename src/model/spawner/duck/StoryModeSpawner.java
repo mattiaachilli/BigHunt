@@ -11,7 +11,7 @@ import model.utilities.RoundUtility;
  */
 public class StoryModeSpawner extends AbstractSpawner {
 
-    private static final int INIT_DELAY = DelayDuckSpawner.FIRST_ROUND_DELAY.getSecondDelay();
+    private static final int INIT_DELAY = DelayDuckSpawner.DOG_DELAY.getSecondDelay();
     private static final int ROUND_DELAY = DelayDuckSpawner.ROUND_DELAY.getSecondDelay();
     private int round;
 

@@ -1,18 +1,16 @@
 package model.entities.utilities;
 
 import model.decorator.YellowDuck;
-
-import java.security.SecureRandom;
 import model.entities.StandardDuck;
 import model.ModelImpl;
 import model.decorator.OrangeDuck;
 import model.decorator.PinkDuck;
 import model.entities.Duck;
 import model.entities.DuckProperty;
+import model.entities.EntityStatus;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
-import model.spawner.duck.DelayDuckSpawner;
 
 /**
  * 
@@ -20,10 +18,9 @@ import model.spawner.duck.DelayDuckSpawner;
  *
  */
 public final class EntityUtilities {
-
-    private static final int MILLIS = 1000;
     private static final int FLY_AWAY_VELOCITY = 1500;
     private static final int KILLED_VELOCITY = 400;
+
     /**
      * Check if fly away is possible.
      * 
@@ -31,7 +28,6 @@ public final class EntityUtilities {
      *          duck's type
      * @return true if duck can fly away.
      */
-
     private EntityUtilities() {
         super();
     }
@@ -57,44 +53,7 @@ public final class EntityUtilities {
         } else {
             throw new IllegalArgumentException();
         }
-        return duck.getTimeFromBirth() >= time;
-    }
-
-    /**
-     * Generate a random number between 1000(ONE MILLISECOND)-maxRange.
-     * 
-     * @param maxRange 
-     *          max number to generate random number.
-     * @return random number approximated
-     */
-    public static int getRandomDelay(final int maxRange) {
-        final int numberRandom = new SecureRandom().nextInt(maxRange) + MILLIS;
-        int newValue = 0;
-        if (numberRandom >= DelayDuckSpawner.ALL_DEFAULT_DELAY.get(0) 
-            && 
-            numberRandom < DelayDuckSpawner.ALL_DEFAULT_DELAY.get(1)) {
-
-            newValue = DelayDuckSpawner.ALL_DEFAULT_DELAY.get(0);
-        } else if (numberRandom >= DelayDuckSpawner.ALL_DEFAULT_DELAY.get(1) 
-                   && 
-                   numberRandom < DelayDuckSpawner.ALL_DEFAULT_DELAY.get(2)) {
-
-            newValue = DelayDuckSpawner.ALL_DEFAULT_DELAY.get(1);
-        } else if (numberRandom >= DelayDuckSpawner.ALL_DEFAULT_DELAY.get(2) 
-                   && 
-                   numberRandom < DelayDuckSpawner.ALL_DEFAULT_DELAY.get(3)) {
-
-            newValue = DelayDuckSpawner.ALL_DEFAULT_DELAY.get(2);
-        } else if (numberRandom >= DelayDuckSpawner.ALL_DEFAULT_DELAY.get(3) 
-                   && 
-                   numberRandom < DelayDuckSpawner.ALL_DEFAULT_DELAY.get(4)) {
-
-            newValue = DelayDuckSpawner.ALL_DEFAULT_DELAY.get(3);
-        } else if (numberRandom >= DelayDuckSpawner.ALL_DEFAULT_DELAY.get(4)) {
-
-            newValue = DelayDuckSpawner.ALL_DEFAULT_DELAY.get(4); 
-        }
-        return newValue;
+        return duck.getTimeFromBirth() >= time && duck.getStatus() == EntityStatus.ALIVE;
     }
 
     /**
@@ -171,14 +130,14 @@ public final class EntityUtilities {
         }
         //LEFT/RIGHT DOWN
         if (actualDirection == DuckDirection.LEFT_DOWN) {
-            if (duck.getPosition().getY() >= ModelImpl.GAME_HEIGHT / 2 + ModelImpl.GAME_HEIGHT / 4) {
+            if (duck.getPosition().getY() >= ModelImpl.GAME_HEIGHT / 4 * 2) {
                 EntityUtilities.setNewPosition(duck, DuckDirection.LEFT_UP);
             } else if (duck.getPosition().getX() <= StandardDuck.COLLISION_X) {
                 EntityUtilities.setNewPosition(duck, actualDirection.getOpponentPosition().get());
             }
         }
         if (actualDirection == DuckDirection.RIGHT_DOWN) {
-            if (duck.getPosition().getY() >= ModelImpl.GAME_HEIGHT / 2 + ModelImpl.GAME_HEIGHT / 4) {
+            if (duck.getPosition().getY() >= ModelImpl.GAME_HEIGHT / 4 * 2) {
                 EntityUtilities.setNewPosition(duck, DuckDirection.RIGHT_UP);
             } 
             if (duck.getPosition().getX() >= ModelImpl.GAME_WIDTH - StandardDuck.WIDTH_DUCK / 2) {

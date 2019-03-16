@@ -16,6 +16,10 @@ import model.properties.VelocityImpl;
  */
 public final class SpawnSide {
     private static final int SIDE = 2;
+    /**
+     * SPAWN_Y = Y COORDINATE FOR DUCK.
+     */
+    private static final int SPAWN_Y = 200;
 
     private SpawnSide() {
         super();
@@ -57,5 +61,14 @@ public final class SpawnSide {
     public static int initPosX(final DuckDirection initDirection) {
         return initDirection == DuckDirection.LEFT ? ModelImpl.GAME_WIDTH + StandardDuck.WIDTH_DUCK 
                                                      : 0 - StandardDuck.WIDTH_DUCK;
+    }
+
+    /**
+     * Random Y coordinate.
+     * 
+     * @return Y coordinate random to spawn duck.
+     */
+    public static int getRandomPosY() {
+        return new Random().nextInt(ModelImpl.GAME_HEIGHT / 2 - SPAWN_Y) + SPAWN_Y;
     }
 }

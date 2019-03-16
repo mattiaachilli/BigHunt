@@ -141,6 +141,7 @@ public abstract class DuckDecorator implements Duck {
     }
 
     /**
+     * Get score multiplier of the duck.
      * 
      * @return the score multiplier of the duck
      */

@@ -56,7 +56,7 @@ public class AbstractCharacter extends AbstractEntity implements Character {
     }
 
     @Override
-    public final void addTimeElapsed(int timeElapsed) {
+    public final void addTimeElapsed(final int timeElapsed) {
         this.timeElapsed += timeElapsed;
     }
 }

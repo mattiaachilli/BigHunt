@@ -35,7 +35,7 @@ public abstract class AbstractSpawner implements DuckSpawner {
     public AbstractSpawner(final int initDelay, final DuckState initialState) {
         this.spawnDelay = initDelay;
         this.ducksSpawned = 0;
-        this.timeElapsed = initDelay;
+        this.timeElapsed = 0;
         this.actualState = Optional.of(initialState);
         this.listDucksSpawned = new ArrayList<>();
     }

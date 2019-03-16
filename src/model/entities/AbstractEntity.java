@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import javafx.scene.shape.Shape;
-import model.ModelImpl;
-import model.properties.*;
+import model.properties.Position;
+import model.properties.Velocity;
 import model.utilities.ShapeUtility;
 
 /**
@@ -16,54 +16,66 @@ import model.utilities.ShapeUtility;
  */
 public class AbstractEntity implements Entity {
     private static final double MILLISECOND_TO_SECOND = 0.001;
-    
     private Shape shape;
     private Velocity velocity;
 
-    
+
+    /**
+     * Constructor of abstract entity.
+     * 
+     * @param shape
+     *          shape of the entity
+     * @param velocity
+     *          velocity of the entity
+     */
     public AbstractEntity(final Shape shape, final Velocity velocity) {
-	this.shape = shape;
-	this.velocity = velocity;
-    }
-    
-    @Override
-    public Position getPosition() {
-	return ShapeUtility.getPositionbyShape(this.shape);
+        this.shape = shape;
+        this.velocity = velocity;
     }
 
     @Override
-    public void setPosition(final Position position) {
-	ShapeUtility.setShapePosition(this.shape, position);
+    public final Position getPosition() {
+        return ShapeUtility.getPositionbyShape(this.shape);
     }
 
     @Override
-    public Velocity getVelocity() {
-	return this.velocity;
+    public final void setPosition(final Position position) {
+        ShapeUtility.setShapePosition(this.shape, position);
     }
 
     @Override
-    public void setVelocity(final Velocity velocity) {
-	this.velocity = velocity;
+    public final Velocity getVelocity() {
+        return this.velocity;
     }
 
     @Override
-    public Shape getShape() {
-	return this.shape;
+    public final void setVelocity(final Velocity velocity) {
+        this.velocity = velocity;
     }
 
     @Override
-    public void setShape(final Shape shape) {
-	this.shape = shape;
+    public final Shape getShape() {
+        return this.shape;
     }
 
     @Override
+    public final void setShape(final Shape shape) {
+        this.shape = shape;
+    }
+
+    /**
+     * Update entity.
+     * 
+     * @param timeElapsed
+     *          timeElapsed from last update
+     */
     public void update(final int timeElapsed) {
-	final Velocity velocity = this.getVelocity().mul(MILLISECOND_TO_SECOND * timeElapsed);
+        final Velocity velocity = this.getVelocity().mul(MILLISECOND_TO_SECOND * timeElapsed);
         this.setPosition(this.getPosition().sum(velocity));
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(final Graphics2D g) {
         g.setColor(Color.green);
         g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 50, 50));
     }

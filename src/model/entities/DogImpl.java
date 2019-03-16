@@ -3,6 +3,8 @@ package model.entities;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -23,9 +25,12 @@ public final class DogImpl extends AbstractEntity implements Dog {
     private static final double WIDTH = 70;
     private static final double HEIGHT = 50;
     private static final double VELOCITY_X = 100.0;
-    private static final double VELOCITY_JUMP_Y = -200.0;
-    private static final int WAITING_MILLIS = 500;
+    private static final double VELOCITY_JUMP_Y = -300.0;
+    private static final int WAITING_MILLIS = 750;
     private static final int UPDATE_MILLIS = 1000;
+    private static final int LAUGH_MILLIS = 1000;
+    private static final int HAPPY_MILLIS = 500;
+
     private DogStatus status;
     private boolean inGrass;
     private int waitingTime;
@@ -58,15 +63,8 @@ public final class DogImpl extends AbstractEntity implements Dog {
         return this.inGrass; 
     }
 
-    @Override
-    public void inGrass() {
+    private void inGrass() {
         this.inGrass = true;
-    }
-
-    @Override
-    public void render(final Graphics2D g) {
-        g.setColor(Color.green);
-        g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 70, 50));
     }
 
     private void updateVelocityStatus(final int timeElapsed) {
@@ -74,14 +72,14 @@ public final class DogImpl extends AbstractEntity implements Dog {
             this.waitingTime += timeElapsed;
             if (this.waitingTime >= UPDATE_MILLIS) {
                 this.waitingTime -= UPDATE_MILLIS;
-                this.status = this.status == DogStatus.RIGHT ? DogStatus.SNIFF : DogStatus.RIGHT;
+                this.setDogStatus(this.status == DogStatus.RIGHT ? DogStatus.SNIFF : DogStatus.RIGHT);
             }
         }
 
         if ((this.status == DogStatus.RIGHT 
            || this.status == DogStatus.SNIFF)
            && this.getPosition().getX() >= FINAL_POS_X) {
-            this.status = DogStatus.ATTENTION;
+            this.setDogStatus(DogStatus.ATTENTION);
             this.waitingTime = 0;
         } 
 
@@ -93,12 +91,31 @@ public final class DogImpl extends AbstractEntity implements Dog {
         if (this.status == DogStatus.ATTENTION && this.waitingTime >= WAITING_MILLIS) {
             this.waitingTime -= WAITING_MILLIS;
             this.setVelocity(new VelocityImpl(0, VELOCITY_JUMP_Y));
-            this.status = DogStatus.JUMP;
+            this.setDogStatus(DogStatus.JUMP);
         }
 
         if (this.status == DogStatus.JUMP && this.getPosition().getY() <= FINAL_POS_Y) {
             this.setVelocity(new VelocityImpl(0, 0));
-            this.status = DogStatus.EMPTY;
+            this.setDogStatus(DogStatus.EMPTY);
+            this.inGrass();
+        }
+
+        if (this.status == DogStatus.LAUGH) {
+            this.waitingTime += timeElapsed;
+            if (this.waitingTime >= LAUGH_MILLIS) {
+                this.waitingTime -= LAUGH_MILLIS;
+                this.setDogStatus(DogStatus.EMPTY);
+                this.inGrass();
+            }
+        }
+
+        if (this.status == DogStatus.HAPPY) {
+            this.waitingTime += timeElapsed;
+            if (this.waitingTime >= HAPPY_MILLIS) {
+                this.waitingTime -= HAPPY_MILLIS;
+                this.setDogStatus(DogStatus.EMPTY);
+                this.inGrass();
+            }
         }
     }
 
@@ -106,6 +123,22 @@ public final class DogImpl extends AbstractEntity implements Dog {
     public void update(final int timeElapsed) {
         this.updateVelocityStatus(timeElapsed);
         super.update(timeElapsed);
+    }
+
+    @Override
+    public void render(final Graphics2D g) {
+        if (!this.isInGrass()) {
+            g.setColor(Color.blue);
+            g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 70, 50));
+        }
+    }
+
+    @Override
+    public void setDogStatus(final DogStatus status) {
+        if (this.status == DogStatus.LAUGH || this.status == DogStatus.HAPPY) {
+            this.inGrass = false;
+        }
+        this.status = status;
     }
 
     @Override

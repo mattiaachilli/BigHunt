@@ -36,13 +36,13 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     /**
      * X COORDINATE COLLISION.
      */
-    public static final double COLLISION_X = 150.0;
+    public static final double COLLISION_X = 50.0;
     /**
      * Y COORDINATE COLLISION.
      */
-    public static final double COLLISION_Y = 150.0;
+    public static final double COLLISION_Y = 50.0;
 
-    private final long initTime; //Duck's creation time
+    private long initTime; //Duck's creation time
     private long dieTime; //Duck's died time
     private DuckDirection actualDirection;
     private int lastDirectionUpdate;
@@ -61,11 +61,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
      */
     public StandardDuck(final Shape shape, final Velocity velocity, final DuckDirection duckDirection) {
         super(shape, velocity);
-        this.initTime = System.currentTimeMillis();
         this.powerUp = this.getRandomPowerUp();
         this.actualDirection = duckDirection;
         this.lastDirectionUpdate = 0;
         this.movement = true;
+        this.initTime = System.currentTimeMillis();
     }
 
     private Optional<PowerUp> getRandomPowerUp() {
@@ -87,7 +87,6 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 
     @Override
     public final void kill() {
-        ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
         super.kill();
         this.dieTime = System.currentTimeMillis();
         EntityUtilities.setNewPosition(this, DuckDirection.KILLED);

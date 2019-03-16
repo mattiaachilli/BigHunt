@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import model.ModelImpl;
 import model.entities.Duck;
 import model.entities.DuckProperty;
 import model.entities.StandardDuck;
@@ -45,8 +44,9 @@ public class SurvivalState extends AbstractDuckState {
         Duck duck;
         final DuckDirection direction = SpawnSide.getSpawnSide(); //Init direction
         int posX = SpawnSide.initPosX(direction);
+        int posY = SpawnSide.getRandomPosY();
         final Velocity velocity = SpawnSide.getVelocity(direction, DuckProperty.STANDARD_DUCK);
-        final Shape shape = new Rectangle(posX, ModelImpl.GAME_HEIGHT / 2 - SPAWN_Y, StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK);
+        final Shape shape = new Rectangle(posX, posY, StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK);
         final Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
         if (this.currentDifficulty < BEGINNER_DIFFICULTY) {
             duck = standardDuck;

@@ -18,10 +18,6 @@ public abstract class AbstractDuckState implements DuckState {
      * NUM_DUCK_ROUND = NUMBER OF THE DUCK TO SPAWN IN A ROUND.
      */
     protected static final int NUM_DUCK_ROUND = 15; //Number ducks for round
-    /**
-     * SPAWN_Y = Y COORDINATE FOR DUCK.
-     */
-    protected static final int SPAWN_Y = 300;
 
     private int duckSpawned;
     private final DuckFactory duckFactory;

@@ -1,5 +1,6 @@
 package model.entities;
 
+
 /**
  * 
  * Interface that represents the dog in the game, dog hasn't a health, score etc...
@@ -15,15 +16,18 @@ public interface Dog extends Entity {
     boolean isInGrass();
 
     /**
-     * Dog is in grass.
-     */
-    void inGrass();
-
-    /**
      * Get the actual dog status.
      * 
      * @return dog's status.
      * 
      */
     DogStatus getDogStatus();
+
+    /**
+     * Set new dog status.
+     * 
+     * @param status
+     *          of the dog
+     */
+    void setDogStatus(DogStatus status);
 }

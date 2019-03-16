@@ -11,7 +11,7 @@ import model.entities.Duck;
 
 public class SurvivalModeSpawner extends AbstractSpawner {
 
-    private static final int INIT_DELAY = DelayDuckSpawner.SURVIVAL_DELAY.getSecondDelay();
+    private static final int INIT_DELAY = DelayDuckSpawner.DOG_DELAY.getSecondDelay();
 
     /**
      * Survival spawner constructor.
@@ -40,6 +40,6 @@ public class SurvivalModeSpawner extends AbstractSpawner {
 
     @Override
     public final int getActualRound() {
-        throw new UnsupportedOperationException();
+        return 1;
     }
 }

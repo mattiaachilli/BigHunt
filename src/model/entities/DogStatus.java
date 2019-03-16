@@ -7,42 +7,7 @@ package model.entities;
  */
 public enum DogStatus {
     /**
-     * RIGHT.
+     * DOG STATUS.
      */
-    RIGHT("Dog right"),
-    /**
-     * SNIFF.
-     */
-    SNIFF("Dog sniff the ground"),
-    /**
-     * ATTENTION.
-     */
-    ATTENTION("Dog attention"),
-    /**
-     * JUMP.
-     */
-    JUMP("Dog jump"),
-    /**
-     * LAUGH.
-     */
-    LAUGH("Dog laugh"),
-    /**
-     * EMPTY.
-     */
-    EMPTY("Empty");
-
-    private final String description;
-
-    DogStatus(final String description) {
-        this.description = description;
-    }
-
-    /**
-     * Get status.
-     * 
-     * @return the description of the status
-     */
-    public String getStatusDescription() {
-        return this.description;
-    }
+    RIGHT, SNIFF, ATTENTION, JUMP, LAUGH, HAPPY, EMPTY;
 }
