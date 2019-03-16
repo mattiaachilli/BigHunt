@@ -2,27 +2,27 @@ package settings.utilities;
 
 /**
  * 
- * Enumeration that contains the standard text of the CheckBoxes of the settings
+ * Enumeration that contains the standard text of the CheckBoxes of the settings.
  *
  */
 public enum SettingsCheckBox {
 
     /**
-     * standard checked CheckBox text
+     * standard checked CheckBox text.
      */
     CHECKED("ON"),
-    
+
     /**
-     * standard unchecked CheckBox text
+     * standard unchecked CheckBox text.
      */
     UNCHECKED("OFF");
-    
+
     private final String checkBoxText;
-    
+
     SettingsCheckBox(final String checkBoxText) {
         this.checkBoxText = checkBoxText;
     }
-    
+
     /**
      * 
      * @return 

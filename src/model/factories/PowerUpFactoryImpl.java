@@ -11,19 +11,24 @@ import model.properties.Position;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
 
+/**
+ * 
+ * Implementation of the powerUp factory.
+ *
+ */
 public class PowerUpFactoryImpl implements PowerUpFactory {
 
     private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0.0, 250.0);
     private static final double POWER_UP_SIDE = 20.0;
-    
+
     @Override
-    public PowerUp createPowerUp(final PowerUpType type, final Position position) {
+    public final PowerUp createPowerUp(final PowerUpType type, final Position position) {
         final Shape shape = new Rectangle(position.getX(), position.getY(), POWER_UP_SIDE, POWER_UP_SIDE);
         return new PowerUpImpl(type, shape, POWER_UP_VELOCITY);
     }
 
     @Override
-    public PowerUp createRandomPowerUp(final Position position) {
+    public final PowerUp createRandomPowerUp(final Position position) {
         /*
          * da fare in base alle rarità
          */
@@ -31,5 +36,4 @@ public class PowerUpFactoryImpl implements PowerUpFactory {
         final PowerUpType randomPowerUpType = PowerUpType.values()[random];
         return this.createPowerUp(randomPowerUpType, position);
     }
-
 }

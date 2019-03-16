@@ -2,26 +2,40 @@ package model.rarity;
 
 /**
  * 
- * Enumeration used to associate the rarity whit its values
+ * Enumeration used to associate the rarity whit its values.
  *
  */
 public enum ItemRarity {
-	
     /**
-    * Type of rarity
+    * Type of rarity.
+    * 
+    * VERY COMMON.
     */
     VERY_COMMON(40),
+    /**
+     * COMMON.
+     */
     COMMON(30),
+    /**
+     * RARE.
+     */
     RARE(20),
+    /**
+     * VERY RARE.
+     */
     VERY_RARE(10);
-	
+
     private final int value;
-	
-    private ItemRarity(final int newValue) {
-	this.value = newValue;
+
+    ItemRarity(final int newValue) {
+        this.value = newValue;
     }
-	
+
+    /**
+     * 
+     * @return the rarity value
+     */
     public int getValue() {
-	return this.value;
+        return this.value;
     }
 }

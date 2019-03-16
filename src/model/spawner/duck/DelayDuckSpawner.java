@@ -15,40 +15,61 @@ import model.entities.utilities.EntityUtilities;
 
 public enum DelayDuckSpawner {
 
-    
-    ROUND_DELAY(5000), //Represents the delay between two rounds.
-    
+    /**
+     * ROUND DELAY BETWEEN TWO ROUNDS.
+     */
+    ROUND_DELAY(5000), 
+    /**
+     * SURVIVAL DELAY.
+     */
     SURVIVAL_DELAY(6000),
-    
+    /**
+     * FIRST ROUND DELAY.
+     */
     FIRST_ROUND_DELAY(5000),
-    
+    /**
+     * SECOND ROUND DELAY.
+     */
     SECOND_ROUND_DELAY(5000),
-    
+    /**
+     * THIRD ROUND DELAY.
+     */
     THIRD_ROUND_DELAY(4000),
-    
+    /**
+     * FOURTH ROUND DELAY.
+     */
     FOURTH_ROUND_DELAY(4000),
-    
+    /**
+     * FIFTH ROUND DELAY.
+     */
     FIFTH_ROUND_DELAY(3000);
-    
+
+    /**
+     * Contains the default delay.
+     */
     public static final List<Integer> ALL_DEFAULT_DELAY = Arrays.asList(1000, 2000, 3000, 4000, 5000);
     private int secondRandomDelay;
-    
-    private DelayDuckSpawner(final int secondRandomDelay) {
+
+    DelayDuckSpawner(final int secondRandomDelay) {
         this.secondRandomDelay = secondRandomDelay;
     }
-    
+
+    /**
+     * 
+     * @return the second delay.
+     */
     public int getSecondDelay() {
-        if(this == ROUND_DELAY) {
+        if (this == ROUND_DELAY) {
             return this.secondRandomDelay;
         }
         this.setNewRandomDelay();
         return this.secondRandomDelay;
     }
-    
-    public void setNewRandomDelay() {
+
+    private void setNewRandomDelay() {
         int newDelay = 0;
 
-        switch(this) {
+        switch (this) {
             case FIRST_ROUND_DELAY:
                 newDelay = EntityUtilities.getRandomDelay(ALL_DEFAULT_DELAY.get(4));
                 break;

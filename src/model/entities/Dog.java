@@ -6,17 +6,24 @@ package model.entities;
  *
  */
 public interface Dog extends Entity {
-    
+
     /**
      * Check if dog is in grass.
      * 
      * @return true if dog is in grass.
      */
     boolean isInGrass();
-    
-    
+
     /**
-     * Dog is in grass
+     * Dog is in grass.
      */
     void inGrass();
+
+    /**
+     * Get the actual dog status.
+     * 
+     * @return dog's status.
+     * 
+     */
+    DogStatus getDogStatus();
 }

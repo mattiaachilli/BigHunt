@@ -44,19 +44,25 @@ public final class ModelImpl extends Canvas implements Model {
     private DuckSpawner spawner;
     private final GlobalData globaldata;
     private int lastRound;
-    
+    private String lastDogStatus;
+
+    /**
+     * 
+
+     */
     public ModelImpl(final GlobalData globaldata) {
-	super();
-	this.ducks = new ArrayList<>();
-	this.dog = new DogImpl(null, null);
-	this.globaldata = globaldata;
-	this.initGame(GameMode.STORY_MODE);
-	this.lastRound = this.spawner.getActualRound();
+        super();
+        this.dog = new DogImpl();
+        this.ducks = new ArrayList<>();
+        this.globaldata = globaldata;
+        this.initGame(GameMode.STORY_MODE);
+        this.lastRound = this.spawner.getActualRound();
     }
 
     @Override
     public void initGame(final GameMode gameMode) {
         this.matchdata = Optional.of(new MatchDataImpl(gameMode));
+
         ducks.clear();
         /*
         switch(gameMode) {
@@ -69,16 +75,25 @@ public final class ModelImpl extends Canvas implements Model {
         }
         */
         this.spawner = new StoryModeSpawner();
-	
+
     }
 
     @Override
-    public void update(int timeElapsed) {
+    public void update(final int timeElapsed) {
+
+        this.dog.update(timeElapsed);
+        if (this.dog.getDogStatus().toString() != this.lastDogStatus) {
+            this.lastDogStatus = this.dog.getDogStatus().toString();
+            System.out.println(dog.getDogStatus());
+        }
+
+        //System.out.println(dog.getDogStatus());
+        /*
         spawner.update(timeElapsed);
         if(spawner.canSpawnDuck()) {
             this.ducks.add(spawner.spawnDuck().get());
         }
-	for(Duck d: this.ducks) {
+        for (Duck d: this.ducks) {
 	    if(d.canFlyAway()) {
 	        d.computeFlyAway();
 	    }
@@ -88,6 +103,7 @@ public final class ModelImpl extends Canvas implements Model {
             this.ducks.clear();
             this.lastRound = this.spawner.getActualRound();
         }
+        */
     }
 
     @Override
@@ -122,6 +138,7 @@ public final class ModelImpl extends Canvas implements Model {
     public List<Entity> getEntities() {
 	final List<Entity> listEntity = new ArrayList<>();
 	listEntity.addAll(ducks);
+	listEntity.add(dog);
 	return listEntity;
     }
 

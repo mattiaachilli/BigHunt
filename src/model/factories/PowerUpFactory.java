@@ -6,7 +6,7 @@ import model.properties.Position;
 
 /**
  * 
- * Interface that represent PowerUp Factory
+ * Interface that represent PowerUp Factory.
  *
  */
 
@@ -22,7 +22,7 @@ public interface PowerUpFactory {
      *          a Power Up by specific type
      */
     PowerUp createPowerUp(PowerUpType type, Position position);
-    
+
     /**
      * 
      * @param position
@@ -31,5 +31,4 @@ public interface PowerUpFactory {
      *          a random Power Up
      */
     PowerUp createRandomPowerUp(Position position);
-      
 }

@@ -5,13 +5,18 @@ import java.util.stream.Collectors;
 import javafx.scene.control.ComboBox;
 import settings.SettingsImpl;
 
+/**
+ * 
+ * ResolutionObserver.
+ *
+ */
 public class ResolutionObserver implements Observer {
 
     /**
-     * Resolution Observer Class
+     * Resolution Observer Class.
      */
     private final ComboBox<String> resolutionComboBox;
-    
+
     /**
      * 
      * @param resolutionComboBox
@@ -21,24 +26,25 @@ public class ResolutionObserver implements Observer {
         this.resolutionComboBox = resolutionComboBox;
         this.inizialize();
     }
-    
+
     @Override
-    public void update() {
+    public final void update() {
         SettingsImpl.getSettings().setSelectedResolution(SettingsImpl.getSettings().getSupportedResolutions()
         .get(this.resolutionComboBox.getSelectionModel().getSelectedIndex()));
     }
-    
+
     private void inizialize() {
         this.resolutionComboBox.getItems().addAll(SettingsImpl.getSettings().getSupportedResolutions().stream()
         .map(resolution -> resolution.getKey() + "*" + resolution.getValue()).collect(Collectors.toList()));
-        
-        this.resolutionComboBox.setValue(SettingsImpl.getSettings().getSelectedResolution().getKey() + "*" + 
+
+        this.resolutionComboBox.setValue(SettingsImpl.getSettings().getSelectedResolution().getKey() + "*" 
+            + 
             SettingsImpl.getSettings().getSelectedResolution().getValue());
-        
+
         this.resolutionComboBox.getSelectionModel().select(this.resolutionComboBox.getSelectionModel()
             .getSelectedItem());
-        
-        if(this.resolutionComboBox.getSelectionModel().getSelectedIndex() == -1) {
+
+        if (this.resolutionComboBox.getSelectionModel().getSelectedIndex() == -1) {
             this.resolutionComboBox.getSelectionModel()
                 .select(SettingsImpl.getSettings().getSupportedResolutions().size() / 2);
             this.update();

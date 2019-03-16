@@ -62,11 +62,9 @@ public class AbstractEntity implements Entity {
         this.setPosition(this.getPosition().sum(velocity));
     }
 
-    /*
     @Override
     public void render(Graphics2D g) {
         g.setColor(Color.green);
         g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 50, 50));
     }
-    */
 }
