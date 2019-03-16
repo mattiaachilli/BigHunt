@@ -6,18 +6,19 @@ package model.entities;
  *
  */
 public interface Character extends Status {
-    
+
     /**
      * Represents the time elapsed.
      * 
      * @return the time elapsed.
      */
     int getTimeElapsed();
-    
+
     /**
      * Add the time elapsed of this entity.
      * 
-     * @param timeElapsed, time to add
+     * @param timeElapsed 
+     *          time to add
      */
     void addTimeElapsed(int timeElapsed);
 }

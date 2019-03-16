@@ -12,13 +12,20 @@ import model.data.MatchData;
 import model.data.MatchDataImpl;
 import utility.GameMode;
 
+/**
+ * 
+ * Test about MatchData.
+ *
+ */
 public class MatchDataTest {
-    
+    private MatchDataTest() {
+        super();
+    }
     private final MatchData survivalMatch = new MatchDataImpl(GameMode.SURVIVAL_MODE);
     private final MatchData storyMatch = new MatchDataImpl(GameMode.STORY_MODE);
-    
+
     /**
-     * Tests the rounds related to the game mode
+     * Tests the rounds related to the game mode.
      */
     @Test
     public final void testRounds() {
@@ -27,25 +34,25 @@ public class MatchDataTest {
         assertEquals(this.survivalMatch.getCurrentRound(), 1);
         assertEquals(this.storyMatch.getCurrentRound(), 1);
         this.storyMatch.incrementRound();
-        assertNotEquals(this.storyMatch.getCurrentRound(),2);
+        assertNotEquals(this.storyMatch.getCurrentRound(), 2);
         this.storyMatch.pauseMatch();
         this.survivalMatch.pauseMatch();
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             this.survivalMatch.incrementRound();
             this.storyMatch.incrementRound();
         }
         assertEquals(this.survivalMatch.getCurrentRound(), 1);
-        assertEquals(this.storyMatch.getCurrentRound(), 4);    
-        for(int i = 0; i < 3; i++) {
+        assertEquals(this.storyMatch.getCurrentRound(), 4);
+        for (int i = 0; i < 3; i++) {
             this.survivalMatch.incrementRound();
             this.storyMatch.incrementRound();
         }
         assertEquals(this.survivalMatch.getCurrentRound(), 1);
-        assertEquals(this.storyMatch.getCurrentRound(), 5);  
+        assertEquals(this.storyMatch.getCurrentRound(), 5);
     }
-    
+
     /**
-     * Tests the score
+     * Tests the score.
      */
     @Test
     public final void testScore() {
@@ -66,9 +73,8 @@ public class MatchDataTest {
         this.storyMatch.incrementScoreOf(deltaScore);
         assertNotEquals(this.storyMatch.getGlobalScore(), score);
     }
-    
     /**
-     * Tests the pauses
+     * Tests the pauses.
      * The match starts with a pause in order to allow the dog to dive in the grass
      */
     @Test
@@ -79,7 +85,7 @@ public class MatchDataTest {
         this.survivalMatch.pauseMatch();
         assertFalse(this.survivalMatch.isMatchGoing());
     }
-    
+
     private void testUnsupported(final Runnable runnable) {
         try {
             runnable.run();
@@ -90,11 +96,13 @@ public class MatchDataTest {
             fail("UnsupportedOperationException not catched");
         }
     }
-    
+
+    /**
+     * Test on UnmodifiableData.
+     */
     @Test
     public final void testUnmodifiableData() {
         final MatchData unmodifiable = this.storyMatch.unmodifiableCopy();
-        this.testUnsupported( () -> unmodifiable.incrementScoreOf(5));
+        this.testUnsupported(() -> unmodifiable.incrementScoreOf(5));
     }
-    
 }

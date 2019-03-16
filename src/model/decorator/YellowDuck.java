@@ -1,16 +1,27 @@
 package model.decorator;
 
 import model.entities.Duck;
-import model.entities.DuckProperty;
 
+/**
+ * 
+ * This class represents a yellow duck.
+ *
+ */
 public final class YellowDuck extends DuckDecorator {
 
+    private static final int SCORE_MULTIPLIER = 2;
+
+    /**
+     * 
+     * @param duck
+     *          duck decorator
+     */
     public YellowDuck(final Duck duck) {
-	super(duck);
+        super(duck);
     }
 
     @Override
     public int getScoreMultiplier() {
-	return DuckProperty.YELLOW_DUCK.getMultiplierScore();
+        return SCORE_MULTIPLIER;
     }
 }

@@ -9,18 +9,17 @@ import utility.GameMode;
 
 /**
  * 
- * @author mattia
- *	Model of the application.
+ * Model of the application.
  */
-
 public interface Model {
-	
+
     /**
      * Initialize state of model to start the game.
-     * 
+     * @param gameMode
+     *          gameMode chosen at start
      */
-    public void initGame(final GameMode gameMode);
-	
+    void initGame(GameMode gameMode);
+
     /**
      * Update the state of the application.
      * 
@@ -34,46 +33,49 @@ public interface Model {
      * @return true if game is over
      */
     boolean isGameOver();
-    
+
     /**
      * 
      * @return the list of entities
      */
     List<Entity> getEntities();
-    
+
     /**
      * 
      * @return data of the actual match
      */
     MatchData getMatchData();
-    
+
     /**
      * 
      * @return data of all matches
      */
     GlobalData getGlobalData();
-    
+
     /**
      * 
      * @return true if is an highscore
      */
     boolean isHighScore();
-    
+
     /**
+     * 
      * End the match
      */
     void endMatch();
-    
+
     /**
+     * 
      * Set the X position of the Aim
      */
     void setAimX(); //Parametro da passare
-    
+
     /**
+     * 
      * Set the Y position of the Aim
      */
     void setAimY(); //Parametro da passare
-    
+
     /**
      * 
      * @return the list of bullets

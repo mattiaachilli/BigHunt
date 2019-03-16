@@ -18,128 +18,137 @@ import model.properties.Velocity;
  */
 
 public abstract class DuckDecorator implements Duck {
-    
+
     private final Duck duck;
-    
+
+    /**
+     * 
+     * @param duck
+     *          duck to decorate
+     */
     public DuckDecorator(final Duck duck) {
-	this.duck = duck;
-    }
-    
-    @Override
-    public int getTimeElapsed() {
-	return this.duck.getTimeElapsed();
+        this.duck = duck;
     }
 
     @Override
-    public void addTimeElapsed(final int timeElapsed) {
-	this.duck.addTimeElapsed(timeElapsed);
+    public final int getTimeElapsed() {
+        return this.duck.getTimeElapsed();
     }
 
     @Override
-    public boolean isAlive() {
-	return this.duck.isAlive();
+    public final void addTimeElapsed(final int timeElapsed) {
+        this.duck.addTimeElapsed(timeElapsed);
     }
 
     @Override
-    public Position getPosition() {
-	return this.duck.getPosition();
+    public final boolean isAlive() {
+        return this.duck.isAlive();
     }
 
     @Override
-    public void setPosition(final Position position) {
-	this.duck.setPosition(position);
+    public final Position getPosition() {
+        return this.duck.getPosition();
     }
 
     @Override
-    public Velocity getVelocity() {
-	return this.duck.getVelocity();
+    public final void setPosition(final Position position) {
+        this.duck.setPosition(position);
     }
 
     @Override
-    public void setVelocity(final Velocity velocity) {
-	this.duck.setVelocity(velocity);
+    public final Velocity getVelocity() {
+        return this.duck.getVelocity();
     }
 
     @Override
-    public Shape getShape() {
-	return this.duck.getShape();
+    public final void setVelocity(final Velocity velocity) {
+        this.duck.setVelocity(velocity);
     }
 
     @Override
-    public void setShape(final Shape shape) {
-	this.duck.setShape(shape);
+    public final Shape getShape() {
+        return this.duck.getShape();
     }
 
     @Override
-    public void update(final int timeElapsed) {
-	this.duck.update(timeElapsed);
-    }
-    
-    @Override
-    public Optional<PowerUp> getPowerUp() {
-	return this.duck.getPowerUp();
+    public final void setShape(final Shape shape) {
+        this.duck.setShape(shape);
     }
 
     @Override
-    public boolean hasPowerUp() {
-	return this.duck.hasPowerUp();
-    }
-    
-    @Override
-    public long getTimeFromBirth() {
-	return this.duck.getTimeFromBirth();
+    public final void update(final int timeElapsed) {
+        this.duck.update(timeElapsed);
     }
 
     @Override
-    public void kill() {
-	this.duck.kill();
+    public final Optional<PowerUp> getPowerUp() {
+        return this.duck.getPowerUp();
     }
-    
+
     @Override
-    public void computeFlyAway() {
+    public final boolean hasPowerUp() {
+        return this.duck.hasPowerUp();
+    }
+
+    @Override
+    public final long getTimeFromBirth() {
+        return this.duck.getTimeFromBirth();
+    }
+
+    @Override
+    public final void kill() {
+        this.duck.kill();
+    }
+
+    @Override
+    public final void computeFlyAway() {
         this.duck.computeFlyAway();
     }
 
     @Override
-    public void setStatus(EntityStatus status) {
+    public final void setStatus(final EntityStatus status) {
         this.duck.setStatus(status);
     }
 
     @Override
-    public EntityStatus getStatus() {
+    public final EntityStatus getStatus() {
         return this.duck.getStatus();
     }
 
     @Override
-    public int getScore() {
-	return (this.duck.getScore() * this.getScoreMultiplier());
+    public final int getScore() {
+        return (this.duck.getScore() * this.getScoreMultiplier());
     }
-    
+
     @Override
-    public DuckDirection getActualDirection() {
+    public final DuckDirection getActualDirection() {
         return this.duck.getActualDirection();
     }
-    
-    public void setDirection(final DuckDirection direction) {
+
+    @Override
+    public final void setDirection(final DuckDirection direction) {
         this.duck.setDirection(direction);
     }
-   
+
     @Override
-    public boolean canFlyAway() {
+    public final boolean canFlyAway() {
         return this.duck.canFlyAway();
     }
-    
+
     @Override
-    public void setMovementChange(boolean change) {
+    public final void setMovementChange(final boolean change) {
         this.duck.setMovementChange(change);
     }
-    
+
+    /**
+     * Get score multiplier of the duck.
+     * 
+     * @return the score multiplier of the duck
+     */
     public abstract int getScoreMultiplier();
-    
-    //DA TOGLIERE POI
-    /*
-    public void render(Graphics2D g) {
+
+    @Override
+    public final void render(final Graphics2D g) {
         this.duck.render(g);
     }
-    */
 }

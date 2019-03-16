@@ -16,7 +16,7 @@ import settings.utilities.SettingsCheckBox;
 public class BackGroundAudioObserver implements Observer {
 
     private final CheckBox bgAudioCheckbox;
-    
+
     /**
      * 
      * @param bgAudioCheckbox
@@ -28,12 +28,12 @@ public class BackGroundAudioObserver implements Observer {
         this.bgAudioCheckbox.selectedProperty().addListener(e -> this.setText());
         this.setText();
     }
-    
+
     @Override
-    public void update() {
+    public final void update() {
        SettingsImpl.getSettings().setBackgroundAudio(this.bgAudioCheckbox.isSelected());
     }
-    
+
     private void setText() {
         this.bgAudioCheckbox.setText(
             this.bgAudioCheckbox.isSelected() ? SettingsCheckBox.CHECKED.getText() : SettingsCheckBox.UNCHECKED.getText());

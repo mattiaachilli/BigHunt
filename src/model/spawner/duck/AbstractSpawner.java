@@ -14,47 +14,66 @@ import model.entities.Duck;
  */
 
 public abstract class AbstractSpawner implements DuckSpawner {
-    
+
     private static final int NUMBER_MAX_DUCK = 3; //Max number of ducks at the same time
-    
+
     private int spawnDelay;
     private int ducksSpawned; //Total in all round
     private int timeElapsed; 
-    
+
     private Optional<DuckState> actualState;
     private final List<Duck> listDucksSpawned; //List of ducks spawned
-    
+
+    /**
+     * Constructor of the spawner.
+     * 
+     * @param initDelay
+     *          initial delay before spawn.
+     * @param initialState
+     *          initial duck state.
+     */
     public AbstractSpawner(final int initDelay, final DuckState initialState) {
         this.spawnDelay = initDelay;
         this.ducksSpawned = 0;
-        this.timeElapsed = initDelay;
+        this.timeElapsed = 0;
         this.actualState = Optional.of(initialState);
         this.listDucksSpawned = new ArrayList<>();
     }
-    
+
     @Override
-    public void update(int elapsed) {
+    public final void update(final int elapsed) {
         this.timeElapsed += elapsed;
     }
-    
+
+    /**
+     * Reset the time elapsed.
+     */
     protected void resetTimeElapsed() {
         this.timeElapsed = 0;
     }
-    
+
+    /**
+     * Clear the list of ducks spawned.
+     */
     protected void clearDucksSpawned() {
-        if(this instanceof StoryModeSpawner) {
+        if (this instanceof StoryModeSpawner) {
             listDucksSpawned.clear();
         }
     }
-    
+
+    /**
+     * 
+     * @param duck
+     *          duck to add.
+     */
     protected void addDuck(final Duck duck) {
         this.listDucksSpawned.add(Objects.requireNonNull(duck));
     }
 
     private boolean checkNumberDuck() {
         int numDuckAlive = 0;
-        for(final Duck duck: this.listDucksSpawned) {
-            if(duck.isAlive()) {
+        for (final Duck duck: this.listDucksSpawned) {
+            if (duck.isAlive()) {
                 numDuckAlive++;
             }
         }
@@ -62,42 +81,45 @@ public abstract class AbstractSpawner implements DuckSpawner {
     }
 
     @Override
-    public boolean canSpawnDuck() {
+    public final boolean canSpawnDuck() {
         return this.checkNumberDuck() 
             && this.timeElapsed >= this.spawnDelay 
             && this.actualState.isPresent();
     }
 
     @Override
-    public void setSpawnDelay(int delay) {
+    public final void setSpawnDelay(final int delay) {
         this.spawnDelay = delay;
     }
-    
+
     @Override
-    public int getNumberDuckSpawned() {
+    public final int getNumberDuckSpawned() {
         return this.ducksSpawned;
     }
-    
+
+    /**
+     * Increment the duck spawned.
+     */
     protected void incDuckSpawned() {
         this.ducksSpawned++;
     }
-    
+
     @Override
-    public Optional<DuckState> getCurrentDuckState() {
+    public final Optional<DuckState> getCurrentDuckState() {
         return this.actualState;
     }
-    
+
     @Override
-    public void setState(Optional<DuckState> state) {
+    public final void setState(final Optional<DuckState> state) {
         this.actualState = state;
     }
 
     @Override
     public abstract Optional<Duck> spawnDuck();
-    
+
     @Override
     public abstract boolean isSpawnFinished();
-    
+
     @Override
     public abstract int getActualRound();
 }

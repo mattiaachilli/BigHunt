@@ -7,19 +7,8 @@ package model.entities;
  */
 
 public enum EntityStatus {
-    DEAD("Dead"),
-    
-    ALIVE("Alive"),
-    
-    FLOWN_AWAY("Flown Away");
-    
-    private final String description;
-    
-    private EntityStatus(final String description) {
-        this.description = description;
-    }
-    
-    public String getStatusDescription() {
-        return this.description;
-    }
+    /**
+     * Entity status.
+     */
+    DEAD, ALIVE, FLOWN_AWAY;
 }

@@ -15,17 +15,6 @@ import model.properties.Velocity;
  * 
  */
 public interface DuckFactory {
-    
-    /**
-     * 
-     * @param shape
-     *          of the duck.
-     * @param velocity
-     *          of the duck.
-     * @return a random duck created by percentage.
-     */
-    Duck createRandomDuck(Shape shape, Velocity velocity);
-    
     /**
      * 
      * @param shape
@@ -37,7 +26,7 @@ public interface DuckFactory {
      * @return a standard duck.
      */
     StandardDuck createStandardDuck(Shape shape, Velocity velocity, DuckDirection direction);
-    
+
     /**
      * 
      * @param duck 
@@ -45,7 +34,7 @@ public interface DuckFactory {
      * @return a yellow duck.
      */
     YellowDuck createYellowDuck(Duck duck);
-    
+
     /**
      * 
      * @param duck 
@@ -53,7 +42,7 @@ public interface DuckFactory {
      * @return a orange duck.
      */
     OrangeDuck createOrangeDuck(Duck duck);
-    
+
     /**
      * 
      * @param duck 
