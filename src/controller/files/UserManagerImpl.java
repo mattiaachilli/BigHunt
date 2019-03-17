@@ -20,22 +20,19 @@ import model.data.UserData;
 import model.data.UserDataImpl;
 
 /**
- * 
+ * Class that loads and saves users in the File System.
  * @author simone
- * Class that loads and saves users in the File System
  */
 public class UserManagerImpl implements UserManager {
 
     private static final String SEPARATOR = " ";
-    
+
     @Override
-    public Optional<UserData> login(String userName, String password) {
+    public Optional<UserData> login(final String userName, final String password) {
         // TODO Auto-generated method stub
-        final Optional<String[]> account = this.getUsersAndPasswords()
-                .filter(u -> u[0].equals(userName))
-                .filter(u -> u[1].equals(Integer.toString(password.hashCode())))
-                .findFirst();
-        if(account.isPresent()) {
+        final Optional<String[]> account = this.getUsersAndPasswords().filter(u -> u[0].equals(userName))
+        .filter(u -> u[1].equals(Integer.toString(password.hashCode()))).findFirst();
+        if (account.isPresent()) {
             try {
                 return Optional.of(this.load(userName));
             } catch (IOException e) {
@@ -46,7 +43,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public boolean save(UserData data) {
+    public boolean save(final UserData data) {
         // TODO Auto-generated method stub
         try {
             write(data);
@@ -58,9 +55,9 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public Optional<UserData> register(String userName, String password) {
+    public Optional<UserData> register(final String userName, final String password) {
         // TODO Auto-generated method stub
-        if(this.getUsersAndPasswords().filter(l -> l[0].equals(userName)).findFirst().isPresent()) {
+        if (this.getUsersAndPasswords().filter(l -> l[0].equals(userName)).findFirst().isPresent()) {
             return Optional.empty();
         } else {
             try (BufferedWriter write = new BufferedWriter(new FileWriter(FilesHomeManager.USERS_LIST, true))) {
@@ -74,16 +71,15 @@ public class UserManagerImpl implements UserManager {
             }
         }
     }
-    
+
     private Stream<String[]> getUsersAndPasswords() {
         try {
-            return Files.lines(Paths.get(FilesHomeManager.USERS_LIST))
-                .map(list -> list.split(SEPARATOR));
+            return Files.lines(Paths.get(FilesHomeManager.USERS_LIST)).map(list -> list.split(SEPARATOR));
         } catch (IOException e) {
             return Stream.empty();
         }
     }
-    
+
     private UserData load(final String userName) throws IOException {
         try (InputStream file = new FileInputStream(FilesHomeManager.getUserFile(userName));
         InputStream buffStream = new BufferedInputStream(file);
@@ -94,7 +90,7 @@ public class UserManagerImpl implements UserManager {
             throw new IOException();
         }
     }
-    
+
     private void write(final UserData user) throws IOException {
         try (OutputStream file = new FileOutputStream(FilesHomeManager.getUserFile(user.getName()));
         OutputStream buffStream = new BufferedOutputStream(file);

@@ -1,23 +1,27 @@
 package model.decorator;
 
 import model.entities.Duck;
-import model.entities.DuckProperty;
-import model.properties.Velocity;
 
+/**
+ * 
+ * This class represents a pink duck.
+ *
+ */
 public final class PinkDuck extends DuckDecorator {
-  
+
+    private static final int SCORE_MULTIPLIER = 4;
+
+    /**
+     * 
+     * @param duck
+     *          duck decorator
+     */
     public PinkDuck(final Duck duck) {
-	super(duck);
+        super(duck);
     }
 
     @Override
     public int getScoreMultiplier() {
-	return DuckProperty.PINK_DUCK.getMultiplierScore();
-    }
-    
-    @Override
-    public void setNewVelocity() {
-	final Velocity newVelocity = this.getVelocity().mul(DuckProperty.PINK_DUCK.getVelocitySpeedUp());
-	this.setVelocity(newVelocity);
+        return SCORE_MULTIPLIER;
     }
 }

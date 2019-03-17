@@ -7,8 +7,11 @@ import java.util.Optional;
 
 import model.entities.powerup.PowerUpType;
 
-//import java.util.Optional;
-
+/**
+ * The implementation of the data of a match.
+ * @author simone
+ *
+ */
 public class MatchDataImpl implements MatchData {
 
     private int score;
@@ -20,7 +23,7 @@ public class MatchDataImpl implements MatchData {
 
     /**
      * 
-     * Constructor do be called when the player starts a new match
+     * Constructor do be called when the player starts a new match.
      */
     public MatchDataImpl() {
         this.score = 0;
@@ -62,14 +65,14 @@ public class MatchDataImpl implements MatchData {
     }
 
     @Override
-    public void incrementScoreOf(int score) {
+    public void incrementScoreOf(final int score) {
         // TODO Auto-generated method stub
         this.score += score;
 
     }
 
     @Override
-    public void decrementScoreOf(int negativeScore) {
+    public void decrementScoreOf(final int negativeScore) {
         // TODO Auto-generated method stub
         this.score -= negativeScore;
     }
@@ -81,13 +84,13 @@ public class MatchDataImpl implements MatchData {
     }
 
     @Override
-    public void addTimeToTimer(int timeElapsed) {
+    public void addTimeToTimer(final int timeElapsed) {
         // TODO Auto-generated method stub
         this.timer += timeElapsed;
     }
 
     @Override
-    public void powerUpCollected(PowerUpType type) { 
+    public void powerUpCollected(final PowerUpType type) { 
         // TODO Auto-generated method stub
         this.usedPowerUps++;
         if (!this.hasPowerUp()) {
@@ -119,11 +122,11 @@ public class MatchDataImpl implements MatchData {
         return new UnmodifiableMatchData(new MatchDataImpl());
     }
     
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
     }
     
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
     }
 

@@ -7,7 +7,10 @@ package model.utilities;
  */
 
 public final class ExceptionRuntimeUtility {
-    
+
+    private ExceptionRuntimeUtility() {
+        super();
+    };
     /**
      * 
      * @param condition 
@@ -16,7 +19,7 @@ public final class ExceptionRuntimeUtility {
      *          to throws.
      */
     public static void checkException(final boolean condition, final RuntimeException exception) {
-        if(condition) {
+        if (condition) {
             throw exception;
         }
     }

@@ -4,14 +4,19 @@ import model.entities.powerup.PowerUpType;
 
 /**
  * 
+ * Represents the data of an unmodifiable match.
+ * 
  * @author simone
- *
- *         Represents the data of an unmodifiable match
  */
 public class UnmodifiableMatchData implements MatchData {
 
     private final MatchData matchdata;
 
+    /**
+     * Constructor of an unmodifiable match data.
+     * 
+     * @param matchdata the matchdata to copy
+     */
     public UnmodifiableMatchData(final MatchData matchdata) {
         this.matchdata = matchdata;
     }
@@ -39,30 +44,26 @@ public class UnmodifiableMatchData implements MatchData {
         return this.matchdata.getNumberOfUsedPowerUps();
     }
 
-    /*
-     * @Override public boolean hasPowerUp() { // TODO Auto-generated method stub
-     * return this.matchdata.hasPowerUp(); }
-     */
     @Override
     public void incrementKilledDucks() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void incrementScoreOf(int score) {
+    public void incrementScoreOf(final int score) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void decrementScoreOf(int negativeScore) {
+    public void decrementScoreOf(final int negativeScore) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void addTimeToTimer(int timeElapsed) {
+    public void addTimeToTimer(final int timeElapsed) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
     public void incrementFlownDucks() {
         // TODO Auto-generated method stub
@@ -76,7 +77,7 @@ public class UnmodifiableMatchData implements MatchData {
     }
 
     @Override
-    public void powerUpCollected(PowerUpType type) {
+    public void powerUpCollected(final PowerUpType type) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
@@ -97,6 +98,5 @@ public class UnmodifiableMatchData implements MatchData {
     public UnmodifiableMatchData unmodifiableCopy() {
         return this;
     }
-
 
 }

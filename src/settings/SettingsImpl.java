@@ -13,58 +13,70 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+/**
+ * 
+ * Implementation of the settings interface.
+ *
+ */
 public final class SettingsImpl implements Settings {
 
     private static final int DEFAULT_X_RESOLUTION = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private static final int DEFAULT_Y_RESOLUTION = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    
+
     private static final int FIRST_SCREEN_PROPORTION = 3;
     private static final int LAST_SCREEN_PROPORTION = 8;
-    
+
     private static final Pair<Integer, Integer> DEFAULT_RESOLUTION = new ImmutablePair<>(DEFAULT_X_RESOLUTION,
         DEFAULT_Y_RESOLUTION);
-    
+
     private static final Pair<Integer, Integer> SCREEN_RESOLUTION = DEFAULT_RESOLUTION;
-        
+
     private final List<Pair<Integer, Integer>> supportedResolutions = new ArrayList<>();
-    
+
     private Pair<Integer, Integer> selectedResolution = new ImmutablePair<>(
-        SettingsImpl.SCREEN_RESOLUTION.getKey() * 3 / 4, SettingsImpl.SCREEN_RESOLUTION.getValue() * 3 / 4);
-    
+        SettingsImpl.SCREEN_RESOLUTION.getKey(), SettingsImpl.SCREEN_RESOLUTION.getValue());
+
     private static final int DEFAULT_FPS = 60;
-    
+
     private final Set<Integer> supportedFPS = new TreeSet<>(Arrays.asList(20, 30, 60, GraphicsEnvironment
         .getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate()));
-    
+
     private int selectedFPS = DEFAULT_FPS;
-    
+
     private boolean fullScreen = true;
     private boolean backgroundAudio = true;
-    
+
     private static SettingsImpl singleton;
-    
-    private SettingsImpl() {}
-    
+
+    private SettingsImpl() {
+        super();
+    }
+
+    /**
+     * 
+     * @return the instance of this object, once.
+     */
     public static SettingsImpl getSettings() {
-        if(Objects.isNull(singleton)) {
+        if (Objects.isNull(singleton)) {
             singleton = new SettingsImpl();
         }
         return singleton;
     }
-    
+
     @Override
     public void setSelectedResolution(final Pair<Integer, Integer> selectedResolution) {
-        if(this.supportedResolutions.isEmpty()) {
+        if (this.supportedResolutions.isEmpty()) {
             this.loadScreenResolutions();
         }
-        
-        if(!this.supportedResolutions.contains(selectedResolution)) {
+
+        if (!this.supportedResolutions.contains(selectedResolution)) {
             this.selectedResolution = DEFAULT_RESOLUTION;
         } else {
             this.selectedResolution = selectedResolution;
         }
-        
-        if(this.selectedResolution.getKey().equals(SettingsImpl.DEFAULT_X_RESOLUTION) &&
+
+        if (this.selectedResolution.getKey().equals(SettingsImpl.DEFAULT_X_RESOLUTION) 
+            &&
             this.selectedResolution.getValue().equals(SettingsImpl.DEFAULT_Y_RESOLUTION)) {
             this.setFullScreen(true);
         } else {
@@ -78,7 +90,7 @@ public final class SettingsImpl implements Settings {
     }
 
     @Override
-    public void setSelectedFPS(int selectedFPS) {
+    public void setSelectedFPS(final int selectedFPS) {
         this.selectedFPS = selectedFPS;
     }
 
@@ -103,12 +115,12 @@ public final class SettingsImpl implements Settings {
         this.loadScreenResolutions();
         return this.supportedResolutions.stream().distinct().collect(Collectors.toList());
     }
-    
+
     @Override
     public void setFullScreen(final boolean fullScreen) {
-        this.fullScreen = fullScreen;        
+        this.fullScreen = fullScreen;
     }
-    
+
     @Override
     public boolean isFullScreen() {
         return this.fullScreen;
@@ -123,10 +135,10 @@ public final class SettingsImpl implements Settings {
     public void setBackgroundAudio(final boolean backgroundAudio) {
         this.backgroundAudio = backgroundAudio;
     }
-    
+
     private void loadScreenResolutions() {
         this.supportedResolutions.clear();
-        for(int i = SettingsImpl.FIRST_SCREEN_PROPORTION; i <= SettingsImpl.LAST_SCREEN_PROPORTION; i++) {
+        for (int i = SettingsImpl.FIRST_SCREEN_PROPORTION; i <= SettingsImpl.LAST_SCREEN_PROPORTION; i++) {
             this.supportedResolutions.add(new ImmutablePair<>(
                 (int) SettingsImpl.SCREEN_RESOLUTION.getKey() * i / SettingsImpl.LAST_SCREEN_PROPORTION,
                 (int) SettingsImpl.SCREEN_RESOLUTION.getValue() * i / SettingsImpl.LAST_SCREEN_PROPORTION));

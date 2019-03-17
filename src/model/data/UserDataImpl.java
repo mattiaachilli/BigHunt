@@ -11,23 +11,30 @@ import model.achievements.Achievement;
 import model.achievements.AchievementImpl;
 import model.achievements.AchievementType;
 
+/**
+ * The serializable data of a single user.
+ * 
+ * @author simone
+ *
+ */
 public class UserDataImpl implements UserData {
 
     private static final long serialVersionUID = 1L;
 
     private final String name;
-    
+
     private int matchesPlayed;
     private int killedDucks;
     private int powerUpsUsed;
     private int globalScore;
 
     /**
-     * Constructor to be used when a new account is created
+     * Constructor to be used when a new account is created.
+     * @param name the user's username
      */
     public UserDataImpl(final String name) {
         this.name = name;
-        
+
         this.matchesPlayed = 0;
         this.killedDucks = 0;
         this.powerUpsUsed = 0;
@@ -69,7 +76,7 @@ public class UserDataImpl implements UserData {
         // TODO Auto-generated method stub
         return this.name;
     }
-    
+
     @Override
     public void addMatchData(final MatchData matchdata) {
         // TODO Auto-generated method stub
@@ -78,12 +85,12 @@ public class UserDataImpl implements UserData {
         this.globalScore += matchdata.getGlobalScore();
         this.powerUpsUsed += matchdata.getNumberOfUsedPowerUps();
     }
-    
-    private void writeObject(ObjectOutputStream out) throws IOException {
+
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
     }
-    
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
     }
 

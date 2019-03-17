@@ -1,6 +1,4 @@
 package model.entities;
-import static model.rarity.ItemRarity.*;
-import model.rarity.ItemRarity;
 
 /**
  * 
@@ -10,56 +8,72 @@ import model.rarity.ItemRarity;
  */
 
 public enum DuckProperty {
-    
-    STANDARD_DUCK(1, 1.0, 15, "Standard Duck", VERY_COMMON),
-    
-    YELLOW_DUCK(2, 1.50, 12, "Yellow Duck", COMMON),
-    
-    ORANGE_DUCK(3, 2.0, 10, "Orange Duck", RARE),
-    
-    PINK_DUCK(4, 2.50, 8, "Pink Duck", VERY_RARE);
-    
-    
-    private final int multiplierScore;
-    private final double velocitySpeedUp;
+
+    /**
+     * STANDARD DUCK INFORMATIONS.
+     */
+    STANDARD_DUCK(700, 8000, "Standard Duck"),
+    /**
+     * YELLOW DUCK INFORMATIONS.
+     */
+    YELLOW_DUCK(900, 7000, "Yellow Duck"),
+    /**
+     * ORANGE DUCK INFORMATIONS.
+     */
+    ORANGE_DUCK(1200, 6000, "Orange Duck"),
+    /**
+     * PINK DUCK INFORMATIONS.
+     */
+    PINK_DUCK(1500, 5000, "Pink Duck");
+
+
+    private final double velocity;
     private final int timeFlyAway;
     private final String duckType;
-    private final ItemRarity duckRarity;
-    
-    DuckProperty(final int multiplierScore, final double velocitySpeedUp, 
-	    final int timeFlyAway, final String duckType, final ItemRarity duckRarity) {
-	this.multiplierScore = multiplierScore;
-	this.velocitySpeedUp = velocitySpeedUp;
-	this.timeFlyAway = timeFlyAway;
-	this.duckType = duckType;
-	this.duckRarity = duckRarity;
+
+
+    DuckProperty(final double velocity,
+                final int timeFlyAway, final String duckType) {
+        this.velocity = velocity;
+        this.timeFlyAway = timeFlyAway;
+        this.duckType = duckType;
     }
-    
-    public int getMultiplierScore() {
-	return this.multiplierScore;
+
+    /**
+     * Get velocity.
+     * 
+     * @return the velocity of the duck.
+     */
+    public double getVelocity() {
+        return this.velocity;
     }
-    
-    public double getVelocitySpeedUp() {
-	return this.velocitySpeedUp;
-    }
-    
+
+    /**
+     * Get fly away time.
+     * 
+     * @return the fly away time.
+     */
     public int getTimeFlyAway() {
-	return this.timeFlyAway;
+        return this.timeFlyAway;
     }
-    
+
+    /**
+     * Get duck type.
+     * 
+     * @return the duck type
+     */
     public String getDuckType() {
-	return this.duckType;
+        return this.duckType;
     }
-    
-    public ItemRarity getDuckRarity() {
-        return this.duckRarity;
-    }
-    
+
+    /**
+     * To string.
+     * 
+     * @return description of the duck.
+     */
     public String toString() {
-	return this.duckType 
-		+ ", Multiplier score: " + this.multiplierScore 
-		+ ", Speed Up: " + this.velocitySpeedUp
-		+ ", Time fly away: " + this.timeFlyAway
-	        + ", Duck rarity: " + this.duckRarity;
+        return this.duckType 
+                + ", Speed Up: " + this.velocity
+                + ", Time fly away: " + this.timeFlyAway;
     }
 }

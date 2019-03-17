@@ -16,6 +16,12 @@ import java.util.Optional;
 import model.data.Podium;
 import model.data.PodiumImpl;
 
+/**
+ * The manager of the podium.
+ * 
+ * @author simone
+ *
+ */
 public class PodiumManagerImpl implements PodiumManager {
 
     @Override
@@ -41,28 +47,24 @@ public class PodiumManagerImpl implements PodiumManager {
         // TODO Auto-generated method stub
         return this.save(podium, FilesHomeManager.SURVIVAL_SCORES);
     }
-    
+
     private Optional<Podium> load(final String path) {
-        if(!Files.exists(Paths.get(path))) {
+        if (!Files.exists(Paths.get(path))) {
             return Optional.of(new PodiumImpl());
         }
-        try (
-        InputStream file = new FileInputStream(path);
+        try (InputStream file = new FileInputStream(path);
         InputStream buffStream = new BufferedInputStream(file);
-        ObjectInputStream objectStream = new ObjectInputStream(buffStream);
-        ) {
+        ObjectInputStream objectStream = new ObjectInputStream(buffStream);) {
             return Optional.of((Podium) objectStream.readObject());
         } catch (IOException | ClassNotFoundException e) {
             return Optional.empty();
         }
     }
-    
+
     private boolean save(final Podium podium, final String path) {
-        try (
-            OutputStream file = new FileOutputStream(path);
-            OutputStream buffStream = new BufferedOutputStream(file);
-            ObjectOutputStream objectStream = new ObjectOutputStream(buffStream);
-        ) {
+        try (OutputStream file = new FileOutputStream(path);
+        OutputStream buffStream = new BufferedOutputStream(file);
+        ObjectOutputStream objectStream = new ObjectOutputStream(buffStream);) {
             objectStream.writeObject(podium);
             return true;
         } catch (IOException e) {

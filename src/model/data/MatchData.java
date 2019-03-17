@@ -3,95 +3,97 @@ package model.data;
 import model.entities.powerup.PowerUpType;
 
 /**
- * 
- * 
- * Represents the information of the current match
- *
+ * Represents the information of the current match.
+ * @author simone
  */
 
 public interface MatchData {
-    
+
     /**
      * 
      * @return the score of the actual match
      */
-    public int getGlobalScore();
-    
+    int getGlobalScore();
+
     /**
      * 
-     * Increments the number of killed ducks
+     * Increments the number of killed ducks.
      */
-    public void incrementKilledDucks();
-    
+    void incrementKilledDucks();
+
     /**
      * 
      * @return the number of killed ducks in the actual match
      */
-    public int getKilledDucks();
-    
+    int getKilledDucks();
+
     /**
-     * Increments the number of flown ducks
+     * 
+     * Increments the number of flown ducks.
      */
-    public void incrementFlownDucks();
-    
+    void incrementFlownDucks();
+
     /**
      * 
      * @return the number of flown ducks in the actual match
      */
-    public int getFlownDucks();
-    
+    int getFlownDucks();
+
     /**
      * 
-     * @param score, the score received by killing a certain duck
+     * @param score
+     *          the score received by killing a certain duck
      */
-    public void incrementScoreOf(int score);
-    
+    void incrementScoreOf(int score);
+
     /**
      * 
-     * @param negativeScore, the score to remove from the global score as a penalty
+     * @param negativeScore
+     *          the score to remove from the global score as a penalty
      */
-    public void decrementScoreOf(int negativeScore);
-    
+    void decrementScoreOf(int negativeScore);
+
     /**
      * 
      * @return the time elapsed (in milliseconds) from the beginning of the match
      */
-    public int getTimerFromStart();
-    
+    int getTimerFromStart();
+
     /**
      * 
-     * @param timeElapsed, the time elapsed in a certain period
+     * @param timeElapsed
+     *          the time elapsed in a certain period
      */
-    public void addTimeToTimer(int timeElapsed);
-    
+    void addTimeToTimer(int timeElapsed);
+
     /**
      * 
-     * @param type, the type of the power up just collected
+     * @param type
+     *          the type of the power up just collected
      */
-    public void powerUpCollected(PowerUpType type);
-    
+    void powerUpCollected(PowerUpType type);
+
     /**
      * 
      * @return the number of powerups used int the match
      */
-    public int getNumberOfUsedPowerUps();
-    
+    int getNumberOfUsedPowerUps();
+
     /**
      * 
      * @return true if the player has already a power up
      */
-    public boolean hasPowerUp();
-    
+    boolean hasPowerUp();
+
     /**
      * 
-     * Removes the power up
+     * Removes the power up.
      */
-    public void powerUpEnded();
-    
+    void powerUpEnded();
+
     /**
      * 
-     * @param matchdata, the match to be copied
      * @return an unmodifiable copy of a match
      */
-    public UnmodifiableMatchData unmodifiableCopy();
+   UnmodifiableMatchData unmodifiableCopy();
 }

@@ -4,30 +4,37 @@ import java.util.Optional;
 
 import model.data.Podium;
 
+/**
+ * An interface of the file manager for podium (high scores) files.
+ * @author simone
+ *
+ */
 public interface PodiumManager {
 
     /**
-     * If it is present
+     * 
      * @return the story high scores
      */
-    public Optional<Podium> loadStoryHighScores();
-    
+    Optional<Podium> loadStoryHighScores();
+
     /**
-     * If it is present
+     * 
      * @return the survival high scores
      */
-    public Optional<Podium> loadSurvivalHighScores();
-    
+    Optional<Podium> loadSurvivalHighScores();
+
     /**
-     * 
+     * @param podium
+     *          the podium to be saved
      * @return true if the story scores are correctly saved
      */
-    public boolean saveStoryHighScores(final Podium podium);
-    
+    boolean saveStoryHighScores(Podium podium);
+
     /**
-     * 
+     * @param podium
+     *          the podium to be saved
      * @return true if the survival scores are correctly saved
      */
-    public boolean saveSurvivalHighScores(final Podium podium);
+    boolean saveSurvivalHighScores(Podium podium);
 
 }
