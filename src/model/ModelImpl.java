@@ -9,16 +9,12 @@ import java.util.Optional;
 import model.data.GlobalData;
 import model.data.MatchData;
 import model.data.MatchDataImpl;
-import model.decorator.OrangeDuck;
-import model.decorator.PinkDuck;
-import model.decorator.YellowDuck;
 import model.entities.Dog;
 import model.entities.DogImpl;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
 import model.entities.EntityStatus;
-import model.entities.StandardDuck;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
@@ -54,8 +50,6 @@ public final class ModelImpl extends Canvas implements Model {
 
     /**
      * Constructor of the model.
-     * 
-     * 
      */
     public ModelImpl(final GlobalData globaldata) {
         super();
@@ -102,11 +96,10 @@ public final class ModelImpl extends Canvas implements Model {
         }
         //Update ducks
         for (Duck d: this.ducks) {
-            if (this.timeElapsed >= 10000) {
+            if (this.timeElapsed >= 6000) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
-                    this.timeElapsed -= 10000;
+                    this.timeElapsed -= 6000;
                     d.kill();
-                    System.out.println(d.getScore());
                     dog.setDogStatus(DogStatus.HAPPY);
                 }
             }

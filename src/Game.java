@@ -3,13 +3,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.IOException;
 
 import model.*;
+import model.entities.Dog;
+import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
 import utility.Utilities;
-
 import javax.swing.JFrame;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Game extends Canvas implements Runnable{
     
@@ -65,6 +71,7 @@ public class Game extends Canvas implements Runnable{
         this.model = model;
         Dimension size = new Dimension((int)1366, (int)1000);
         this.setPreferredSize(size);
+      
         setMaximumSize(size);
         setMinimumSize(size);
     }

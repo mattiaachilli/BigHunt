@@ -28,6 +28,9 @@ public class AbstractCharacter extends AbstractEntity implements Character {
         this.status = EntityStatus.ALIVE;
     }
 
+    /**
+     * Kill the entity(duck, dog cannot be killed).
+     */
     @Override
     public void kill() {
         ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
