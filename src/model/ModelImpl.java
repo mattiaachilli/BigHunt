@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-<<<<<<< HEAD
+import controller.matches.AbstractMatch;
 import controller.matches.GameMode;
-=======
-
->>>>>>> 6c7fcf455825c89390aa2e853336c06cdb63f1d7
-import model.data.GlobalData;
+import controller.matches.StoryMatch;
+import controller.matches.SurvivalMatch;
 import model.data.MatchData;
 import model.data.MatchDataImpl;
 import model.decorator.OrangeDuck;
@@ -21,15 +19,15 @@ import model.entities.DogImpl;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
-<<<<<<< HEAD
-=======
+
 import model.entities.EntityStatus;
 import model.entities.StandardDuck;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
-import utility.GameMode;
->>>>>>> 6c7fcf455825c89390aa2e853336c06cdb63f1d7
+import settings.GlobalDifficulty;
+
+
 
 /**
  * 
@@ -51,11 +49,11 @@ public final class ModelImpl extends Canvas implements Model {
      */
     private final Dog dog;
     private final List<Duck> ducks;
-    private Optional<MatchData> matchdata;
+    private Optional<AbstractMatch> match;
     private DuckSpawner spawner;
-    private final GlobalData globaldata;
     private int lastRound;
     private GameMode gameMode;
+    private GlobalDifficulty difficulty;
     private DogStatus lastDogStatus;
     private int timeElapsed = 0;
 
@@ -64,25 +62,25 @@ public final class ModelImpl extends Canvas implements Model {
      * 
      * 
      */
-    public ModelImpl(final GlobalData globaldata) {
+    public ModelImpl() {
         super();
         this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
-        this.globaldata = globaldata;
         this.initGame(GameMode.SURVIVAL_MODE);
         this.lastRound = this.spawner.getActualRound();
     }
 
     @Override
     public void initGame(final GameMode gameMode) {
-        this.matchdata = Optional.of(new MatchDataImpl(gameMode));
         this.gameMode = gameMode;
         ducks.clear();
         switch (gameMode) {
             case STORY_MODE:
+                this.match = Optional.of(new StoryMatch(this.difficulty));
                 this.spawner = new StoryModeSpawner();
                 break;
             case SURVIVAL_MODE:
+                this.match = Optional.of(new SurvivalMatch(this.difficulty));
                 this.spawner = new SurvivalModeSpawner();
                 break;
             default:
