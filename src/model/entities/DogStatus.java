@@ -9,5 +9,5 @@ public enum DogStatus {
     /**
      * DOG STATUS.
      */
-    RIGHT, SNIFF, ATTENTION, JUMP, LAUGH, HAPPY, EMPTY;
+    RIGHT, SNIFF, ATTENTION, JUMP, LAUGH, HAPPY, IN_GRASS;
 }

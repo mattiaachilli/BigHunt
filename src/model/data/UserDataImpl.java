@@ -28,8 +28,11 @@ public class UserDataImpl implements UserData {
     private int powerUpsUsed;
     private int globalScore;
 
+    private Map<AchievementType, Achievement> achievements;
+
     /**
      * Constructor to be used when a new account is created.
+     * 
      * @param name the user's username
      */
     public UserDataImpl(final String name) {
@@ -39,36 +42,42 @@ public class UserDataImpl implements UserData {
         this.killedDucks = 0;
         this.powerUpsUsed = 0;
         this.globalScore = 0;
+
+        this.achievements = new EnumMap<>(AchievementType.class);
     }
 
     @Override
     public Map<AchievementType, Achievement> getAchievements() {
         // TODO Auto-generated method stub
-        Map<AchievementType, Achievement> achievements = new EnumMap<>(AchievementType.class);
+        return Collections.unmodifiableMap(this.achievements);
+    }
+
+    @Override
+    public void updateAchievements() {
+        // TODO Auto-generated method stub
         for (AchievementType type : AchievementType.values()) {
             switch (type) {
 
             case KILLED_DUCKS:
-                achievements.put(type, new AchievementImpl(type, this.killedDucks));
+                this.achievements.put(type, new AchievementImpl(type, this.killedDucks));
                 break;
 
             case MATCHES_PLAYED:
-                achievements.put(type, new AchievementImpl(type, this.matchesPlayed));
+                this.achievements.put(type, new AchievementImpl(type, this.matchesPlayed));
                 break;
 
             case POWERUPS_USED:
-                achievements.put(type, new AchievementImpl(type, this.powerUpsUsed));
+                this.achievements.put(type, new AchievementImpl(type, this.powerUpsUsed));
                 break;
 
             case SUM_OF_SCORES:
-                achievements.put(type, new AchievementImpl(type, this.globalScore));
+                this.achievements.put(type, new AchievementImpl(type, this.globalScore));
                 break;
 
             default:
                 break;
             }
         }
-        return Collections.unmodifiableMap(achievements);
     }
 
     @Override
@@ -93,5 +102,4 @@ public class UserDataImpl implements UserData {
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
     }
-
 }

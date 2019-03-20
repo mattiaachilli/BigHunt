@@ -10,10 +10,7 @@ import controller.matches.GameMode;
 import controller.matches.StoryMatch;
 import controller.matches.SurvivalMatch;
 import model.data.MatchData;
-import model.data.MatchDataImpl;
-import model.decorator.OrangeDuck;
-import model.decorator.PinkDuck;
-import model.decorator.YellowDuck;
+import model.data.Podium;
 import model.entities.Dog;
 import model.entities.DogImpl;
 import model.entities.DogStatus;
@@ -21,7 +18,6 @@ import model.entities.Duck;
 import model.entities.Entity;
 
 import model.entities.EntityStatus;
-import model.entities.StandardDuck;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
@@ -36,6 +32,10 @@ import settings.GlobalDifficulty;
  */
 public final class ModelImpl extends Canvas implements Model {
     /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    /**
      * Game width.
      */
     public static final int GAME_WIDTH = 1366;
@@ -43,6 +43,11 @@ public final class ModelImpl extends Canvas implements Model {
      * Game height.
      */
     public static final int GAME_HEIGHT = 1000;
+
+    /**
+     * Max of time elapsed before the update.
+     */
+    private static final int UPDATE_TIME = 6000;
 
     /**
      * All objects of the game world.
@@ -59,15 +64,13 @@ public final class ModelImpl extends Canvas implements Model {
 
     /**
      * Constructor of the model.
-     * 
-     * 
      */
     public ModelImpl() {
         super();
         this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
-        this.initGame(GameMode.SURVIVAL_MODE);
-        this.lastRound = this.spawner.getActualRound();
+        this.match = Optional.empty();
+        this.difficulty = GlobalDifficulty.MEDIUM;
     }
 
     @Override
@@ -78,10 +81,12 @@ public final class ModelImpl extends Canvas implements Model {
             case STORY_MODE:
                 this.match = Optional.of(new StoryMatch(this.difficulty));
                 this.spawner = new StoryModeSpawner();
+                this.lastRound = this.spawner.getActualRound();
                 break;
             case SURVIVAL_MODE:
                 this.match = Optional.of(new SurvivalMatch(this.difficulty));
                 this.spawner = new SurvivalModeSpawner();
+                this.lastRound = this.spawner.getActualRound();
                 break;
             default:
                 break;
@@ -107,11 +112,10 @@ public final class ModelImpl extends Canvas implements Model {
         }
         //Update ducks
         for (Duck d: this.ducks) {
-            if (this.timeElapsed >= 10000) {
+            if (this.timeElapsed >= UPDATE_TIME) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
-                    this.timeElapsed -= 10000;
+                    this.timeElapsed -= UPDATE_TIME;
                     d.kill();
-                    System.out.println(d.getScore());
                     dog.setDogStatus(DogStatus.HAPPY);
                 }
             }
@@ -132,17 +136,12 @@ public final class ModelImpl extends Canvas implements Model {
 
     @Override
     public boolean isGameOver() {
-        return this.matchdata.isPresent();
-    }
-
-    @Override
-    public boolean isHighScore() {
-        return this.globaldata.isHighScore(this.matchdata.get().getGlobalScore());
+        return this.match.isPresent();
     }
 
     @Override
     public void endMatch() {
-        this.matchdata = Optional.empty();
+        this.match = Optional.empty();
     }
 
     @Override
@@ -165,12 +164,13 @@ public final class ModelImpl extends Canvas implements Model {
 
     @Override
     public MatchData getMatchData() {
-        return this.matchdata.get();
+        //return this.matchdata.get();
+        return this.match.get().getMatchData();
     }
 
     @Override
-    public GlobalData getGlobalData() {
-        return this.globaldata;
+    public List<Duck> getDucks() {
+        return this.ducks;
     }
 
     /*
@@ -180,3 +180,5 @@ public final class ModelImpl extends Canvas implements Model {
     }
     */
 }
+
+

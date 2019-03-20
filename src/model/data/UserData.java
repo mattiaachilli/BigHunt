@@ -22,6 +22,12 @@ public interface UserData extends Serializable {
     Map<AchievementType, Achievement> getAchievements();
 
     /**
+     * Updates the user's achievements after an ended match.
+     * It replaces the old values of achievements with the new ones.
+     */
+    void updateAchievements();
+
+    /**
      * 
      * @param matchdata data of the just ended match
      */

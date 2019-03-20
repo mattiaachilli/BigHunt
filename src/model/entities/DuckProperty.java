@@ -12,7 +12,7 @@ public enum DuckProperty {
     /**
      * STANDARD DUCK INFORMATIONS.
      */
-    STANDARD_DUCK(700, 8000, "Standard Duck"),
+    STANDARD_DUCK(200, 8000, "Standard Duck"),
     /**
      * YELLOW DUCK INFORMATIONS.
      */

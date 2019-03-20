@@ -77,6 +77,6 @@ public class AbstractEntity implements Entity {
     @Override
     public void render(final Graphics2D g) {
         g.setColor(Color.green);
-        g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 50, 50));
+        g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 150, 150));
     }
 }

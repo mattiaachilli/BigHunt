@@ -9,6 +9,11 @@ import java.util.Set;
  */
 public class AchievementImpl implements Achievement {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     private final AchievementType type;
     private int value;
 

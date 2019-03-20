@@ -1,5 +1,6 @@
 package model.achievements;
 
+import java.io.Serializable;
 import java.util.Optional;
 import java.util.Set;
 
@@ -7,7 +8,7 @@ import java.util.Set;
  * An interface of an achievement.
  * @author simone
  */
-public interface Achievement {
+public interface Achievement extends Serializable {
 
     /**
      * 

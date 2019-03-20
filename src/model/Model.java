@@ -3,8 +3,8 @@ package model;
 import java.util.List;
 
 import controller.matches.GameMode;
-import model.data.GlobalData;
 import model.data.MatchData;
+import model.entities.Duck;
 import model.entities.Entity;
 
 /**
@@ -42,37 +42,30 @@ public interface Model {
 
     /**
      * 
+     * @return the list of ducks
+     */
+    List<Duck> getDucks();
+    /**
+     * 
      * @return data of the actual match
      */
     MatchData getMatchData();
 
     /**
      * 
-     * @return data of all matches
-     */
-    GlobalData getGlobalData();
-
-    /**
-     * 
-     * @return true if is an highscore
-     */
-    boolean isHighScore();
-
-    /**
-     * 
-     * End the match
+     * End the match.
      */
     void endMatch();
 
     /**
      * 
-     * Set the X position of the Aim
+     * Set the X position of the Aim.
      */
     void setAimX(); //Parametro da passare
 
     /**
      * 
-     * Set the Y position of the Aim
+     * Set the Y position of the Aim.
      */
     void setAimY(); //Parametro da passare
 
