@@ -15,9 +15,11 @@ import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
 import model.entities.EntityStatus;
+import model.entities.powerup.PowerUpType;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
+import settings.SettingsImpl;
 import utility.GameMode;
 
 /**
@@ -29,11 +31,11 @@ public final class ModelImpl extends Canvas implements Model {
     /**
      * Game width.
      */
-    public static final int GAME_WIDTH = 1366;
+    public static final int GAME_WIDTH = SettingsImpl.getSettings().getSelectedResolution().getKey();
     /**
      * Game height.
      */
-    public static final int GAME_HEIGHT = 1000;
+    public static final int GAME_HEIGHT = SettingsImpl.getSettings().getSelectedResolution().getValue();
 
     /**
      * All objects of the game world.
@@ -103,10 +105,14 @@ public final class ModelImpl extends Canvas implements Model {
                     dog.setDogStatus(DogStatus.HAPPY);
                 }
             }
-            if (d.canFlyAway()) {
+            if(d.getStatus() == EntityStatus.DEAD && d.hasPowerUp()) {
+                d.getPowerUp().get().update(timeElapsed);
+            }
+            /*if (d.canFlyAway()) {
                 d.computeFlyAway();
                 dog.setDogStatus(DogStatus.LAUGH);
             }
+            */
             d.update(timeElapsed);
         }
         //Only for STORY MODE

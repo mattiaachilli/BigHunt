@@ -11,6 +11,7 @@ import model.entities.Dog;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
+import settings.SettingsImpl;
 import utility.Utilities;
 import javax.swing.JFrame;
 
@@ -37,7 +38,15 @@ public class Game extends Canvas implements Runnable{
          g.setColor(Color.white);
          g.fillRect(0, 0, this.getWidth(), this.getHeight());
          for(Entity e: model.getEntities()) {
-             e.render(g);
+             if(e instanceof Duck) {
+                 final Duck duck = (Duck)e;
+                 duck.render(g);
+                 if(duck.hasPowerUp()) {
+                     duck.getPowerUp().get().render(g);
+                 }
+             } else {
+                 e.render(g);
+             }
          }
          g.dispose();
          bs.show();
@@ -69,7 +78,7 @@ public class Game extends Canvas implements Runnable{
     
     public Game(Model model) {
         this.model = model;
-        Dimension size = new Dimension((int)1366, (int)1000);
+        Dimension size = new Dimension((int)SettingsImpl.getSettings().getSelectedResolution().getKey(), (int)SettingsImpl.getSettings().getSelectedResolution().getValue());
         this.setPreferredSize(size);
       
         setMaximumSize(size);

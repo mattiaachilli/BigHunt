@@ -6,6 +6,8 @@ import java.util.Random;
 import javafx.scene.shape.Shape;
 import model.entities.powerup.PowerUp;
 import model.entities.utilities.EntityUtilities;
+import model.factories.PowerUpFactory;
+import model.factories.PowerUpFactoryImpl;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
 import model.utilities.ExceptionRuntimeUtility;
@@ -48,6 +50,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     private int lastDirectionUpdate;
     private Optional<PowerUp> powerUp;
     private boolean movement;
+    private final PowerUpFactory powerUpFactory;
 
     /**
      * Standard Duck constructor.
@@ -61,18 +64,13 @@ public class StandardDuck extends AbstractCharacter implements Duck {
      */
     public StandardDuck(final Shape shape, final Velocity velocity, final DuckDirection duckDirection) {
         super(shape, velocity);
-        this.powerUp = this.getRandomPowerUp();
+        this.powerUpFactory = new PowerUpFactoryImpl();
+        this.powerUp = this.powerUpFactory.createRandomPowerUp(this.getPosition());
+        System.out.println(this.powerUp.isPresent() ? this.powerUp.get().getType() : "No present");
         this.actualDirection = duckDirection;
         this.lastDirectionUpdate = 0;
         this.movement = true;
         this.initTime = System.currentTimeMillis();
-    }
-
-    private Optional<PowerUp> getRandomPowerUp() {
-        /**
-         * Algoritmo con le rarità
-         */
-        return Optional.empty();
     }
 
     @Override
@@ -90,6 +88,9 @@ public class StandardDuck extends AbstractCharacter implements Duck {
         super.kill();
         this.dieTime = System.currentTimeMillis();
         EntityUtilities.setNewPosition(this, DuckDirection.KILLED);
+        if (this.hasPowerUp()) {
+            this.powerUp.get().setVisible();
+        }
     }
 
     @Override
@@ -112,6 +113,9 @@ public class StandardDuck extends AbstractCharacter implements Duck {
                 this.changeDirection();
             }
             EntityUtilities.checkCollision(this, this.actualDirection);
+            if (this.hasPowerUp()) {
+                this.powerUp.get().setPosition(this.getPosition());
+            }
         }
         super.update(timeElapsed);
     }

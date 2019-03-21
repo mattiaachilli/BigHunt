@@ -1,7 +1,8 @@
 package model.factories;
 
+import java.util.Optional;
+
 import model.entities.powerup.PowerUp;
-import model.entities.powerup.PowerUpType;
 import model.properties.Position;
 
 /**
@@ -14,21 +15,11 @@ public interface PowerUpFactory {
 
     /**
      * 
-     * @param type
-     *          type of the Power Up
      * @param position
      *          initial position to assign to the Power Up
      * @return
-     *          a Power Up by specific type
+     *          a Optional and random Power Up
      */
-    PowerUp createPowerUp(PowerUpType type, Position position);
-
-    /**
-     * 
-     * @param position
-     *          initial position to assign to the Power Up
-     * @return
-     *          a random Power Up
-     */
-    PowerUp createRandomPowerUp(Position position);
+    Optional<PowerUp> createRandomPowerUp(Position position);
 }
+

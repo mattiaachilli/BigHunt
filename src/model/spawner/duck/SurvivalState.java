@@ -50,7 +50,7 @@ public class SurvivalState extends AbstractDuckState {
         final Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
         if (this.currentDifficulty < BEGINNER_DIFFICULTY) {
             duck = standardDuck;
-        } else if (currentDifficulty >= BEGINNER_DIFFICULTY 
+        } else if (currentDifficulty >= BEGINNER_DIFFICULTY
             && this.currentDifficulty < NORMAL_DIFFICULTY) {
             standardDuck.setVelocity(SpawnSide.getVelocity(direction, DuckProperty.YELLOW_DUCK));
             duck = super.getDuckFactory().createYellowDuck(standardDuck);
