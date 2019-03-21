@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 
+import controller.matches.GameMode;
 import model.data.MatchData;
 import model.entities.Duck;
 import model.entities.Entity;
@@ -39,11 +40,6 @@ public interface Model {
      */
     List<Entity> getEntities();
 
-    /**
-     * 
-     * @return the list of ducks
-     */
-    List<Duck> getDucks();
     /**
      * 
      * @return data of the actual match

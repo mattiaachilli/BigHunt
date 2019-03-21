@@ -1,26 +1,26 @@
 package model;
-
 import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import model.data.GlobalData;
+import controller.matches.AbstractMatch;
+import controller.matches.GameMode;
+import controller.matches.StoryMatch;
+import controller.matches.SurvivalMatch;
 import model.data.MatchData;
 import model.entities.Dog;
 import model.entities.DogImpl;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
-
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
+import settings.GlobalDifficulty;
 import settings.SettingsImpl;
-import utility.GameMode;
 
 
 /**
@@ -41,12 +41,14 @@ public final class ModelImpl extends Canvas implements Model {
     /**
      * All objects of the game world.
      */
-    private final Dog dog;
+    private Dog dog;
     private final List<Duck> ducks;
     private final List<PowerUp> powerUp;
+    private Optional<AbstractMatch> match;
     private DuckSpawner spawner;
     private int lastRound;
     private GameMode gameMode;
+    private GlobalDifficulty difficulty;
     private DogStatus lastDogStatus;
     private int timeElapsed = 0;
 
@@ -58,8 +60,9 @@ public final class ModelImpl extends Canvas implements Model {
         this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
         this.powerUp = new ArrayList<>();
+        this.match = Optional.empty();
+        this.difficulty = GlobalDifficulty.MEDIUM;
         this.initGame(GameMode.SURVIVAL_MODE);
-        this.lastRound = this.spawner.getActualRound();
     }
 
     @Override
@@ -169,17 +172,12 @@ public final class ModelImpl extends Canvas implements Model {
 
     @Override
     public boolean isGameOver() {
-        return this.matchdata.isPresent();
-    }
-
-    @Override
-    public boolean isHighScore() {
-        return this.globaldata.isHighScore(this.matchdata.get().getGlobalScore());
+        return this.match.isPresent();
     }
 
     @Override
     public void endMatch() {
-        this.matchdata = Optional.empty();
+        this.match = Optional.empty();
     }
 
     @Override
@@ -193,18 +191,7 @@ public final class ModelImpl extends Canvas implements Model {
 
     @Override
     public MatchData getMatchData() {
-        return this.matchdata.get();
-    }
-
-    @Override
-    public GlobalData getGlobalData() {
-        return this.globaldata;
-    }
-
-    @Override
-    public GlobalData getGlobalData() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.match.get().getMatchData();
     }
 
     @Override

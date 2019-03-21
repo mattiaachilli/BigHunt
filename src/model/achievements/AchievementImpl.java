@@ -4,20 +4,31 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * 
+ * The class representing achievements.
  * @author simone
- *
  */
 public class AchievementImpl implements Achievement {
-    
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     private final AchievementType type;
     private int value;
-    
-    public AchievementImpl(final AchievementType type, int value) {
+
+    /**
+     * Constructor of a new achievement.
+     * @param type
+     *          the achievement type
+     * @param value
+     *          its value
+     */
+    public AchievementImpl(final AchievementType type, final int value) {
         this.type = type;
         this.value = value;
     }
-    
+
     @Override
     public AchievementType getAchievementType() {
         // TODO Auto-generated method stub
@@ -41,5 +52,4 @@ public class AchievementImpl implements Achievement {
         // TODO Auto-generated method stub
         return this.value;
     }
-
 }
