@@ -2,10 +2,9 @@ package model;
 
 import java.util.List;
 
-import model.data.GlobalData;
 import model.data.MatchData;
+import model.entities.Duck;
 import model.entities.Entity;
-import utility.GameMode;
 
 /**
  * 
@@ -42,21 +41,14 @@ public interface Model {
 
     /**
      * 
+     * @return the list of ducks
+     */
+    List<Duck> getDucks();
+    /**
+     * 
      * @return data of the actual match
      */
     MatchData getMatchData();
-
-    /**
-     * 
-     * @return data of all matches
-     */
-    GlobalData getGlobalData();
-
-    /**
-     * 
-     * @return true if is an highscore
-     */
-    boolean isHighScore();
 
     /**
      * 
@@ -64,10 +56,18 @@ public interface Model {
      */
     void endMatch();
 
-    
-    void setAimX();
-    
-    void setAimY();
+    /**
+     * 
+     * Set the X position of the Aim.
+     */
+    void setAimX(); //Parametro da passare
+
+    /**
+     * 
+     * Set the Y position of the Aim.
+     */
+    void setAimY(); //Parametro da passare
+
     /**
      * 
      * @return the list of bullets
