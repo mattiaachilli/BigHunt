@@ -30,11 +30,11 @@ public final class ControllerImpl implements Controller {
     private final View view;
     private final PodiumManager podiumManager;
     private final UserManager userManager;
-    private Podium podium;
+    private Optional<Podium> podium;
     private Optional<UserData> user;
     //Command list, mouse
-    
-    
+
+    // finisci podiumManager e il suo loading
 
     /**
      * Constructor of the controller.
@@ -46,6 +46,7 @@ public final class ControllerImpl implements Controller {
         this.view = view;
         this.podiumManager = new PodiumManagerImpl();
         this.userManager = new UserManagerImpl();
+        this.podium = Optional.empty();
         this.user = Optional.empty();
     }
 
@@ -89,6 +90,40 @@ public final class ControllerImpl implements Controller {
         // TODO Auto-generated method stub
         this.user = this.userManager.register(username, password);
         return this.user.isPresent();
+    }
+
+    @Override
+    public boolean loadPodium(final GameMode gamemode) {
+        // TODO Auto-generated method stub
+        switch (gamemode) {
+        case STORY_MODE: 
+            this.podium = this.podiumManager.loadStoryHighScores();
+            break;
+        case SURVIVAL_MODE:
+            this.podium = this.podiumManager.loadSurvivalHighScores();
+            break;
+            default:
+                break;
+        }
+        return this.podium.isPresent();
+    }
+
+    @Override
+    public boolean isHighScore(final int score) {
+        // TODO Auto-generated method stub
+        return this.podium.get().isHighScore(score);
+    }
+
+    @Override
+    public void addToPodium(final int score) {
+        // TODO Auto-generated method stub
+        this.podium.get().addHighScore(score, this.user.get().getName());
+    }
+
+    @Override
+    public void emptyPodium() {
+        // TODO Auto-generated method stub
+        this.podium = Optional.empty();
     }
 
     private class GameLoop extends Thread { 
