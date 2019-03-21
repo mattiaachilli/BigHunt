@@ -57,14 +57,6 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
     }
 
     @Override
-    public final void render(final Graphics2D g) {
-        if (this.visible && !this.hit) {
-            g.setColor(Color.black);
-            g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 20, 20));
-        }
-    }
-
-    @Override
     public final boolean isHit() {
         return this.hit;
     }
@@ -72,5 +64,13 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
     @Override
     public final void hit() {
         this.hit = true;
+    }
+
+    @Override
+    public final void render(final Graphics2D g) {
+        if (this.visible) {
+            g.setColor(Color.black);
+            g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 20, 20));
+        }
     }
 }

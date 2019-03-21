@@ -4,13 +4,7 @@ import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import controller.matches.AbstractMatch;
-import controller.matches.GameMode;
-import controller.matches.StoryMatch;
-import controller.matches.SurvivalMatch;
 import model.data.MatchData;
-import model.data.Podium;
 import model.entities.Dog;
 import model.entities.DogImpl;
 import model.entities.DogStatus;
@@ -19,10 +13,13 @@ import model.entities.Entity;
 
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
+import model.entities.powerup.PowerUpType;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
-import settings.GlobalDifficulty;
+import settings.SettingsImpl;
+import utility.GameMode;
+
 
 /**
  * 
@@ -45,11 +42,9 @@ public final class ModelImpl extends Canvas implements Model {
     private final Dog dog;
     private final List<Duck> ducks;
     private final List<PowerUp> powerUp;
-    private Optional<AbstractMatch> match;
     private DuckSpawner spawner;
     private int lastRound;
     private GameMode gameMode;
-    private GlobalDifficulty difficulty;
     private DogStatus lastDogStatus;
     private int timeElapsed = 0;
 
@@ -58,7 +53,6 @@ public final class ModelImpl extends Canvas implements Model {
      */
     public ModelImpl() {
         super();
-        this.match = Optional.empty();
         this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
         this.powerUp = new ArrayList<>();
@@ -109,7 +103,6 @@ public final class ModelImpl extends Canvas implements Model {
         }
         //Update ducks
         this.ducks.forEach(d -> {
-            /*
             if (this.timeElapsed >= 6000) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
                     this.timeElapsed -= 6000;
@@ -117,7 +110,6 @@ public final class ModelImpl extends Canvas implements Model {
                     dog.setDogStatus(DogStatus.HAPPY);
                 }
             }
-            */
             if (d.canFlyAway()) {
                 d.computeFlyAway();
                 dog.setDogStatus(DogStatus.LAUGH);

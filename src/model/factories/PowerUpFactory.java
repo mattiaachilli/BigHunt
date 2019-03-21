@@ -1,10 +1,7 @@
 package model.factories;
-
 import java.util.Optional;
-
 import model.entities.powerup.PowerUp;
 import model.properties.Position;
-
 /**
  * 
  * Interface that represent PowerUp Factory.
@@ -22,4 +19,3 @@ public interface PowerUpFactory {
      */
     Optional<PowerUp> createRandomPowerUp(Position position);
 }
-
