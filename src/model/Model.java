@@ -64,6 +64,10 @@ public interface Model {
      */
     void endMatch();
 
+    
+    void setAimX();
+    
+    void setAimY();
     /**
      * 
      * @return the list of bullets

@@ -20,8 +20,8 @@ import model.rarity.ItemRarity;
  */
 public final class PowerUpFactoryImpl implements PowerUpFactory {
 
-    private static final int POWER_UP_COMMON = 100;
-    private static final int POWER_UP_VERY_RARE = 2;
+    private static final int POWER_UP_COMMON = 3;
+    private static final int POWER_UP_VERY_RARE = 7;
 
     private static final double POWER_UP_SIDE = 20.0;
     private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0, 0); 
