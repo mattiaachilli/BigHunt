@@ -60,21 +60,9 @@ public interface Model {
 
     /**
      * 
-     * End the match
+     * End the match.
      */
     void endMatch();
-
-    /**
-     * 
-     * Set the X position of the Aim
-     */
-    void setAimX(); //Parametro da passare
-
-    /**
-     * 
-     * Set the Y position of the Aim
-     */
-    void setAimY(); //Parametro da passare
 
     /**
      * 

@@ -6,7 +6,6 @@ import java.util.Random;
 import javafx.scene.shape.Shape;
 import model.entities.powerup.PowerUp;
 import model.entities.utilities.EntityUtilities;
-import model.factories.PowerUpFactory;
 import model.factories.PowerUpFactoryImpl;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
@@ -50,7 +49,6 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     private int lastDirectionUpdate;
     private Optional<PowerUp> powerUp;
     private boolean movement;
-    private final PowerUpFactory powerUpFactory;
 
     /**
      * Standard Duck constructor.
@@ -64,9 +62,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
      */
     public StandardDuck(final Shape shape, final Velocity velocity, final DuckDirection duckDirection) {
         super(shape, velocity);
-        this.powerUpFactory = new PowerUpFactoryImpl();
-        this.powerUp = this.powerUpFactory.createRandomPowerUp(this.getPosition());
-        System.out.println(this.powerUp.isPresent() ? this.powerUp.get().getType() : "No present");
+        this.powerUp = PowerUpFactoryImpl.getInstance().createRandomPowerUp(this.getPosition());
         this.actualDirection = duckDirection;
         this.lastDirectionUpdate = 0;
         this.movement = true;

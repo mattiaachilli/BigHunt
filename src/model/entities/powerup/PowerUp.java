@@ -16,7 +16,18 @@ public interface PowerUp extends Entity {
     PowerUpType getType();
 
     /**
-     * Set hit when duck has been hit.
+     * Set visible when duck has been hit.
      */
     void setVisible();
+
+    /**
+     * 
+     * @return true if this powerUp has been hit.
+     */
+    boolean isHit();
+
+    /**
+     * Set the powerUp hit.
+     */
+    void hit();
 }

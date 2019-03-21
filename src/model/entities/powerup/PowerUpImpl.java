@@ -16,9 +16,10 @@ import model.properties.VelocityImpl;
  */
 public class PowerUpImpl extends AbstractEntity implements PowerUp {
 
-    private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0.0, 50.0);
+    private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0.0, 100.0);
     private final PowerUpType type;
     private boolean visible;
+    private boolean hit;
 
     /**
      * Constructor of the power up.
@@ -34,6 +35,7 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
         super(shape, velocity);
         this.type = type;
         this.visible = false;
+        this.hit = false;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
 
     @Override
     public final void update(final int timeElapsed) { 
-        if (this.visible) {
+        if (this.visible && !this.hit) {
             this.setVelocity(POWER_UP_VELOCITY);
             super.update(timeElapsed);
         }
@@ -56,9 +58,19 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
 
     @Override
     public final void render(final Graphics2D g) {
-        if (this.visible) {
+        if (this.visible && !this.hit) {
             g.setColor(Color.black);
             g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 20, 20));
         }
+    }
+
+    @Override
+    public final boolean isHit() {
+        return this.hit;
+    }
+
+    @Override
+    public final void hit() {
+        this.hit = true;
     }
 }

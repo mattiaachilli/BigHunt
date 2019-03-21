@@ -30,7 +30,6 @@ public class MatchDataImpl implements MatchData {
         this.timer = 0;
         this.usedPowerUps = 0;
         // this.powerUp = Optional.empty();
-        
         this.GAME_MODE = gameMode;
 
         switch (gameMode) {

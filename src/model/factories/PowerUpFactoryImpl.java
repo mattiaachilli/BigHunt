@@ -1,7 +1,7 @@
 package model.factories;
 
+import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -11,45 +11,62 @@ import model.entities.powerup.PowerUpType;
 import model.properties.Position;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
+import model.rarity.ItemRarity;
 
 /**
  * 
  * Implementation of the powerUp factory.
  *
  */
-public class PowerUpFactoryImpl implements PowerUpFactory {
+public final class PowerUpFactoryImpl implements PowerUpFactory {
+
+    private static final int POWER_UP_COMMON = 100;
+    private static final int POWER_UP_VERY_RARE = 2;
 
     private static final double POWER_UP_SIDE = 20.0;
     private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0, 0); 
     private int randPowerUpCounter = 0;
-    private final Random showPowerUp = new Random();
+    private static PowerUpFactory instance;
+
+    private PowerUpFactoryImpl() {
+        super();
+    }
+
+    /**
+     * 
+     * @return the instance of this object, once.
+     */
+    public static PowerUpFactory getInstance() {
+        if (Objects.isNull(instance)) {
+            instance = new PowerUpFactoryImpl();
+        }
+        return instance;
+    }
 
     @Override
-    public final Optional<PowerUp> createRandomPowerUp(final Position position) {
-        final int random;
-        final PowerUpType randomPowerUpType;
+    public Optional<PowerUp> createRandomPowerUp(final Position position) {
+        final ItemRarity rarityPowerUp;
+        this.randPowerUpCounter++;
 
-        if (showPowerUp.nextInt() % 1  == 0) {
-            if (randPowerUpCounter != 0) {
-                resetCounter();
-                random = new Random().nextInt(PowerUpType.values().length);
-                randomPowerUpType = PowerUpType.values()[random];
-            } else {
-                randPowerUpCounter++;
-                randomPowerUpType = PowerUpType.INFINITE_AMMO;
-            }
-            return Optional.of(this.createPowerUp(randomPowerUpType, position));
+        if (this.randPowerUpCounter % POWER_UP_COMMON == 0) {
+            rarityPowerUp = ItemRarity.COMMON;
+        } else if (this.randPowerUpCounter % POWER_UP_VERY_RARE == 0) {
+            rarityPowerUp = ItemRarity.VERY_RARE;
         } else {
             return Optional.empty();
         }
+
+        return Optional.of(this.createPowerUp(rarityPowerUp, position));
     }
 
-    private final PowerUp createPowerUp(final PowerUpType type, final Position position) {
+    private PowerUp createPowerUp(final ItemRarity rarity, final Position position) {
         final Shape shape = new Rectangle(position.getX(), position.getY(), POWER_UP_SIDE, POWER_UP_SIDE);
-        return new PowerUpImpl(type, shape, POWER_UP_VELOCITY);
-    }
-
-    private void resetCounter() {
-        this.randPowerUpCounter = 0;
+        Optional<PowerUpType> powerUpType = Optional.empty();
+        for (final PowerUpType type: PowerUpType.values()) {
+            if (type.getPowerUpRarity() == rarity) {
+                powerUpType = Optional.of(type);
+            }
+        }
+        return new PowerUpImpl(powerUpType.get(), shape, POWER_UP_VELOCITY);
     }
 }
