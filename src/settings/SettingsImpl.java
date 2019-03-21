@@ -75,8 +75,7 @@ public final class SettingsImpl implements Settings {
             this.selectedResolution = selectedResolution;
         }
 
-        if (this.selectedResolution.getKey().equals(SettingsImpl.DEFAULT_X_RESOLUTION) 
-            &&
+        if (this.selectedResolution.getKey().equals(SettingsImpl.DEFAULT_X_RESOLUTION) &&
             this.selectedResolution.getValue().equals(SettingsImpl.DEFAULT_Y_RESOLUTION)) {
             this.setFullScreen(true);
         } else {

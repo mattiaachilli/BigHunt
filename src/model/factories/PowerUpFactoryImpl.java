@@ -1,5 +1,6 @@
 package model.factories;
 
+import java.util.Optional;
 import java.util.Random;
 
 import javafx.scene.shape.Rectangle;
@@ -18,22 +19,37 @@ import model.properties.VelocityImpl;
  */
 public class PowerUpFactoryImpl implements PowerUpFactory {
 
-    private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0.0, 250.0);
     private static final double POWER_UP_SIDE = 20.0;
+    private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0, 0); 
+    private int randPowerUpCounter = 0;
+    private final Random showPowerUp = new Random();
 
     @Override
-    public final PowerUp createPowerUp(final PowerUpType type, final Position position) {
+    public final Optional<PowerUp> createRandomPowerUp(final Position position) {
+        final int random;
+        final PowerUpType randomPowerUpType;
+        
+        if (showPowerUp.nextInt() % 1  == 0) {
+            if (randPowerUpCounter != 0) {
+                resetCounter();
+                random = new Random().nextInt(PowerUpType.values().length);
+                randomPowerUpType = PowerUpType.values()[random];
+            } else {
+                randPowerUpCounter++;
+                randomPowerUpType = PowerUpType.INFINITE_AMMO;
+            }
+            return Optional.of(this.createPowerUp(randomPowerUpType, position));
+        } else {
+            return Optional.empty();
+        }
+    }
+    
+    private final PowerUp createPowerUp(final PowerUpType type, final Position position) {
         final Shape shape = new Rectangle(position.getX(), position.getY(), POWER_UP_SIDE, POWER_UP_SIDE);
         return new PowerUpImpl(type, shape, POWER_UP_VELOCITY);
     }
-
-    @Override
-    public final PowerUp createRandomPowerUp(final Position position) {
-        /*
-         * da fare in base alle rarità
-         */
-        final int random = new Random().nextInt(PowerUpType.values().length);
-        final PowerUpType randomPowerUpType = PowerUpType.values()[random];
-        return this.createPowerUp(randomPowerUpType, position);
+    
+    private void resetCounter() {
+        this.randPowerUpCounter = 0;
     }
 }
