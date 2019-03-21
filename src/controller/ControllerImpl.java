@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import controller.files.PodiumManager;
 import controller.files.PodiumManagerImpl;
@@ -26,7 +27,8 @@ public final class ControllerImpl implements Controller {
     private static final int PERIOD = 16;
 
     private GameLoop gameLoop;
-    private final Model model;
+    private final Supplier<Model> modelSupplier;
+    private Model model;
     private final View view;
     private final PodiumManager podiumManager;
     private final UserManager userManager;
@@ -38,11 +40,11 @@ public final class ControllerImpl implements Controller {
 
     /**
      * Constructor of the controller.
-     * @param model the structure of the game
+     * @param modelSupplier the structure of the game
      * @param view the view of the game
      */
-    public ControllerImpl(final Model model, final View view) {
-        this.model = model;
+    public ControllerImpl(final Supplier<Model> modelSupplier, final View view) {
+        this.modelSupplier = modelSupplier;
         this.view = view;
         this.podiumManager = new PodiumManagerImpl();
         this.userManager = new UserManagerImpl();
@@ -52,11 +54,9 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public void initGame(final GameMode gameMode) {
+        this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
-    }
-
-    @Override
-    public void startGame() {
+        this.loadPodium(gameMode);
         gameLoop = new GameLoop();
         gameLoop.start();
     }
@@ -64,10 +64,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public void stopGame() {
         gameLoop.stopGameLoop();
-    }
-
-    private void endGame() {
-        stopGame();
+        // view method
     }
 
     @Override
@@ -146,7 +143,7 @@ public final class ControllerImpl implements Controller {
                 lastTime = current;
             }
             if (model.isGameOver()) {
-                ControllerImpl.this.endGame();
+                ControllerImpl.this.stopGame();
             }
         }
 

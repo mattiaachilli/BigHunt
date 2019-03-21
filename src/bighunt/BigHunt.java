@@ -1,5 +1,7 @@
 package bighunt;
 
+import java.util.function.Supplier;
+
 import controller.Controller;
 import controller.ControllerImpl;
 import controller.files.FilesHomeManager;
@@ -30,8 +32,9 @@ public class BigHunt extends Application {
     public void start(final Stage primaryStage) throws Exception {
         // TODO Auto-generated method stub
         FilesHomeManager.setupApplication();
-        // final View view = new JavaFXView(primaryStage);
-        final Model model = new ModelImpl();
+        //final View view = new JavaFXView(primaryStage);
+        //final Model model = new ModelImpl();
+        final Supplier<Model> model;
         final Controller controller = new ControllerImpl(model, view);
 
     }
