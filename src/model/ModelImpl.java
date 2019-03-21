@@ -44,7 +44,7 @@ public final class ModelImpl extends Canvas implements Model {
      */
     private final Dog dog;
     private final List<Duck> ducks;
-    private final List<PowerUp> powerUp
+    private final List<PowerUp> powerUp;
     private Optional<AbstractMatch> match;
     private DuckSpawner spawner;
     private int lastRound;
