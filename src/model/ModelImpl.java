@@ -5,25 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
-import model.data.GlobalData;
+import controller.matches.AbstractMatch;
+import controller.matches.GameMode;
+import controller.matches.StoryMatch;
+import controller.matches.SurvivalMatch;
 import model.data.MatchData;
-import model.data.MatchDataImpl;
+import model.data.Podium;
 import model.entities.Dog;
 import model.entities.DogImpl;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
+
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
-import model.entities.powerup.PowerUpType;
-
-import static model.entities.powerup.PowerUpType.*;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
-import settings.SettingsImpl;
-import utility.GameMode;
+import settings.GlobalDifficulty;
 
 /**
  * 
@@ -43,43 +42,44 @@ public final class ModelImpl extends Canvas implements Model {
     /**
      * All objects of the game world.
      */
-    private Dog dog;
+    private final Dog dog;
     private final List<Duck> ducks;
-    private final List<PowerUp> powerUp;
-    private Optional<MatchData> matchdata;
+    private final List<PowerUp> powerUp
+    private Optional<AbstractMatch> match;
     private DuckSpawner spawner;
-    private final GlobalData globaldata;
     private int lastRound;
     private GameMode gameMode;
+    private GlobalDifficulty difficulty;
     private DogStatus lastDogStatus;
     private int timeElapsed = 0;
-    private int timeElapsedPowerUp = 0;
 
     /**
      * Constructor of the model.
      */
-    public ModelImpl(final GlobalData globaldata) {
+    public ModelImpl() {
         super();
+        this.match = Optional.empty();
         this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
         this.powerUp = new ArrayList<>();
-        this.globaldata = globaldata;
         this.initGame(GameMode.SURVIVAL_MODE);
         this.lastRound = this.spawner.getActualRound();
     }
 
     @Override
     public void initGame(final GameMode gameMode) {
-        this.matchdata = Optional.of(new MatchDataImpl(gameMode));
         this.gameMode = gameMode;
         this.dog = new DogImpl();
         ducks.clear();
         powerUp.clear();
         switch (gameMode) {
             case STORY_MODE:
+                this.match = Optional.of(new StoryMatch(this.difficulty));
                 this.spawner = new StoryModeSpawner();
+                this.lastRound = this.spawner.getActualRound();
                 break;
             case SURVIVAL_MODE:
+                this.match = Optional.of(new SurvivalMatch(this.difficulty));
                 this.spawner = new SurvivalModeSpawner();
                 break;
             default:
