@@ -51,11 +51,11 @@ public class Game extends Canvas implements Runnable{
          g.dispose();
          bs.show();
      }
-     
+
      @Override
-     public void run() {
+     public final void run() {
          long lastTime = System.currentTimeMillis();
-         while (running) { /* Running and not gameover */
+         while (running && !model.isGameOver()) { /* Running and not gameover */
              final long current = System.currentTimeMillis();
              final int elapsed = (int) (current - lastTime);
             // processInput();
@@ -63,6 +63,10 @@ public class Game extends Canvas implements Runnable{
              render();
              Utilities.waitForNextFrame(PERIOD, current);
              lastTime = current;
+         }
+         if (model.isGameOver()) {
+             System.out.println("GameOver!");
+             System.exit(0);
          }
      }
      

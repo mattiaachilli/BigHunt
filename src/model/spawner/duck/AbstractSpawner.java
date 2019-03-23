@@ -62,6 +62,14 @@ public abstract class AbstractSpawner implements DuckSpawner {
     }
 
     /**
+     * Get the list of ducks spawned.
+     * @return the list of ducks spawned
+     */
+    protected List<Duck> getListDuckSpawned() {
+        return this.listDucksSpawned;
+    }
+
+    /**
      * 
      * @param duck
      *          duck to add.

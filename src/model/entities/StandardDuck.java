@@ -20,11 +20,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class StandardDuck extends AbstractCharacter implements Duck {
 
-    private static final int MILLIS_UPDATE_DIRECTION = 1000; //1.5 SECONDS
+    private static final int MILLIS_UPDATE_DIRECTION = 1000; //1 SECOND
     private static final int DEFAULT_SCORE = 50;
-    private static final int TIME_FOR_PENALTY_SCORE = 5000; //5 SECONDS
-    private static final int PENALTY_SCORE_FOR_FIVE_SECOND = 5;
-
     private static final int POSSIBLE_DIRECTION = 6;
     /**
      * WIDTH OF THE DUCK.
@@ -49,6 +46,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     private int lastDirectionUpdate;
     private Optional<PowerUp> powerUp;
     private boolean movement;
+    private boolean decelerate;
 
     /**
      * Standard Duck constructor.
@@ -66,6 +64,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
         this.actualDirection = duckDirection;
         this.lastDirectionUpdate = 0;
         this.movement = true;
+        this.decelerate = false;
         this.initTime = System.currentTimeMillis();
     }
 
@@ -83,7 +82,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     public final void kill() {
         super.kill();
         this.dieTime = System.currentTimeMillis();
-        EntityUtilities.setNewPosition(this, DuckDirection.KILLED);
+        EntityUtilities.setNewPosition(this, false, DuckDirection.KILLED);
         if (this.hasPowerUp()) {
             this.powerUp.get().setVisible();
         }
@@ -108,7 +107,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
                 this.lastDirectionUpdate -= MILLIS_UPDATE_DIRECTION;
                 this.changeDirection();
             }
-            EntityUtilities.checkCollision(this, this.actualDirection);
+            EntityUtilities.checkCollision(this, this.decelerate, this.actualDirection);
             if (this.hasPowerUp()) {
                 this.powerUp.get().setPosition(this.getPosition());
             }
@@ -125,7 +124,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 
         for (Pair<DuckDirection, Integer> direction: DuckDirection.getRandomDirection()) {
             if (direction.getRight() == randomDirection) {
-                EntityUtilities.setNewPosition(this, direction.getLeft());
+                EntityUtilities.setNewPosition(this, this.decelerate, direction.getLeft());
             }
         }
     }
@@ -133,9 +132,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     @Override
     public final int getScore() {
         ExceptionRuntimeUtility.checkException(this.isAlive() || this.getStatus() == EntityStatus.FLOWN_AWAY, new IllegalStateException());
-        final int penaltyTime = (int) this.getTimeFromBirth() / TIME_FOR_PENALTY_SCORE;
-        final int penaltyScore = penaltyTime * PENALTY_SCORE_FOR_FIVE_SECOND;
-        return DEFAULT_SCORE - penaltyScore;
+        return DEFAULT_SCORE;
     }
 
     @Override
@@ -147,7 +144,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     public final void computeFlyAway() {
         ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
         this.setStatus(EntityStatus.FLOWN_AWAY);
-        EntityUtilities.setNewPosition(this, DuckDirection.FLOWN_AWAY);
+        EntityUtilities.setNewPosition(this, false, DuckDirection.FLOWN_AWAY);
     }
 
     @Override
@@ -163,5 +160,12 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     @Override
     public final void setMovementChange(final boolean change) {
         this.movement = change;
+    }
+
+    @Override
+    public final void setDecelerate() {
+        if (!this.decelerate) {
+            this.decelerate = true;
+        }
     }
 }

@@ -140,6 +140,11 @@ public abstract class DuckDecorator implements Duck {
         this.duck.setMovementChange(change);
     }
 
+    @Override
+    public final void setDecelerate() {
+        this.duck.setDecelerate();
+    }
+
     /**
      * Get score multiplier of the duck.
      * 
