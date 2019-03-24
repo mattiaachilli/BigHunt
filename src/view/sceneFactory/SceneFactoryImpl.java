@@ -74,7 +74,7 @@ public class SceneFactoryImpl implements SceneFactory {
     
     private void openNewScene(final Screens screen) {
         this.checkFullScreen();
-        //
+        //sceneloaderIml
     }
 
     private void checkFullScreen() {
