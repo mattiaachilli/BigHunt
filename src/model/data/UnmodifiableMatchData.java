@@ -22,81 +22,72 @@ public class UnmodifiableMatchData implements MatchData {
     }
 
     @Override
-    public int getGlobalScore() {
+    public final int getGlobalScore() {
         return this.matchdata.getGlobalScore();
     }
 
     @Override
-    public int getKilledDucks() {
-        // TODO Auto-generated method stub
+    public final int getKilledDucks() {
         return this.matchdata.getKilledDucks();
     }
 
     @Override
-    public int getTimerFromStart() {
-        // TODO Auto-generated method stub
+    public final int getTimerFromStart() {
         return this.matchdata.getTimerFromStart();
     }
 
     @Override
-    public int getNumberOfUsedPowerUps() {
-        // TODO Auto-generated method stub
+    public final int getNumberOfUsedPowerUps() {
         return this.matchdata.getNumberOfUsedPowerUps();
     }
 
     @Override
-    public void incrementKilledDucks() {
+    public final void incrementKilledDucks() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void incrementScoreOf(final int score) {
+    public final void incrementScoreOf(final int score) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void decrementScoreOf(final int negativeScore) {
+    public final void decrementScoreOf(final int negativeScore) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void addTimeToTimer(final int timeElapsed) {
+    public final void addTimeToTimer(final int timeElapsed) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void incrementFlownDucks() {
-        // TODO Auto-generated method stub
+    public final void incrementFlownDucks() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public int getFlownDucks() {
-        // TODO Auto-generated method stub
+    public final int getFlownDucks() {
         return this.matchdata.getFlownDucks();
     }
 
     @Override
-    public void powerUpCollected(final PowerUpType type) {
-        // TODO Auto-generated method stub
+    public final void powerUpCollected(final PowerUpType type) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean hasPowerUp() {
-        // TODO Auto-generated method stub
+    public final boolean hasPowerUp() {
         return this.matchdata.hasPowerUp();
     }
 
     @Override
-    public void powerUpEnded() {
-        // TODO Auto-generated method stub
+    public final void powerUpEnded() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public UnmodifiableMatchData unmodifiableCopy() {
+    public final UnmodifiableMatchData unmodifiableCopy() {
         return this;
     }
-
 }

@@ -45,6 +45,7 @@ public interface Model {
      * @return the list of ducks
      */
     List<Duck> getDucks();
+
     /**
      * 
      * @return data of the actual match

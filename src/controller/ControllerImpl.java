@@ -69,7 +69,6 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public boolean loginUser(final String username, final String password) {
-        // TODO Auto-generated method stub
         this.user = this.userManager.login(username, password);
         return this.user.isPresent();
     }
@@ -84,14 +83,12 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public boolean registerUser(final String username, final String password) {
-        // TODO Auto-generated method stub
         this.user = this.userManager.register(username, password);
         return this.user.isPresent();
     }
 
     @Override
     public boolean loadPodium(final GameMode gamemode) {
-        // TODO Auto-generated method stub
         switch (gamemode) {
         case STORY_MODE: 
             this.podium = this.podiumManager.loadStoryHighScores();
@@ -107,19 +104,16 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public boolean isHighScore(final int score) {
-        // TODO Auto-generated method stub
         return this.podium.get().isHighScore(score);
     }
 
     @Override
     public void addToPodium(final int score) {
-        // TODO Auto-generated method stub
         this.podium.get().addHighScore(score, this.user.get().getName());
     }
 
     @Override
     public void emptyPodium() {
-        // TODO Auto-generated method stub
         this.podium = Optional.empty();
     }
 

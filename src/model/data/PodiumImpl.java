@@ -28,21 +28,18 @@ public class PodiumImpl implements Podium {
     }
 
     @Override
-    public List<HighScore> getHighScores() {
-        // TODO Auto-generated method stub
+    public final List<HighScore> getHighScores() {
         return this.highScores;
     }
 
     @Override
-    public boolean isHighScore(final int score) {
-        // TODO Auto-generated method stub
+    public final boolean isHighScore(final int score) {
         return this.highScores.size() < MAX_OF_HIGH_SCORES
         || score > this.highScores.get(MAX_OF_HIGH_SCORES).getScore();
     }
 
     @Override
-    public void addHighScore(final int score, final String name) {
-        // TODO Auto-generated method stub
+    public final void addHighScore(final int score, final String name) {
         if (this.isHighScore(score)) {
             this.highScores.add(new HighScoreImpl(name, score));
             if (this.highScores.size() > MAX_OF_HIGH_SCORES) {
@@ -51,5 +48,4 @@ public class PodiumImpl implements Podium {
             this.highScores.sort(COMPARATOR);
         }
     }
-
 }

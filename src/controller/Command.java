@@ -9,8 +9,8 @@ package controller;
 public interface Command {
 
     /**
-     * Runs the command
-     * @param input, the input to be executed
+     * Runs the command.
+     * @param input the input to be executed
      */
-    public void executeCommand(Input input);
+    void executeCommand(Input input);
 }

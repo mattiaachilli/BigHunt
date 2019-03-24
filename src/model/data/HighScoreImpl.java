@@ -27,13 +27,11 @@ public class HighScoreImpl implements HighScore {
 
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
         return this.name;
     }
 
     @Override
     public int getScore() {
-        // TODO Auto-generated method stub
         return this.score;
     }
 

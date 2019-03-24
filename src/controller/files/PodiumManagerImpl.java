@@ -26,25 +26,21 @@ public class PodiumManagerImpl implements PodiumManager {
 
     @Override
     public Optional<Podium> loadStoryHighScores() {
-        // TODO Auto-generated method stub
         return this.load(FilesHomeManager.STORY_SCORES);
     }
 
     @Override
     public Optional<Podium> loadSurvivalHighScores() {
-        // TODO Auto-generated method stub
         return this.load(FilesHomeManager.SURVIVAL_SCORES);
     }
 
     @Override
     public boolean saveStoryHighScores(final Podium podium) {
-        // TODO Auto-generated method stub
         return this.save(podium, FilesHomeManager.STORY_SCORES);
     }
 
     @Override
     public boolean saveSurvivalHighScores(final Podium podium) {
-        // TODO Auto-generated method stub
         return this.save(podium, FilesHomeManager.SURVIVAL_SCORES);
     }
 
@@ -71,5 +67,4 @@ public class PodiumManagerImpl implements PodiumManager {
             return false;
         }
     }
-
 }

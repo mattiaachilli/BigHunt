@@ -1,8 +1,9 @@
 package model.spawner.duck;
 
 import java.util.Optional;
+
+import controller.matches.MaxOfRounds;
 import model.entities.Duck;
-import model.utilities.RoundUtility;
 
 /**
  * 
@@ -24,7 +25,7 @@ public class StoryModeSpawner extends AbstractSpawner {
     }
 
     private void incRound() {
-        if (this.round < RoundUtility.FIVE_ROUNDS.getRounds()) {
+        if (this.round < MaxOfRounds.FIVE_ROUNDS.getRounds()) {
             this.round++;
         }
     }

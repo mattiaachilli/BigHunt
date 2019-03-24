@@ -4,8 +4,6 @@ package controller.matches;
  * An enumeration with the different values that represent the score to surpass
  * or the ducks that cannot fly away to allow the player to get to the next
  * round. These values are the essence of the difficulty of a match.
- * 
- * @author simone
  *
  */
 public enum MatchDifficulty {
@@ -54,3 +52,4 @@ public enum MatchDifficulty {
         return this.value;
     }
 }
+

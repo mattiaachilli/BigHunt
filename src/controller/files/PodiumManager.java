@@ -36,5 +36,4 @@ public interface PodiumManager {
      * @return true if the survival scores are correctly saved
      */
     boolean saveSurvivalHighScores(Podium podium);
-
 }
