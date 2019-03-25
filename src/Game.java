@@ -1,6 +1,7 @@
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.io.File;
@@ -13,22 +14,28 @@ import model.entities.Duck;
 import model.entities.Entity;
 import settings.SettingsImpl;
 import utility.Utilities;
+import view.entities.EntityImageType;
+import view.entities.EntityImageTypeImpl;
+import view.entities.ViewEntity;
+
 import javax.swing.JFrame;
 
+import controller.utilities.EntitiesConverter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Game extends Canvas implements Runnable{
     
      private final static int PERIOD = 16; //60 FPS
-     private final static int FPS = 60;
             
      private volatile boolean running;
      private Thread th;
      private Model model;
+     private final EntityImageType eit = new EntityImageTypeImpl();
      
      
-     public void render() {
+     public void render(final int elapsed) {
+         
          BufferStrategy bs = getBufferStrategy();
          if(bs == null) {
                  this.createBufferStrategy(3);
@@ -38,6 +45,11 @@ public class Game extends Canvas implements Runnable{
          g.setColor(Color.white);
          g.fillRect(0, 0, this.getWidth(), this.getHeight());
          for(Entity e: model.getEntities()) {
+             eit.updateEntity(e, elapsed);
+             if(e instanceof Dog) {
+                 System.out.println(EntitiesConverter.convertEntity(e));
+             }
+             /*
              if(e instanceof Duck) {
                  final Duck duck = (Duck)e;
                  duck.render(g);
@@ -46,7 +58,7 @@ public class Game extends Canvas implements Runnable{
                  }
              } else {
                  e.render(g);
-             }
+             }*/
          }
          g.dispose();
          bs.show();
@@ -60,7 +72,7 @@ public class Game extends Canvas implements Runnable{
              final int elapsed = (int) (current - lastTime);
             // processInput();
              this.model.update(elapsed);
-             render();
+             render(elapsed);
              Utilities.waitForNextFrame(PERIOD, current);
              lastTime = current;
          }

@@ -28,7 +28,7 @@ public enum DogType {
     /**
      * DOG LAUGH.
      */
-    DOG_LAUGH_1("dogLaugh1.png"),
+    DOG_LAUGH1("dogLaugh1.png"),
     /**
      * DOG RIGHT.
      */
