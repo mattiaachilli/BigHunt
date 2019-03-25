@@ -1,17 +1,17 @@
-package view.sceneFactory;
+package view.scenefactory;
 
 import controller.matches.GameMode;
 import javafx.stage.Stage;
 
 /**
  * 
- * Represents the factory of the game scenes
+ * Represents the factory of the game scenes.
  *
  */
 public interface SceneFactory {
 
     /**
-     * Set a new game stage
+     * Set a new game stage.
      * 
      * @param stage
      *          the stage to must be loaded

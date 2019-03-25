@@ -1,4 +1,4 @@
-package view.sceneFactory;
+package view.scenefactory;
 
 import controller.matches.GameMode;
 import javafx.stage.Stage;
@@ -7,6 +7,11 @@ import settings.SettingsImpl;
 import view.View;
 import view.utilities.Screens;
 
+/**
+ * 
+ * Implements factory of the game.
+ *
+ */
 public class SceneFactoryImpl implements SceneFactory {
 
     private Stage stage;

@@ -1,8 +1,8 @@
-package view.controller;
+package view.scenecontroller;
 
 /**
  * 
- * Factory the shared methods of the secondary menu
+ * Factory the shared methods of the secondary menu.
  */
 public abstract class AbstractSecondarySceneController extends AbstractSceneController {
 

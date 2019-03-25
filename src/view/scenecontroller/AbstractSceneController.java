@@ -1,9 +1,9 @@
-package view.controller;
+package view.scenecontroller;
 
-import view.sceneFactory.SceneFactory;
+import view.scenefactory.SceneFactory;
 
 /**
- * this class factories the shared methods of the scenes
+ * this class factories the shared methods of the scenes.
  *
  */
 public abstract class AbstractSceneController implements SceneController {

@@ -1,9 +1,9 @@
-package view.controller;
+package view.scenecontroller;
 
-import view.sceneFactory.SceneFactory;
+import view.scenefactory.SceneFactory;
 
 /**
- * Represents a simple scene controller
+ * Represents a simple scene controller.
  *
  */
 public interface SceneController {

@@ -6,7 +6,7 @@ package view.utilities;
  */
 public enum Screens {
     /**
-     * The game scene
+     * The game scene.
      */
     GAME("Game.fxml"),
     /**
@@ -14,33 +14,33 @@ public enum Screens {
      */
     PAUSE("Pause.fxml"),
     /**
-     * game mode secìlection
+     * game mode selection.
      */
-    SELECTMODE(""),
+    SELECTMODE("SelectMode.fxml"),
     /**
-     * main menu
+     * main menu.
      */
     MENU("Menu.fxml"),
     /**
-     * settings scene
+     * settings scene.
      */
     SETTINGS("Settings.fxml"),
     /**
-     * achievements scene
+     * achievements scene.
      */
-    ACHIEVEMENTS(""),
+    ACHIEVEMENTS("Achievements.fxml"),
     /**
-     * manual scene
+     * manual scene.
      */
-    MANUAL(""),
+    MANUAL("Manual.fxml"),
     /**
-     * high scores scene
+     * high scores scene.
      */
-    HIGH_SCORES(""),
+    HIGH_SCORES("HighScores.fxml"),
     /**
-     * game over scene
+     * game over scene.
      */
-    GAME_OVER("");
+    GAME_OVER("GameOver.fxml");
     
     private static final String PATH = "/view/scenes/";
     private final String selecedSceneName;
@@ -50,7 +50,7 @@ public enum Screens {
     }
     
     /**
-     * Provides the scenes Path
+     * Provides the scenes Path.
      * @return
      *          the selected game scene path
      */

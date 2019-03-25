@@ -1,4 +1,4 @@
-package view.controller;
+package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,8 +13,9 @@ import settings.observers.BackGroundAudioObserver;
 import settings.observers.FpsObserver;
 import settings.observers.Observer;
 import settings.observers.ResolutionObserver;
+
 /**
- * Sample Skeleton for 'Settings.fxml' Controller Class
+ * Sample Skeleton for 'Settings.fxml' Controller Class.
  */
 public class SettingsSceneControllerImpl extends AbstractSecondarySceneController {
 

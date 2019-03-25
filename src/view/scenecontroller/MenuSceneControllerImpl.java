@@ -1,6 +1,6 @@
 
 
-package view.controller;
+package view.scenecontroller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -8,7 +8,7 @@ import javafx.scene.layout.BorderPane;
 
 /**
  * 
- * Sample Skeleton for 'Menu.fxml' Controller Class
+ * Sample Skeleton for 'Menu.fxml' Controller Class.
  *
  */
 public class MenuSceneControllerImpl extends AbstractSceneController{
