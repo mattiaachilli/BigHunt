@@ -10,19 +10,19 @@ package controller.matches;
 public enum MatchDifficulty {
 
     /**
-     * The user has to score more than 100 to pass to the next round.
+     * The user has to score more than 500 to pass to the next round.
      */
-    STORY_EASY(100),
+    STORY_EASY(500),
 
     /**
      * The user has to score more than 200 to pass to the next round.
      */
-    STORY_MEDIUM(200),
+    STORY_MEDIUM(750),
 
     /**
      * The user has to score more than 300 to pass to the next round.
      */
-    STORY_HARD(300),
+    STORY_HARD(1000),
 
     /**
      * The match ends when 5 ducks have flown away.
