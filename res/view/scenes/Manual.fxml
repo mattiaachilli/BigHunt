@@ -51,7 +51,7 @@
                         <Label text="Kill All the Duck" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Double Score" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <ImageView fx:id="doublescorelogo" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
-                        <Label text="Score Down" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Slow Down" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <ImageView fx:id="slowdownlogo" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
                         <Label text="Infinite Ammo" GridPane.columnIndex="1" />
                      </children>

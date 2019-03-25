@@ -27,7 +27,6 @@ Label{
     -fx-font-size: 26pt;
     -fx-text-fill: red ;
     -fx-font-weight: bold;
-   /* -fx-effect: dropshadow(three-pass-box, yellow, 10, 0, 0, 0);*/
 }
 
 #menu{
@@ -46,6 +45,9 @@ Label{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
 
+#selectmode {
+	-fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
 
 #manual{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
@@ -72,7 +74,7 @@ Label{
 }
 
 #pinkducklogo {
-    -fx-image: url("../duck/pink/duckLeft0.png");
+    -fx-image: url("../duck/pink/pinkDuckLeft0.png");
 }
 
 #orangeducklogo {
