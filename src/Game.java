@@ -14,6 +14,8 @@ import view.entities.EntityImageType;
 import view.entities.EntityImageTypeImpl;
 import javax.swing.JFrame;
 
+import controller.converter.EntitiesConverter;
+
 public class Game extends Canvas implements Runnable{
     
      /**
@@ -25,7 +27,6 @@ public class Game extends Canvas implements Runnable{
      private volatile boolean running;
      private Thread th;
      private Model model;
-     private final EntityImageType eit = new EntityImageTypeImpl();
 
      public void render(final int elapsed) {
 
@@ -38,9 +39,9 @@ public class Game extends Canvas implements Runnable{
          g.setColor(Color.white);
          g.fillRect(0, 0, this.getWidth(), this.getHeight());
          for(Entity e: model.getEntities()) {
-             eit.updateEntity(e, elapsed);
+             EntityImageTypeImpl.getInstance().updateEntity(e, elapsed);
              if(e instanceof Dog) {
-                 eit.getImageType(e);
+                 EntitiesConverter.convertEntity(e).getPicture();
              }
              /*
              if(e instanceof Duck) {

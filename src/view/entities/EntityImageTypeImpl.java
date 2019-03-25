@@ -13,15 +13,17 @@ import model.entities.Entity;
  */
 public final class EntityImageTypeImpl implements EntityImageType {
 
-    private static final int UPDATE_IMAGE = 250;
-    private int elapsed;
-    private final List<EntityImageAnimation> entitiesAnimation;
+    /**
+     * MILLIS UPDATE FRAME.
+     */
+    protected static final int UPDATE_IMAGE = 250;
+    private final EntityImageAnimation dogAnimation;
 
     private static EntityImageTypeImpl singleton;
 
     private EntityImageTypeImpl() {
         super();
-        this.entitiesAnimation = new ArrayList<>();
+        this.dogAnimation = new DogAnimation();
     }
 
     /**
@@ -39,22 +41,15 @@ public final class EntityImageTypeImpl implements EntityImageType {
     public Image getImageType(final Entity entity) {
         Image image = null;
         if (entity instanceof Dog) {
-            
+            image = this.dogAnimation.getImage();
         }
         return image;
     }
 
-    private void updateIndex() {
-        if (this.elapsed >= UPDATE_IMAGE) {
-            this.elapsed -= UPDATE_IMAGE;
-        }
-    }
-
     @Override
     public void updateEntity(final Entity entity, final int elapsed) {
-        this.elapsed += elapsed;
         if (entity instanceof Dog) {
-            
+            this.dogAnimation.update(entity, elapsed);
         }
     }
 }
