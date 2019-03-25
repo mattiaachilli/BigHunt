@@ -10,17 +10,6 @@ import model.properties.Position;
  *
  */
 public interface EntityImageType {
-    /**
-     * 
-     * @return entity's position
-     */
-    Position getPosition();
-
-    /**
-     * 
-     * @return the entity's shape
-     */
-    Shape getShape();
 
     /**
      * Get entity type based on input entity.

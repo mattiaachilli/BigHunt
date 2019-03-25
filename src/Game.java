@@ -1,41 +1,34 @@
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.io.File;
-import java.io.IOException;
 
-import model.*;
+import model.Model;
+import model.ModelImpl;
 import model.entities.Dog;
-import model.entities.DogStatus;
-import model.entities.Duck;
 import model.entities.Entity;
 import settings.SettingsImpl;
 import utility.Utilities;
 import view.entities.EntityImageType;
 import view.entities.EntityImageTypeImpl;
-import view.entities.ViewEntity;
-
 import javax.swing.JFrame;
-
-import controller.utilities.EntitiesConverter;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class Game extends Canvas implements Runnable{
     
-     private final static int PERIOD = 16; //60 FPS
-            
+     /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+    private static final int PERIOD = 16; //60 FPS
      private volatile boolean running;
      private Thread th;
      private Model model;
      private final EntityImageType eit = new EntityImageTypeImpl();
-     
-     
+
      public void render(final int elapsed) {
-         
+
          BufferStrategy bs = getBufferStrategy();
          if(bs == null) {
                  this.createBufferStrategy(3);
@@ -47,7 +40,7 @@ public class Game extends Canvas implements Runnable{
          for(Entity e: model.getEntities()) {
              eit.updateEntity(e, elapsed);
              if(e instanceof Dog) {
-                 System.out.println(EntitiesConverter.convertEntity(e));
+                 eit.getImageType(e);
              }
              /*
              if(e instanceof Duck) {
