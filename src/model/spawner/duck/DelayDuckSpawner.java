@@ -30,7 +30,7 @@ public enum DelayDuckSpawner {
     /**
      * FIRST ROUND DELAY.
      */
-    FIRST_ROUND_DELAY(3000),
+    FIRST_ROUND_DELAY(1000),
     /**
      * SECOND ROUND DELAY.
      */

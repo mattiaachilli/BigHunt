@@ -3,32 +3,33 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.io.File;
-import java.io.IOException;
 
-import model.*;
+import model.Model;
+import model.ModelImpl;
 import model.entities.Dog;
-import model.entities.DogStatus;
-import model.entities.Duck;
 import model.entities.Entity;
 import settings.SettingsImpl;
 import utility.Utilities;
+//import view.entities.EntityImageType;
+import view.entities.EntityImageTypeImpl;
 import javax.swing.JFrame;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import controller.converter.EntitiesConverter;
 
 public class Game extends Canvas implements Runnable{
     
-     private final static int PERIOD = 16; //60 FPS
-     private final static int FPS = 60;
-            
+     /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+    private static final int PERIOD = 16; //60 FPS
      private volatile boolean running;
      private Thread th;
      private Model model;
-     
-     
-     public void render() {
+
+     public void render(final int elapsed) {
+
          BufferStrategy bs = getBufferStrategy();
          if(bs == null) {
                  this.createBufferStrategy(3);
@@ -38,6 +39,11 @@ public class Game extends Canvas implements Runnable{
          g.setColor(Color.white);
          g.fillRect(0, 0, this.getWidth(), this.getHeight());
          for(Entity e: model.getEntities()) {
+             EntityImageTypeImpl.getInstance().updateEntity(e, elapsed);
+             if(e instanceof Dog) {
+                 EntitiesConverter.convertEntity(e).getPicture();
+             }
+             /*
              if(e instanceof Duck) {
                  final Duck duck = (Duck)e;
                  duck.render(g);
@@ -46,23 +52,27 @@ public class Game extends Canvas implements Runnable{
                  }
              } else {
                  e.render(g);
-             }
+             }*/
          }
          g.dispose();
          bs.show();
      }
-     
+
      @Override
-     public void run() {
+     public final void run() {
          long lastTime = System.currentTimeMillis();
-         while (running) { /* Running and not gameover */
+         while (running && !model.isGameOver()) { /* Running and not gameover */
              final long current = System.currentTimeMillis();
              final int elapsed = (int) (current - lastTime);
             // processInput();
              this.model.update(elapsed);
-             render();
+             render(elapsed);
              Utilities.waitForNextFrame(PERIOD, current);
              lastTime = current;
+         }
+         if (model.isGameOver()) {
+             System.out.println("GameOver!");
+             System.exit(0);
          }
      }
      

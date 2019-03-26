@@ -61,7 +61,8 @@ public interface Controller {
 
     /**
      * Adds an high score to the podium.
-     * @param score    the new high score
+     * 
+     * @param score the new high score
      */
     void addToPodium(int score);
 
@@ -69,4 +70,14 @@ public interface Controller {
      * No more podium needed.
      */
     void emptyPodium();
+
+    /**
+     * Pauses the game loop.
+     */
+    void pause();
+
+    /**
+     * Resume the game loop.
+     */
+    void resume();
 }

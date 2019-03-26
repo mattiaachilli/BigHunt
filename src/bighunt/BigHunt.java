@@ -8,7 +8,8 @@ import controller.files.FilesHomeManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Model;
-//import view.View;
+import view.View;
+import view.ViewImpl;
 
 /**
  * 
@@ -16,7 +17,8 @@ import model.Model;
  * @author mattia Provides methods to initialize the game.
  */
 
-public class BigHunt extends Application {
+public final class BigHunt extends Application {
+
     /**
      * 
      * The main of the application.
@@ -29,11 +31,9 @@ public class BigHunt extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        // TODO Auto-generated method stub
         FilesHomeManager.setupApplication();
-        //final View view = new JavaFXView(primaryStage);
-        //final Model model = new ModelImpl();
-        final Supplier<Model> model;
-        final Controller controller = new ControllerImpl(model, view);
+        final View view = new ViewImpl(primaryStage);
+        final Supplier<Model> modelSupplier;
+        final Controller controller = new ControllerImpl(modelSupplier, view);
     }
 }

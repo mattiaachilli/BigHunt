@@ -34,14 +34,15 @@ public final class ControllerImpl implements Controller {
     private final UserManager userManager;
     private Optional<Podium> podium;
     private Optional<UserData> user;
-    //Command list, mouse
+    // Command list, mouse
 
     // finisci podiumManager e il suo loading
 
     /**
      * Constructor of the controller.
+     * 
      * @param modelSupplier the structure of the game
-     * @param view the view of the game
+     * @param view          the view of the game
      */
     public ControllerImpl(final Supplier<Model> modelSupplier, final View view) {
         this.modelSupplier = modelSupplier;
@@ -90,14 +91,14 @@ public final class ControllerImpl implements Controller {
     @Override
     public boolean loadPodium(final GameMode gamemode) {
         switch (gamemode) {
-        case STORY_MODE: 
+        case STORY_MODE:
             this.podium = this.podiumManager.loadStoryHighScores();
             break;
         case SURVIVAL_MODE:
             this.podium = this.podiumManager.loadSurvivalHighScores();
             break;
-            default:
-                break;
+        default:
+            break;
         }
         return this.podium.isPresent();
     }
@@ -117,24 +118,38 @@ public final class ControllerImpl implements Controller {
         this.podium = Optional.empty();
     }
 
-    private class GameLoop extends Thread { 
+    @Override
+    public void pause() {
+        this.gameLoop.pauseLoop();
+    }
+
+    @Override
+    public void resume() {
+        this.gameLoop.resumeLoop();
+    }
+
+    private class GameLoop extends Thread {
         private volatile boolean running;
+        private boolean paused;
 
         GameLoop() {
             super();
             running = true;
+            paused = false;
         }
 
         public void run() {
             long lastTime = System.currentTimeMillis();
             while (running && !model.isGameOver()) { /* Running and not gameover */
-                final long current = System.currentTimeMillis();
-                final int elapsed = (int) (current - lastTime);
-                processInput();
-                model.update(elapsed);
-                // view.setStateGame(getEntitiesForView(), model.getGameData());
-                Utilities.waitForNextFrame(PERIOD, current);
-                lastTime = current;
+                if (this.paused) {
+                    final long current = System.currentTimeMillis();
+                    final int elapsed = (int) (current - lastTime);
+                    processInput();
+                    model.update(elapsed);
+                    // view.setStateGame(getEntitiesForView(), model.getGameData());
+                    Utilities.waitForNextFrame(PERIOD, current);
+                    lastTime = current;
+                }
             }
             if (model.isGameOver()) {
                 ControllerImpl.this.stopGame();
@@ -143,6 +158,14 @@ public final class ControllerImpl implements Controller {
 
         private void processInput() {
             // Input from mouse command example
+        }
+
+        public void pauseLoop() {
+            this.paused = true;
+        }
+
+        public void resumeLoop() {
+            this.paused = false;
         }
 
         public void stopGameLoop() {
