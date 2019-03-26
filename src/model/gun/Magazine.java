@@ -1,30 +1,39 @@
 package model.gun;
 
-import model.entities.Entity;
-
 /**
  * 
  * Interface that represents the gun's scope, with which you can aim to shoot.
  *
  */
-public interface Aim extends Entity {
-    
+public interface Magazine {
+
+    /**
+     * 
+     * Decrements ammo.
+     */
+    void shoot();
     /**
      * 
      * @return the number of bullets.
      */
     int getAmmo();
-    
+
     /**
      * 
-     * @return false if the gun is reloading.
+     * @return the serial number of the magazine.
      */
-    boolean canShoot();
-    
+    int getNumber();
+
     /**
      * 
-     * @return true if you have picked up a PowerUp.
+     * @param bulletType is used to set the bullet type.
      */
-    boolean hasPowerUp();
+    void setBulletType(BulletType bulletType);
+
+    /**
+     * 
+     * @return the bullet type
+     */
+    BulletType getBulletType();
 
 }

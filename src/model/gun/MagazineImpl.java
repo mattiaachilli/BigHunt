@@ -1,34 +1,36 @@
 package model.gun;
 
-import javafx.scene.shape.Shape;
-import model.properties.Position;
-import model.properties.Velocity;
-import model.entities.AbstractEntity;
-import model.entities.StandardDuck;
-import model.entities.standardDuck
-
-public class AimImpl extends AbstractEntity implements Aim {
+/**
+ * 
+ * Implementation of Magazine interface.
+ *
+ */
+public class MagazineImpl implements Magazine {
 
     private static final int MAX_AMMO = 5;
-    
+
+    private int magNumber;
     private int ammo;
     private boolean hasAmmo;
-    
-    public AimImpl(Shape shape, Velocity velocity) {
-        super(shape, velocity);
+    private BulletType bulletType;
+
+    /**
+     * MagazineImpl constructor.
+     * 
+     * @param magNumber represents the serial number of the magazine.
+     */
+    public MagazineImpl(final int magNumber) {
         this.ammo = MAX_AMMO;
         this.hasAmmo = true;
+        this.magNumber = magNumber;
+        this.bulletType = BulletType.NORMAL_BULLET;
     }
-    
+
+    @Override
     public void shoot() {
-        this.ammo --;
-        if(this.getPosition() == StandardDuck.getPosition())
-    }
-    
-    private boolean recharge() {
-        this.ammo = MAX_AMMO;
-        this.hasAmmo = true;
-        return this.hasAmmo;
+        if (this.getBulletType().equals(BulletType.NORMAL_BULLET)) {
+            this.ammo--;
+        }
     }
 
     @Override
@@ -37,14 +39,18 @@ public class AimImpl extends AbstractEntity implements Aim {
     }
 
     @Override
-    public boolean canShoot() {
-        return this.hasAmmo == true ? this.hasAmmo : this.recharge();
+    public int getNumber() {
+        return this.magNumber;
     }
 
     @Override
-    public boolean hasPowerUp() {
-        // TODO Auto-generated method stub
-        return false;
+    public void setBulletType(BulletType bulletType) {
+        this.bulletType = bulletType;
+    }
+
+    @Override
+    public BulletType getBulletType() {
+        return this.bulletType;
     }
 
 }

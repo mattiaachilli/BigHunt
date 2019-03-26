@@ -19,6 +19,9 @@ import model.entities.Duck;
 import model.entities.Entity;
 import model.entities.EntityStatus;
 import model.entities.StandardDuck;
+import model.gun.BulletType;
+import model.gun.Magazine;
+import model.gun.MagazineImpl;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
@@ -38,29 +41,41 @@ public final class ModelImpl extends Canvas implements Model {
      * Game height.
      */
     public static final int GAME_HEIGHT = 1000;
+    /**
+     * Carriable magazines.
+     */
+    public static final int MAX_MAGAZINES = 20;
 
     /**
      * All objects of the game world.
      */
     private final Dog dog;
     private final List<Duck> ducks;
+    private final List<Magazine> ammo;
+    private int currentMagazine;
     private Optional<MatchData> matchdata;
     private DuckSpawner spawner;
     private final GlobalData globaldata;
     private int lastRound;
     private GameMode gameMode;
     private DogStatus lastDogStatus;
+    private boolean gameOver = false;
     private int timeElapsed = 0;
 
     /**
      * Constructor of the model.
      * 
-     * 
+     * @param globaldata 
      */
     public ModelImpl(final GlobalData globaldata) {
         super();
         this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
+        this.currentMagazine = 1;
+        this.ammo = new ArrayList<>();
+        for (int i = 1; i <= MAX_MAGAZINES; i++) {
+            this.ammo.add(new MagazineImpl(i));
+        }
         this.globaldata = globaldata;
         this.initGame(GameMode.SURVIVAL_MODE);
         this.lastRound = this.spawner.getActualRound();
@@ -102,18 +117,10 @@ public final class ModelImpl extends Canvas implements Model {
         }
         //Update ducks
         for (Duck d: this.ducks) {
-            if (this.timeElapsed >= 10000) {
-                if (d.getStatus() == EntityStatus.ALIVE) {
-                    this.timeElapsed -= 10000;
-                    d.kill();
-                    System.out.println(d.getScore());
-                    dog.setDogStatus(DogStatus.HAPPY);
-                }
-            }
-            if (d.canFlyAway()) {
-                d.computeFlyAway();
-                dog.setDogStatus(DogStatus.LAUGH);
-            }
+//            if (d.canFlyAway()) {
+//                d.computeFlyAway();
+//                dog.setDogStatus(DogStatus.LAUGH);
+//            }
             d.update(timeElapsed);
         }
         //Only for STORY MODE
@@ -141,16 +148,6 @@ public final class ModelImpl extends Canvas implements Model {
     }
 
     @Override
-    public void setAimX() {
-
-    }
-
-    @Override
-    public void setAimY() {
-
-    }
-
-    @Override
     public List<Entity> getEntities() {
         final List<Entity> listEntity = new ArrayList<>();
         listEntity.addAll(ducks);
@@ -168,10 +165,50 @@ public final class ModelImpl extends Canvas implements Model {
         return this.globaldata;
     }
 
-    /*
     @Override
-    public List<Bullet> getBullets() {
-        return null;
+    public List<Duck> getDucks() {
+        return this.ducks;
     }
-    */
+
+    @Override
+    public int getBullets() {
+        return this.ammo.stream().filter(m -> m.getNumber() == currentMagazine).findFirst().get().getAmmo();
+    }
+
+    @Override
+    public void shoot() {
+        if (this.canShoot() && !this.gameOver) {
+            this.ammo.stream().filter(m -> m.getNumber() == currentMagazine)
+            .findFirst().get().shoot();
+        } else if (!this.gameOver) {
+            this.recharge();
+            this.shoot();
+        }
+    }
+
+    @Override
+    public boolean canShoot() {
+        return this.ammo.stream().filter(m -> m.getNumber() == currentMagazine)
+        .findFirst().get().getAmmo() > 0;
+    }
+
+    @Override
+    public void recharge() {
+        if (this.currentMagazine < MAX_MAGAZINES) {
+            this.currentMagazine++;
+        } else {
+            this.gameOver = true;
+        }
+    }
+
+    @Override
+    public List<Magazine> getAmmo() {
+        return this.ammo;
+    }
+
+    @Override
+    public int getCurrentMagazine() {
+        return this.currentMagazine;
+    }
+
 }

@@ -4,7 +4,9 @@ import java.util.List;
 
 import model.data.GlobalData;
 import model.data.MatchData;
+import model.entities.Duck;
 import model.entities.Entity;
+import model.gun.Magazine;
 import utility.GameMode;
 
 /**
@@ -36,6 +38,12 @@ public interface Model {
 
     /**
      * 
+     * @return the list of ducks
+     */
+    List<Duck> getDucks();
+
+    /**
+     * 
      * @return the list of entities
      */
     List<Entity> getEntities();
@@ -60,25 +68,43 @@ public interface Model {
 
     /**
      * 
-     * End the match
+     * End the match.
      */
     void endMatch();
 
     /**
      * 
-     * Set the X position of the Aim
+     * @return a map containing magazine and bullets.
      */
-    void setAimX(); //Parametro da passare
+    int getBullets();
 
     /**
      * 
-     * Set the Y position of the Aim
+     * @return the list of magazines carried.
      */
-    void setAimY(); //Parametro da passare
+    List<Magazine> getAmmo();
 
     /**
      * 
-     * @return the list of bullets
+     * Method used to handle bullets after each shot.
      */
-    //List<Bullet> getBullets();
+    void shoot();
+
+    /**
+     * 
+     * @return true if the magazine still contains ammo.
+     */
+    boolean canShoot();
+
+    /**
+     * 
+     * changes magazine.
+     */
+    void recharge();
+
+    /**
+     * 
+     * @return the serial number of the magazine being used.
+     */
+    int getCurrentMagazine();
 }

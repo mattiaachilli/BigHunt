@@ -9,6 +9,6 @@ public enum BulletType {
     /**
      * All type of bullets
      */
-    NORMAL_BULLET;
+    NORMAL_BULLET, INFINITE_BULLETS;
 
 }

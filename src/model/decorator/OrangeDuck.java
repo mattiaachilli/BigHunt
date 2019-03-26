@@ -24,4 +24,5 @@ public final class OrangeDuck extends DuckDecorator {
     public int getScoreMultiplier() {
         return SCORE_MULTIPLIER;
     }
+
 }

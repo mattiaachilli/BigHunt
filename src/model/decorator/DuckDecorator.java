@@ -46,6 +46,11 @@ public abstract class DuckDecorator implements Duck {
     }
 
     @Override
+    public final boolean hasBeenHit() {
+        return this.duck.hasBeenHit();
+    }
+
+    @Override
     public final Position getPosition() {
         return this.duck.getPosition();
     }
@@ -93,6 +98,11 @@ public abstract class DuckDecorator implements Duck {
     @Override
     public final long getTimeFromBirth() {
         return this.duck.getTimeFromBirth();
+    }
+
+    @Override
+    public final void hit() {
+        this.duck.hit();
     }
 
     @Override

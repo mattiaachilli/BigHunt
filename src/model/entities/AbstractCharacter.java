@@ -36,7 +36,7 @@ public class AbstractCharacter extends AbstractEntity implements Character {
 
     @Override
     public final boolean isAlive() {
-        return this.status == EntityStatus.ALIVE;
+        return this.status.equals(EntityStatus.ALIVE);
     }
 
     @Override
