@@ -7,9 +7,9 @@ import java.util.stream.Stream;
 import javafx.scene.image.Image;
 
 /**
- * Enumeration used to pink duck images.
+ * Enumeration used to orange duck images.
  */
-public enum PinkDuckType {
+public enum OrangeDuckImageType {
     /**
      * All types of yellow ducks images.
      */
@@ -17,69 +17,69 @@ public enum PinkDuckType {
     /**
      * DUCK RIGHT.
      */
-    DUCK_RIGHT("pinkDuckRight0.png"),
+    DUCK_RIGHT("orangeDuckRight0.png"),
 
     /**
      * DUCK RIGHT.
      */
-    DUCK_RIGHT1("pinkDuckRight1.png"),
+    DUCK_RIGHT1("orangeDuckRight1.png"),
 
     /**
      * DUCK LEFT.
      */
-    DUCK_LEFT("pinkDuckLeft0.png"),
+    DUCK_LEFT("orangeDuckLeft0.png"),
 
     /**
      * DUCK LEFT.
      */
-    DUCK_LEFT1("pinkDuckLeft1.png"),
+    DUCK_LEFT1("orangeDuckLeft1.png"),
 
     /**
      * DUCK UP RIGHT.
      */
-    DUCK_UP_RIGHT("pinkDuckUpRight0.png"),
+    DUCK_UP_RIGHT("orangeDuckUpRight0.png"),
 
     /**
      * DUCK UP RIGHT.
      */
-    DUCK_UP_RIGHT1("pinkDuckUpRight1.png"),
+    DUCK_UP_RIGHT1("orangeDuckUpRight1.png"),
 
     /**
      * DUCK UP LEFT.
      */
-    DUCK_UP_LEFT("pinkDuckUpLeft0.png"),
+    DUCK_UP_LEFT("orangeDuckUpLeft0.png"),
 
     /**
      * DUCK UP LEFT.
      */
-    DUCK_UP_LEFT1("pinkDuckUpLeft1.png"),
+    DUCK_UP_LEFT1("orangeDuckUpLeft1.png"),
 
     /**
      * DUCK DEAD.
      */
-    DUCK_DEAD("pinkDuckDead.png"),
+    DUCK_DEAD("orangeDuckDead.png"),
 
     /**
      * DUCK PRECIPITATE.
      */
-    DUCK_PRECIPITATE("pinkDuckPrecipitate1.png"),
+    DUCK_PRECIPITATE("orangeDuckPrecipitate1.png"),
 
     /**
      * DUCK PRECIPITATE.
      */
-    DUCK_PRECIPITATE1("pinkDuckPrecipitate3.png"),
+    DUCK_PRECIPITATE1("orangeDuckPrecipitate3.png"),
 
     /**
      * DUCK FLY AWAY.
      */
-    DUCK_FLY_AWAY("pinkDuckFlyAway0.png"),
+    DUCK_FLY_AWAY("orangeDuckFlyAway0.png"),
 
     /**
      * DUCK FLY AWAY.
      */
-    DUCK_FLY_AWAY1("pinkDuckFlyAway1.png");
+    DUCK_FLY_AWAY1("orangeDuckFlyAway1.png");
 
-    private static final String PATH = "/view/duck/pink";
+    private static final String PATH = "/view/duck/orange/";
     private Image picture;
 
     /**
@@ -87,7 +87,7 @@ public enum PinkDuckType {
      * @param imageName,
      *            name of the image stored in resources
      */
-    PinkDuckType(final String imageName) {
+    OrangeDuckImageType(final String imageName) {
         this.picture = new Image(getClass().getResourceAsStream(PATH + imageName));
     }
 

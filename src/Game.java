@@ -42,19 +42,18 @@ public class Game extends Canvas implements Runnable{
          g.fillRect(0, 0, this.getWidth(), this.getHeight());
          for(Entity e: model.getEntities()) {
              EntityImageTypeImpl.getInstance().updateEntity(e, elapsed);
-             if(e instanceof Dog) {
-                 EntitiesConverter.convertEntity(e).getPicture();
-             }
-             /*
+             EntitiesConverter.convertEntity(e).getPicture();
              if(e instanceof Duck) {
                  final Duck duck = (Duck)e;
                  duck.render(g);
+                 /*
                  if(duck.hasPowerUp()) {
                      duck.getPowerUp().get().render(g);
                  }
+                 */
              } else {
                  e.render(g);
-             }*/
+             }
          }
          g.dispose();
          bs.show();

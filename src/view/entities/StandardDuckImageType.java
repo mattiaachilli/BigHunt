@@ -1,5 +1,6 @@
 package view.entities;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -7,79 +8,79 @@ import java.util.stream.Stream;
 import javafx.scene.image.Image;
 
 /**
- * Enumeration used to yellow duck images.
+ * Enumeration used to duck images.
  */
-public enum YellowDuckType {
+public enum StandardDuckImageType {
     /**
-     * All types of yellow ducks images.
+     * All types of ducks images.
      */
 
     /**
      * DUCK RIGHT.
      */
-    DUCK_RIGHT("YellowDuckRight0.png"),
+    DUCK_RIGHT("duckRight0.png"),
 
     /**
      * DUCK RIGHT.
      */
-    DUCK_RIGHT1("yellowDuckRight1.png"),
+    DUCK_RIGHT1("duckRight1.png"),
 
     /**
      * DUCK LEFT.
      */
-    DUCK_LEFT("yellowDuckLeft0.png"),
+    DUCK_LEFT("duckLeft0.png"),
 
     /**
      * DUCK LEFT.
      */
-    DUCK_LEFT1("yellowDuckLeft1.png"),
+    DUCK_LEFT1("duckLeft1.png"),
 
     /**
      * DUCK UP RIGHT.
      */
-    DUCK_UP_RIGHT("yellowDuckUpRight0.png"),
+    DUCK_UP_RIGHT("duckUpRight0.png"),
 
     /**
      * DUCK UP RIGHT.
      */
-    DUCK_UP_RIGHT1("yellowDuckUpRight1.png"),
+    DUCK_UP_RIGHT1("duckUpRight1.png"),
 
     /**
      * DUCK UP LEFT.
      */
-    DUCK_UP_LEFT("yellowDuckUpLeft0.png"),
+    DUCK_UP_LEFT("duckUpLeft0.png"),
 
     /**
      * DUCK UP LEFT.
      */
-    DUCK_UP_LEFT1("yellowDuckUpLeft1.png"),
+    DUCK_UP_LEFT1("duckUpLeft1.png"),
 
     /**
      * DUCK DEAD.
      */
-    DUCK_DEAD("yellowDuckDead.png"),
+    DUCK_DEAD("duckDead.png"),
 
     /**
      * DUCK PRECIPITATE.
      */
-    DUCK_PRECIPITATE("yellowDuckPrecipitate1.png"),
+    DUCK_PRECIPITATE("duckPrecipitate1.png"),
 
     /**
      * DUCK PRECIPITATE.
      */
-    DUCK_PRECIPITATE1("yellowDuckPrecipitate3.png"),
+    DUCK_PRECIPITATE1("duckPrecipitate3.png"),
 
     /**
      * DUCK FLY AWAY.
      */
-    DUCK_FLY_AWAY("yellowDuckFlyAway0.png"),
+    DUCK_FLY_AWAY("duckFlyAway0.png"),
 
     /**
      * DUCK FLY AWAY.
      */
-    DUCK_FLY_AWAY1("yellowDuckFlyAway1.png");
+    DUCK_FLY_AWAY1("duckFlyAway1.png");
 
-    private static final String PATH = "/view/duck/yellow";
+    private static final String PATH = "/view/duck/standard/";
     private Image picture;
 
     /**
@@ -87,7 +88,7 @@ public enum YellowDuckType {
      * @param imageName,
      *            name of the image stored in resources
      */
-    YellowDuckType(final String imageName) {
+    StandardDuckImageType(final String imageName) {
         this.picture = new Image(getClass().getResourceAsStream(PATH + imageName));
     }
 

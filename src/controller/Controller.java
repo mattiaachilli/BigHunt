@@ -16,6 +16,12 @@ public interface Controller {
      */
     void initGame(GameMode gameMode);
 
+
+    /**
+     * Start the game loop.
+     */
+    void startGame();
+
     /**
      * Stop the game loop.
      */

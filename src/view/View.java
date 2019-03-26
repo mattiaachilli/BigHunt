@@ -5,6 +5,7 @@ import java.util.List;
 import controller.matches.GameMode;
 import model.data.HighScore;
 import model.data.MatchData;
+import view.entities.ViewEntity;
 import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;
 
@@ -27,9 +28,16 @@ public interface View {
     
     void resetGame();
     
-    void setStateGame();
+    /**
+     * 
+     * @param viewEntities
+     *          view entities converted from the model.
+     * @param matchData
+     *          current matchData
+     */
+    void render(List<ViewEntity> viewEntities, MatchData matchData);
     
-    void serHighScores();
+    void setHighScores();
     
     void setAchievements();
     

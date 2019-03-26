@@ -1,5 +1,7 @@
 package view.entities;
 
+import java.util.Optional;
+
 import javafx.scene.image.Image;
 import model.entities.Entity;
 
@@ -15,7 +17,7 @@ public interface EntityImageAnimation {
      * 
      * @return the image
      */
-    Image getImage();
+    Optional<Image> getImage();
 
     /**
      * Add elapsed.

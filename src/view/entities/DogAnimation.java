@@ -2,6 +2,7 @@ package view.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.scene.image.Image;
 import model.entities.Dog;
@@ -57,39 +58,35 @@ public class DogAnimation implements EntityImageAnimation {
     }
 
     @Override
-    public final Image getImage() {
-        Image image = null;
+    public final Optional<Image> getImage() {
+        Optional<Image> image = Optional.empty();
         switch (dog.getDogStatus()) {
             case ATTENTION:
-                image = DogType.DOG_ATTENTION.getPicture();
+                image = Optional.of(DogType.DOG_ATTENTION.getPicture());
                 break;
             case RIGHT:
                 if (this.index >= this.dogRightImages.size()) {
                     this.index = 0;
                 }
-                image = this.dogRightImages.get(this.index);
-                System.out.println("Right, indice: " + this.index);
+                image = Optional.of(this.dogRightImages.get(this.index));
                 break;
             case SNIFF:
                 if (this.index >= this.dogSniffImages.size()) {
                     this.index = 0;
                 }
-                image = this.dogSniffImages.get(this.index);
-                System.out.println("Sniff, indice: " + this.index);
+                image = Optional.of(this.dogSniffImages.get(this.index));
                 break;
             case JUMP:
                 if (this.index >= this.dogJumpImages.size()) {
                     this.index = 1;
                 }
-                image = this.dogJumpImages.get(this.index);
-                System.out.println("Jump, indice: " + this.index);
+                image = Optional.of(this.dogJumpImages.get(this.index));
                 break;
             case LAUGH:
                 if (this.index >= this.dogLaughImages.size()) {
                     this.index = 0;
                 }
-                image = this.dogLaughImages.get(this.index);
-                System.out.println("Laugh, indice: " + this.index);
+                image = Optional.of(this.dogLaughImages.get(this.index));
                 break;
             case HAPPY:
                 break;

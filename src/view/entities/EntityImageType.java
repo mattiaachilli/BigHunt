@@ -1,5 +1,7 @@
 package view.entities;
 
+import java.util.Optional;
+
 import javafx.scene.image.Image;
 import model.entities.Entity;
 
@@ -17,7 +19,7 @@ public interface EntityImageType {
      * 
      * @return the entity type
      */
-    Image getImageType(Entity entity);
+    Optional<Image> getImageType(Entity entity);
 
     /**
      * Update entity.

@@ -1,8 +1,11 @@
 package controller;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
+import controller.converter.EntitiesConverter;
 import controller.files.PodiumManager;
 import controller.files.PodiumManagerImpl;
 import controller.files.UserManager;
@@ -13,6 +16,7 @@ import model.data.Podium;
 import model.data.UserData;
 import utility.Utilities;
 import view.View;
+import view.entities.ViewEntity;
 
 /**
  * 
@@ -57,8 +61,12 @@ public final class ControllerImpl implements Controller {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
         this.loadPodium(gameMode);
-        gameLoop = new GameLoop();
-        gameLoop.start();
+    }
+
+    @Override
+    public void startGame() {
+        this.gameLoop = new GameLoop();
+        this.gameLoop.start();
     }
 
     @Override
@@ -69,7 +77,6 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public boolean loginUser(final String username, final String password) {
-        // TODO Auto-generated method stub
         this.user = this.userManager.login(username, password);
         return this.user.isPresent();
     }
@@ -84,14 +91,12 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public boolean registerUser(final String username, final String password) {
-        // TODO Auto-generated method stub
         this.user = this.userManager.register(username, password);
         return this.user.isPresent();
     }
 
     @Override
     public boolean loadPodium(final GameMode gamemode) {
-        // TODO Auto-generated method stub
         switch (gamemode) {
         case STORY_MODE: 
             this.podium = this.podiumManager.loadStoryHighScores();
@@ -107,20 +112,24 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public boolean isHighScore(final int score) {
-        // TODO Auto-generated method stub
         return this.podium.get().isHighScore(score);
     }
 
     @Override
     public void addToPodium(final int score) {
-        // TODO Auto-generated method stub
         this.podium.get().addHighScore(score, this.user.get().getName());
     }
 
     @Override
     public void emptyPodium() {
-        // TODO Auto-generated method stub
         this.podium = Optional.empty();
+    }
+
+    private List<ViewEntity> getViewEntities(final int elapsed) {
+        return this.model.getEntities()
+                         .stream()
+                         .map(e -> EntitiesConverter.convertEntity(e, elapsed))
+                         .collect(Collectors.toList());
     }
 
     private class GameLoop extends Thread { 
@@ -138,7 +147,7 @@ public final class ControllerImpl implements Controller {
                 final int elapsed = (int) (current - lastTime);
                 processInput();
                 model.update(elapsed);
-                // view.setStateGame(getEntitiesForView(), model.getGameData());
+                view.render(getViewEntities(elapsed), model.getMatchData());
                 Utilities.waitForNextFrame(PERIOD, current);
                 lastTime = current;
             }
