@@ -7,6 +7,8 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import settings.SettingsImpl;
 import view.View;
+import view.scenecontroller.AchievementSceneController;
+import view.scenecontroller.AchievementsSceneControllerImpl;
 import view.scenecontroller.GameSceneController;
 import view.scenecontroller.SceneController;
 import view.utilities.Screens;
@@ -79,6 +81,8 @@ public class SceneLoaderImpl implements SceneLoader {
                 //
                 break;
             case ACHIEVEMENTS:
+                final AchievementSceneController achievementController = (AchievementSceneController) controller;
+                achievementController.setAchievements(this.view.getAchievements());
                 break;
             case HIGH_SCORES:
                 break;

@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 
 import controller.matches.GameMode;
+import model.achievements.Achievement;
 import model.data.HighScore;
 import model.data.MatchData;
 import view.entities.ViewEntity;
@@ -39,9 +40,9 @@ public interface View {
     
     void setHighScores();
     
-    void setAchievements();
+    void setAchievements(List<Achievement> achievements);
     
-    //map<> get achievement
+    List<Achievement> getAchievements();
     
     List<HighScore> getHighScores();
     

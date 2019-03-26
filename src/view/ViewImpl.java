@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -10,6 +11,7 @@ import javafx.application.Application;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.achievements.Achievement;
 import model.data.HighScore;
 import model.data.MatchData;
 import settings.SettingsImpl;
@@ -35,6 +37,7 @@ public class ViewImpl extends Application implements View {
     private final Semaphore mutex;
     private static final String GAME_TITLE = "BIG HUNT";
     private final SceneFactory sceneFactory;
+    private List<Achievement> achievements;
     private boolean gamePaused;
 
     /**
@@ -43,6 +46,7 @@ public class ViewImpl extends Application implements View {
     public ViewImpl(final Controller controller) {
         super();
         this.controller = controller;
+        this.achievements = new ArrayList<>();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
     }
@@ -67,11 +71,6 @@ public class ViewImpl extends Application implements View {
         this.render = new Render(gameSceneController, gameMode);
         this.startRender();
     }
-
-    @Override
-    public void closeGame(final MatchData matchData, final boolean isHighScores) {
-    }
-
 
     @Override
     public final void startRender() {
@@ -108,9 +107,8 @@ public class ViewImpl extends Application implements View {
     }
 
     @Override
-    public void setAchievements() {
-        // TODO Auto-generated method stub
-
+    public void setAchievements(List<Achievement> achievements) {
+        this.achievements = achievements;        
     }
 
     @Override
@@ -191,5 +189,16 @@ public class ViewImpl extends Application implements View {
             this.running = true;
             super.start();
         }
+    }
+
+    @Override
+    public void closeGame(MatchData matchData, boolean isHighScores) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public List<Achievement> getAchievements() {
+        return this.achievements;
     }
 }

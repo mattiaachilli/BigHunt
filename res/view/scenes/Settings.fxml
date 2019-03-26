@@ -34,10 +34,10 @@
                   <Label text="FPS" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="BACKGROUND AUDIO" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Button fx:id="settingsApplyBtn" mnemonicParsing="false" onAction="#applyChanges" text="APPLY" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <CheckBox mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                  <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <CheckBox fx:id="bgAudioCheckBox" mnemonicParsing="false" onAction="#enableApplyBtn" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="fpsComboBox" onAction="#enableApplyBtn" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="difficultyComboBox" onAction="#enableApplyBtn" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="resolutionComboBox" onAction="#enableApplyBtn" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_LEFT">

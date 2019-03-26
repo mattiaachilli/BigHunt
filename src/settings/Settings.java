@@ -87,4 +87,24 @@ public interface Settings {
      *          is true if background audio is active, false otherwise
      */
     void setBackgroundAudio(boolean backgroundAudio);
+
+    /**
+     * 
+     * @param difficulty
+     *          the selected game difficulty.
+     */
+    void setDifficulty(String difficulty);
+    /**
+     * 
+     * @return
+     *          the actual game difficulty.
+     */
+    String getSelectedDifficulty();
+    
+    /**
+     * 
+     * @return
+     *          all game difficulty.
+     */
+    List<String> getGameDifficulties();
 }

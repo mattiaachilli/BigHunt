@@ -20,7 +20,7 @@ public class ResolutionObserver implements Observer {
     /**
      * 
      * @param resolutionComboBox
-     *          the comboBox where we can change the resoution
+     *          the comboBox where we can change the resolution.
      */
     public ResolutionObserver(final ComboBox<String> resolutionComboBox) {
         this.resolutionComboBox = resolutionComboBox;
