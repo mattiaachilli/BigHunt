@@ -2,9 +2,12 @@ package view;
 
 import java.util.List;
 
+import controller.matches.GameMode;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.data.HighScore;
+import model.data.MatchData;
+import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;
 import view.scenefactory.SceneFactoryImpl;
 
@@ -35,13 +38,7 @@ public class ViewImpl extends Application implements View {
     public void viewLauncher() {
        launch();
     }
-
-    @Override
-    public void startGame() {
-        // TODO Auto-generated method stub
-
-    }
-
+    
     @Override
     public void startViewRender() {
         // TODO Auto-generated method stub
@@ -50,12 +47,6 @@ public class ViewImpl extends Application implements View {
 
     @Override
     public void stopViewRender() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void closeGame() {
         // TODO Auto-generated method stub
 
     }
@@ -92,8 +83,19 @@ public class ViewImpl extends Application implements View {
 
     @Override
     public SceneFactory getSceneFactory() {
+        return this.sceneFactory;
+    }
+
+    @Override
+    public void startGame(GameSceneController gameSceneController, GameMode gameMode) {
         // TODO Auto-generated method stub
-        return null;
+        
+    }
+
+    @Override
+    public void closeGame(MatchData matchData, boolean isHighScores) {
+        // TODO Auto-generated method stub
+        
     }
 
     
