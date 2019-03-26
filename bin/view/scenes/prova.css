@@ -1,0 +1,123 @@
+.root {
+	-fx-background-size: 100% 100%;
+}
+
+Button{
+ 	-fx-background-color: none;
+	-fx-border-color: none;
+    -fx-text-fill: white ;
+	-fx-font-size: 21pt;
+	-fx-font-weight: bold;
+}
+
+Button:hover{
+    -fx-text-fill: #ff7200;
+    -fx-effect: dropshadow( gaussian , rgba(0.5,0.5,0.5,0.5) , 10,0,0,1 );
+}
+
+Label{
+ 	-fx-background-color: none;
+	-fx-border-color: none;
+    -fx-font-size: 14pt;
+    -fx-text-fill: white ;
+}
+
+#title {
+    -fx-font-size: 26pt;
+    -fx-text-fill: red ;
+    -fx-font-weight: bold;
+   /* -fx-effect: dropshadow(three-pass-box, yellow, 10, 0, 0, 0);*/
+}
+
+#menu{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#menulogo{
+	 -fx-image: url("../logo/logo.png");
+}
+
+#settings{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#login{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#register{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#selectmode{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#pause{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#gameover{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#manual{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#selectmode{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#highscores{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#achievements{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#infiniteammologo {
+    -fx-image: url("../powerup/yellowStar.png");
+}
+
+#killallducklogo {
+    -fx-image: url("../powerup/blackStar.png");
+}
+
+#slowdownlogo {
+    -fx-image: url("../powerup/redStar.png");
+}
+
+#doublescorelogo {
+	-fx-image: url("../powerup/greenStar.png");
+}
+
+#standardducklogo {
+    -fx-image: url("../duck/standard/duckLeft0.png");
+}
+
+#pinkducklogo {
+    -fx-image: url("../duck/pink/pinkDuckLeft0.png");
+}
+
+#orangeducklogo {
+    -fx-image: url("../duck/orange/orangeDuckLeft0.png");
+}
+
+#yellowducklogo {
+    -fx-image: url("../duck/yellow/yellowDuckLeft0.png");
+}
+
+#backBtn {
+	-fx-background-color:
+        linear-gradient(#ff5400, #be1d00);
+    -fx-background-radius: 20, 25;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: white;
+	-fx-font-size: 14pt;
+}
+
+#settingsApplyBtn {
+    -fx-background-color:
+        linear-gradient(#00812a, #003411);
+    -fx-background-radius: 20, 25;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: white;
+	-fx-font-size: 14pt;
+}
