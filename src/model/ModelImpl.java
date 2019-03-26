@@ -18,6 +18,9 @@ import model.entities.Entity;
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
+import model.gun.BulletType;
+import model.gun.Magazine;
+import model.gun.MagazineImpl;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
@@ -39,6 +42,10 @@ public final class ModelImpl extends Canvas implements Model {
      * Game height.
      */
     public static final int GAME_HEIGHT = SettingsImpl.getSettings().getSelectedResolution().getValue();
+    /**
+     * Maximum number of magazines carriable.
+     */
+    public static final int MAX_MAGAZINES = 20;
 
     /**
      * All objects of the game world.
@@ -46,6 +53,8 @@ public final class ModelImpl extends Canvas implements Model {
     private Dog dog;
     private final List<Duck> ducks;
     private final List<PowerUp> powerUp;
+    private final List<Magazine> ammo;
+    private int currentMagazine;
     private Optional<AbstractMatch> match;
     private DuckSpawner spawner;
     private GameMode gameMode;
@@ -63,6 +72,11 @@ public final class ModelImpl extends Canvas implements Model {
         super();
         this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
+        this.currentMagazine = 1;
+        this.ammo = new ArrayList<>();
+        for (int i = 1; i <= MAX_MAGAZINES; i++) {
+            this.ammo.add(new MagazineImpl(i));
+        }
         this.powerUp = new ArrayList<>();
         this.match = Optional.empty();
         this.difficulty = GlobalDifficulty.EASY;
@@ -104,8 +118,9 @@ public final class ModelImpl extends Canvas implements Model {
         //Update spawner when dog is in grass
         if (this.dog.isInGrass()) {
             this.timeElapsed += timeElapsed;
-                spawner.update(timeElapsed);
-                if (spawner.canSpawnDuck()) {
+            this.getCurrentMagazine().update(timeElapsed);
+            spawner.update(timeElapsed);
+            if (spawner.canSpawnDuck()) {
                 final Optional<Duck> duckSpawn = spawner.spawnDuck();
                 if (duckSpawn.isPresent()) {
                     this.ducks.add(duckSpawn.get());
@@ -159,6 +174,20 @@ public final class ModelImpl extends Canvas implements Model {
         }
     }
 
+    @Override
+    public void activateInfAmmo() {
+        this.ammo.stream()
+        .filter(m -> m.getNumber() == this.currentMagazine)
+        .findFirst().get().setBulletType(BulletType.INFINITE_BULLETS);
+    }
+
+    @Override
+    public void deactivateInfAmmo() {
+        this.ammo.stream()
+        .filter(m -> m.getNumber() == this.currentMagazine)
+        .findFirst().get().setBulletType(BulletType.NORMAL_BULLET);
+    }
+
     private void activePowerUp(final PowerUpType powerUp) {
         System.out.println(powerUp.toString());
         switch (powerUp) {
@@ -170,7 +199,7 @@ public final class ModelImpl extends Canvas implements Model {
                           });
                 break;
             case INFINITE_AMMO:
-                /* Bullet */
+                this.getCurrentMagazine().setBulletType(BulletType.INFINITE_BULLETS);
                 break;
             case SLOW_DOWN:
                 this.ducks.stream()
@@ -195,10 +224,11 @@ public final class ModelImpl extends Canvas implements Model {
         switch (this.gameMode) {
             case STORY_MODE:
                 gameOver = this.spawner.getActualRound() > this.lastRound 
-                            && matchData.getGlobalScore() < matchScore;
+                            && matchData.getGlobalScore() < matchScore && this.currentMagazine > MAX_MAGAZINES;
             break;
             case SURVIVAL_MODE:
-                gameOver = matchData.getFlownDucks() >= this.match.get().getDifficulty().getLimitOfDifficulty();
+                gameOver = matchData.getFlownDucks() >= this.match.get().getDifficulty().getLimitOfDifficulty()
+                           && this.currentMagazine > MAX_MAGAZINES;
             break;
             default:
                 break;
@@ -226,19 +256,45 @@ public final class ModelImpl extends Canvas implements Model {
     }
 
     @Override
-    public void setAimX() {
-        // TODO Auto-generated method stub
+    public List<Duck> getDucks() {
+        return this.ducks;
     }
 
     @Override
-    public void setAimY() {
-        // TODO Auto-generated method stub
+    public int getBullets() {
+        return this.getCurrentMagazine().getAmmo();
     }
 
-    /*
     @Override
-    public List<Bullet> getBullets() {
-        return null;
+    public void shoot() {
+        if (this.canShoot()) {
+            this.getCurrentMagazine().shoot();
+        } else {
+            this.recharge();
+            this.shoot();
+        }
     }
-    */
+
+    @Override
+    public boolean canShoot() {
+        return this.getCurrentMagazine().getAmmo() > 0;
+    }
+
+    @Override
+    public void recharge() {
+        this.currentMagazine++;
+    }
+
+    @Override
+    public List<Magazine> getAmmo() {
+        return this.ammo;
+    }
+
+    @Override
+    public Magazine getCurrentMagazine() {
+        return this.ammo.stream()
+        .filter(m -> m.getNumber() == currentMagazine)
+        .findFirst().get();
+    }
 }
+

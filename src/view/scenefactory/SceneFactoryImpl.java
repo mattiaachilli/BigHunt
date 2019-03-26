@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import settings.SettingsImpl;
 import view.View;
+import view.sceneloader.SceneLoaderImpl;
 import view.utilities.Screens;
 
 /**
@@ -18,12 +19,12 @@ public class SceneFactoryImpl implements SceneFactory {
     private final View view;
     private GameMode gameMode = GameMode.STORY_MODE;
     
-    public SceneFactoryImpl(View view) {
+    public SceneFactoryImpl(final View view) {
         this.view = view;
     }
     
     @Override
-    public void setStage(Stage stage) {
+    public void setStage(final Stage stage) {
         this.stage = stage;
     }
 
@@ -31,7 +32,21 @@ public class SceneFactoryImpl implements SceneFactory {
     public Stage getStage() {
         return this.stage;
     }
-
+    
+    @Override
+    public void openAccountSelectionScene() {
+        this.openNewScene(Screens.SELECT_ACCOUNT);
+    }
+    
+    @Override
+    public void openRegisterScene() {
+        this.openNewScene(Screens.REGISTER);
+    }
+    
+    @Override
+    public void openLoginScene() {
+        this.openNewScene(Screens.LOGIN);
+    }
     @Override
     public void openMenuScene() {
         this.openNewScene(Screens.MENU);
@@ -53,7 +68,7 @@ public class SceneFactoryImpl implements SceneFactory {
     }
 
     @Override
-    public void OpenManualScene() {
+    public void openManualScene() {
         this.openNewScene(Screens.MANUAL);
     }
 
@@ -73,21 +88,21 @@ public class SceneFactoryImpl implements SceneFactory {
     }
 
     @Override
-    public void setGameMode(GameMode gameMode) {
+    public void setGameMode(final GameMode gameMode) {
         this.gameMode = gameMode;
     }
     
     private void openNewScene(final Screens screen) {
         this.checkFullScreen();
-        //sceneloaderIml
+        new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
     }
 
     private void checkFullScreen() {
-        if(SettingsImpl.getSettings().isFullScreen() && this.stage.getStyle().equals(StageStyle.UNDECORATED)) {
+        if (SettingsImpl.getSettings().isFullScreen() && this.stage.getStyle().equals(StageStyle.DECORATED)) {
             this.createNewStage();
             this.stage.initStyle(StageStyle.UNDECORATED);
             this.stage.setMaximized(true);
-        } else {
+        } else if (!SettingsImpl.getSettings().isFullScreen() && this.stage.getStyle().equals(StageStyle.UNDECORATED)) {
             this.createNewStage();
             this.stage.initStyle(StageStyle.DECORATED);
         }

@@ -1,4 +1,3 @@
-
 .root {
 	-fx-background-size: 100% 100%;
 }
@@ -41,13 +40,35 @@ Label{
 #settings{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
+#login{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#register{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#selectmode{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
 
 #pause{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
 
+#gameover{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
 
 #manual{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#selectmode{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#highscores{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#achievements{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
 
@@ -72,7 +93,7 @@ Label{
 }
 
 #pinkducklogo {
-    -fx-image: url("../duck/pink/duckLeft0.png");
+    -fx-image: url("../duck/pink/pinkDuckLeft0.png");
 }
 
 #orangeducklogo {
