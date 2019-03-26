@@ -4,10 +4,12 @@ import java.util.function.Supplier;
 
 import controller.Controller;
 import controller.ControllerImpl;
-import controller.files.FilesHomeManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Model;
+import model.ModelImpl;
+import view.View;
+import view.ViewImpl;
 
 /**
  * 
@@ -27,12 +29,16 @@ public class BigHunt extends Application {
     }
 
     @Override
-    public void start(final Stage primaryStage) throws Exception {
+    public final void start(final Stage primaryStage) throws Exception {
         // TODO Auto-generated method stub
-        FilesHomeManager.setupApplication();
-        //final View view = new JavaFXView(primaryStage);
-        //final Model model = new ModelImpl();
-        final Supplier<Model> model;
-        final Controller controller = new ControllerImpl(model, view);
+        //FilesHomeManager.setupApplication();
+        final Supplier<Model> modelSupplier = new Supplier<Model>() {
+            @Override
+            public Model get() {
+                return new ModelImpl();
+            }
+        };
+        final View view = new ViewImpl(controller);
+        final Controller controller = new ControllerImpl(modelSupplier, view);
     }
 }

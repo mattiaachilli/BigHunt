@@ -3,8 +3,6 @@ import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
-
 import controller.matches.AbstractMatch;
 import controller.matches.GameMode;
 import controller.matches.StoryMatch;
@@ -135,7 +133,7 @@ public final class ModelImpl extends Canvas implements Model {
         //Update ducks
         this.ducks.forEach(d -> {
             //SIMULATE KILL EACH 4000ms = 5s
-            if (this.timeElapsed >= 4000) {
+            /*if (this.timeElapsed >= 4000) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
                     this.timeElapsed -= 4000;
                     d.kill();
@@ -147,7 +145,7 @@ public final class ModelImpl extends Canvas implements Model {
                     this.match.get().getMatchData().incrementScoreOf(score);
                     dog.setDogStatus(DogStatus.HAPPY);
                 }
-            }
+            }*/
             if (d.canFlyAway()) {
                 d.computeFlyAway();
                 dog.setDogStatus(DogStatus.LAUGH);
