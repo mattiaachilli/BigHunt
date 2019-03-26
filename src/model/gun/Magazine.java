@@ -36,4 +36,11 @@ public interface Magazine {
      */
     BulletType getBulletType();
 
+    /**
+     * Checks the time for the powerup duration.
+     * 
+     * @param timeElapsed represents how much time has passed.
+     */
+    void update(int timeElapsed);
+
 }

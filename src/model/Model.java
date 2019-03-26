@@ -85,9 +85,9 @@ public interface Model {
 
     /**
      * 
-     * @return the serial number of the magazine being used.
+     * @return the magazine being used.
      */
-    int getCurrentMagazine();
+    Magazine getCurrentMagazine();
 
     /**
      * 

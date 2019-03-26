@@ -120,8 +120,9 @@ public final class ModelImpl extends Canvas implements Model {
         //Update spawner when dog is in grass
         if (this.dog.isInGrass()) {
             this.timeElapsed += timeElapsed;
-                spawner.update(timeElapsed);
-                if (spawner.canSpawnDuck()) {
+            this.getCurrentMagazine().update(timeElapsed);
+            spawner.update(timeElapsed);
+            if (spawner.canSpawnDuck()) {
                 final Optional<Duck> duckSpawn = spawner.spawnDuck();
                 if (duckSpawn.isPresent()) {
                     this.ducks.add(duckSpawn.get());
@@ -200,9 +201,7 @@ public final class ModelImpl extends Canvas implements Model {
                           });
                 break;
             case INFINITE_AMMO:
-                this.ammo.stream()
-                .filter(m -> m.getNumber() == this.currentMagazine)
-                .findFirst().get().setBulletType(BulletType.INFINITE_BULLETS);
+                this.getCurrentMagazine().setBulletType(BulletType.INFINITE_BULLETS);
                 break;
             case SLOW_DOWN:
                 this.ducks.stream()
@@ -265,14 +264,13 @@ public final class ModelImpl extends Canvas implements Model {
 
     @Override
     public int getBullets() {
-        return this.ammo.stream().filter(m -> m.getNumber() == currentMagazine).findFirst().get().getAmmo();
+        return this.getCurrentMagazine().getAmmo();
     }
 
     @Override
     public void shoot() {
         if (this.canShoot()) {
-            this.ammo.stream().filter(m -> m.getNumber() == currentMagazine)
-            .findFirst().get().shoot();
+            this.getCurrentMagazine().shoot();
         } else {
             this.recharge();
             this.shoot();
@@ -281,8 +279,7 @@ public final class ModelImpl extends Canvas implements Model {
 
     @Override
     public boolean canShoot() {
-        return this.ammo.stream().filter(m -> m.getNumber() == currentMagazine)
-        .findFirst().get().getAmmo() > 0;
+        return this.getCurrentMagazine().getAmmo() > 0;
     }
 
     @Override
@@ -296,8 +293,10 @@ public final class ModelImpl extends Canvas implements Model {
     }
 
     @Override
-    public int getCurrentMagazine() {
-        return this.currentMagazine;
+    public Magazine getCurrentMagazine() {
+        return this.ammo.stream()
+        .filter(m -> m.getNumber() == currentMagazine)
+        .findFirst().get();
     }
 }
 
