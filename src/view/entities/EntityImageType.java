@@ -1,9 +1,7 @@
 package view.entities;
 
 import javafx.scene.image.Image;
-import javafx.scene.shape.Shape;
 import model.entities.Entity;
-import model.properties.Position;
 
 /**
  * Interface that represents entity in view.

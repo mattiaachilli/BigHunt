@@ -1,11 +1,10 @@
 package view.entities;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javafx.scene.image.Image;
 import model.entities.Dog;
+import model.entities.Duck;
 import model.entities.Entity;
 
 /**
@@ -18,12 +17,14 @@ public final class EntityImageTypeImpl implements EntityImageType {
      */
     protected static final int UPDATE_IMAGE = 250;
     private final EntityImageAnimation dogAnimation;
+    private final EntityImageAnimation duckAnimation;
 
     private static EntityImageTypeImpl singleton;
 
     private EntityImageTypeImpl() {
         super();
         this.dogAnimation = new DogAnimation();
+        this.duckAnimation = new DuckAnimation();
     }
 
     /**
@@ -42,6 +43,8 @@ public final class EntityImageTypeImpl implements EntityImageType {
         Image image = null;
         if (entity instanceof Dog) {
             image = this.dogAnimation.getImage();
+        } else if (entity instanceof Duck) {
+            image = this.duckAnimation.getImage();
         }
         return image;
     }
@@ -50,6 +53,8 @@ public final class EntityImageTypeImpl implements EntityImageType {
     public void updateEntity(final Entity entity, final int elapsed) {
         if (entity instanceof Dog) {
             this.dogAnimation.update(entity, elapsed);
+        } else if (entity instanceof Duck) {
+            this.duckAnimation.update(entity, elapsed);
         }
     }
 }

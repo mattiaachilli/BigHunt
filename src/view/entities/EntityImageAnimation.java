@@ -19,6 +19,9 @@ public interface EntityImageAnimation {
 
     /**
      * Add elapsed.
+     * 
+     * @param entity
+     *          entity to update.
      * @param elapsed
      *          elapsed from the last update.
      */

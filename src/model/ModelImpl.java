@@ -3,8 +3,6 @@ import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
-
 import controller.matches.AbstractMatch;
 import controller.matches.GameMode;
 import controller.matches.StoryMatch;

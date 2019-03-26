@@ -10,7 +10,6 @@ import model.entities.Dog;
 import model.entities.Entity;
 import settings.SettingsImpl;
 import utility.Utilities;
-import view.entities.EntityImageType;
 import view.entities.EntityImageTypeImpl;
 import javax.swing.JFrame;
 
