@@ -20,9 +20,9 @@ public interface View {
     
     void startGame(GameSceneController gameSceneController, GameMode gameMode);
     
-    void startViewRender();
+    void startRender();
     
-    void stopViewRender();
+    void stopRender();
     
     void closeGame(MatchData matchData, boolean isHighScores);
     
