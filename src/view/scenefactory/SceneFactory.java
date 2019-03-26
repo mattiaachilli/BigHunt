@@ -19,7 +19,7 @@ public interface SceneFactory {
     void setStage(Stage stage);
     
     /**
-     * get the current stage
+     * get the current stage.
      * 
      * @return 
      *          the current stage
@@ -27,47 +27,59 @@ public interface SceneFactory {
     Stage getStage();
     
     /**
-     * Opens the main menu scene
+     * Opens the account method.
+     */
+    void openAccountSelectionScene();
+    /**
+     * open registration scene.
+     */
+    void openRegisterScene();
+    /**
+     * open login scene.
+     */
+    void openLoginScene();
+    
+    /**
+     * Opens the main menu scene.
      */
     void openMenuScene();
     
     /**
-     * Opens the Settings scene
+     * Opens the Settings scene.
      */
     void openSettingsScene();
     
     /**
-     * Opens the achievements scene
+     * Opens the achievements scene.
      */
     void openAchievementsScene();
     
     /**
-     * Opens the high scores scene
+     * Opens the high scores scene.
      */
     void openHighScoresScene();
     
     /**
-     * Opens the manual of the game's scene
+     * Opens the manual of the game's scene.
      */
-    void OpenManualScene();
+    void openManualScene();
     
     /**
-     * Open the game scene
+     * Open the game scene.
      */
     void openGameScene();
     
     /**
-     * Open the game mode selection scene
+     * Open the game mode selection scene.
      */
     void openSelectModeScene();
-    
     /**
-     * Opens the game over scene
+     * Opens the game over scene.
      */
     void openGameOverScene();
     
     /**
-     * Set the game over scene
+     * Set the game over scene.
      * 
      * @param gameMode
      *          the game mode must be loaded

@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
  * Sample Skeleton for 'Menu.fxml' Controller Class.
  *
  */
-public class MenuSceneControllerImpl extends AbstractSceneController{
+public class MenuSceneControllerImpl extends AbstractSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -39,7 +39,7 @@ public class MenuSceneControllerImpl extends AbstractSceneController{
 
     @FXML
     private void openManual() {
-        this.getSceneFactory().OpenManualScene();
+        this.getSceneFactory().openManualScene();
     }
 
     @FXML

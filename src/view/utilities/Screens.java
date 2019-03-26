@@ -1,7 +1,7 @@
 package view.utilities;
 
 /**
- * Enum that contains the game scenes.
+ * Enumeration that contains the game scenes.
  *
  */
 public enum Screens {
@@ -10,7 +10,19 @@ public enum Screens {
      */
     GAME("Game.fxml"),
     /**
-     * Pause scene
+     * the login scene.
+     */
+    LOGIN("Login.fxml"),
+    /**
+     * the registration scene.
+     */
+    REGISTER("Register.fxml"),
+    /**
+     * select account scene.
+     */
+    SELECT_ACCOUNT("SelectAccount.fxml"),
+    /**
+     * Pause scene.
      */
     PAUSE("Pause.fxml"),
     /**

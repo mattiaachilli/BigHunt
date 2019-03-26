@@ -2,7 +2,10 @@ package view;
 
 import java.util.List;
 
+import controller.matches.GameMode;
 import model.data.HighScore;
+import model.data.MatchData;
+import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;
 
 /**
@@ -14,13 +17,13 @@ public interface View {
 
     void viewLauncher();
     
-    void startGame();
+    void startGame(GameSceneController gameSceneController, GameMode gameMode);
     
     void startViewRender();
     
     void stopViewRender();
     
-    void closeGame();
+    void closeGame(MatchData matchData, boolean isHighScores);
     
     void resetGame();
     
