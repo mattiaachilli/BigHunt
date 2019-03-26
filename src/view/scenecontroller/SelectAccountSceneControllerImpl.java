@@ -21,12 +21,14 @@ public class SelectAccountSceneControllerImpl extends AbstractSceneController {
 
     @FXML
     void goToLogin() {
-
+        //salva dati
+        this.getSceneFactory().openLoginScene();
     }
 
     @FXML
     void goToRegister() {
-
+        //salva dati
+        this.getSceneFactory().openRegisterScene();
     }
 
     @FXML

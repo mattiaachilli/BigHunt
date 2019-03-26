@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane id="selectmode" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="selectmode" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.SelectModeSceneControllerImpl">
    <top>
       <Label id="title" alignment="CENTER" text="SELECT GAME MODE" BorderPane.alignment="CENTER" />
    </top>
@@ -28,8 +28,8 @@
                   <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="arcadeBtn" mnemonicParsing="false" text="ARCADE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button fx:id="survivalBtn" mnemonicParsing="false" text="SURVIVAL" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button fx:id="arcadeBtn" mnemonicParsing="false" onAction="#startArcadeGame" text="ARCADE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="survivalBtn" mnemonicParsing="false" onAction="#startSurvivalGame" text="SURVIVAL" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_LEFT">
@@ -46,7 +46,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="backBtn" mnemonicParsing="false" text="BACK TO MENU" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backToMenu" text="BACK TO MENU" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
                </children>

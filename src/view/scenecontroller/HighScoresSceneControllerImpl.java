@@ -1,12 +1,11 @@
 package view.scenecontroller;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class AchievementsSceneControllerImpl extends AbstractSecondarySceneController{
+public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -19,7 +18,7 @@ public class AchievementsSceneControllerImpl extends AbstractSecondarySceneContr
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'Achievements.fxml'.";
+        assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'HighScores.fxml'.";
 
     }
 }

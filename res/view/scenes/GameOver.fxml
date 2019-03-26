@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane id="gameover" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="gameover" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameOverSceneControllerImpl">
    <center>
       <VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
@@ -26,7 +26,7 @@
                   <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="newgame" mnemonicParsing="false" text="NEW GAME" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Button fx:id="newgame" mnemonicParsing="false" onAction="#startNewGame" text="NEW GAME" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <Label text="TIME PLAYED" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="KILLS" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="SCORE" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -50,7 +50,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="backBtn" mnemonicParsing="false" text="BACK TO MENU" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backToMenu" text="BACK TO MENU" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
                </children>
