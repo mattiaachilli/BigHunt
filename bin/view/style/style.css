@@ -40,9 +40,68 @@ Label{
 #settings{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
+#login{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#register{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#selectmode{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
 
 #pause{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#gameover{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#manual{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#selectmode{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#highscores{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+#achievements{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#infiniteammologo {
+    -fx-image: url("../powerup/yellowStar.png");
+}
+
+#killallducklogo {
+    -fx-image: url("../powerup/blackStar.png");
+}
+
+#slowdownlogo {
+    -fx-image: url("../powerup/redStar.png");
+}
+
+#doublescorelogo {
+	-fx-image: url("../powerup/greenStar.png");
+}
+
+#standardducklogo {
+    -fx-image: url("../duck/standard/duckLeft0.png");
+}
+
+#pinkducklogo {
+    -fx-image: url("../duck/pink/pinkDuckLeft0.png");
+}
+
+#orangeducklogo {
+    -fx-image: url("../duck/orange/orangeDuckLeft0.png");
+}
+
+#yellowducklogo {
+    -fx-image: url("../duck/yellow/yellowDuckLeft0.png");
 }
 
 #backBtn {

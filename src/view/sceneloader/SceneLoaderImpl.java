@@ -65,19 +65,25 @@ public class SceneLoaderImpl implements SceneLoader {
             }
             
             switch(screen) {
+            case SELECT_ACCOUNT:
+                this.view.resetGame();
+                break;
+            case LOGIN:
+                break;
+            case REGISTER:
+                break;
             case GAME:
                 this.view.startGame((GameSceneController) controller,gameMode);
                 break;
             case GAME_OVER:
                 //
-            
                 break;
             case ACHIEVEMENTS:
                 break;
             case HIGH_SCORES:
                 break;
             case MENU: 
-                this.view.resetGame();
+            //    this.view.resetGame();
                 break;
            /* case MANUAL:
                 break;

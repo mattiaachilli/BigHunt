@@ -30,7 +30,9 @@ public class ViewImpl extends Application implements View {
         primaryStage.setTitle(GAME_TITLE);
         primaryStage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));
         this.sceneFactory.setStage(primaryStage);
-        this.sceneFactory.openMenuScene();
+        this.sceneFactory.openAccountSelectionScene();
+        
+        //this.sceneFactory.openMenuScene();
         //load images
     }
     

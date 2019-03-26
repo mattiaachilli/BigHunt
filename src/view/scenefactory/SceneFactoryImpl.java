@@ -35,6 +35,7 @@ public class SceneFactoryImpl implements SceneFactory {
     
     @Override
     public void openAccountSelectionScene() {
+        System.out.println("ok");
         this.openNewScene(Screens.SELECT_ACCOUNT);
     }
     
