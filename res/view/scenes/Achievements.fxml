@@ -34,10 +34,10 @@
                   <Label text="DUCKS KILLED" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="POWER UP USED" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="TOTAL SCORES" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="10" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <Label text="10" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <Label text="10" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                  <Label text="10" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <Label fx:id="matchPlayed" text="10" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Label fx:id="kills" text="10" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <Label fx:id="powerUpUsed" text="10" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <Label fx:id="totalScore" text="10" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_LEFT">

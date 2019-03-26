@@ -40,7 +40,7 @@ public class RegisterSceneControllerImpl extends AbstractSceneController {
 
     @FXML
     void registerBtn() {
-        System.out.println(userTextField.getText() + pwdTextField.getText());
+        System.out.println(userTextField.getText() + "\n" + pwdTextField.getText());
         this.getSceneFactory().openMenuScene();
     }
 

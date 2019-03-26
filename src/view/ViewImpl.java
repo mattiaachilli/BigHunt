@@ -1,10 +1,12 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import controller.matches.GameMode;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.achievements.Achievement;
 import model.data.HighScore;
 import model.data.MatchData;
 import view.scenecontroller.GameSceneController;
@@ -20,8 +22,10 @@ public class ViewImpl extends Application implements View {
 
     private static final String GAME_TITLE = "BIG HUNT";
     private final SceneFactory sceneFactory;
+    private List<Achievement> achievements;
     
     public ViewImpl() {
+        this.achievements = new ArrayList<>();
         this.sceneFactory = new SceneFactoryImpl(this);
     }
     
@@ -66,15 +70,14 @@ public class ViewImpl extends Application implements View {
     }
 
     @Override
-    public void serHighScores() {
+    public void setHighScores() {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void setAchievements() {
-        // TODO Auto-generated method stub
-
+    public void setAchievements(List<Achievement> achievements) {
+        this.achievements = achievements;        
     }
 
     @Override
@@ -98,6 +101,11 @@ public class ViewImpl extends Application implements View {
     public void closeGame(MatchData matchData, boolean isHighScores) {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public List<Achievement> getAchievements() {
+        return this.achievements;
     }
 
     

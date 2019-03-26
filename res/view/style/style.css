@@ -15,6 +15,22 @@ Button:hover{
     -fx-effect: dropshadow( gaussian , rgba(0.5,0.5,0.5,0.5) , 10,0,0,1 );
 }
 
+TextField {
+	-fx-font-size: 12pt;
+}
+
+ComboBox {
+	-fx-font-size: 12pt;
+}
+
+CheckBox {
+	-fx-font-size: 12pt;
+}
+
+PasswordField  {
+	-fx-font-size: 12pt;
+}
+
 Label{
  	-fx-background-color: none;
 	-fx-border-color: none;
@@ -26,7 +42,6 @@ Label{
     -fx-font-size: 26pt;
     -fx-text-fill: red ;
     -fx-font-weight: bold;
-   /* -fx-effect: dropshadow(three-pass-box, yellow, 10, 0, 0, 0);*/
 }
 
 #menu{
@@ -40,12 +55,15 @@ Label{
 #settings{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
+
 #login{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
+
 #register{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
+
 #selectmode{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
@@ -65,9 +83,11 @@ Label{
 #selectmode{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
+
 #highscores{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
+
 #achievements{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
@@ -105,8 +125,7 @@ Label{
 }
 
 #backBtn {
-	-fx-background-color:
-        linear-gradient(#ff5400, #be1d00);
+	-fx-background-color:linear-gradient(#ff5400, #be1d00);
     -fx-background-radius: 20, 25;
     -fx-background-insets: 0, 1;
     -fx-text-fill: white;
@@ -114,8 +133,7 @@ Label{
 }
 
 #settingsApplyBtn {
-    -fx-background-color:
-        linear-gradient(#00812a, #003411);
+    -fx-background-color:linear-gradient(#00812a, #003411);
     -fx-background-radius: 20, 25;
     -fx-background-insets: 0, 1;
     -fx-text-fill: white;
