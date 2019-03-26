@@ -1,8 +1,10 @@
 package model.spawner.duck;
 
+import java.util.List;
 import java.util.Optional;
+
+import controller.matches.MaxOfRounds;
 import model.entities.Duck;
-import model.utilities.RoundUtility;
 
 /**
  * 
@@ -24,7 +26,7 @@ public class StoryModeSpawner extends AbstractSpawner {
     }
 
     private void incRound() {
-        if (this.round < RoundUtility.FIVE_ROUNDS.getRounds()) {
+        if (this.round < MaxOfRounds.FIVE_ROUNDS.getRounds()) {
             this.round++;
         }
     }
@@ -32,28 +34,37 @@ public class StoryModeSpawner extends AbstractSpawner {
     @Override
     public final Optional<Duck> spawnDuck() {
         super.resetTimeElapsed();
-        final Optional<Duck> duck;
+        Optional<Duck> duck = Optional.empty();
 
         if (super.getCurrentDuckState().isPresent()) {
             final DuckState duckState = super.getCurrentDuckState().get();
-            duck = Optional.of(duckState.spawnDuck());
-            super.addDuck(duck.get());
-
-            super.setSpawnDelay(duckState.getSpawnDelay());
-            super.incDuckSpawned();
-
-            if (duckState.isStateEnded()) {
+            if (!duckState.isStateEnded()) {
+                duck = Optional.of(duckState.spawnDuck());
+                super.addDuck(duck.get());
+                super.setSpawnDelay(duckState.getSpawnDelay());
+                super.incDuckSpawned();
+            } else if (duckState.isStateEnded() && !this.checkDucksAlive()) {
                 duckState.resetDuckSpawned();
+                super.clearDucksSpawned();
                 this.incRound();
                 super.setState(duckState.getNextState());
-                super.clearDucksSpawned();
                 super.setSpawnDelay(ROUND_DELAY);
-            } 
+            }
         } else {
             duck = Optional.empty();
         }
 
         return duck;
+    }
+
+    private boolean checkDucksAlive() {
+        final List<Duck> ducksSpawned = super.getListDuckSpawned();
+        for (final Duck duck: ducksSpawned) {
+            if (duck.isAlive()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

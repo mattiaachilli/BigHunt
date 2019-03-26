@@ -1,6 +1,8 @@
 package model.entities.powerup;
 
+import static model.rarity.ItemRarity.VERY_COMMON;
 import static model.rarity.ItemRarity.COMMON;
+import static model.rarity.ItemRarity.RARE;
 import static model.rarity.ItemRarity.VERY_RARE;
 import model.rarity.ItemRarity;
 
@@ -12,9 +14,18 @@ import model.rarity.ItemRarity;
 public enum PowerUpType {
 
     /**
+     * DOUBLE SCORE FOR ALL DUCKS SPAWNED.
+     */
+    DOUBLE_SCORE("Double score", VERY_COMMON),
+    /**
      * INFINITE AMMO FOR A SHORT TIME.
      */
     INFINITE_AMMO("Infinite ammo", COMMON),
+
+    /**
+     * SLOW DOWN ALL DUCKS SPAWNED.
+     */
+    SLOW_DOWN("Slow down all ducks", RARE),
     /**
      * KILL ALL DUCK SPAWNED.
      */

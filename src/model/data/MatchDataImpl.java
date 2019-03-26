@@ -1,48 +1,37 @@
 package model.data;
 
-//import java.util.Optional;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Optional;
 
-import model.utilities.RoundUtility;
-import utility.GameMode;
+import model.entities.powerup.PowerUpType;
 
+/**
+ * The implementation of the data of a match.
+ * @author simone
+ *
+ */
 public class MatchDataImpl implements MatchData {
 
-    private final RoundUtility MAX_OF_ROUNDS;
-    private final GameMode GAME_MODE;
-
-    private boolean isMatchPaused;
-    private int currentRound;
     private int score;
     private int killedDucks;
+    private int flownDucks;
     private int timer;
     private int usedPowerUps;
-    // private Optional<PowerUpType> powerUp;
+    private Optional<PowerUpType> powerUp;
 
     /**
      * 
-     * Constructor do be called when the player starts a new match
+     * Constructor do be called when the player starts a new match.
      */
-    public MatchDataImpl(final GameMode gameMode) {
-        this.isMatchPaused = true;
-        this.currentRound = 1;
+    public MatchDataImpl() {
         this.score = 0;
         this.killedDucks = 0;
+        this.flownDucks = 0;
         this.timer = 0;
         this.usedPowerUps = 0;
-        // this.powerUp = Optional.empty();
-        
-        this.GAME_MODE = gameMode;
-
-        switch (gameMode) {
-        case STORY_MODE:
-            this.MAX_OF_ROUNDS = RoundUtility.FIVE_ROUNDS;
-            break;
-        case SURVIVAL_MODE:
-            this.MAX_OF_ROUNDS = RoundUtility.UNIQUE_ROUND;
-            break;
-        default:
-            throw new IllegalArgumentException();
-        }
+        this.powerUp = Optional.empty();
     }
 
     @Override
@@ -52,33 +41,40 @@ public class MatchDataImpl implements MatchData {
     }
 
     @Override
-    public void incrementNumberOdKilledDucks() {
+    public void incrementKilledDucks() {
         // TODO Auto-generated method stub
-        if (this.isMatchGoing()) {
-            this.killedDucks++;
-        }
+        this.killedDucks++;
     }
 
     @Override
-    public int getNumberOfKilledDucks() {
+    public int getKilledDucks() {
         // TODO Auto-generated method stub
         return this.killedDucks;
     }
 
     @Override
-    public void incrementScoreOf(int score) {
+    public void incrementFlownDucks() {
         // TODO Auto-generated method stub
-        if (this.isMatchGoing()) {
-            this.score += score;
-        }
+        this.flownDucks++;
     }
 
     @Override
-    public void decrementScoreOf(int negativeScore) {
+    public int getFlownDucks() {
         // TODO Auto-generated method stub
-        if (this.isMatchGoing()) {
-            this.score -= negativeScore;
-        }
+        return this.flownDucks;
+    }
+
+    @Override
+    public void incrementScoreOf(final int score) {
+        // TODO Auto-generated method stub
+        this.score += score;
+
+    }
+
+    @Override
+    public void decrementScoreOf(final int negativeScore) {
+        // TODO Auto-generated method stub
+        this.score -= negativeScore;
     }
 
     @Override
@@ -88,24 +84,32 @@ public class MatchDataImpl implements MatchData {
     }
 
     @Override
-    public void addTimeToTimer(int timeElapsed) {
+    public void addTimeToTimer(final int timeElapsed) {
         // TODO Auto-generated method stub
-        if (this.isMatchGoing()) {
-            this.timer += timeElapsed;
+        this.timer += timeElapsed;
+    }
+
+    @Override
+    public void powerUpCollected(final PowerUpType type) { 
+        // TODO Auto-generated method stub
+        this.usedPowerUps++;
+        if (!this.hasPowerUp()) {
+            this.powerUp = Optional.of(type);
         }
     }
 
-    /*
-     * @Override public void powerUpCollected(PowerUpType type) { // TODO
-     * Auto-generated method stub this.usedPowerUps++; if (!this.hasPowerUp()) {
-     * this.powerUp = Optional.of(type); } }
-     * 
-     * @Override public boolean hasPowerUp() { // TODO Auto-generated method stub
-     * return this.powerUp.isPresent(); }
-     * 
-     * @Override public void powerUpEnded() { // TODO Auto-generated method stub
-     * this.powerUp = Optional.empty(); }
-     */
+    @Override
+    public boolean hasPowerUp() { 
+        // TODO Auto-generated method stub
+        return this.powerUp.isPresent();
+    }
+
+    @Override
+    public void powerUpEnded() { 
+        // TODO Auto-generated method stub
+        this.powerUp = Optional.empty();
+    }
+
     @Override
     public int getNumberOfUsedPowerUps() {
         // TODO Auto-generated method stub
@@ -113,51 +117,16 @@ public class MatchDataImpl implements MatchData {
     }
 
     @Override
-    public boolean isMatchGoing() {
-        // TODO Auto-generated method stub
-        return !this.isMatchPaused;
-    }
-
-    @Override
-    public void pauseMatch() {
-        // TODO Auto-generated method stub
-        if (this.isMatchGoing()) {
-            this.isMatchPaused = true;
-        }
-    }
-
-    @Override
-    public void unpauseMatch() {
-        // TODO Auto-generated method stub
-        if (!this.isMatchGoing()) {
-            this.isMatchPaused = false;
-        }
-    }
-
-    @Override
-    public int getCurrentRound() {
-        // TODO Auto-generated method stub
-        return this.currentRound;
-    }
-
-    @Override
-    public void incrementRound() {
-        // TODO Auto-generated method stub
-        if (this.currentRound < this.MAX_OF_ROUNDS.getRounds() && !this.isMatchGoing()) {
-            this.currentRound++;
-        }
-    }
-
-    @Override
-    public GameMode getMode() {
-        // TODO Auto-generated method stub
-        return this.GAME_MODE;
-    }
-    
-    @Override
     public UnmodifiableMatchData unmodifiableCopy() {
         // TODO Auto-generated method stub
-        return new UnmodifiableMatchData(new MatchDataImpl(this.GAME_MODE));
+        return new UnmodifiableMatchData(new MatchDataImpl());
     }
-
+    
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
+    
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+    }
 }

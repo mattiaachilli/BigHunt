@@ -1,111 +1,101 @@
 package model.data;
 
-import utility.GameMode;
+import model.entities.powerup.PowerUpType;
 
 /**
  * 
+ * Represents the data of an unmodifiable match.
+ * 
  * @author simone
- *
- *         Represents the data of an unmodifiable match
  */
 public class UnmodifiableMatchData implements MatchData {
 
     private final MatchData matchdata;
 
+    /**
+     * Constructor of an unmodifiable match data.
+     * 
+     * @param matchdata the matchdata to copy
+     */
     public UnmodifiableMatchData(final MatchData matchdata) {
         this.matchdata = matchdata;
     }
 
     @Override
-    public int getGlobalScore() {
+    public final int getGlobalScore() {
         return this.matchdata.getGlobalScore();
     }
 
     @Override
-    public int getNumberOfKilledDucks() {
+    public final int getKilledDucks() {
         // TODO Auto-generated method stub
-        return this.matchdata.getNumberOfKilledDucks();
+        return this.matchdata.getKilledDucks();
     }
 
     @Override
-    public int getTimerFromStart() {
+    public final int getTimerFromStart() {
         // TODO Auto-generated method stub
         return this.matchdata.getTimerFromStart();
     }
 
     @Override
-    public int getNumberOfUsedPowerUps() {
+    public final int getNumberOfUsedPowerUps() {
         // TODO Auto-generated method stub
         return this.matchdata.getNumberOfUsedPowerUps();
     }
-    
-    @Override
-    public int getCurrentRound() {
-        return this.matchdata.getCurrentRound();
-    }
 
     @Override
-    public boolean isMatchGoing() {
-        return this.matchdata.isMatchGoing();
-    }
-
-    /*
-     * @Override public boolean hasPowerUp() { // TODO Auto-generated method stub
-     * return this.matchdata.hasPowerUp(); }
-     */
-    @Override
-    public void incrementNumberOdKilledDucks() {
+    public final void incrementKilledDucks() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void incrementScoreOf(int score) {
+    public final void incrementScoreOf(final int score) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void decrementScoreOf(int negativeScore) {
+    public final void decrementScoreOf(final int negativeScore) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void addTimeToTimer(int timeElapsed) {
-        throw new UnsupportedOperationException();
-    }
-    /*
-     * @Override public void powerUpEnded() { // TODO Auto-generated method throw
-     * new UnsupportedOperationException();
-     * 
-     * }
-     * 
-     * @Override public void powerUpCollected(PowerUpType type) { // TODO
-     * Auto-generated method stub throw new UnsupportedOperationException(); }
-     */
-
-
-    @Override
-    public void pauseMatch() {
+    public final void addTimeToTimer(final int timeElapsed) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void unpauseMatch() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void incrementRound() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public UnmodifiableMatchData unmodifiableCopy() {
-        return this;
-    }
-
-    @Override
-    public GameMode getMode() {
+    public final void incrementFlownDucks() {
         // TODO Auto-generated method stub
-        return this.matchdata.getMode();
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public final int getFlownDucks() {
+        // TODO Auto-generated method stub
+        return this.matchdata.getFlownDucks();
+    }
+
+    @Override
+    public final void powerUpCollected(final PowerUpType type) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public final boolean hasPowerUp() {
+        // TODO Auto-generated method stub
+        return this.matchdata.hasPowerUp();
+    }
+
+    @Override
+    public final void powerUpEnded() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public final UnmodifiableMatchData unmodifiableCopy() {
+        return this;
     }
 }

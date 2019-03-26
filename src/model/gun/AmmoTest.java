@@ -10,7 +10,7 @@ import model.ModelImpl;
 
 class AmmoTest {
 
-    private final Model model = new ModelImpl(null);
+    private final Model model = new ModelImpl();
 
     @Test
     void test() {
@@ -22,11 +22,23 @@ class AmmoTest {
         }
         assertEquals(this.model.getCurrentMagazine(), 2);
         assertEquals(this.model.getBullets(), 3);
-        for (int i = 0; i < ModelImpl.MAX_MAGAZINES * 5; i++) {
+        this.model.activateInfAmmo();
+        for (int i = 0; i <= ModelImpl.MAX_MAGAZINES; i++) {
             this.model.shoot();
         }
-        assertEquals(this.model.getCurrentMagazine(), ModelImpl.MAX_MAGAZINES);
-        assertEquals(this.model.getBullets(), 0);
+        assertEquals(this.model.getCurrentMagazine(), 2);
+        assertEquals(this.model.getBullets(), 3);
+        this.model.deactivateInfAmmo();
+        for (int i = 0; i <= ModelImpl.MAX_MAGAZINES / 4; i++) {
+            this.model.shoot();
+        }
+        assertEquals(this.model.getCurrentMagazine(), 3);
+        assertEquals(this.model.getBullets(), 2);
+//        for (int i = 0; i < ModelImpl.MAX_MAGAZINES * 5; i++) {
+//            this.model.shoot();
+//        }
+//        assertEquals(this.model.getCurrentMagazine(), ModelImpl.MAX_MAGAZINES);
+//        assertEquals(this.model.getBullets(), 0);
     }
 
 }

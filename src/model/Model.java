@@ -2,12 +2,11 @@ package model;
 
 import java.util.List;
 
-import model.data.GlobalData;
+import controller.matches.GameMode;
 import model.data.MatchData;
 import model.entities.Duck;
 import model.entities.Entity;
 import model.gun.Magazine;
-import utility.GameMode;
 
 /**
  * 
@@ -38,12 +37,6 @@ public interface Model {
 
     /**
      * 
-     * @return the list of ducks
-     */
-    List<Duck> getDucks();
-
-    /**
-     * 
      * @return the list of entities
      */
     List<Entity> getEntities();
@@ -53,18 +46,6 @@ public interface Model {
      * @return data of the actual match
      */
     MatchData getMatchData();
-
-    /**
-     * 
-     * @return data of all matches
-     */
-    GlobalData getGlobalData();
-
-    /**
-     * 
-     * @return true if is an highscore
-     */
-    boolean isHighScore();
 
     /**
      * 
@@ -107,4 +88,20 @@ public interface Model {
      * @return the serial number of the magazine being used.
      */
     int getCurrentMagazine();
+
+    /**
+     * 
+     * @return the list of ducks.
+     */
+    List<Duck> getDucks();
+
+    /**
+     * test.
+     */
+    void activateInfAmmo();
+
+    /**
+     * test.
+     */
+    void deactivateInfAmmo();
 }

@@ -73,4 +73,9 @@ public interface Duck extends Character {
      *          set the movement
      */
     void setMovementChange(boolean change);
+
+    /**
+     * Set the velocity of this duck decelerate.
+     */
+    void setDecelerate();
 }
