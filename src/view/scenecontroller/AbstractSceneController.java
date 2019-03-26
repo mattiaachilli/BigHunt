@@ -10,7 +10,7 @@ public abstract class AbstractSceneController implements SceneController {
     private SceneFactory sceneFactory;
     
     @Override
-    public void setSceneFactory(SceneFactory sceneFactory) {
+    public void setSceneFactory(final SceneFactory sceneFactory) {
         this.sceneFactory = sceneFactory;
     }
     

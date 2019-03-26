@@ -33,11 +33,11 @@
                   <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="KILL ALL THE DUCK TO WIN" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="KILL ALL THE DUCKS TO WIN" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
                     <columnConstraints>
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints vgrow="SOMETIMES" />
@@ -58,8 +58,8 @@
                   </GridPane>
                   <GridPane GridPane.columnIndex="3" GridPane.rowIndex="5">
                     <columnConstraints>
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints vgrow="SOMETIMES" />
