@@ -7,6 +7,7 @@ import controller.Controller;
 import controller.matches.GameMode;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
+import model.data.HighScore;
 import model.data.MatchData;
 import model.data.Podium;
 import view.entities.ViewEntity;
@@ -54,19 +55,40 @@ public interface View {
      * @return a map of achievements.
      */
     Map<AchievementType, Achievement> getAchievements();
+    
+    /**
+     * 
+     * @return
+     *          a list of story mode highScores.
+     */
+    List<HighScore> getStoryHighScores();
+    
+    /**
+     * 
+     * @return
+     *          a list of survival mode high scores.
+     */
+    List<HighScore> getSurvivalHighScores();
 
     /**
      * 
-     * @return the story podium.
+     * @return the story pods.
      */
     Podium getStoryPodium();
 
     /**
      * 
-     * @return the survival podium.
+     * @return the survival pods.
      */
     Podium getSurvivalPodium();
 
+    /**
+     * 
+     * @return
+     *          the match data of logged user.
+     */
+    
+    MatchData getMatchData();
     /**
      * 
      * @return .

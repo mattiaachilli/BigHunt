@@ -1,12 +1,25 @@
 package view.scenecontroller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+
+import controller.files.UserManager;
+import controller.files.UserManagerImpl;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import javafx.scene.control.TextInputDialog;
+import model.data.UserData;
+/**
+ * 
+ * Sample Skeleton for 'Login.fxml' Controller Class
+ *
+ */
 public class LoginSceneControllerImpl extends AbstractSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -26,6 +39,8 @@ public class LoginSceneControllerImpl extends AbstractSceneController {
 
     @FXML // fx:id="exitBtn"
     private Button exitBtn; // Value injected by FXMLLoader
+    
+    private final UserManager user = new UserManagerImpl();
 
     @FXML
     void quitGame() {
@@ -34,8 +49,15 @@ public class LoginSceneControllerImpl extends AbstractSceneController {
 
     @FXML
     void login() {
-        //salva
-        this.getSceneFactory().openMenuScene();
+        Optional<UserData> userData = user.login(this.userTextField.getText(), this.passwordTextField.getText());
+        if(userData.isPresent()) {
+            //inserire??
+            this.getSceneFactory().openMenuScene();
+        } else {
+            Alert alert = new Alert(AlertType.ERROR, "USER E/O PASSWORD ERRATI", ButtonType.OK);
+            alert.showAndWait();
+            
+        }
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

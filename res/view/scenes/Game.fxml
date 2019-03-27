@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.canvas.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane fx:id="game" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameSceneControllerImpl">
-	<Canvas fx:id="canvas" BorderPane.alignment="CENTER" />
-</Pane>
+<BorderPane fx:id="game" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameSceneControllerImpl">
+   <center>
+      <VBox fx:id="vGameBox" alignment="CENTER" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Canvas fx:id="canvas" height="500.0" width="800.0" />
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <GridPane fx:id="bottomGrid" alignment="CENTER" prefHeight="100.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="SOMETIMES" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="prova1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="prova2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label text="Prova3" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+   </bottom>
+</BorderPane>

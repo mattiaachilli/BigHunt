@@ -3,7 +3,9 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Map.Entry;
 
 import com.sun.corba.se.spi.activation.ActivatorHolder;
 
@@ -11,7 +13,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import model.achievements.Achievement;
-
+import model.achievements.AchievementType;
+/**
+ * 
+ * Sample Skeleton for 'Achievements.fxml' Controller Class
+ *
+ */
 public class AchievementsSceneControllerImpl extends AbstractSecondarySceneController 
     implements AchievementSceneController {
 
@@ -41,11 +48,29 @@ public class AchievementsSceneControllerImpl extends AbstractSecondarySceneContr
      * @param achievements
      *          points of player
      */
-    public final void setAchievements(final List<Achievement> achievements) {
-        this.matchPlayed.setText("1");
-        this.kills.setText("2");
-        this.powerUpUsed.setText("3");
-        this.totalScore.setText("4");
+    public final void setAchievements(final Map<AchievementType, Achievement> achievements) {
+        //verificare cosa succede se non sono presenti
+        
+        for (final Entry<AchievementType, Achievement> a : achievements.entrySet()) { 
+            switch(a.getKey()) {
+            case KILLED_DUCKS:
+                this.kills.setText(String.valueOf(a.getValue().getCurrentValueOfAchievement()));
+                break;
+            case MATCHES_PLAYED:
+                this.matchPlayed.setText(String.valueOf(a.getValue().getCurrentValueOfAchievement()));
+                break;
+            case POWERUPS_USED:
+                this.powerUpUsed.setText(String.valueOf(a.getValue().getCurrentValueOfAchievement()));
+                break;
+            case SUM_OF_SCORES:
+                this.totalScore.setText(String.valueOf(a.getValue().getCurrentValueOfAchievement()));
+                break;
+            }
+         
+                
+            
+            
+        }
         /*
         aggiungere informazioni da achievements
         scorrerei la mappa 
@@ -59,4 +84,5 @@ public class AchievementsSceneControllerImpl extends AbstractSecondarySceneContr
         assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'Achievements.fxml'.";
 
     }
+
 }

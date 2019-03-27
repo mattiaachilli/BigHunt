@@ -7,7 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-
+/**
+ * 
+ * Sample Skeleton for 'Pause.fxml' Controller Class
+ *
+ */
 public class PauseSceneControllerImpl extends AbstractSecondarySceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader

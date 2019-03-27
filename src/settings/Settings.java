@@ -59,7 +59,13 @@ public interface Settings {
      * @return a list of supported resolutions
      */
     List<Pair<Integer, Integer>> getSupportedResolutions();
-
+    
+    /**
+     * 
+     * @return
+     *          default screen resolution.
+     */
+    Pair<Integer, Integer> getDefaultResolutions();
     /**
      * 
      * @return true if fullScreenMode is enable, false otherwise

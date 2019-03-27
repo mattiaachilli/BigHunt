@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.shape.Rectangle;
+import model.data.HighScore;
 import model.data.MatchData;
 import settings.SettingsImpl;
 import utility.Utilities;
@@ -44,6 +45,8 @@ public class ViewImpl implements View {
     private final SceneFactory sceneFactory;
     private Stage stage;
     private Map<AchievementType, Achievement> achievements;
+    private List<HighScore> survivalModeHighsScores;
+    private List<HighScore> storyModeHighsScores;
     private Podium storyPodium;
     private Podium survivalPodium;
     private boolean gamePaused;
@@ -138,11 +141,22 @@ public class ViewImpl implements View {
         // TODO Auto-generated method stub
         return this.survivalPodium;
     }
+    
+    @Override
+    public MatchData getMatchData() {
+        return this.matchData;
+    }
+    
+    @Override
+    public List<HighScore> getStoryHighScores() {
+        return this.storyModeHighsScores;
+    }
 
-    /**
-     * 
-     * @return the scene factory.
-     */
+    @Override
+    public List<HighScore> getSurvivalHighScores() {
+        return this.survivalModeHighsScores;
+    }
+    
     public SceneFactory getSceneFactory() {
         return this.sceneFactory;
     }
@@ -193,14 +207,12 @@ public class ViewImpl implements View {
                 final long currentTime = System.currentTimeMillis();
                 
                 this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, 1366, 768);
-                
+               
                 for (final ViewEntity viewEntity : this.viewEntitiesGame) {
                     if (viewEntity.getShape() instanceof Rectangle) {
                         final Rectangle rectangle = (Rectangle) viewEntity.getShape();
                         this.gamecanvas.drawImage(viewEntity.getPicture(), viewEntity.getPosition().getX(), viewEntity.getPosition().getY(),
                         rectangle.getWidth(), rectangle.getHeight());
-                      
-                       
                     }
                 }
 
@@ -217,9 +229,7 @@ public class ViewImpl implements View {
             this.running = true;
             super.start();
         }
-    }
-
- 
+    } 
 
 }
 

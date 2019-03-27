@@ -1,16 +1,27 @@
 package view.scenecontroller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import controller.Controller;
 import controller.ControllerImpl;
+import controller.files.UserManager;
+import controller.files.UserManagerImpl;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import javafx.scene.control.Alert.AlertType;
+import model.data.UserData;
+/**
+ * 
+ * Sample Skeleton for 'Register.fxml' Controller Class
+ *
+ */
 public class RegisterSceneControllerImpl extends AbstractSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -31,6 +42,8 @@ public class RegisterSceneControllerImpl extends AbstractSceneController {
     @FXML // fx:id="pwdTextField"
     private PasswordField pwdTextField; // Value injected by FXMLLoader
 
+    private final UserManager user = new UserManagerImpl();
+
     //private final Controller controller; 
     
     @FXML
@@ -40,7 +53,15 @@ public class RegisterSceneControllerImpl extends AbstractSceneController {
 
     @FXML
     void registerBtn() {
-        System.out.println(userTextField.getText() + "\n" + pwdTextField.getText());
+        /*Optional<UserData> userData = user.register(this.userTextField.getText(), this.passwordTextField.getText());
+        if(userData.isPresent()) {
+            //inserire??
+            this.getSceneFactory().openMenuScene();
+        } else {
+            Alert alert = new Alert(AlertType.ERROR, "USER GIA' ESISTENTE", ButtonType.OK);
+            alert.showAndWait();
+            
+        }*/
         //view.getcontr.loginuser/regUser
         this.getSceneFactory().openMenuScene();
     }

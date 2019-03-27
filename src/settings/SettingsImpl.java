@@ -181,4 +181,9 @@ public final class SettingsImpl implements Settings {
         }
     }
 
+    @Override
+    public Pair<Integer, Integer> getDefaultResolutions() {
+        return SettingsImpl.DEFAULT_RESOLUTION;
+    }
+
 }
