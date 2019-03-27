@@ -96,14 +96,12 @@ public class ViewImpl implements View {
 
     @Override
     public Map<AchievementType, Achievement> getAchievements() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.achievements;
     }
 
     @Override
     public void setAchievements(final Map<AchievementType, Achievement> achievements) {
-        // TODO Auto-generated method stub
-
+        this.achievements = achievements;
     }
 
     @Override
