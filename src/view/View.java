@@ -7,6 +7,7 @@ import controller.Controller;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
 import model.data.HighScore;
+import model.data.Podium;
 import view.scenefactory.SceneFactory;
 
 /**
@@ -54,13 +55,23 @@ public interface View {
 
     /**
      * 
+     * Sets the story podium for the view.
+     * 
+     * @param podium the podium
      */
-    void setHighScores();
+    void setStoryPodium(Podium podium);
 
     /**
      * 
-     * @param achievements
-     *            current achievements
+     * Sets the survival podium for the view.
+     * 
+     * @param podium the podium
+     */
+    void setSurvivalPodium(Podium podium);
+
+    /**
+     * 
+     * @param achievements current achievements
      */
     void setAchievements(Map<AchievementType, Achievement> achievements);
 
@@ -72,9 +83,15 @@ public interface View {
 
     /**
      * 
-     * @return .
+     * @return the story podium.
      */
-    List<HighScore> getHighScores();
+    Podium getStoryPodium();
+
+    /**
+     * 
+     * @return the survival podium.
+     */
+    Podium getSurvivalPodium();
 
     /**
      * 

@@ -47,6 +47,7 @@ public final class ControllerImpl implements Controller {
     public ControllerImpl(final Supplier<Model> modelSupplier, final View view) {
         this.modelSupplier = modelSupplier;
         this.view = view;
+        this.view.viewLauncher(this);
         this.podiumManager = new PodiumManagerImpl();
         this.userManager = new UserManagerImpl();
         this.podium = Optional.empty();

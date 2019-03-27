@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
 import model.data.HighScore;
+import model.data.Podium;
 import view.scenefactory.SceneFactory;
 import view.scenefactory.SceneFactoryImpl;
 
@@ -23,6 +24,9 @@ public class ViewImpl implements View {
     private final SceneFactory sceneFactory;
     private final Stage stage;
     private Controller controller;
+    private Map<AchievementType, Achievement> achievements;
+    private Podium storyPodium;
+    private Podium survivalPodium;
 
     /**
      * Constructor.
@@ -44,16 +48,14 @@ public class ViewImpl implements View {
         this.sceneFactory.setStage(this.stage);
         this.sceneFactory.openMenuScene();
 
-        /*this.stage.setMinWidth(MIN_WIDTH);
-        this.stage.setMinHeight(MIN_HEIGHT);
-        this.stage.setMaximized(true);
-        this.loadScene(GameScene.MAIN_MENU);
-        ImageLoader.getLoader().loadAll();
-
-        Metodi di view per istanziare lo stage
-        visti da altro codice
-
-        */
+        /*
+         * this.stage.setMinWidth(MIN_WIDTH); this.stage.setMinHeight(MIN_HEIGHT);
+         * this.stage.setMaximized(true); this.loadScene(GameScene.MAIN_MENU);
+         * ImageLoader.getLoader().loadAll();
+         * 
+         * Metodi di view per istanziare lo stage visti da altro codice
+         * 
+         */
     }
 
     @Override
@@ -93,12 +95,6 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public void setHighScores() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public Map<AchievementType, Achievement> getAchievements() {
         // TODO Auto-generated method stub
         return null;
@@ -111,14 +107,30 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public List<HighScore> getHighScores() {
+    public SceneFactory getSceneFactory() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public SceneFactory getSceneFactory() {
+    public void setStoryPodium(final Podium podium) {
+        this.storyPodium = podium;
+    }
+
+    @Override
+    public void setSurvivalPodium(final Podium podium) {
+        this.survivalPodium = podium;
+    }
+
+    @Override
+    public Podium getStoryPodium() {
         // TODO Auto-generated method stub
-        return null;
+        return this.storyPodium;
+    }
+
+    @Override
+    public Podium getSurvivalPodium() {
+        // TODO Auto-generated method stub
+        return this.survivalPodium;
     }
 }

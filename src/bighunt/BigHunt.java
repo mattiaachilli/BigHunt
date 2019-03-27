@@ -8,6 +8,7 @@ import controller.files.FilesHomeManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Model;
+import model.ModelImpl;
 import view.View;
 import view.ViewImpl;
 
@@ -34,6 +35,6 @@ public final class BigHunt extends Application {
         FilesHomeManager.setupApplication();
         final View view = new ViewImpl(primaryStage);
         final Supplier<Model> modelSupplier;
-        final Controller controller = new ControllerImpl(modelSupplier, view);
+        final Controller controller = new ControllerImpl(() -> new ModelImpl(), view);
     }
 }
