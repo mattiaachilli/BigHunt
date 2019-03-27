@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 import javafx.scene.image.Image;
 import model.decorator.OrangeDuck;
 import model.decorator.PinkDuck;
@@ -20,7 +22,7 @@ import model.entities.StandardDuck;
  */
 public class DuckAnimation implements EntityImageAnimation {
 
-    private static final int UPDATE_DUCK = 700;
+    private static final int UPDATE_DUCK = 500;
 
     private int index;
     private int elapsed;
@@ -96,9 +98,10 @@ public class DuckAnimation implements EntityImageAnimation {
         } else if (this.duck instanceof OrangeDuck) {
             color = "Orange";
         } else if (this.duck instanceof PinkDuck) {
-            color = "PinkDuck";
+            color = "Pink";
         } 
 
+        System.out.println("Colore: " + color);
         switch (this.duck.getActualDirection()) {
             case RIGHT:
                 if (this.index >= this.duckRightImages.get(color).size()) {

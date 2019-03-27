@@ -17,6 +17,7 @@ import model.data.Podium;
 import model.data.UserData;
 import utility.Utilities;
 import view.View;
+import view.entities.EntityImageTypeImpl;
 import view.entities.ViewEntity;
 
 /**
@@ -26,7 +27,7 @@ import view.entities.ViewEntity;
  */
 
 public final class ControllerImpl implements Controller {
-    
+
     private static final int GREEN_SEMAPHORE = 1;
     /**
      * 60 FPS.

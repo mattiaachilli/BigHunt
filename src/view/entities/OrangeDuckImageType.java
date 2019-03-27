@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
  */
 public enum OrangeDuckImageType {
     /**
-     * All types of yellow ducks images.
+     * All types of orange ducks images.
      */
 
     /**

@@ -139,19 +139,19 @@ public final class ModelImpl implements Model {
         //Update ducks
         this.ducks.forEach(d -> {
             //SIMULATE KILL EACH 4000ms = 5s
-            if (this.timeElapsed >= 4000) {
+            /*if (this.timeElapsed >= 4000) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
                     this.timeElapsed -= 4000;
                     d.kill();
-                    /*if (d.hasPowerUp()) {
+                    if (d.hasPowerUp()) {
                         d.getPowerUp().get().hit();
-                    }*/
+                    }
                     final int score = this.duckDoubleScore > 0 ? d.getScore() * 2 : d.getScore();
                     this.duckDoubleScore = this.duckDoubleScore > 0 ? this.duckDoubleScore-- : 0;
                     this.match.get().getMatchData().incrementScoreOf(score);
                     dog.setDogStatus(DogStatus.HAPPY);
                 }
-            }
+            }*/
             if (d.canFlyAway()) {
                 d.computeFlyAway();
                 dog.setDogStatus(DogStatus.LAUGH);
