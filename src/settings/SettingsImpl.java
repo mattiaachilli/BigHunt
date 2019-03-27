@@ -24,7 +24,7 @@ public final class SettingsImpl implements Settings {
     private static final int DEFAULT_Y_RESOLUTION = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     private static final int FIRST_SCREEN_PROPORTION = 3;
-    private static final int LAST_SCREEN_PROPORTION = 8;
+    private static final int LAST_SCREEN_PROPORTION = 5;
 
     private static final Pair<Integer, Integer> DEFAULT_RESOLUTION = new ImmutablePair<>(DEFAULT_X_RESOLUTION,
         DEFAULT_Y_RESOLUTION);
@@ -43,6 +43,10 @@ public final class SettingsImpl implements Settings {
 
     private int selectedFPS = DEFAULT_FPS;
 
+    private static final String DEFAULT_DIFFICULTY = GlobalDifficulty.MEDIUM.getGlobalDifficulty();
+    private String selectedDifficulty = DEFAULT_DIFFICULTY;
+    private List<String> gameDifficulty = this.writeGameDifficulty();
+    
     private boolean fullScreen = true;
     private boolean backgroundAudio = true;
 
@@ -135,6 +139,39 @@ public final class SettingsImpl implements Settings {
         this.backgroundAudio = backgroundAudio;
     }
 
+    @Override
+    public void setDifficulty(final String difficulty) {
+        if(this.gameDifficulty.isEmpty()) {
+            this.gameDifficulty = this.writeGameDifficulty();
+        }
+        if(!this.gameDifficulty.contains(difficulty)) {
+            this.selectedDifficulty = DEFAULT_DIFFICULTY;
+        } else {
+            this.selectedDifficulty = difficulty; 
+        }
+    }
+
+    @Override
+    public String getSelectedDifficulty() {
+        return this.selectedDifficulty;
+    }
+
+    @Override
+    public List<String> getGameDifficulties() {
+        return this.gameDifficulty;
+    }
+    
+    private List<String> writeGameDifficulty() {
+        
+        final List<String> difficulty = new ArrayList<>();
+
+        for (int i = 0; i < GlobalDifficulty.values().length; i++) {
+            difficulty.add(GlobalDifficulty.values()[i].getGlobalDifficulty());
+        }
+        
+        return difficulty;
+    }
+    
     private void loadScreenResolutions() {
         this.supportedResolutions.clear();
         for (int i = SettingsImpl.FIRST_SCREEN_PROPORTION; i <= SettingsImpl.LAST_SCREEN_PROPORTION; i++) {

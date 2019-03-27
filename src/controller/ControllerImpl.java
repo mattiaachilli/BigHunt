@@ -59,12 +59,16 @@ public final class ControllerImpl implements Controller {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
         this.loadPodium(gameMode);
+    }
+
+    @Override
+    public void startGameLoop() {
         gameLoop = new GameLoop();
         gameLoop.start();
     }
 
     @Override
-    public void stopGame() {
+    public void stopGameLoop() {
         gameLoop.stopGameLoop();
         // view method
     }
@@ -142,7 +146,7 @@ public final class ControllerImpl implements Controller {
         public void run() {
             long lastTime = System.currentTimeMillis();
             while (running && !model.isGameOver()) { /* Running and not gameover */
-                if (this.paused) {
+                if (!this.paused) {
                     final long current = System.currentTimeMillis();
                     final int elapsed = (int) (current - lastTime);
                     processInput();
@@ -153,7 +157,7 @@ public final class ControllerImpl implements Controller {
                 }
             }
             if (model.isGameOver()) {
-                ControllerImpl.this.stopGame();
+                ControllerImpl.this.stopGameLoop();
             }
         }
 

@@ -7,8 +7,17 @@ import controller.Controller;
 import javafx.stage.Stage;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
-import model.data.HighScore;
 import model.data.Podium;
+import java.util.concurrent.Semaphore;
+
+import controller.matches.GameMode;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.Rectangle;
+import model.data.MatchData;
+import settings.SettingsImpl;
+import utility.Utilities;
+import view.entities.ViewEntity;
+import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;
 import view.scenefactory.SceneFactoryImpl;
 
@@ -19,14 +28,21 @@ import view.scenefactory.SceneFactoryImpl;
  */
 public class ViewImpl implements View {
 
+    private static final int GREEN_SEMAPHORE = 1;
+
+    private Controller controller;
+    private Render render;
+    private List<ViewEntity> viewEntities;
+    private MatchData matchData;
+    private final Semaphore mutex;
     private static final String GAME_TITLE = "BIG HUNT";
 
     private final SceneFactory sceneFactory;
     private final Stage stage;
-    private Controller controller;
     private Map<AchievementType, Achievement> achievements;
     private Podium storyPodium;
     private Podium survivalPodium;
+    private boolean gamePaused;
 
     /**
      * Constructor.
@@ -35,8 +51,8 @@ public class ViewImpl implements View {
      */
     public ViewImpl(final Stage primaryStage) {
         super();
-
         this.stage = primaryStage;
+        this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
     }
 
@@ -59,37 +75,35 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public void startGame() {
-        // TODO Auto-generated method stub
-
+    public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
+        this.render = new Render(gameSceneController, gameMode);
+        this.startRender();
     }
 
     @Override
-    public void startViewRender() {
-        // TODO Auto-generated method stub
-
+    public final void startRender() {
+        this.render.start();
     }
 
     @Override
-    public void stopViewRender() {
-        // TODO Auto-generated method stub
-
+    public final void stopRender() {
+        this.render.stopRender();
     }
 
     @Override
-    public void closeGame() {
-        // TODO Auto-generated method stub
-
+    public final void render(final List<ViewEntity> viewEntities, final MatchData matchData) {
+        try {
+            this.mutex.acquire();
+            this.viewEntities = viewEntities;
+            this.matchData = matchData;
+            this.mutex.release();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void resetGame() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setStateGame() {
+    public void closeGame(final MatchData matchData, final boolean isHighScores) {
         // TODO Auto-generated method stub
 
     }
@@ -102,12 +116,6 @@ public class ViewImpl implements View {
     @Override
     public void setAchievements(final Map<AchievementType, Achievement> achievements) {
         this.achievements = achievements;
-    }
-
-    @Override
-    public SceneFactory getSceneFactory() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
@@ -131,4 +139,84 @@ public class ViewImpl implements View {
         // TODO Auto-generated method stub
         return this.survivalPodium;
     }
+
+    /**
+     * 
+     * @return the scene factory.
+     */
+    public SceneFactory getSceneFactory() {
+        return this.sceneFactory;
+    }
+
+    /**
+     * 
+     * Thread that render graphics independent from game loop.
+     *
+     */
+    private class Render extends Thread {
+        private static final int MILLIS_FROM_SECOND = 1000;
+
+        private boolean running;
+        private final int period;
+        private List<ViewEntity> viewEntitiesGame;
+        private MatchData currentMatchData;
+        private final GameSceneController gameSceneController;
+        private final GameMode gameMode;
+        private final GraphicsContext gamecanvas;
+
+        Render(final GameSceneController gameSceneController, final GameMode gameMode) {
+            super();
+            this.period = MILLIS_FROM_SECOND / SettingsImpl.getSettings().getSelectedFPS();
+            this.gameSceneController = gameSceneController;
+            this.gameMode = gameMode;
+            this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
+            this.running = true;
+        }
+
+        @Override
+        public final void run() {
+            if (gamePaused) {
+                controller.startGameLoop();
+            } else {
+                gamePaused = true;
+                controller.initGame(this.gameMode);
+                controller.startGameLoop();
+            }
+            while (this.running) {
+                final long currentTime = System.currentTimeMillis();
+                try {
+                    mutex.acquire();
+                    this.viewEntitiesGame = viewEntities;
+                    this.currentMatchData = matchData;
+                    mutex.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                for (final ViewEntity viewEntity : this.viewEntitiesGame) {
+                    if (viewEntity.getShape() instanceof Rectangle) {
+                        final Rectangle rectangle = (Rectangle) viewEntity.getShape();
+                        this.gamecanvas.drawImage(viewEntity.getPicture(), viewEntity.getPosition().getX(), viewEntity.getPosition().getY(),
+                        rectangle.getWidth(), rectangle.getHeight());
+                    }
+                }
+
+                Utilities.waitForNextFrame(period, currentTime);
+            }
+        }
+
+        public final void stopRender() {
+            this.running = false;
+        }
+
+        @Override
+        public void start() {
+            this.running = true;
+            super.start();
+        }
+    }
+
+ 
+
 }
+

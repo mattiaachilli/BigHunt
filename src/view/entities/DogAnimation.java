@@ -2,6 +2,7 @@ package view.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.scene.image.Image;
 import model.entities.Dog;
@@ -18,6 +19,7 @@ public class DogAnimation implements EntityImageAnimation {
     private int index;
     private int elapsed;
     private Dog dog;
+    private DogStatus lastDogStatus;
     private final List<Image> dogRightImages;
     private final List<Image> dogSniffImages;
     private final List<Image> dogJumpImages;
@@ -30,6 +32,7 @@ public class DogAnimation implements EntityImageAnimation {
         this.index = 0;
         this.dogRightImages = new ArrayList<>();
         this.dogSniffImages = new ArrayList<>();
+        this.dogJumpImages = new ArrayList<>();
         this.dogLaughImages = new ArrayList<>();
         this.initializeDogImages();
     }
@@ -47,58 +50,50 @@ public class DogAnimation implements EntityImageAnimation {
     }
 
 
-    private void updateIndex(final DogStatus dogStatus) {
+    private void updateIndex() {
         if (this.elapsed >= EntityImageTypeImpl.UPDATE_IMAGE) {
             this.elapsed -= EntityImageTypeImpl.UPDATE_IMAGE;
             this.index++;
-            switch (dogStatus) {
-                case RIGHT:
-                    this.index = this.index >= this.dogRightImages.size() ? 0 : this.index;
-                    break;
-                case SNIFF:
-                    this.index = this.index >= this.dogSniffImages.size() ? 0 : this.index;
-                    break;
-                case LAUGH:
-                    this.index = this.index >= this.dogLaughImages.size() ? 0 : this.index;
-                    break;
-                case JUMP:
-                    this.index = 1;
-                    break;
-                default:
-                    break;
-            }
         }
     }
 
     @Override
-    public final Image getImage() {
-        Image image = null;
-        this.updateIndex(dog.getDogStatus());
+    public final Optional<Image> getImage() {
+        Optional<Image> image = Optional.empty();
         switch (dog.getDogStatus()) {
             case ATTENTION:
-                image = DogType.DOG_ATTENTION.getPicture();
+                image = Optional.of(DogType.DOG_ATTENTION.getPicture());
                 break;
             case RIGHT:
-                image = this.dogRightImages.get(this.index);
-                System.out.println("Right, indice: " + this.index);
+                if (this.index >= this.dogRightImages.size()) {
+                    this.index = 0;
+                }
+                image = Optional.of(this.dogRightImages.get(this.index));
                 break;
             case SNIFF:
-                image = this.dogSniffImages.get(this.index);
-                System.out.println("Sniff, indice: " + this.index);
+                if (this.index >= this.dogSniffImages.size()) {
+                    this.index = 0;
+                }
+                image = Optional.of(this.dogSniffImages.get(this.index));
                 break;
             case JUMP:
-                image = this.dogJumpImages.get(this.index);
-                System.out.println("Jump, indice: " + this.index);
+                if (this.index >= this.dogJumpImages.size()) {
+                    this.index = 1;
+                }
+                image = Optional.of(this.dogJumpImages.get(this.index));
                 break;
             case LAUGH:
-                image = this.dogLaughImages.get(this.index);
-                //System.out.println("Laugh, indice: " + this.index);
+                if (this.index >= this.dogLaughImages.size()) {
+                    this.index = 0;
+                }
+                image = Optional.of(this.dogLaughImages.get(this.index));
                 break;
             case HAPPY:
                 break;
             default:
                 break;
         }
+        this.updateIndex();
         return image;
     }
 
@@ -106,5 +101,9 @@ public class DogAnimation implements EntityImageAnimation {
     public final void update(final Entity entity, final int elapsed) {
         this.dog = (Dog) entity;
         this.elapsed += elapsed;
+        if (this.lastDogStatus != this.dog.getDogStatus()) {
+            this.index = 0;
+        }
+        this.lastDogStatus = this.dog.getDogStatus();
     }
 }

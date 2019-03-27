@@ -17,9 +17,14 @@ public interface Controller {
     void initGame(GameMode gameMode);
 
     /**
+     * Start the game loop.
+     */
+    void startGameLoop();
+
+    /**
      * Stop the game loop.
      */
-    void stopGame();
+    void stopGameLoop();
 
     /**
      * Login of a player.

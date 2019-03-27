@@ -6,6 +6,7 @@ import controller.matches.GameMode;
 import model.data.MatchData;
 import model.entities.Duck;
 import model.entities.Entity;
+import model.gun.Magazine;
 
 /**
  * 
@@ -60,19 +61,57 @@ public interface Model {
 
     /**
      * 
-     * Set the X position of the Aim.
+     * @return a map containing magazine and bullets.
      */
-    void setAimX(); //Parametro da passare
+    int getBullets();
 
     /**
      * 
-     * Set the Y position of the Aim.
+     * @return the list of magazines carried.
      */
-    void setAimY(); //Parametro da passare
+    List<Magazine> getAmmo();
 
     /**
      * 
-     * @return the list of bullets
+     * Method used to handle bullets after each shot.
      */
+<<<<<<< HEAD
     //List<Bullet> getBullets();
+=======
+    void shoot();
+
+    /**
+     * 
+     * @return true if the magazine still contains ammo.
+     */
+    boolean canShoot();
+
+    /**
+     * 
+     * changes magazine.
+     */
+    void recharge();
+
+    /**
+     * 
+     * @return the magazine being used.
+     */
+    Magazine getCurrentMagazine();
+
+    /**
+     * 
+     * @return the list of ducks.
+     */
+    List<Duck> getDucks();
+
+    /**
+     * test.
+     */
+    void activateInfAmmo();
+
+    /**
+     * test.
+     */
+    void deactivateInfAmmo();
+>>>>>>> 46e5a48ab9a3765a563ffe60a60b0bfba77469e7
 }
