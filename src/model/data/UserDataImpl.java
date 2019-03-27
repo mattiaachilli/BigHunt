@@ -48,13 +48,11 @@ public class UserDataImpl implements UserData {
 
     @Override
     public Map<AchievementType, Achievement> getAchievements() {
-        // TODO Auto-generated method stub
         return Collections.unmodifiableMap(this.achievements);
     }
 
     @Override
     public void updateAchievements() {
-        // TODO Auto-generated method stub
         for (AchievementType type : AchievementType.values()) {
             switch (type) {
 
@@ -82,13 +80,11 @@ public class UserDataImpl implements UserData {
 
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
         return this.name;
     }
 
     @Override
     public void addMatchData(final MatchData matchdata) {
-        // TODO Auto-generated method stub
         this.matchesPlayed++;
         this.killedDucks += matchdata.getKilledDucks();
         this.globalScore += matchdata.getGlobalScore();
@@ -102,4 +98,5 @@ public class UserDataImpl implements UserData {
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
     }
+
 }

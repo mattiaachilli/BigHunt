@@ -12,7 +12,11 @@ public enum DuckProperty {
     /**
      * STANDARD DUCK INFORMATIONS.
      */
+<<<<<<< HEAD
+    STANDARD_DUCK(200, 8000, "Standard Duck"),
+=======
     STANDARD_DUCK(1000, 8000, "Standard Duck"),
+>>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
     /**
      * YELLOW DUCK INFORMATIONS.
      */

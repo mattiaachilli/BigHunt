@@ -43,6 +43,12 @@ public interface Model {
 
     /**
      * 
+     * @return the list of ducks
+     */
+    List<Duck> getDucks();
+
+    /**
+     * 
      * @return data of the actual match
      */
     MatchData getMatchData();
@@ -69,6 +75,9 @@ public interface Model {
      * 
      * Method used to handle bullets after each shot.
      */
+<<<<<<< HEAD
+    //List<Bullet> getBullets();
+=======
     void shoot();
 
     /**
@@ -104,4 +113,5 @@ public interface Model {
      * test.
      */
     void deactivateInfAmmo();
+>>>>>>> 46e5a48ab9a3765a563ffe60a60b0bfba77469e7
 }

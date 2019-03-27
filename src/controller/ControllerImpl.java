@@ -1,11 +1,8 @@
 package controller;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
-import controller.converter.EntitiesConverter;
 import controller.files.PodiumManager;
 import controller.files.PodiumManagerImpl;
 import controller.files.UserManager;
@@ -16,7 +13,6 @@ import model.data.Podium;
 import model.data.UserData;
 import utility.Utilities;
 import view.View;
-import view.entities.ViewEntity;
 
 /**
  * 
@@ -38,18 +34,20 @@ public final class ControllerImpl implements Controller {
     private final UserManager userManager;
     private Optional<Podium> podium;
     private Optional<UserData> user;
-    //Command list, mouse
+    // Command list, mouse
 
     // finisci podiumManager e il suo loading
 
     /**
      * Constructor of the controller.
+     * 
      * @param modelSupplier the structure of the game
-     * @param view the view of the game
+     * @param view          the view of the game
      */
     public ControllerImpl(final Supplier<Model> modelSupplier, final View view) {
         this.modelSupplier = modelSupplier;
         this.view = view;
+        this.view.viewLauncher(this);
         this.podiumManager = new PodiumManagerImpl();
         this.userManager = new UserManagerImpl();
         this.podium = Optional.empty();
@@ -64,13 +62,13 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public void startGame() {
-        this.gameLoop = new GameLoop();
-        this.gameLoop.start();
+    public void startGameLoop() {
+        gameLoop = new GameLoop();
+        gameLoop.start();
     }
 
     @Override
-    public void stopGame() {
+    public void stopGameLoop() {
         gameLoop.stopGameLoop();
         // view method
     }
@@ -98,14 +96,14 @@ public final class ControllerImpl implements Controller {
     @Override
     public boolean loadPodium(final GameMode gamemode) {
         switch (gamemode) {
-        case STORY_MODE: 
+        case STORY_MODE:
             this.podium = this.podiumManager.loadStoryHighScores();
             break;
         case SURVIVAL_MODE:
             this.podium = this.podiumManager.loadSurvivalHighScores();
             break;
-            default:
-                break;
+        default:
+            break;
         }
         return this.podium.isPresent();
     }
@@ -125,39 +123,54 @@ public final class ControllerImpl implements Controller {
         this.podium = Optional.empty();
     }
 
-    private List<ViewEntity> getViewEntities(final int elapsed) {
-        return this.model.getEntities()
-                         .stream()
-                         .map(e -> EntitiesConverter.convertEntity(e, elapsed))
-                         .collect(Collectors.toList());
+    @Override
+    public void pause() {
+        this.gameLoop.pauseLoop();
     }
 
-    private class GameLoop extends Thread { 
+    @Override
+    public void resume() {
+        this.gameLoop.resumeLoop();
+    }
+
+    private class GameLoop extends Thread {
         private volatile boolean running;
+        private boolean paused;
 
         GameLoop() {
             super();
             running = true;
+            paused = false;
         }
 
         public void run() {
             long lastTime = System.currentTimeMillis();
             while (running && !model.isGameOver()) { /* Running and not gameover */
-                final long current = System.currentTimeMillis();
-                final int elapsed = (int) (current - lastTime);
-                processInput();
-                model.update(elapsed);
-                view.render(getViewEntities(elapsed), model.getMatchData());
-                Utilities.waitForNextFrame(PERIOD, current);
-                lastTime = current;
+                if (!this.paused) {
+                    final long current = System.currentTimeMillis();
+                    final int elapsed = (int) (current - lastTime);
+                    processInput();
+                    model.update(elapsed);
+                    // view.setStateGame(getEntitiesForView(), model.getGameData());
+                    Utilities.waitForNextFrame(PERIOD, current);
+                    lastTime = current;
+                }
             }
             if (model.isGameOver()) {
-                ControllerImpl.this.stopGame();
+                ControllerImpl.this.stopGameLoop();
             }
         }
 
         private void processInput() {
             // Input from mouse command example
+        }
+
+        public void pauseLoop() {
+            this.paused = true;
+        }
+
+        public void resumeLoop() {
+            this.paused = false;
         }
 
         public void stopGameLoop() {

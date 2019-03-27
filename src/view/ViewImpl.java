@@ -1,18 +1,18 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
+import java.util.Map;
 
 import controller.Controller;
-import controller.ControllerImpl;
-import controller.matches.GameMode;
-import javafx.application.Application;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.achievements.Achievement;
-import model.data.HighScore;
+import model.achievements.AchievementType;
+import model.data.Podium;
+import java.util.concurrent.Semaphore;
+
+import controller.matches.GameMode;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.Rectangle;
 import model.data.MatchData;
 import settings.SettingsImpl;
 import utility.Utilities;
@@ -26,44 +26,52 @@ import view.scenefactory.SceneFactoryImpl;
  * Implements starting game methods.
  *
  */
-public class ViewImpl extends Application implements View {
+public class ViewImpl implements View {
 
     private static final int GREEN_SEMAPHORE = 1;
 
-    private final Controller controller;
+    private Controller controller;
     private Render render;
     private List<ViewEntity> viewEntities;
     private MatchData matchData;
     private final Semaphore mutex;
     private static final String GAME_TITLE = "BIG HUNT";
+
     private final SceneFactory sceneFactory;
-    private List<Achievement> achievements;
+    private final Stage stage;
+    private Map<AchievementType, Achievement> achievements;
+    private Podium storyPodium;
+    private Podium survivalPodium;
     private boolean gamePaused;
 
     /**
-     * Constructor of the view of the application.
+     * Constructor.
+     * 
+     * @param primaryStage the stage received from the application launcher
      */
-    public ViewImpl(final Controller controller) {
+    public ViewImpl(final Stage primaryStage) {
         super();
-        this.controller = controller;
-        this.achievements = new ArrayList<>();
+        this.stage = primaryStage;
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
     }
 
     @Override
-    public final void start(final Stage primaryStage) throws Exception {
-        primaryStage.setTitle(GAME_TITLE);
-        primaryStage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));
-        this.sceneFactory.setStage(primaryStage);
-        this.sceneFactory.openAccountSelectionScene();
-        //this.sceneFactory.openMenuScene();
-        //load images
-    }
+    public void viewLauncher(final Controller controller) {
+        this.controller = controller;
+        this.stage.setTitle(GAME_TITLE);
+        this.stage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));
+        this.sceneFactory.setStage(this.stage);
+        this.sceneFactory.openMenuScene();
 
-    @Override
-    public final void viewLauncher() {
-       launch();
+        /*
+         * this.stage.setMinWidth(MIN_WIDTH); this.stage.setMinHeight(MIN_HEIGHT);
+         * this.stage.setMaximized(true); this.loadScene(GameScene.MAIN_MENU);
+         * ImageLoader.getLoader().loadAll();
+         * 
+         * Metodi di view per istanziare lo stage visti da altro codice
+         * 
+         */
     }
 
     @Override
@@ -95,29 +103,47 @@ public class ViewImpl extends Application implements View {
     }
 
     @Override
-    public void resetGame() {
+    public void closeGame(final MatchData matchData, final boolean isHighScores) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void setHighScores() {
+    public Map<AchievementType, Achievement> getAchievements() {
+        return this.achievements;
+    }
+
+    @Override
+    public void setAchievements(final Map<AchievementType, Achievement> achievements) {
+        this.achievements = achievements;
+    }
+
+    @Override
+    public void setStoryPodium(final Podium podium) {
+        this.storyPodium = podium;
+    }
+
+    @Override
+    public void setSurvivalPodium(final Podium podium) {
+        this.survivalPodium = podium;
+    }
+
+    @Override
+    public Podium getStoryPodium() {
         // TODO Auto-generated method stub
-
+        return this.storyPodium;
     }
 
     @Override
-    public void setAchievements(List<Achievement> achievements) {
-        this.achievements = achievements;        
-    }
-
-    @Override
-    public List<HighScore> getHighScores() {
+    public Podium getSurvivalPodium() {
         // TODO Auto-generated method stub
-        return null;
+        return this.survivalPodium;
     }
 
-    @Override
+    /**
+     * 
+     * @return the scene factory.
+     */
     public SceneFactory getSceneFactory() {
         return this.sceneFactory;
     }
@@ -138,7 +164,7 @@ public class ViewImpl extends Application implements View {
         private final GameMode gameMode;
         private final GraphicsContext gamecanvas;
 
-        public Render(final GameSceneController gameSceneController, final GameMode gameMode) {
+        Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
             this.period = MILLIS_FROM_SECOND / SettingsImpl.getSettings().getSelectedFPS();
             this.gameSceneController = gameSceneController;
@@ -150,13 +176,12 @@ public class ViewImpl extends Application implements View {
         @Override
         public final void run() {
             if (gamePaused) {
-                controller.startGame();
+                controller.startGameLoop();
             } else {
                 gamePaused = true;
                 controller.initGame(this.gameMode);
-                controller.startGame();
+                controller.startGameLoop();
             }
-
             while (this.running) {
                 final long currentTime = System.currentTimeMillis();
                 try {
@@ -191,14 +216,7 @@ public class ViewImpl extends Application implements View {
         }
     }
 
-    @Override
-    public void closeGame(MatchData matchData, boolean isHighScores) {
-        // TODO Auto-generated method stub
-        
-    }
+ 
 
-    @Override
-    public List<Achievement> getAchievements() {
-        return this.achievements;
-    }
 }
+

@@ -1,4 +1,5 @@
 package model;
+
 import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import model.entities.DogImpl;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
+
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
@@ -25,8 +27,8 @@ import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
 import settings.GlobalDifficulty;
-import settings.SettingsImpl;
 
+import settings.SettingsImpl;
 
 /**
  * 
@@ -34,6 +36,10 @@ import settings.SettingsImpl;
  *
  */
 public final class ModelImpl extends Canvas implements Model {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * Game width.
      */
@@ -46,6 +52,11 @@ public final class ModelImpl extends Canvas implements Model {
      * Maximum number of magazines carriable.
      */
     public static final int MAX_MAGAZINES = 20;
+
+    /**
+     * Max of time elapsed before the update.
+     */
+    private static final int UPDATE_TIME = 6000;
 
     /**
      * All objects of the game world.
@@ -92,30 +103,35 @@ public final class ModelImpl extends Canvas implements Model {
         ducks.clear();
         powerUp.clear();
         switch (gameMode) {
-            case STORY_MODE:
-                this.match = Optional.of(new StoryMatch(this.difficulty));
-                this.spawner = new StoryModeSpawner();
-                this.lastRound = this.spawner.getActualRound();
-                break;
-            case SURVIVAL_MODE:
-                this.match = Optional.of(new SurvivalMatch(this.difficulty));
-                this.spawner = new SurvivalModeSpawner();
-                break;
-            default:
-                break;
+        case STORY_MODE:
+            this.match = Optional.of(new StoryMatch(this.difficulty));
+            this.spawner = new StoryModeSpawner();
+            this.lastRound = this.spawner.getActualRound();
+            break;
+        case SURVIVAL_MODE:
+            this.match = Optional.of(new SurvivalMatch(this.difficulty));
+            this.spawner = new SurvivalModeSpawner();
+            this.lastRound = this.spawner.getActualRound();
+            break;
+        default:
+            break;
         }
     }
 
     @Override
     public void update(final int timeElapsed) {
+<<<<<<< HEAD
+        // Update dog
+=======
         this.updateRoundNumber();
         //Update dog
+>>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
         this.dog.update(timeElapsed);
         if (this.dog.getDogStatus() != this.lastDogStatus) {
             this.lastDogStatus = this.dog.getDogStatus();
         }
 
-        //Update spawner when dog is in grass
+        // Update spawner when dog is in grass
         if (this.dog.isInGrass()) {
             this.timeElapsed += timeElapsed;
             this.getCurrentMagazine().update(timeElapsed);
@@ -130,12 +146,21 @@ public final class ModelImpl extends Canvas implements Model {
                 }
             }
         }
+<<<<<<< HEAD
+        // Update ducks
+
+        for (Duck d : this.ducks) {
+            if (this.timeElapsed >= UPDATE_TIME) {
+                if (d.getStatus() == EntityStatus.ALIVE) {
+                    this.timeElapsed -= UPDATE_TIME;
+=======
         //Update ducks
         this.ducks.forEach(d -> {
             //SIMULATE KILL EACH 4000ms = 5s
             /*if (this.timeElapsed >= 4000) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
                     this.timeElapsed -= 4000;
+>>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
                     d.kill();
                     if (d.hasPowerUp()) {
                         d.getPowerUp().get().hit();
@@ -152,20 +177,26 @@ public final class ModelImpl extends Canvas implements Model {
                 this.match.get().getMatchData().incrementFlownDucks();
             }
             d.update(timeElapsed);
-        });
-        //Update PowerUp list
+        }
+
+        // Update PowerUp list
         this.powerUp.forEach(p -> {
             if (p.isHit()) {
                 this.activePowerUp(p.getType());
             }
             p.update(timeElapsed);
         });
+<<<<<<< HEAD
+        this.deleteUnnecessaryPowerUp();
+        // Only for STORY MODE
+=======
         //Clean the powerUp out of screen
         this.cleaner.cleanPowerUp(this.powerUp);
     }
 
     private void updateRoundNumber() {
         //Only for STORY MODE
+>>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
         if (this.gameMode == GameMode.STORY_MODE) {
             if (this.spawner.getActualRound() != this.lastRound) {
                 this.ducks.clear();
@@ -174,6 +205,38 @@ public final class ModelImpl extends Canvas implements Model {
         }
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    private void deleteUnnecessaryPowerUp() {
+        final List<Integer> indexesPowUp = new ArrayList<>();
+        for (int i = 0; i < this.powerUp.size(); i++) {
+            if (this.powerUp.get(i).isHit() || this.powerUp.get(i).getPosition().getY() <= 0
+            || this.powerUp.get(i).getPosition().getY() >= GAME_HEIGHT) {
+                indexesPowUp.add(i);
+            }
+        }
+        for (final Integer index : indexesPowUp) {
+            this.powerUp.remove((int) index);
+        }
+    }
+
+    private void activePowerUp(final PowerUpType powerUp) {
+        System.out.println(powerUp.toString());
+        switch (powerUp) {
+        case INFINITE_AMMO:
+            /* Bullet */
+            break;
+        case KILL_ALL:
+            for (final Duck duck : this.ducks) {
+                if (duck.isAlive()) {
+                    duck.kill();
+                }
+            }
+            break;
+        default:
+            break;
+=======
+=======
     @Override
     public void activateInfAmmo() {
         this.ammo.stream()
@@ -188,6 +251,7 @@ public final class ModelImpl extends Canvas implements Model {
         .findFirst().get().setBulletType(BulletType.NORMAL_BULLET);
     }
 
+>>>>>>> 46e5a48ab9a3765a563ffe60a60b0bfba77469e7
     private void activePowerUp(final PowerUpType powerUp) {
         System.out.println(powerUp.toString());
         switch (powerUp) {
@@ -213,6 +277,7 @@ public final class ModelImpl extends Canvas implements Model {
                 break;
             default:
                 break;
+>>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
         }
     }
 
@@ -258,6 +323,31 @@ public final class ModelImpl extends Canvas implements Model {
     @Override
     public List<Duck> getDucks() {
         return this.ducks;
+<<<<<<< HEAD
+    }
+
+    @Override
+    public void setAimX() {
+        // TODO Auto-generated method stub
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
+    }
+
+    @Override
+    public void setAimY() {
+        // TODO Auto-generated method stub
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
+    }
+
+    /*
+     * @Override public List<Bullet> getBullets() { return null; }
+     */
+=======
     }
 
     @Override
@@ -296,5 +386,6 @@ public final class ModelImpl extends Canvas implements Model {
         .filter(m -> m.getNumber() == currentMagazine)
         .findFirst().get();
     }
+>>>>>>> 46e5a48ab9a3765a563ffe60a60b0bfba77469e7
 }
 
