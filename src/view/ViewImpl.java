@@ -30,7 +30,7 @@ public class ViewImpl extends Application implements View {
 
     private static final int GREEN_SEMAPHORE = 1;
 
-    private final Controller controller;
+//    private final Controller controller;
     private Render render;
     private List<ViewEntity> viewEntities;
     private MatchData matchData;
@@ -43,9 +43,10 @@ public class ViewImpl extends Application implements View {
     /**
      * Constructor of the view of the application.
      */
-    public ViewImpl(final Controller controller) {
+   // public ViewImpl(final Controller controller) {
+    public ViewImpl() {
         super();
-        this.controller = controller;
+    //    this.controller = controller;
         this.achievements = new ArrayList<>();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
@@ -149,14 +150,14 @@ public class ViewImpl extends Application implements View {
 
         @Override
         public final void run() {
-            if (gamePaused) {
+          /*  if (gamePaused) {
                 controller.startGame();
             } else {
                 gamePaused = true;
                 controller.initGame(this.gameMode);
                 controller.startGame();
             }
-
+*/
             while (this.running) {
                 final long currentTime = System.currentTimeMillis();
                 try {

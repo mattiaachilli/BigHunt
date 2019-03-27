@@ -41,6 +41,7 @@ public class RegisterSceneControllerImpl extends AbstractSceneController {
     @FXML
     void registerBtn() {
         System.out.println(userTextField.getText() + "\n" + pwdTextField.getText());
+        //view.getcontr.loginuser/regUser
         this.getSceneFactory().openMenuScene();
     }
 

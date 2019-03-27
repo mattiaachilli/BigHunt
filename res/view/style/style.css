@@ -48,6 +48,10 @@ Label{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
 
+#game{
+    -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
 #menulogo{
 	 -fx-image: url("../logo/logo.png");
 }
