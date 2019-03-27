@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import controller.Controller;
-import controller.ControllerImpl;
 import controller.matches.GameMode;
 import javafx.application.Application;
 import javafx.scene.canvas.GraphicsContext;

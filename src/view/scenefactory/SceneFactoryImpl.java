@@ -18,80 +18,86 @@ public class SceneFactoryImpl implements SceneFactory {
     private Stage stage;
     private final View view;
     private GameMode gameMode = GameMode.STORY_MODE;
-    
+
+    /**
+     * Constructor of SceneFactory.
+     * 
+     * @param view
+     *          view of the game.
+     */
     public SceneFactoryImpl(final View view) {
         this.view = view;
     }
-    
+
     @Override
-    public void setStage(final Stage stage) {
+    public final void setStage(final Stage stage) {
         this.stage = stage;
     }
 
     @Override
-    public Stage getStage() {
+    public final Stage getStage() {
         return this.stage;
     }
-    
+
     @Override
-    public void openAccountSelectionScene() {
+    public final void openAccountSelectionScene() {
         this.openNewScene(Screens.SELECT_ACCOUNT);
     }
-    
+
     @Override
-    public void openRegisterScene() {
+    public final void openRegisterScene() {
         this.openNewScene(Screens.REGISTER);
     }
-    
+
     @Override
-    public void openLoginScene() {
+    public final void openLoginScene() {
         this.openNewScene(Screens.LOGIN);
     }
     @Override
-    public void openMenuScene() {
+    public final void openMenuScene() {
         this.openNewScene(Screens.MENU);
     }
 
     @Override
-    public void openSettingsScene() {
+    public final void openSettingsScene() {
         this.openNewScene(Screens.SETTINGS);
     }
 
     @Override
-    public void openAchievementsScene() {
+    public final void openAchievementsScene() {
         this.openNewScene(Screens.ACHIEVEMENTS);
     }
 
     @Override
-    public void openHighScoresScene() {
+    public final void openHighScoresScene() {
         this.openNewScene(Screens.HIGH_SCORES);
     }
 
     @Override
-    public void openManualScene() {
+    public final void openManualScene() {
         this.openNewScene(Screens.MANUAL);
     }
 
     @Override
-    public void openGameScene() {
+    public final void openGameScene() {
         this.openNewScene(Screens.GAME);
     }
 
     @Override
-    public void openSelectModeScene() {
+    public final void openSelectModeScene() {
         this.openNewScene(Screens.SELECTMODE);
     }
 
     @Override
-    public void openGameOverScene() {
+    public final void openGameOverScene() {
         this.openNewScene(Screens.GAME_OVER);
     }
 
     @Override
-    public void setGameMode(final GameMode gameMode) {
+    public final void setGameMode(final GameMode gameMode) {
         this.gameMode = gameMode;
     }
-    
+
     private void openNewScene(final Screens screen) {
         this.checkFullScreen();
         new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
@@ -107,7 +113,7 @@ public class SceneFactoryImpl implements SceneFactory {
             this.stage.initStyle(StageStyle.DECORATED);
         }
     }
-    
+
     private void createNewStage() { 
         this.stage.close();
         this.stage = new Stage();
