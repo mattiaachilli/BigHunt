@@ -26,11 +26,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     /**
      * WIDTH OF THE DUCK.
      */
-    public static final int WIDTH_DUCK = 80;
+    public static final int WIDTH_DUCK = 150;
     /**
      * HEIGHT OF THE DUCK.
      */
-    public static final int HEIGHT_DUCK = 80;
+    public static final int HEIGHT_DUCK = 150;
     /**
      * X COORDINATE COLLISION.
      */

@@ -28,19 +28,16 @@ public class UnmodifiableMatchData implements MatchData {
 
     @Override
     public final int getKilledDucks() {
-        // TODO Auto-generated method stub
         return this.matchdata.getKilledDucks();
     }
 
     @Override
     public final int getTimerFromStart() {
-        // TODO Auto-generated method stub
         return this.matchdata.getTimerFromStart();
     }
 
     @Override
     public final int getNumberOfUsedPowerUps() {
-        // TODO Auto-generated method stub
         return this.matchdata.getNumberOfUsedPowerUps();
     }
 
@@ -66,31 +63,26 @@ public class UnmodifiableMatchData implements MatchData {
 
     @Override
     public final void incrementFlownDucks() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
     public final int getFlownDucks() {
-        // TODO Auto-generated method stub
         return this.matchdata.getFlownDucks();
     }
 
     @Override
     public final void powerUpCollected(final PowerUpType type) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
     public final boolean hasPowerUp() {
-        // TODO Auto-generated method stub
         return this.matchdata.hasPowerUp();
     }
 
     @Override
     public final void powerUpEnded() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 

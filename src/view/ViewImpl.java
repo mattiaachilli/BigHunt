@@ -1,18 +1,22 @@
 package view;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Semaphore;
+import java.util.Map;
 
 import controller.Controller;
-import controller.ControllerImpl;
-import controller.matches.GameMode;
-import javafx.application.Application;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.achievements.Achievement;
-import model.data.HighScore;
+import model.achievements.AchievementType;
+import model.data.Podium;
+import java.util.concurrent.Semaphore;
+
+import controller.matches.GameMode;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.shape.Rectangle;
 import model.data.MatchData;
 import settings.SettingsImpl;
 import utility.Utilities;
@@ -26,50 +30,51 @@ import view.scenefactory.SceneFactoryImpl;
  * Implements starting game methods.
  *
  */
-public class ViewImpl extends Application implements View {
+public class ViewImpl implements View {
 
     private static final int GREEN_SEMAPHORE = 1;
 
-//    private final Controller controller;
+    private Controller controller;
     private Render render;
     private List<ViewEntity> viewEntities;
     private MatchData matchData;
     private final Semaphore mutex;
     private static final String GAME_TITLE = "BIG HUNT";
+
     private final SceneFactory sceneFactory;
-    private List<Achievement> achievements;
+    private Stage stage;
+    private Map<AchievementType, Achievement> achievements;
+    private Podium storyPodium;
+    private Podium survivalPodium;
     private boolean gamePaused;
 
     /**
-     * Constructor of the view of the application.
+     * Constructor.
+     * 
+     * @param primaryStage the stage received from the application launcher
      */
-   // public ViewImpl(final Controller controller) {
-    public ViewImpl() {
+    public ViewImpl(final Stage primaryStage) {
         super();
-    //    this.controller = controller;
-        this.achievements = new ArrayList<>();
+        this.stage = primaryStage;
+        this.achievements = new HashMap<>();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
     }
 
     @Override
-    public final void start(final Stage primaryStage) throws Exception {
-        primaryStage.setTitle(GAME_TITLE);
-        primaryStage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));
-        this.sceneFactory.setStage(primaryStage);
-        this.sceneFactory.openAccountSelectionScene();
+    public void viewLauncher(final Controller controller) {
+        this.controller = controller;
+        this.stage.setTitle(GAME_TITLE);
+        this.stage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));
+        this.sceneFactory.setStage(this.stage);
         //this.sceneFactory.openMenuScene();
-        //load images
-    }
-
-    @Override
-    public final void viewLauncher() {
-       launch();
+        this.sceneFactory.openAccountSelectionScene();
     }
 
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
         this.render = new Render(gameSceneController, gameMode);
+        controller.initGame(gameMode);
         this.startRender();
     }
 
@@ -96,29 +101,48 @@ public class ViewImpl extends Application implements View {
     }
 
     @Override
-    public void resetGame() {
+    public void closeGame(final MatchData matchData, final boolean isHighScores) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void setHighScores() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setAchievements(List<Achievement> achievements) {
-        this.achievements = achievements;        
-    }
-
-    @Override
-    public List<HighScore> getHighScores() {
-        // TODO Auto-generated method stub
+    public Map<AchievementType, Achievement> getAchievements() {
         return null;
+        //return this.achievements;
     }
 
     @Override
+    public void setAchievements(final Map<AchievementType, Achievement> achievements) {
+        //this.achievements = achievements;
+    }
+
+    @Override
+    public void setStoryPodium(final Podium podium) {
+        this.storyPodium = podium;
+    }
+
+    @Override
+    public void setSurvivalPodium(final Podium podium) {
+        this.survivalPodium = podium;
+    }
+
+    @Override
+    public Podium getStoryPodium() {
+        // TODO Auto-generated method stub
+        return this.storyPodium;
+    }
+
+    @Override
+    public Podium getSurvivalPodium() {
+        // TODO Auto-generated method stub
+        return this.survivalPodium;
+    }
+
+    /**
+     * 
+     * @return the scene factory.
+     */
     public SceneFactory getSceneFactory() {
         return this.sceneFactory;
     }
@@ -138,28 +162,25 @@ public class ViewImpl extends Application implements View {
         private final GameSceneController gameSceneController;
         private final GameMode gameMode;
         private final GraphicsContext gamecanvas;
+        private final ImageView backgroundImage;
 
-        public Render(final GameSceneController gameSceneController, final GameMode gameMode) {
+        Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
             this.period = MILLIS_FROM_SECOND / SettingsImpl.getSettings().getSelectedFPS();
             this.gameSceneController = gameSceneController;
             this.gameMode = gameMode;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
+            this.backgroundImage = new ImageView();
+            this.backgroundImage
+                    .setImage(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png")));
         }
 
         @Override
-        public final void run() {
-          /*  if (gamePaused) {
-                controller.startGame();
-            } else {
-                gamePaused = true;
-                controller.initGame(this.gameMode);
-                controller.startGame();
-            }
-*/
+        public final void run() {            
+            controller.startGameLoop();
+            
             while (this.running) {
-                final long currentTime = System.currentTimeMillis();
                 try {
                     mutex.acquire();
                     this.viewEntitiesGame = viewEntities;
@@ -168,12 +189,18 @@ public class ViewImpl extends Application implements View {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
+                
+                final long currentTime = System.currentTimeMillis();
+                
+                this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, 1366, 768);
+                
                 for (final ViewEntity viewEntity : this.viewEntitiesGame) {
                     if (viewEntity.getShape() instanceof Rectangle) {
                         final Rectangle rectangle = (Rectangle) viewEntity.getShape();
                         this.gamecanvas.drawImage(viewEntity.getPicture(), viewEntity.getPosition().getX(), viewEntity.getPosition().getY(),
                         rectangle.getWidth(), rectangle.getHeight());
+                      
+                       
                     }
                 }
 
@@ -192,14 +219,7 @@ public class ViewImpl extends Application implements View {
         }
     }
 
-    @Override
-    public void closeGame(MatchData matchData, boolean isHighScores) {
-        // TODO Auto-generated method stub
-        
-    }
+ 
 
-    @Override
-    public List<Achievement> getAchievements() {
-        return this.achievements;
-    }
 }
+

@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import controller.matches.GameMode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import utility.GameModes;
+//import utility.GameMode;
 
 public class SelectModeSceneControllerImpl extends AbstractSecondarySceneController {
 

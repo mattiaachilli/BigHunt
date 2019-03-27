@@ -10,8 +10,8 @@ import settings.GlobalDifficulty;
  */
 public class StoryMatch extends AbstractMatch {
 
-    private final GameMode GAME_MODE;
-    private final MaxOfRounds MAX_OF_ROUNDS;
+    private static final GameMode GAME_MODE = GameMode.STORY_MODE;
+    private static final MaxOfRounds MAX_OF_ROUNDS = MaxOfRounds.FIVE_ROUNDS;
 
     private MatchDifficulty difficulty;
 
@@ -22,8 +22,6 @@ public class StoryMatch extends AbstractMatch {
      */
     public StoryMatch(final GlobalDifficulty globalDifficulty) {
         super();
-        this.GAME_MODE = GameMode.STORY_MODE;
-        this.MAX_OF_ROUNDS = MaxOfRounds.FIVE_ROUNDS;
 
         switch (globalDifficulty.getGlobalDifficulty()) {
         case "EASY":
@@ -48,8 +46,7 @@ public class StoryMatch extends AbstractMatch {
      * @return the game mode
      */
     public GameMode getMode() {
-        // TODO Auto-generated method stub
-        return this.GAME_MODE;
+        return StoryMatch.GAME_MODE;
     }
 
     /**
@@ -57,7 +54,6 @@ public class StoryMatch extends AbstractMatch {
      * @return the difficulty
      */
     public MatchDifficulty getDifficulty() {
-        // TODO Auto-generated method stub
         return this.difficulty;
     }
 
@@ -66,8 +62,7 @@ public class StoryMatch extends AbstractMatch {
      * @return the number of rounds that a match can have.
      */
     public MaxOfRounds getMaxOfRounds() {
-        // TODO Auto-generated method stub
-        return this.MAX_OF_ROUNDS;
+        return StoryMatch.MAX_OF_ROUNDS;
     }
 
     /**
@@ -75,8 +70,7 @@ public class StoryMatch extends AbstractMatch {
      * @return true if the match is over
      */
     public boolean isMatchOver() {
-        // TODO Auto-generated method stub
-        return this.getCurrentRound() >= this.MAX_OF_ROUNDS.getRounds()
+        return this.getCurrentRound() >= StoryMatch.MAX_OF_ROUNDS.getRounds()
         || this.getMatchData().getGlobalScore() < this.difficulty.getLimitOfDifficulty() * this.getCurrentRound();
     }
 }

@@ -1,4 +1,5 @@
 package model;
+
 import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import model.entities.DogImpl;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
+
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
@@ -25,8 +27,8 @@ import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
 import settings.GlobalDifficulty;
-import settings.SettingsImpl;
 
+import settings.SettingsImpl;
 
 /**
  * 
@@ -34,6 +36,10 @@ import settings.SettingsImpl;
  *
  */
 public final class ModelImpl extends Canvas implements Model {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * Game width.
      */
@@ -46,6 +52,11 @@ public final class ModelImpl extends Canvas implements Model {
      * Maximum number of magazines carriable.
      */
     public static final int MAX_MAGAZINES = 20;
+
+    /**
+     * Max of time elapsed before the update.
+     */
+    private static final int UPDATE_TIME = 6000;
 
     /**
      * All objects of the game world.
@@ -82,7 +93,6 @@ public final class ModelImpl extends Canvas implements Model {
         this.difficulty = GlobalDifficulty.EASY;
         this.cleaner = new CleanerImpl();
         this.duckDoubleScore = 0;
-        this.initGame(GameMode.STORY_MODE);
     }
 
     @Override
@@ -92,30 +102,30 @@ public final class ModelImpl extends Canvas implements Model {
         ducks.clear();
         powerUp.clear();
         switch (gameMode) {
-            case STORY_MODE:
-                this.match = Optional.of(new StoryMatch(this.difficulty));
-                this.spawner = new StoryModeSpawner();
-                this.lastRound = this.spawner.getActualRound();
-                break;
-            case SURVIVAL_MODE:
-                this.match = Optional.of(new SurvivalMatch(this.difficulty));
-                this.spawner = new SurvivalModeSpawner();
-                break;
-            default:
-                break;
+        case STORY_MODE:
+            this.match = Optional.of(new StoryMatch(this.difficulty));
+            this.spawner = new StoryModeSpawner();
+            this.lastRound = this.spawner.getActualRound();
+            break;
+        case SURVIVAL_MODE:
+            this.match = Optional.of(new SurvivalMatch(this.difficulty));
+            this.spawner = new SurvivalModeSpawner();
+            this.lastRound = this.spawner.getActualRound();
+            break;
+        default:
+            break;
         }
     }
 
     @Override
     public void update(final int timeElapsed) {
         this.updateRoundNumber();
-        //Update dog
         this.dog.update(timeElapsed);
         if (this.dog.getDogStatus() != this.lastDogStatus) {
             this.lastDogStatus = this.dog.getDogStatus();
         }
 
-        //Update spawner when dog is in grass
+        // Update spawner when dog is in grass
         if (this.dog.isInGrass()) {
             this.timeElapsed += timeElapsed;
             this.getCurrentMagazine().update(timeElapsed);
@@ -130,12 +140,14 @@ public final class ModelImpl extends Canvas implements Model {
                 }
             }
         }
+
         //Update ducks
         this.ducks.forEach(d -> {
             //SIMULATE KILL EACH 4000ms = 5s
             /*if (this.timeElapsed >= 4000) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
                     this.timeElapsed -= 4000;
+>>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
                     d.kill();
                     if (d.hasPowerUp()) {
                         d.getPowerUp().get().hit();
@@ -153,13 +165,14 @@ public final class ModelImpl extends Canvas implements Model {
             }
             d.update(timeElapsed);
         });
-        //Update PowerUp list
+        // Update PowerUp list
         this.powerUp.forEach(p -> {
             if (p.isHit()) {
                 this.activePowerUp(p.getType());
             }
             p.update(timeElapsed);
         });
+        this.deleteUnnecessaryPowerUp();
         //Clean the powerUp out of screen
         this.cleaner.cleanPowerUp(this.powerUp);
     }
@@ -174,6 +187,19 @@ public final class ModelImpl extends Canvas implements Model {
         }
     }
 
+    private void deleteUnnecessaryPowerUp() {
+        final List<Integer> indexesPowUp = new ArrayList<>();
+        for (int i = 0; i < this.powerUp.size(); i++) {
+            if (this.powerUp.get(i).isHit() || this.powerUp.get(i).getPosition().getY() <= 0
+            || this.powerUp.get(i).getPosition().getY() >= GAME_HEIGHT) {
+                indexesPowUp.add(i);
+            }
+        }
+        for (final Integer index : indexesPowUp) {
+            this.powerUp.remove((int) index);
+        }
+    }
+    
     @Override
     public void activateInfAmmo() {
         this.ammo.stream()

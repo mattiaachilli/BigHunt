@@ -5,12 +5,15 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import model.data.MatchData;
+import settings.SettingsImpl;
 
 public class GameSceneControllerImpl extends AbstractSceneController implements GameSceneController {
 
-    @FXML
-    private Canvas canvas;
+
+    @FXML // fx:id="canvas"
+    private Canvas canvas; // Value injected by FXMLLoader
     
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -19,7 +22,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     private URL location;
 
     @FXML // fx:id="game"
-    private BorderPane game; // Value injected by FXMLLoader
+    private Pane game; // Value injected by FXMLLoader
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -28,6 +31,16 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
 
     @Override
     public Canvas getCanvas() {
+     //   this.game.setPrefHeight(SettingsImpl.getSettings().getSelectedResolution().getValue());
+     //   this.game.setPrefWidth(SettingsImpl.getSettings().getSelectedResolution().getKey());
+        this.canvas.setHeight(SettingsImpl.getSettings().getSelectedResolution().getValue());
+        this.canvas.setWidth(SettingsImpl.getSettings().getSelectedResolution().getKey());
+        System.out.println(this.canvas.getWidth());
+        System.out.println(this.canvas.getHeight()); 
+        System.out.println(this.game.getWidth());
+        System.out.println(this.game.getHeight()); 
+  
+        
         return this.canvas;
     }
 
