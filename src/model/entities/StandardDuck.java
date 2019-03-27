@@ -21,6 +21,7 @@ import org.apache.commons.lang3.tuple.Pair;
 public class StandardDuck extends AbstractCharacter implements Duck {
 
     private static final int MILLIS_UPDATE_DIRECTION = 1000; //1 SECOND
+    private static final int MILLIS_UPDATE_PRECIPITATE = 300; //300ms
     private static final int DEFAULT_SCORE = 50;
     private static final int POSSIBLE_DIRECTION = 6;
     /**
@@ -86,6 +87,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
         if (this.hasPowerUp()) {
             this.powerUp.get().setVisible();
         }
+        this.lastDirectionUpdate = 0;
     }
 
     @Override
@@ -101,7 +103,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 
     @Override
     public final void update(final int timeElapsed) {
-        if (this.getStatus() == EntityStatus.ALIVE && this.movement) { //Only if is alive
+        if (this.getStatus() == EntityStatus.ALIVE && this.movement) { 
             this.lastDirectionUpdate += timeElapsed;
             if (this.canChangeDirection()) {
                 this.lastDirectionUpdate -= MILLIS_UPDATE_DIRECTION;
@@ -110,6 +112,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
             EntityUtilities.checkCollision(this, this.decelerate, this.actualDirection);
             if (this.hasPowerUp()) {
                 this.powerUp.get().setPosition(this.getPosition());
+            }
+        } else if (this.getStatus() == EntityStatus.DEAD) {
+            this.lastDirectionUpdate += timeElapsed;
+            if (this.lastDirectionUpdate >= MILLIS_UPDATE_PRECIPITATE) {
+                EntityUtilities.setNewPosition(this, this.decelerate, DuckDirection.PRECIPITATE);
             }
         }
         super.update(timeElapsed);

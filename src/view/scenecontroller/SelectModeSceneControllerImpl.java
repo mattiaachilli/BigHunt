@@ -6,8 +6,11 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import controller.matches.GameMode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+//import utility.GameMode;
 
 public class SelectModeSceneControllerImpl extends AbstractSecondarySceneController {
 
@@ -28,7 +31,8 @@ public class SelectModeSceneControllerImpl extends AbstractSecondarySceneControl
 
     @FXML
     void startArcadeGame() {
-        //inizia arcade
+        this.getSceneFactory().setGameMode(GameMode.STORY_MODE);
+        this.getSceneFactory().openGameScene();
     }
 
     @FXML

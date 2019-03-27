@@ -12,19 +12,19 @@ public enum DuckProperty {
     /**
      * STANDARD DUCK INFORMATIONS.
      */
-    STANDARD_DUCK(1000, 8000, "Standard Duck"),
+    STANDARD_DUCK(800, 8000, "Standard Duck"),
     /**
      * YELLOW DUCK INFORMATIONS.
      */
-    YELLOW_DUCK(1400, 7000, "Yellow Duck"),
+    YELLOW_DUCK(1000, 7000, "Yellow Duck"),
     /**
      * ORANGE DUCK INFORMATIONS.
      */
-    ORANGE_DUCK(1700, 6000, "Orange Duck"),
+    ORANGE_DUCK(1200, 6000, "Orange Duck"),
     /**
      * PINK DUCK INFORMATIONS.
      */
-    PINK_DUCK(2000, 5000, "Pink Duck");
+    PINK_DUCK(1500, 5000, "Pink Duck");
 
 
     private final double velocity;

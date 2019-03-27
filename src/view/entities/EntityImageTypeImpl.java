@@ -62,6 +62,7 @@ public final class EntityImageTypeImpl implements EntityImageType {
         if (entity instanceof Dog) {
             this.dogAnimation.update(entity, elapsed);
         } else if (entity instanceof Duck) {
+            System.out.println("ok");
             this.duckAnimation.update(entity, elapsed);
         }
     }
@@ -83,6 +84,9 @@ public final class EntityImageTypeImpl implements EntityImageType {
                 break;
             default:
                 break;
+        }
+        if (!powerUp.isVisible()) {
+            return Optional.empty();
         }
         return image;
     }

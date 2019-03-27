@@ -42,7 +42,7 @@ public class AchievementsSceneControllerImpl extends AbstractSecondarySceneContr
      *          points of player
      */
     public final void setAchievements(final List<Achievement> achievements) {
-        this.matchPlayed.setText("2");
+        this.matchPlayed.setText("1");
         this.kills.setText("2");
         this.powerUpUsed.setText("3");
         this.totalScore.setText("4");

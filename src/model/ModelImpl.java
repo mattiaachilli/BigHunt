@@ -1,4 +1,5 @@
 package model;
+
 import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +26,15 @@ import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
 import settings.GlobalDifficulty;
-import settings.SettingsImpl;
 
+import settings.SettingsImpl;
 
 /**
  * 
  * Model implementation, contains all objects of the game.
  *
  */
-public final class ModelImpl extends Canvas implements Model {
+public final class ModelImpl implements Model {
     /**
      * Game width.
      */
@@ -46,6 +47,11 @@ public final class ModelImpl extends Canvas implements Model {
      * Maximum number of magazines carriable.
      */
     public static final int MAX_MAGAZINES = 20;
+
+    /**
+     * Max of time elapsed before the update.
+     */
+    private static final int UPDATE_TIME = 6000;
 
     /**
      * All objects of the game world.
@@ -72,17 +78,16 @@ public final class ModelImpl extends Canvas implements Model {
         super();
         this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
+        this.powerUp = new ArrayList<>();
+        this.cleaner = new CleanerImpl();
         this.currentMagazine = 1;
         this.ammo = new ArrayList<>();
         for (int i = 1; i <= MAX_MAGAZINES; i++) {
             this.ammo.add(new MagazineImpl(i));
         }
-        this.powerUp = new ArrayList<>();
         this.match = Optional.empty();
         this.difficulty = GlobalDifficulty.EASY;
-        this.cleaner = new CleanerImpl();
         this.duckDoubleScore = 0;
-        this.initGame(GameMode.STORY_MODE);
     }
 
     @Override
@@ -92,30 +97,30 @@ public final class ModelImpl extends Canvas implements Model {
         ducks.clear();
         powerUp.clear();
         switch (gameMode) {
-            case STORY_MODE:
-                this.match = Optional.of(new StoryMatch(this.difficulty));
-                this.spawner = new StoryModeSpawner();
-                this.lastRound = this.spawner.getActualRound();
-                break;
-            case SURVIVAL_MODE:
-                this.match = Optional.of(new SurvivalMatch(this.difficulty));
-                this.spawner = new SurvivalModeSpawner();
-                break;
-            default:
-                break;
+        case STORY_MODE:
+            this.match = Optional.of(new StoryMatch(this.difficulty));
+            this.spawner = new StoryModeSpawner();
+            this.lastRound = this.spawner.getActualRound();
+            break;
+        case SURVIVAL_MODE:
+            this.match = Optional.of(new SurvivalMatch(this.difficulty));
+            this.spawner = new SurvivalModeSpawner();
+            this.lastRound = this.spawner.getActualRound();
+            break;
+        default:
+            break;
         }
     }
 
     @Override
     public void update(final int timeElapsed) {
         this.updateRoundNumber();
-        //Update dog
         this.dog.update(timeElapsed);
         if (this.dog.getDogStatus() != this.lastDogStatus) {
             this.lastDogStatus = this.dog.getDogStatus();
         }
 
-        //Update spawner when dog is in grass
+        // Update spawner when dog is in grass
         if (this.dog.isInGrass()) {
             this.timeElapsed += timeElapsed;
             this.getCurrentMagazine().update(timeElapsed);
@@ -130,22 +135,23 @@ public final class ModelImpl extends Canvas implements Model {
                 }
             }
         }
+
         //Update ducks
         this.ducks.forEach(d -> {
             //SIMULATE KILL EACH 4000ms = 5s
-            /*if (this.timeElapsed >= 4000) {
+            if (this.timeElapsed >= 4000) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
                     this.timeElapsed -= 4000;
                     d.kill();
-                    if (d.hasPowerUp()) {
+                    /*if (d.hasPowerUp()) {
                         d.getPowerUp().get().hit();
-                    }
+                    }*/
                     final int score = this.duckDoubleScore > 0 ? d.getScore() * 2 : d.getScore();
                     this.duckDoubleScore = this.duckDoubleScore > 0 ? this.duckDoubleScore-- : 0;
                     this.match.get().getMatchData().incrementScoreOf(score);
                     dog.setDogStatus(DogStatus.HAPPY);
                 }
-            }*/
+            }
             if (d.canFlyAway()) {
                 d.computeFlyAway();
                 dog.setDogStatus(DogStatus.LAUGH);
@@ -153,21 +159,22 @@ public final class ModelImpl extends Canvas implements Model {
             }
             d.update(timeElapsed);
         });
-        //Update PowerUp list
+        // Update PowerUp list
         this.powerUp.forEach(p -> {
             if (p.isHit()) {
                 this.activePowerUp(p.getType());
             }
             p.update(timeElapsed);
         });
-        //Clean the powerUp out of screen
-        this.cleaner.cleanPowerUp(this.powerUp);
+        //Clean objects not necessary
+        this.cleaner.clean(this.ducks, this.powerUp);
     }
 
     private void updateRoundNumber() {
         //Only for STORY MODE
         if (this.gameMode == GameMode.STORY_MODE) {
             if (this.spawner.getActualRound() != this.lastRound) {
+                this.dog = new DogImpl();
                 this.ducks.clear();
                 this.lastRound = this.spawner.getActualRound();
             }
@@ -189,7 +196,6 @@ public final class ModelImpl extends Canvas implements Model {
     }
 
     private void activePowerUp(final PowerUpType powerUp) {
-        System.out.println(powerUp.toString());
         switch (powerUp) {
             case DOUBLE_SCORE:
                 this.ducks.stream()
@@ -224,11 +230,11 @@ public final class ModelImpl extends Canvas implements Model {
         switch (this.gameMode) {
             case STORY_MODE:
                 gameOver = this.spawner.getActualRound() > this.lastRound 
-                            && matchData.getGlobalScore() < matchScore && this.currentMagazine > MAX_MAGAZINES;
+                            && matchData.getGlobalScore() < matchScore || this.currentMagazine > MAX_MAGAZINES || this.spawner.isSpawnFinished();
             break;
             case SURVIVAL_MODE:
                 gameOver = matchData.getFlownDucks() >= this.match.get().getDifficulty().getLimitOfDifficulty()
-                           && this.currentMagazine > MAX_MAGAZINES;
+                           || this.currentMagazine > MAX_MAGAZINES || this.spawner.isSpawnFinished();
             break;
             default:
                 break;

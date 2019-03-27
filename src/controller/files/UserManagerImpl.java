@@ -29,7 +29,6 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public Optional<UserData> login(final String userName, final String password) {
-        // TODO Auto-generated method stub
         final Optional<String[]> account = this.getUsersAndPasswords().filter(u -> u[0].equals(userName))
         .filter(u -> u[1].equals(Integer.toString(password.hashCode()))).findFirst();
         if (account.isPresent()) {
@@ -44,7 +43,6 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public boolean save(final UserData data) {
-        // TODO Auto-generated method stub
         try {
             write(data);
             return true;
@@ -56,7 +54,6 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public Optional<UserData> register(final String userName, final String password) {
-        // TODO Auto-generated method stub
         if (this.getUsersAndPasswords().filter(l -> l[0].equals(userName)).findFirst().isPresent()) {
             return Optional.empty();
         } else {

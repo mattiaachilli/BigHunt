@@ -68,7 +68,7 @@ public class SceneLoaderImpl implements SceneLoader {
             
             switch(screen) {
             case SELECT_ACCOUNT:
-                this.view.resetGame();
+                //this.view.resetGame();
                 break;
             case LOGIN:
                 break;
@@ -82,7 +82,7 @@ public class SceneLoaderImpl implements SceneLoader {
                 break;
             case ACHIEVEMENTS:
                 final AchievementSceneController achievementController = (AchievementSceneController) controller;
-                achievementController.setAchievements(this.view.getAchievements());
+                //achievementController.setAchievements(this.view.getAchievements());
                 break;
             case HIGH_SCORES:
                 break;

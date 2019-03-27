@@ -27,9 +27,9 @@ public final class EntitiesConverter {
      *          elapsed from the last update, used for animation of entities.
      * @return the entity for the view.
      */
-    public static ViewEntity convertEntity(final Entity entity, final int elapsed) {
+    public static Optional<ViewEntity> convertEntity(final Entity entity, final int elapsed) {
         EntityImageTypeImpl.getInstance().updateEntity(entity, elapsed);
-        Optional<Image> image = Optional.ofNullable(EntityImageTypeImpl.getInstance().getImageType(entity).get());
-        return new ViewEntityImpl(entity.getShape(), image.isPresent() ? image.get() : null);
+        Optional<Image> image = EntityImageTypeImpl.getInstance().getImageType(entity);
+        return image.isPresent() ? Optional.of(new ViewEntityImpl(entity.getShape(), image.get())) : Optional.empty();
     }
 }

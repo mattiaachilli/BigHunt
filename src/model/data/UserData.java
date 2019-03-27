@@ -38,4 +38,5 @@ public interface UserData extends Serializable {
      * @return the username of the player
      */
     String getName();
+
 }
