@@ -93,7 +93,6 @@ public final class ModelImpl extends Canvas implements Model {
         this.difficulty = GlobalDifficulty.EASY;
         this.cleaner = new CleanerImpl();
         this.duckDoubleScore = 0;
-        this.initGame(GameMode.STORY_MODE);
     }
 
     @Override
@@ -120,12 +119,7 @@ public final class ModelImpl extends Canvas implements Model {
 
     @Override
     public void update(final int timeElapsed) {
-<<<<<<< HEAD
-        // Update dog
-=======
         this.updateRoundNumber();
-        //Update dog
->>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
         this.dog.update(timeElapsed);
         if (this.dog.getDogStatus() != this.lastDogStatus) {
             this.lastDogStatus = this.dog.getDogStatus();
@@ -146,14 +140,7 @@ public final class ModelImpl extends Canvas implements Model {
                 }
             }
         }
-<<<<<<< HEAD
-        // Update ducks
 
-        for (Duck d : this.ducks) {
-            if (this.timeElapsed >= UPDATE_TIME) {
-                if (d.getStatus() == EntityStatus.ALIVE) {
-                    this.timeElapsed -= UPDATE_TIME;
-=======
         //Update ducks
         this.ducks.forEach(d -> {
             //SIMULATE KILL EACH 4000ms = 5s
@@ -177,8 +164,7 @@ public final class ModelImpl extends Canvas implements Model {
                 this.match.get().getMatchData().incrementFlownDucks();
             }
             d.update(timeElapsed);
-        }
-
+        });
         // Update PowerUp list
         this.powerUp.forEach(p -> {
             if (p.isHit()) {
@@ -186,17 +172,13 @@ public final class ModelImpl extends Canvas implements Model {
             }
             p.update(timeElapsed);
         });
-<<<<<<< HEAD
         this.deleteUnnecessaryPowerUp();
-        // Only for STORY MODE
-=======
         //Clean the powerUp out of screen
         this.cleaner.cleanPowerUp(this.powerUp);
     }
 
     private void updateRoundNumber() {
         //Only for STORY MODE
->>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
         if (this.gameMode == GameMode.STORY_MODE) {
             if (this.spawner.getActualRound() != this.lastRound) {
                 this.ducks.clear();
@@ -205,8 +187,6 @@ public final class ModelImpl extends Canvas implements Model {
         }
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     private void deleteUnnecessaryPowerUp() {
         final List<Integer> indexesPowUp = new ArrayList<>();
         for (int i = 0; i < this.powerUp.size(); i++) {
@@ -219,24 +199,7 @@ public final class ModelImpl extends Canvas implements Model {
             this.powerUp.remove((int) index);
         }
     }
-
-    private void activePowerUp(final PowerUpType powerUp) {
-        System.out.println(powerUp.toString());
-        switch (powerUp) {
-        case INFINITE_AMMO:
-            /* Bullet */
-            break;
-        case KILL_ALL:
-            for (final Duck duck : this.ducks) {
-                if (duck.isAlive()) {
-                    duck.kill();
-                }
-            }
-            break;
-        default:
-            break;
-=======
-=======
+    
     @Override
     public void activateInfAmmo() {
         this.ammo.stream()
@@ -251,7 +214,6 @@ public final class ModelImpl extends Canvas implements Model {
         .findFirst().get().setBulletType(BulletType.NORMAL_BULLET);
     }
 
->>>>>>> 46e5a48ab9a3765a563ffe60a60b0bfba77469e7
     private void activePowerUp(final PowerUpType powerUp) {
         System.out.println(powerUp.toString());
         switch (powerUp) {
@@ -277,7 +239,6 @@ public final class ModelImpl extends Canvas implements Model {
                 break;
             default:
                 break;
->>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
         }
     }
 
@@ -323,31 +284,6 @@ public final class ModelImpl extends Canvas implements Model {
     @Override
     public List<Duck> getDucks() {
         return this.ducks;
-<<<<<<< HEAD
-    }
-
-    @Override
-    public void setAimX() {
-        // TODO Auto-generated method stub
-<<<<<<< HEAD
-
-=======
->>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
-    }
-
-    @Override
-    public void setAimY() {
-        // TODO Auto-generated method stub
-<<<<<<< HEAD
-
-=======
->>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
-    }
-
-    /*
-     * @Override public List<Bullet> getBullets() { return null; }
-     */
-=======
     }
 
     @Override
@@ -386,6 +322,5 @@ public final class ModelImpl extends Canvas implements Model {
         .filter(m -> m.getNumber() == currentMagazine)
         .findFirst().get();
     }
->>>>>>> 46e5a48ab9a3765a563ffe60a60b0bfba77469e7
 }
 

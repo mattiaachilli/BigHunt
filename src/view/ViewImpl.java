@@ -1,5 +1,6 @@
 package view;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,9 @@ import java.util.concurrent.Semaphore;
 
 import controller.matches.GameMode;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.shape.Rectangle;
 import model.data.MatchData;
 import settings.SettingsImpl;
@@ -38,7 +42,7 @@ public class ViewImpl implements View {
     private static final String GAME_TITLE = "BIG HUNT";
 
     private final SceneFactory sceneFactory;
-    private final Stage stage;
+    private Stage stage;
     private Map<AchievementType, Achievement> achievements;
     private Podium storyPodium;
     private Podium survivalPodium;
@@ -52,6 +56,7 @@ public class ViewImpl implements View {
     public ViewImpl(final Stage primaryStage) {
         super();
         this.stage = primaryStage;
+        this.achievements = new HashMap<>();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
     }
@@ -62,21 +67,14 @@ public class ViewImpl implements View {
         this.stage.setTitle(GAME_TITLE);
         this.stage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));
         this.sceneFactory.setStage(this.stage);
-        this.sceneFactory.openMenuScene();
-
-        /*
-         * this.stage.setMinWidth(MIN_WIDTH); this.stage.setMinHeight(MIN_HEIGHT);
-         * this.stage.setMaximized(true); this.loadScene(GameScene.MAIN_MENU);
-         * ImageLoader.getLoader().loadAll();
-         * 
-         * Metodi di view per istanziare lo stage visti da altro codice
-         * 
-         */
+        //this.sceneFactory.openMenuScene();
+        this.sceneFactory.openAccountSelectionScene();
     }
 
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
         this.render = new Render(gameSceneController, gameMode);
+        controller.initGame(gameMode);
         this.startRender();
     }
 
@@ -110,12 +108,13 @@ public class ViewImpl implements View {
 
     @Override
     public Map<AchievementType, Achievement> getAchievements() {
-        return this.achievements;
+        return null;
+        //return this.achievements;
     }
 
     @Override
     public void setAchievements(final Map<AchievementType, Achievement> achievements) {
-        this.achievements = achievements;
+        //this.achievements = achievements;
     }
 
     @Override
@@ -163,6 +162,7 @@ public class ViewImpl implements View {
         private final GameSceneController gameSceneController;
         private final GameMode gameMode;
         private final GraphicsContext gamecanvas;
+        private final ImageView backgroundImage;
 
         Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
@@ -171,19 +171,16 @@ public class ViewImpl implements View {
             this.gameMode = gameMode;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
+            this.backgroundImage = new ImageView();
+            this.backgroundImage
+                    .setImage(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png")));
         }
 
         @Override
-        public final void run() {
-            if (gamePaused) {
-                controller.startGameLoop();
-            } else {
-                gamePaused = true;
-                controller.initGame(this.gameMode);
-                controller.startGameLoop();
-            }
+        public final void run() {            
+            controller.startGameLoop();
+            
             while (this.running) {
-                final long currentTime = System.currentTimeMillis();
                 try {
                     mutex.acquire();
                     this.viewEntitiesGame = viewEntities;
@@ -192,12 +189,18 @@ public class ViewImpl implements View {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
+                
+                final long currentTime = System.currentTimeMillis();
+                
+                this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, 1366, 768);
+                
                 for (final ViewEntity viewEntity : this.viewEntitiesGame) {
                     if (viewEntity.getShape() instanceof Rectangle) {
                         final Rectangle rectangle = (Rectangle) viewEntity.getShape();
                         this.gamecanvas.drawImage(viewEntity.getPicture(), viewEntity.getPosition().getX(), viewEntity.getPosition().getY(),
                         rectangle.getWidth(), rectangle.getHeight());
+                      
+                       
                     }
                 }
 

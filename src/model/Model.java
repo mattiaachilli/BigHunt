@@ -75,9 +75,11 @@ public interface Model {
      * 
      * Method used to handle bullets after each shot.
      */
-<<<<<<< HEAD
     //List<Bullet> getBullets();
-=======
+    
+    /**
+     * 
+     */
     void shoot();
 
     /**
@@ -99,12 +101,6 @@ public interface Model {
     Magazine getCurrentMagazine();
 
     /**
-     * 
-     * @return the list of ducks.
-     */
-    List<Duck> getDucks();
-
-    /**
      * test.
      */
     void activateInfAmmo();
@@ -113,5 +109,4 @@ public interface Model {
      * test.
      */
     void deactivateInfAmmo();
->>>>>>> 46e5a48ab9a3765a563ffe60a60b0bfba77469e7
 }

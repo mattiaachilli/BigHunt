@@ -29,7 +29,7 @@ public final class EntitiesConverter {
      */
     public static ViewEntity convertEntity(final Entity entity, final int elapsed) {
         EntityImageTypeImpl.getInstance().updateEntity(entity, elapsed);
-        Optional<Image> image = Optional.ofNullable(EntityImageTypeImpl.getInstance().getImageType(entity).get());
-        return new ViewEntityImpl(entity.getShape(), image.isPresent() ? image.get() : null);
+        Image image = EntityImageTypeImpl.getInstance().getImageType(entity).get();
+        return new ViewEntityImpl(entity.getShape(), image);
     }
 }

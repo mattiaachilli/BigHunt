@@ -1,8 +1,12 @@
 package controller;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Semaphore;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
+import controller.converter.EntitiesConverter;
 import controller.files.PodiumManager;
 import controller.files.PodiumManagerImpl;
 import controller.files.UserManager;
@@ -13,6 +17,7 @@ import model.data.Podium;
 import model.data.UserData;
 import utility.Utilities;
 import view.View;
+import view.entities.ViewEntity;
 
 /**
  * 
@@ -21,6 +26,8 @@ import view.View;
  */
 
 public final class ControllerImpl implements Controller {
+    
+    private static final int GREEN_SEMAPHORE = 1;
     /**
      * 60 FPS.
      */
@@ -29,6 +36,7 @@ public final class ControllerImpl implements Controller {
     private GameLoop gameLoop;
     private final Supplier<Model> modelSupplier;
     private Model model;
+    private final Semaphore mutex;
     private final View view;
     private final PodiumManager podiumManager;
     private final UserManager userManager;
@@ -52,6 +60,7 @@ public final class ControllerImpl implements Controller {
         this.userManager = new UserManagerImpl();
         this.podium = Optional.empty();
         this.user = Optional.empty();
+        this.mutex = new Semaphore(GREEN_SEMAPHORE);
     }
 
     @Override
@@ -59,6 +68,7 @@ public final class ControllerImpl implements Controller {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
         this.loadPodium(gameMode);
+        this.view.render(getEntitiesForView(0), this.model.getMatchData());
     }
 
     @Override
@@ -132,7 +142,11 @@ public final class ControllerImpl implements Controller {
     public void resume() {
         this.gameLoop.resumeLoop();
     }
-
+    
+    private List<ViewEntity> getEntitiesForView(final int elapsed) {
+        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
+    }
+    
     private class GameLoop extends Thread {
         private volatile boolean running;
         private boolean paused;
@@ -151,7 +165,7 @@ public final class ControllerImpl implements Controller {
                     final int elapsed = (int) (current - lastTime);
                     processInput();
                     model.update(elapsed);
-                    // view.setStateGame(getEntitiesForView(), model.getGameData());
+                    view.render(getEntitiesForView(elapsed), model.getMatchData());
                     Utilities.waitForNextFrame(PERIOD, current);
                     lastTime = current;
                 }
@@ -162,7 +176,13 @@ public final class ControllerImpl implements Controller {
         }
 
         private void processInput() {
-            // Input from mouse command example
+            /*try {
+                mutex.acquire();
+                mutex.release();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            */
         }
 
         public void pauseLoop() {
