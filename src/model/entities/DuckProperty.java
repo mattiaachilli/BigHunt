@@ -12,11 +12,11 @@ public enum DuckProperty {
     /**
      * STANDARD DUCK INFORMATIONS.
      */
-    STANDARD_DUCK(700, 8000, "Standard Duck"),
+    STANDARD_DUCK(600, 8000, "Standard Duck"),
     /**
      * YELLOW DUCK INFORMATIONS.
      */
-    YELLOW_DUCK(900, 7000, "Yellow Duck"),
+    YELLOW_DUCK(800, 7000, "Yellow Duck"),
     /**
      * ORANGE DUCK INFORMATIONS.
      */
@@ -24,7 +24,7 @@ public enum DuckProperty {
     /**
      * PINK DUCK INFORMATIONS.
      */
-    PINK_DUCK(1300, 5000, "Pink Duck");
+    PINK_DUCK(1500, 4000, "Pink Duck");
 
 
     private final double velocity;
@@ -32,8 +32,7 @@ public enum DuckProperty {
     private final String duckType;
 
 
-    DuckProperty(final double velocity,
-                final int timeFlyAway, final String duckType) {
+    DuckProperty(final double velocity, final int timeFlyAway, final String duckType) {
         this.velocity = velocity;
         this.timeFlyAway = timeFlyAway;
         this.duckType = duckType;

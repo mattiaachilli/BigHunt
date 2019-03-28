@@ -5,7 +5,6 @@ import javafx.scene.shape.Shape;
 import model.ModelImpl;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
-
 /**
  * 
  * This class represents the dog, animation etc..
@@ -15,18 +14,18 @@ public final class DogImpl extends AbstractEntity implements Dog {
     /**
      * MAX POS Y, USED FOR DOG AND DUCKS.
      */
-    public static final double FINAL_POS_Y = ModelImpl.GAME_HEIGHT - 350;
+    public static final double FINAL_POS_Y = ModelImpl.GAME_HEIGHT * 0.70;
     private static final double INIT_POS_X = 0;
-    private static final double INIT_POS_Y = ModelImpl.GAME_HEIGHT - 200;
+    private static final double INIT_POS_Y = ModelImpl.GAME_HEIGHT * 0.85;
     private static final double FINAL_POS_X = ModelImpl.GAME_WIDTH / 2;
-    private static final double WIDTH = 150;
-    private static final double HEIGHT = 80;
-    private static final double VELOCITY_X = 100.0;
+    private static final double WIDTH = ModelImpl.GAME_WIDTH / 10;
+    private static final double HEIGHT = ModelImpl.GAME_HEIGHT / 10;
+    private static final double VELOCITY_X = 150.0;
     private static final double VELOCITY_JUMP_Y = -300.0;
     private static final int WAITING_MILLIS = 750;
     private static final int UPDATE_MILLIS = 500;
     private static final int LAUGH_MILLIS = 1000;
-    private static final int HAPPY_MILLIS = 1500;
+    private static final int HAPPY_MILLIS = 1000;
 
     private DogStatus status;
     private int waitingTime;

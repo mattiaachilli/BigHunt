@@ -5,6 +5,7 @@ import model.decorator.OrangeDuck;
 import model.decorator.PinkDuck;
 import model.decorator.YellowDuck;
 import model.entities.Duck;
+import model.entities.DuckProperty;
 import model.entities.StandardDuck;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
@@ -23,9 +24,12 @@ public interface DuckFactory {
      *          of the duck.
      * @param direction
      *          of the duck.
+     * @param duckType
+     *          of the duck.
      * @return a standard duck.
+     * 
      */
-    StandardDuck createStandardDuck(Shape shape, Velocity velocity, DuckDirection direction);
+    StandardDuck createStandardDuck(Shape shape, Velocity velocity, DuckDirection direction, DuckProperty duckType);
 
     /**
      * 

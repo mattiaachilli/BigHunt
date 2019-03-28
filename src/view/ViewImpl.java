@@ -170,9 +170,9 @@ public class ViewImpl implements View {
             this.gameMode = gameMode;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
-            this.backgroundImage = new ImageView();
-            this.backgroundImage
-                    .setImage(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png")));
+            this.backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"), 
+                                                 SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                                 SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
         }
 
         @Override
@@ -191,9 +191,10 @@ public class ViewImpl implements View {
 
                 final long currentTime = System.currentTimeMillis();
 
+
                 this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(), 
                                                                                  SettingsImpl.getSettings().getSelectedResolution().getValue());
-
+                this.backgroundImage.setPreserveRatio(true);
                 for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
                     if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {
                         final ViewEntity ve = viewEntity.get();
