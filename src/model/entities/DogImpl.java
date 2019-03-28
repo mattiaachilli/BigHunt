@@ -1,8 +1,11 @@
 package model.entities;
 
+import java.util.Optional;
+
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import model.ModelImpl;
+import model.properties.PositionImpl;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
 /**
@@ -29,6 +32,7 @@ public final class DogImpl extends AbstractEntity implements Dog {
 
     private DogStatus status;
     private int waitingTime;
+    private Optional<Duck> lastDuck;
 
     /**
      * 
@@ -41,6 +45,7 @@ public final class DogImpl extends AbstractEntity implements Dog {
         super(shape, velocity);
         this.status = DogStatus.RIGHT;
         this.waitingTime = 0;
+        this.lastDuck = Optional.empty();
     }
 
     /**
@@ -109,6 +114,8 @@ public final class DogImpl extends AbstractEntity implements Dog {
             if (this.waitingTime >= HAPPY_MILLIS) {
                 this.waitingTime -= HAPPY_MILLIS;
                 this.setDogStatus(DogStatus.IN_GRASS);
+                this.lastDuck = Optional.empty();
+                this.setPosition(new PositionImpl(FINAL_POS_X, FINAL_POS_Y));
                 this.inGrass();
             }
         }
@@ -116,6 +123,12 @@ public final class DogImpl extends AbstractEntity implements Dog {
 
     @Override
     public void update(final int timeElapsed) {
+        if (this.lastDuck.isPresent()) {
+            if (this.lastDuck.get().getPosition().getY() >= FINAL_POS_Y) {
+                this.setPosition(new PositionImpl(this.lastDuck.get().getPosition().getX(), this.getPosition().getY()));
+                this.setDogStatus(DogStatus.HAPPY);
+            }
+        }
         this.updateDogStatus(timeElapsed);
         super.update(timeElapsed);
     }
@@ -128,5 +141,15 @@ public final class DogImpl extends AbstractEntity implements Dog {
     @Override
     public DogStatus getDogStatus() {
         return this.status;
+    }
+
+    @Override
+    public void setLastDuckKilled(final Duck duck) {
+        this.lastDuck = Optional.of(duck);
+    }
+
+    @Override
+    public Optional<Duck> getLastDuckKilled() {
+        return this.lastDuck;
     }
 }

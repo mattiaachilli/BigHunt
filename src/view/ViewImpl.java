@@ -163,6 +163,7 @@ public class ViewImpl implements View {
         private final GraphicsContext gamecanvas;
         private final ImageView backgroundImage;
 
+
         Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
             this.period = MILLIS_FROM_SECOND / SettingsImpl.getSettings().getSelectedFPS();
@@ -190,8 +191,6 @@ public class ViewImpl implements View {
                 }
 
                 final long currentTime = System.currentTimeMillis();
-
-
                 this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(), 
                                                                                  SettingsImpl.getSettings().getSelectedResolution().getValue());
                 this.backgroundImage.setPreserveRatio(true);

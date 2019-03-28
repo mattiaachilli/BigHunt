@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.util.Optional;
 
 /**
  * 
@@ -30,4 +31,18 @@ public interface Dog extends Entity {
      *          of the dog
      */
     void setDogStatus(DogStatus status);
+
+    /**
+     * Set last duck killed.
+     * 
+     * @param duck
+     *          last duck killed.
+     */
+    void setLastDuckKilled(Duck duck);
+
+    /**
+     * Get last duck killed if exist.
+     * @return last duck killed.
+     */
+    Optional<Duck> getLastDuckKilled();
 }

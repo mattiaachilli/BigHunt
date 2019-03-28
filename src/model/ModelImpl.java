@@ -149,7 +149,7 @@ public final class ModelImpl implements Model {
                     final int score = this.duckDoubleScore > 0 ? d.getScore() * 2 : d.getScore();
                     this.duckDoubleScore = this.duckDoubleScore > 0 ? this.duckDoubleScore-- : 0;
                     this.match.get().getMatchData().incrementScoreOf(score);
-                    dog.setDogStatus(DogStatus.HAPPY);
+                    this.dog.setLastDuckKilled(d);
                 }
             }
             if (d.canFlyAway()) {

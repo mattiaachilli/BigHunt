@@ -7,6 +7,7 @@ import java.util.Optional;
 import javafx.scene.image.Image;
 import model.entities.Dog;
 import model.entities.DogStatus;
+import model.entities.Duck;
 import model.entities.Entity;
 
 /**
@@ -89,6 +90,25 @@ public class DogAnimation implements EntityImageAnimation {
                 image = Optional.of(this.dogLaughImages.get(this.index));
                 break;
             case HAPPY:
+                final Optional<Duck> duck = this.dog.getLastDuckKilled();
+                if (duck.isPresent()) {
+                    switch (duck.get().getProperty()) {
+                        case STANDARD_DUCK:
+                            image = Optional.of(DogType.DOG_HAPPY_STANDARD.getPicture());
+                            break;
+                        case YELLOW_DUCK:
+                            image = Optional.of(DogType.DOG_HAPPY_YELLOW.getPicture());
+                            break;
+                        case ORANGE_DUCK:
+                            image = Optional.of(DogType.DOG_HAPPY_ORANGE.getPicture());
+                            break;
+                        case PINK_DUCK:
+                            image = Optional.of(DogType.DOG_HAPPY_PINK.getPicture());
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 break;
             default:
                 break;
