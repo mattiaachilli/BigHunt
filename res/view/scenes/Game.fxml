@@ -1,10 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.canvas.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane fx:id="game" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameSceneControllerImpl">
-	<Canvas fx:id="canvas" BorderPane.alignment="CENTER" />
-</Pane>
+<BorderPane fx:id="game" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameSceneControllerImpl">
+   <center>
+      <Canvas fx:id="canvas" height="600.0" width="800.0" />
+   </center>
+   <bottom>
+      <HBox fx:id="botomHBox" alignment="CENTER" maxHeight="0.0" minHeight="0.0" prefHeight="0.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Score">
+               <padding>
+                  <Insets bottom="50.0" right="20.0" />
+               </padding>
+            </Label>
+            <Label fx:id="scoreLabel" text="000">
+               <padding>
+                  <Insets bottom="50.0" right="200.0" />
+               </padding>
+            </Label>
+            <Label text="Ammo">
+               <padding>
+                  <Insets bottom="50.0" right="20.0" />
+               </padding>
+            </Label>
+            <Label fx:id="ammoLabel" text="000">
+               <padding>
+                  <Insets bottom="50.0" />
+               </padding>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></HBox>
+   </bottom>
+</BorderPane>

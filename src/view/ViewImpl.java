@@ -16,6 +16,8 @@ import model.data.Podium;
 import java.util.concurrent.Semaphore;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import model.data.HighScore;
 import model.data.MatchData;
 import settings.SettingsImpl;
 import utility.Utilities;
@@ -45,6 +47,8 @@ public class ViewImpl implements View {
     private final SceneFactory sceneFactory;
     private Stage stage;
     private Map<AchievementType, Achievement> achievements;
+    private List<HighScore> survivalModeHighsScores;
+    private List<HighScore> storyModeHighsScores;
     private Podium storyPodium;
     private Podium survivalPodium;
     private boolean gamePaused;
@@ -139,11 +143,22 @@ public class ViewImpl implements View {
         // TODO Auto-generated method stub
         return this.survivalPodium;
     }
+    
+    @Override
+    public MatchData getMatchData() {
+        return this.matchData;
+    }
+    
+    @Override
+    public List<HighScore> getStoryHighScores() {
+        return this.storyModeHighsScores;
+    }
 
-    /**
-     * 
-     * @return the scene factory.
-     */
+    @Override
+    public List<HighScore> getSurvivalHighScores() {
+        return this.survivalModeHighsScores;
+    }
+    
     public SceneFactory getSceneFactory() {
         return this.sceneFactory;
     }
@@ -171,6 +186,7 @@ public class ViewImpl implements View {
             this.gameSceneController = gameSceneController;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
+
             this.backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"), 
                                                  SettingsImpl.getSettings().getSelectedResolution().getKey(),
                                                  SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
@@ -193,6 +209,7 @@ public class ViewImpl implements View {
                 final long currentTime = System.currentTimeMillis();
 
                 this.updateBackground();
+                
                 for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
                     if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {
                         final ViewEntity ve = viewEntity.get();
@@ -219,7 +236,7 @@ public class ViewImpl implements View {
         public void start() {
             this.running = true;
             super.start();
-        }
+        }   
     }
 }
 

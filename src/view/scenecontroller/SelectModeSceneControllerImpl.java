@@ -37,7 +37,8 @@ public class SelectModeSceneControllerImpl extends AbstractSecondarySceneControl
 
     @FXML
     void startSurvivalGame() {
-        //inizia survival 
+        this.getSceneFactory().setGameMode(GameMode.SURVIVAL_MODE);
+        this.getSceneFactory().openGameScene();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

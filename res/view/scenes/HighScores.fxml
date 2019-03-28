@@ -27,7 +27,7 @@
                   <RowConstraints prefHeight="20.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="ARCADE MODE" GridPane.columnIndex="1" />
+                  <Label text="STORY MODE" GridPane.columnIndex="1" />
                   <Label text="SURVIVAL MODE" GridPane.columnIndex="4" />
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columnConstraints>
@@ -44,11 +44,11 @@
                      <children>
                         <Label text="1." />
                         <Label text="2." GridPane.rowIndex="1" />
-                        <Label text="300" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="4324343" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="234" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="10102" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="10000000" GridPane.columnIndex="1" />
+                        <Label fx:id="story5" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="story4" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="story3" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="story2" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="story1" text="0" GridPane.columnIndex="1" />
                         <Label text="5." GridPane.rowIndex="4" />
                         <Label text="4." GridPane.rowIndex="3" />
                         <Label text="3." GridPane.rowIndex="2" />
@@ -58,11 +58,11 @@
                      <children>
                         <Label text="1." />
                         <Label text="2." GridPane.rowIndex="1" />
-                        <Label text="300" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="4324343" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="234" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="10102" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="10000000" GridPane.columnIndex="1" />
+                        <Label fx:id="survival5" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="survival4" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="survival3" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="survival2" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="survival1" text="0" GridPane.columnIndex="1" />
                         <Label text="5." GridPane.rowIndex="4" />
                         <Label text="4." GridPane.rowIndex="3" />
                         <Label text="3." GridPane.rowIndex="2" />

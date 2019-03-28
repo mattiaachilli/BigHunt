@@ -1,3 +1,4 @@
+
 package view.scenefactory;
 
 import controller.matches.GameMode;
