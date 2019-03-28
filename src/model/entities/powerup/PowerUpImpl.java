@@ -1,9 +1,5 @@
 package model.entities.powerup;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import javafx.scene.shape.Shape;
 import model.entities.AbstractEntity;
 import model.properties.Velocity;
@@ -49,6 +45,11 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
     }
 
     @Override
+    public final boolean isVisible() {
+        return this.visible;
+    }
+
+    @Override
     public final void update(final int timeElapsed) { 
         if (this.visible && !this.hit) {
             this.setVelocity(POWER_UP_VELOCITY);
@@ -64,13 +65,5 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
     @Override
     public final void hit() {
         this.hit = true;
-    }
-
-    @Override
-    public final void render(final Graphics2D g) {
-        if (this.visible) {
-            g.setColor(Color.black);
-            g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), 20, 20));
-        }
     }
 }

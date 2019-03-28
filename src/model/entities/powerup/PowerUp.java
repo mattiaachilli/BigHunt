@@ -21,6 +21,13 @@ public interface PowerUp extends Entity {
     void setVisible();
 
     /**
+     * Get if is visible.
+     * 
+     * @return true if is visible.
+     */
+    boolean isVisible();
+
+    /**
      * 
      * @return true if this powerUp has been hit.
      */

@@ -66,11 +66,6 @@ public enum StandardDuckImageType {
     DUCK_PRECIPITATE("duckPrecipitate1.png"),
 
     /**
-     * DUCK PRECIPITATE.
-     */
-    DUCK_PRECIPITATE1("duckPrecipitate3.png"),
-
-    /**
      * DUCK FLY AWAY.
      */
     DUCK_FLY_AWAY("duckFlyAway0.png"),
@@ -123,14 +118,6 @@ public enum StandardDuckImageType {
      */
     public static List<Image> getUpLeft() {
         return Stream.of(DUCK_UP_LEFT, DUCK_UP_LEFT1).map(d -> d.getPicture()).collect(Collectors.toList());
-    }
-
-    /**
-     * 
-     * @return up left images.
-     */
-    public static List<Image> getPrecipitate() {
-        return Stream.of(DUCK_PRECIPITATE, DUCK_PRECIPITATE1).map(d -> d.getPicture()).collect(Collectors.toList());
     }
 
     /**

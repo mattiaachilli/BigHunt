@@ -30,17 +30,12 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     }
 
     @Override
-    public Canvas getCanvas() {
+    public final Canvas getCanvas() {
      //   this.game.setPrefHeight(SettingsImpl.getSettings().getSelectedResolution().getValue());
      //   this.game.setPrefWidth(SettingsImpl.getSettings().getSelectedResolution().getKey());
         this.canvas.setHeight(SettingsImpl.getSettings().getSelectedResolution().getValue());
         this.canvas.setWidth(SettingsImpl.getSettings().getSelectedResolution().getKey());
-        System.out.println(this.canvas.getWidth());
-        System.out.println(this.canvas.getHeight()); 
-        System.out.println(this.game.getWidth());
-        System.out.println(this.game.getHeight()); 
-  
-        
+
         return this.canvas;
     }
 

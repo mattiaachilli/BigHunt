@@ -142,9 +142,11 @@ public final class ControllerImpl implements Controller {
         this.gameLoop.resumeLoop();
     }
 
-    private List<ViewEntity> getEntitiesForView(final int elapsed) {
-        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed))
-        .collect(Collectors.toList());
+    private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
+        return this.model.getEntities().stream()
+                            .map(e -> EntitiesConverter
+                            .convertEntity(e, elapsed))
+                            .collect(Collectors.toList());
     }
 
     private class GameLoop extends Thread {
@@ -172,6 +174,7 @@ public final class ControllerImpl implements Controller {
             }
             if (model.isGameOver()) {
                 ControllerImpl.this.stopGameLoop();
+                System.exit(0);
             }
         }
 

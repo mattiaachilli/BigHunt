@@ -25,7 +25,7 @@ public final class PowerUpFactoryImpl implements PowerUpFactory {
     private static final int POWER_UP_RARE = 10;
     private static final int POWER_UP_VERY_RARE = 15;
 
-    private static final double POWER_UP_SIDE = 20.0;
+    private static final double POWER_UP_SIDE = 50.0;
     private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0, 0); 
     private int randPowerUpCounter = 0;
     private static PowerUpFactory instance;

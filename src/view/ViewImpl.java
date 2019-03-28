@@ -3,20 +3,19 @@ package view;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import controller.Controller;
+import controller.matches.GameMode;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
 import model.data.Podium;
 import java.util.concurrent.Semaphore;
-
-import controller.matches.GameMode;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.shape.Rectangle;
 import model.data.MatchData;
 import settings.SettingsImpl;
 import utility.Utilities;
@@ -36,7 +35,7 @@ public class ViewImpl implements View {
 
     private Controller controller;
     private Render render;
-    private List<ViewEntity> viewEntities;
+    private List<Optional<ViewEntity>> viewEntities;
     private MatchData matchData;
     private final Semaphore mutex;
     private static final String GAME_TITLE = "BIG HUNT";
@@ -62,7 +61,7 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public void viewLauncher(final Controller controller) {
+    public final void viewLauncher(final Controller controller) {
         this.controller = controller;
         this.stage.setTitle(GAME_TITLE);
         this.stage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));
@@ -89,7 +88,7 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void render(final List<ViewEntity> viewEntities, final MatchData matchData) {
+    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData) {
         try {
             this.mutex.acquire();
             this.viewEntities = viewEntities;
@@ -118,23 +117,23 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public void setStoryPodium(final Podium podium) {
+    public final void setStoryPodium(final Podium podium) {
         this.storyPodium = podium;
     }
 
     @Override
-    public void setSurvivalPodium(final Podium podium) {
+    public final void setSurvivalPodium(final Podium podium) {
         this.survivalPodium = podium;
     }
 
     @Override
-    public Podium getStoryPodium() {
+    public final Podium getStoryPodium() {
         // TODO Auto-generated method stub
         return this.storyPodium;
     }
 
     @Override
-    public Podium getSurvivalPodium() {
+    public final Podium getSurvivalPodium() {
         // TODO Auto-generated method stub
         return this.survivalPodium;
     }
@@ -157,7 +156,7 @@ public class ViewImpl implements View {
 
         private boolean running;
         private final int period;
-        private List<ViewEntity> viewEntitiesGame;
+        private List<Optional<ViewEntity>> viewEntitiesGame;
         private MatchData currentMatchData;
         private final GameSceneController gameSceneController;
         private final GameMode gameMode;
@@ -177,9 +176,9 @@ public class ViewImpl implements View {
         }
 
         @Override
-        public final void run() {            
+        public final void run() {
             controller.startGameLoop();
-            
+
             while (this.running) {
                 try {
                     mutex.acquire();
@@ -189,18 +188,18 @@ public class ViewImpl implements View {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                
+
                 final long currentTime = System.currentTimeMillis();
-                
-                this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, 1366, 768);
-                
-                for (final ViewEntity viewEntity : this.viewEntitiesGame) {
-                    if (viewEntity.getShape() instanceof Rectangle) {
-                        final Rectangle rectangle = (Rectangle) viewEntity.getShape();
-                        this.gamecanvas.drawImage(viewEntity.getPicture(), viewEntity.getPosition().getX(), viewEntity.getPosition().getY(),
+
+                this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(), 
+                                                                                 SettingsImpl.getSettings().getSelectedResolution().getValue());
+
+                for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
+                    if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {
+                        final ViewEntity ve = viewEntity.get();
+                        final Rectangle rectangle = (Rectangle) ve.getShape();
+                        this.gamecanvas.drawImage(ve.getPicture(), ve.getPosition().getX(), ve.getPosition().getY(),
                         rectangle.getWidth(), rectangle.getHeight());
-                      
-                       
                     }
                 }
 
@@ -218,8 +217,5 @@ public class ViewImpl implements View {
             super.start();
         }
     }
-
- 
-
 }
 

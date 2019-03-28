@@ -1,9 +1,5 @@
 package model.entities;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import model.ModelImpl;
@@ -16,10 +12,13 @@ import model.properties.VelocityImpl;
  *
  */
 public final class DogImpl extends AbstractEntity implements Dog {
+    /**
+     * MAX POS Y, USED FOR DOG AND DUCKS.
+     */
+    public static final double FINAL_POS_Y = ModelImpl.GAME_HEIGHT - 350;
     private static final double INIT_POS_X = 0;
-    private static final double INIT_POS_Y = ModelImpl.GAME_HEIGHT / 2 + ModelImpl.GAME_HEIGHT / 3;
+    private static final double INIT_POS_Y = ModelImpl.GAME_HEIGHT - 200;
     private static final double FINAL_POS_X = ModelImpl.GAME_WIDTH / 2;
-    private static final double FINAL_POS_Y = ModelImpl.GAME_HEIGHT / 2 + ModelImpl.GAME_HEIGHT / 4 - 100;
     private static final double WIDTH = 150;
     private static final double HEIGHT = 80;
     private static final double VELOCITY_X = 100.0;
@@ -120,14 +119,6 @@ public final class DogImpl extends AbstractEntity implements Dog {
     public void update(final int timeElapsed) {
         this.updateDogStatus(timeElapsed);
         super.update(timeElapsed);
-    }
-
-    @Override
-    public void render(final Graphics2D g) {
-        if (!this.isInGrass()) {
-            g.setColor(Color.blue);
-            g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), WIDTH, HEIGHT));
-        }
     }
 
     @Override
