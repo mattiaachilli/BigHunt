@@ -19,6 +19,8 @@ import javafx.scene.image.ImageView;
 import model.data.MatchData;
 import settings.SettingsImpl;
 import utility.Utilities;
+import view.entities.DogType;
+import view.entities.PowerUpImages;
 import view.entities.ViewEntity;
 import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;
@@ -72,7 +74,7 @@ public class ViewImpl implements View {
 
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
-        this.render = new Render(gameSceneController, gameMode);
+        this.render = new Render(gameSceneController);
         controller.initGame(gameMode);
         this.startRender();
     }
@@ -159,16 +161,14 @@ public class ViewImpl implements View {
         private List<Optional<ViewEntity>> viewEntitiesGame;
         private MatchData currentMatchData;
         private final GameSceneController gameSceneController;
-        private final GameMode gameMode;
         private final GraphicsContext gamecanvas;
         private final ImageView backgroundImage;
 
 
-        Render(final GameSceneController gameSceneController, final GameMode gameMode) {
+        Render(final GameSceneController gameSceneController) {
             super();
             this.period = MILLIS_FROM_SECOND / SettingsImpl.getSettings().getSelectedFPS();
             this.gameSceneController = gameSceneController;
-            this.gameMode = gameMode;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
             this.backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"), 
@@ -191,20 +191,24 @@ public class ViewImpl implements View {
                 }
 
                 final long currentTime = System.currentTimeMillis();
-                this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(), 
-                                                                                 SettingsImpl.getSettings().getSelectedResolution().getValue());
-                this.backgroundImage.setPreserveRatio(true);
+
+                this.updateBackground();
                 for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
                     if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {
                         final ViewEntity ve = viewEntity.get();
                         final Rectangle rectangle = (Rectangle) ve.getShape();
                         this.gamecanvas.drawImage(ve.getPicture(), ve.getPosition().getX(), ve.getPosition().getY(),
-                        rectangle.getWidth(), rectangle.getHeight());
+                                                    rectangle.getWidth(), rectangle.getHeight());
                     }
                 }
-
                 Utilities.waitForNextFrame(period, currentTime);
             }
+        }
+
+        private void updateBackground() {
+            this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(), 
+                                      SettingsImpl.getSettings().getSelectedResolution().getValue());
+            this.backgroundImage.setPreserveRatio(true);
         }
 
         public final void stopRender() {
