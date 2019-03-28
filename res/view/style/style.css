@@ -68,7 +68,7 @@ Label{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
 
-#bottomGrid {-fx-background-color: black;
+#bottomGrid {-fx-background-color: transparent;
 }
 
 #pause{

@@ -24,7 +24,7 @@ public final class SettingsImpl implements Settings {
     private static final int DEFAULT_Y_RESOLUTION = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     private static final int FIRST_SCREEN_PROPORTION = 3;
-    private static final int LAST_SCREEN_PROPORTION = 5;
+    private static final int LAST_SCREEN_PROPORTION = 8;
 
     private static final Pair<Integer, Integer> DEFAULT_RESOLUTION = new ImmutablePair<>(DEFAULT_X_RESOLUTION,
         DEFAULT_Y_RESOLUTION);
@@ -185,5 +185,4 @@ public final class SettingsImpl implements Settings {
     public Pair<Integer, Integer> getDefaultResolutions() {
         return SettingsImpl.DEFAULT_RESOLUTION;
     }
-
 }

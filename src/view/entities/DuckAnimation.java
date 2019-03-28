@@ -101,7 +101,7 @@ public class DuckAnimation implements EntityImageAnimation {
             color = "Pink";
         } 
 
-        System.out.println("Colore: " + color);
+  
         switch (this.duck.getActualDirection()) {
             case RIGHT:
                 if (this.index >= this.duckRightImages.get(color).size()) {

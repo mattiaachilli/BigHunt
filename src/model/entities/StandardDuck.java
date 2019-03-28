@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import javafx.scene.shape.Shape;
+import model.ModelImpl;
 import model.entities.powerup.PowerUp;
 import model.entities.utilities.EntityUtilities;
 import model.factories.PowerUpFactoryImpl;
@@ -27,11 +28,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     /**
      * WIDTH OF THE DUCK.
      */
-    public static final int WIDTH_DUCK = 80;
+    public static final int WIDTH_DUCK = ModelImpl.GAME_HEIGHT / 10;;
     /**
      * HEIGHT OF THE DUCK.
      */
-    public static final int HEIGHT_DUCK = 80;
+    public static final int HEIGHT_DUCK = ModelImpl.GAME_HEIGHT / 10;;
     /**
      * X COORDINATE COLLISION.
      */
