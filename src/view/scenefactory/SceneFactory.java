@@ -24,6 +24,7 @@ public interface SceneFactory {
      *          the current stage
      */
     Stage getStage();
+
     /**
      * Opens the account method.
      */

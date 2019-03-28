@@ -42,8 +42,10 @@ public class ThirdRoundState extends AbstractDuckState {
         } else if (super.getDuckSpawned() > FIRST_WAVE 
                    && 
                    super.getDuckSpawned() <= FIRST_WAVE + SECOND_WAVE) {
+            standardDuck.setVelocity(SpawnSide.getVelocity(direction, DuckProperty.YELLOW_DUCK));
             return super.getDuckFactory().createYellowDuck(standardDuck);
         } else { //Last wave of four ducks
+            standardDuck.setVelocity(SpawnSide.getVelocity(direction, DuckProperty.ORANGE_DUCK));
             return super.getDuckFactory().createOrangeDuck(standardDuck);
         }
     }

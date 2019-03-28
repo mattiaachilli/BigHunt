@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 import javafx.scene.image.Image;
 import model.decorator.OrangeDuck;
 import model.decorator.PinkDuck;
@@ -12,7 +14,6 @@ import model.decorator.YellowDuck;
 import model.entities.Duck;
 import model.entities.Entity;
 import model.entities.StandardDuck;
-import model.properties.DuckDirection;
 
 /**
  * 
@@ -21,16 +22,17 @@ import model.properties.DuckDirection;
  */
 public class DuckAnimation implements EntityImageAnimation {
 
+    private static final int UPDATE_DUCK = 500;
+
     private int index;
     private int elapsed;
     private Duck duck;
-    private DuckDirection lastDirection;
     private final Map<String, List<Image>> duckRightImages;
     private final Map<String, List<Image>> duckLeftImages;
     private final Map<String, List<Image>> duckUpRightImages;
     private final Map<String, List<Image>> duckUpLeftImages;
-    private final Map<String, List<Image>> duckPrecipitateImages;
     private final Map<String, List<Image>> duckFlyAwayImages;
+    private final Map<String, Image> duckPrecipitateImages;
     private final Map<String, Image> duckKilled;
 
     /**
@@ -64,10 +66,10 @@ public class DuckAnimation implements EntityImageAnimation {
         this.duckUpLeftImages.put("Yellow", YellowDuckImageType.getUpLeft());
         this.duckUpLeftImages.put("Orange", OrangeDuckImageType.getUpLeft());
         this.duckUpLeftImages.put("Pink", PinkDuckImageType.getUpLeft());
-        this.duckPrecipitateImages.put("Standard", StandardDuckImageType.getPrecipitate());
-        this.duckPrecipitateImages.put("Yellow", YellowDuckImageType.getPrecipitate());
-        this.duckPrecipitateImages.put("Orange", OrangeDuckImageType.getPrecipitate());
-        this.duckPrecipitateImages.put("Pink", PinkDuckImageType.getPrecipitate());
+        this.duckPrecipitateImages.put("Standard", StandardDuckImageType.DUCK_PRECIPITATE.getPicture());
+        this.duckPrecipitateImages.put("Yellow", YellowDuckImageType.DUCK_PRECIPITATE.getPicture());
+        this.duckPrecipitateImages.put("Orange", OrangeDuckImageType.DUCK_PRECIPITATE.getPicture());
+        this.duckPrecipitateImages.put("Pink", PinkDuckImageType.DUCK_PRECIPITATE.getPicture());
         this.duckFlyAwayImages.put("Standard", StandardDuckImageType.getFlyAway());
         this.duckFlyAwayImages.put("Yellow", YellowDuckImageType.getFlyAway());
         this.duckFlyAwayImages.put("Orange", OrangeDuckImageType.getFlyAway());
@@ -79,8 +81,8 @@ public class DuckAnimation implements EntityImageAnimation {
     }
 
     private void updateIndex() {
-        if (this.elapsed >= EntityImageTypeImpl.UPDATE_IMAGE) {
-            this.elapsed -= EntityImageTypeImpl.UPDATE_IMAGE;
+        if (this.elapsed >= UPDATE_DUCK) {
+            this.elapsed -= UPDATE_DUCK;
             this.index++;
         }
     }
@@ -96,9 +98,10 @@ public class DuckAnimation implements EntityImageAnimation {
         } else if (this.duck instanceof OrangeDuck) {
             color = "Orange";
         } else if (this.duck instanceof PinkDuck) {
-            color = "PinkDuck";
+            color = "Pink";
         } 
 
+        System.out.println("Colore: " + color);
         switch (this.duck.getActualDirection()) {
             case RIGHT:
                 if (this.index >= this.duckRightImages.get(color).size()) {
@@ -145,6 +148,9 @@ public class DuckAnimation implements EntityImageAnimation {
                 }
                 image = Optional.of(this.duckFlyAwayImages.get(color).get(this.index));
                 break;
+            case PRECIPITATE:
+                image = Optional.of(this.duckPrecipitateImages.get(color));
+                break;
             default:
                 break;
         }
@@ -156,9 +162,5 @@ public class DuckAnimation implements EntityImageAnimation {
     public final void update(final Entity entity, final int elapsed) {
         this.elapsed += elapsed;
         this.duck = (Duck) entity;
-        if (this.lastDirection != this.duck.getActualDirection()) {
-            this.index = 0;
-        }
-        this.lastDirection = this.duck.getActualDirection();
     }
 }

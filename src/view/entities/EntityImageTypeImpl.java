@@ -85,6 +85,9 @@ public final class EntityImageTypeImpl implements EntityImageType {
             default:
                 break;
         }
+        if (!powerUp.isVisible()) {
+            return Optional.empty();
+        }
         return image;
     }
 }

@@ -1,6 +1,8 @@
 package model.cleaner;
 
 import java.util.List;
+
+import model.entities.Duck;
 import model.entities.powerup.PowerUp;
 
 /**
@@ -11,10 +13,12 @@ import model.entities.powerup.PowerUp;
 public interface Cleaner {
 
     /**
-     * Remove powerUps out of the screen.
+     * Remove entities out of the screen or not necessary.
      * 
-     * @param powerUp
-     *          list of powerUp.
+     * @param ducks
+     *          list of ducks.
+     * @param powerUps
+     *          list of powerUps.
      */
-    void cleanPowerUp(List<PowerUp> powerUp);
+    void clean(List<Duck> ducks, List<PowerUp> powerUps);
 }

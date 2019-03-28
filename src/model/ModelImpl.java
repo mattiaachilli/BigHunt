@@ -16,7 +16,6 @@ import model.entities.DogImpl;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
-
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
@@ -35,11 +34,7 @@ import settings.SettingsImpl;
  * Model implementation, contains all objects of the game.
  *
  */
-public final class ModelImpl extends Canvas implements Model {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+public final class ModelImpl implements Model {
     /**
      * Game width.
      */
@@ -83,15 +78,15 @@ public final class ModelImpl extends Canvas implements Model {
         super();
         this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
+        this.powerUp = new ArrayList<>();
+        this.cleaner = new CleanerImpl();
         this.currentMagazine = 1;
         this.ammo = new ArrayList<>();
         for (int i = 1; i <= MAX_MAGAZINES; i++) {
             this.ammo.add(new MagazineImpl(i));
         }
-        this.powerUp = new ArrayList<>();
         this.match = Optional.empty();
         this.difficulty = GlobalDifficulty.EASY;
-        this.cleaner = new CleanerImpl();
         this.duckDoubleScore = 0;
     }
 
@@ -147,7 +142,6 @@ public final class ModelImpl extends Canvas implements Model {
             /*if (this.timeElapsed >= 4000) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
                     this.timeElapsed -= 4000;
->>>>>>> 1a53ce0e4484952cc17a1d09d62067654a2f22a5
                     d.kill();
                     if (d.hasPowerUp()) {
                         d.getPowerUp().get().hit();
@@ -172,34 +166,21 @@ public final class ModelImpl extends Canvas implements Model {
             }
             p.update(timeElapsed);
         });
-        this.deleteUnnecessaryPowerUp();
-        //Clean the powerUp out of screen
-        this.cleaner.cleanPowerUp(this.powerUp);
+        //Clean objects not necessary
+        this.cleaner.clean(this.ducks, this.powerUp);
     }
 
     private void updateRoundNumber() {
         //Only for STORY MODE
         if (this.gameMode == GameMode.STORY_MODE) {
             if (this.spawner.getActualRound() != this.lastRound) {
+                this.dog = new DogImpl();
                 this.ducks.clear();
                 this.lastRound = this.spawner.getActualRound();
             }
         }
     }
 
-    private void deleteUnnecessaryPowerUp() {
-        final List<Integer> indexesPowUp = new ArrayList<>();
-        for (int i = 0; i < this.powerUp.size(); i++) {
-            if (this.powerUp.get(i).isHit() || this.powerUp.get(i).getPosition().getY() <= 0
-            || this.powerUp.get(i).getPosition().getY() >= GAME_HEIGHT) {
-                indexesPowUp.add(i);
-            }
-        }
-        for (final Integer index : indexesPowUp) {
-            this.powerUp.remove((int) index);
-        }
-    }
-    
     @Override
     public void activateInfAmmo() {
         this.ammo.stream()
@@ -215,7 +196,6 @@ public final class ModelImpl extends Canvas implements Model {
     }
 
     private void activePowerUp(final PowerUpType powerUp) {
-        System.out.println(powerUp.toString());
         switch (powerUp) {
             case DOUBLE_SCORE:
                 this.ducks.stream()
@@ -250,11 +230,11 @@ public final class ModelImpl extends Canvas implements Model {
         switch (this.gameMode) {
             case STORY_MODE:
                 gameOver = this.spawner.getActualRound() > this.lastRound 
-                            && matchData.getGlobalScore() < matchScore && this.currentMagazine > MAX_MAGAZINES;
+                            && matchData.getGlobalScore() < matchScore || this.currentMagazine > MAX_MAGAZINES || this.spawner.isSpawnFinished();
             break;
             case SURVIVAL_MODE:
                 gameOver = matchData.getFlownDucks() >= this.match.get().getDifficulty().getLimitOfDifficulty()
-                           && this.currentMagazine > MAX_MAGAZINES;
+                           || this.currentMagazine > MAX_MAGAZINES || this.spawner.isSpawnFinished();
             break;
             default:
                 break;

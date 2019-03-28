@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
  */
 public enum PinkDuckImageType {
     /**
-     * All types of yellow ducks images.
+     * All types of pink ducks images.
      */
 
     /**
@@ -63,11 +63,6 @@ public enum PinkDuckImageType {
      * DUCK PRECIPITATE.
      */
     DUCK_PRECIPITATE("pinkDuckPrecipitate1.png"),
-
-    /**
-     * DUCK PRECIPITATE.
-     */
-    DUCK_PRECIPITATE1("pinkDuckPrecipitate3.png"),
 
     /**
      * DUCK FLY AWAY.
@@ -123,15 +118,6 @@ public enum PinkDuckImageType {
     public static List<Image> getUpLeft() {
         return Stream.of(DUCK_UP_LEFT, DUCK_UP_LEFT1).map(d -> d.getPicture()).collect(Collectors.toList());
     }
-
-    /**
-     * 
-     * @return up left images.
-     */
-    public static List<Image> getPrecipitate() {
-        return Stream.of(DUCK_PRECIPITATE, DUCK_PRECIPITATE1).map(d -> d.getPicture()).collect(Collectors.toList());
-    }
-
     /**
      * 
      * @return up left images.

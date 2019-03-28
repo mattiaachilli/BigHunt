@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import controller.Controller;
 import controller.matches.GameMode;
@@ -107,7 +108,7 @@ public interface View {
      * @param viewEntities entities in the view
      * @param matchData data of the match
      */
-    void render(List<ViewEntity> viewEntities, MatchData matchData);
+    void render(List<Optional<ViewEntity>> viewEntities, MatchData matchData);
 
     /**
      * Start a new match.

@@ -1,6 +1,5 @@
 package model.decorator;
 
-import java.awt.Graphics2D;
 import java.util.Optional;
 
 import javafx.scene.shape.Shape;
@@ -151,9 +150,4 @@ public abstract class DuckDecorator implements Duck {
      * @return the score multiplier of the duck
      */
     public abstract int getScoreMultiplier();
-
-    @Override
-    public final void render(final Graphics2D g) {
-        this.duck.render(g);
-    }
 }

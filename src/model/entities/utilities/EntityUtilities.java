@@ -112,6 +112,7 @@ public final class EntityUtilities {
                     velocity = new VelocityImpl(0, -FLY_AWAY_VELOCITY);
                     break;
                 case KILLED:
+                case PRECIPITATE:
                     velocity = new VelocityImpl(0, KILLED_VELOCITY);
                     break;
                 default:
