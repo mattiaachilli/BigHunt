@@ -26,7 +26,7 @@ import view.entities.ViewEntity;
  */
 
 public final class ControllerImpl implements Controller {
-    
+
     private static final int GREEN_SEMAPHORE = 1;
     /**
      * 60 FPS.
@@ -55,7 +55,6 @@ public final class ControllerImpl implements Controller {
     public ControllerImpl(final Supplier<Model> modelSupplier, final View view) {
         this.modelSupplier = modelSupplier;
         this.view = view;
-        this.view.viewLauncher(this);
         this.podiumManager = new PodiumManagerImpl();
         this.userManager = new UserManagerImpl();
         this.podium = Optional.empty();
@@ -142,11 +141,12 @@ public final class ControllerImpl implements Controller {
     public void resume() {
         this.gameLoop.resumeLoop();
     }
-    
+
     private List<ViewEntity> getEntitiesForView(final int elapsed) {
-        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
+        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed))
+        .collect(Collectors.toList());
     }
-    
+
     private class GameLoop extends Thread {
         private volatile boolean running;
         private boolean paused;
@@ -176,13 +176,10 @@ public final class ControllerImpl implements Controller {
         }
 
         private void processInput() {
-            /*try {
-                mutex.acquire();
-                mutex.release();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            */
+            /*
+             * try { mutex.acquire(); mutex.release(); } catch (InterruptedException e) {
+             * e.printStackTrace(); }
+             */
         }
 
         public void pauseLoop() {
