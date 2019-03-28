@@ -21,30 +21,31 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class StandardDuck extends AbstractCharacter implements Duck {
 
-    private static final int MILLIS_UPDATE_DIRECTION = 1000; //1 SECOND
+    private static final int MILLIS_UPDATE_DIRECTION = 1500; //1.5 SECONDS
     private static final int MILLIS_UPDATE_PRECIPITATE = 300; //300ms
     private static final int DEFAULT_SCORE = 50;
     private static final int POSSIBLE_DIRECTION = 6;
     /**
      * WIDTH OF THE DUCK.
      */
-    public static final int WIDTH_DUCK = ModelImpl.GAME_HEIGHT / 10;;
+    public static final int WIDTH_DUCK = ModelImpl.GAME_HEIGHT / 10;
     /**
      * HEIGHT OF THE DUCK.
      */
-    public static final int HEIGHT_DUCK = ModelImpl.GAME_HEIGHT / 10;;
+    public static final int HEIGHT_DUCK = ModelImpl.GAME_HEIGHT / 10;
     /**
      * X COORDINATE COLLISION.
      */
-    public static final double COLLISION_X = 50.0;
+    public static final double COLLISION_X = ModelImpl.GAME_WIDTH / 30;
     /**
      * Y COORDINATE COLLISION.
      */
-    public static final double COLLISION_Y = 50.0;
+    public static final double COLLISION_Y = ModelImpl.GAME_WIDTH / 30;
 
     private long initTime; //Duck's creation time
     private long dieTime; //Duck's died time
     private DuckDirection actualDirection;
+    private DuckProperty duckType;
     private int lastDirectionUpdate;
     private Optional<PowerUp> powerUp;
     private boolean movement;
@@ -59,11 +60,14 @@ public class StandardDuck extends AbstractCharacter implements Duck {
      *          of the duck
      * @param duckDirection
      *          initial direction
+     * @param duckType
+     *          duck's type.
      */
-    public StandardDuck(final Shape shape, final Velocity velocity, final DuckDirection duckDirection) {
+    public StandardDuck(final Shape shape, final Velocity velocity, final DuckDirection duckDirection, final DuckProperty duckType) {
         super(shape, velocity);
         this.powerUp = PowerUpFactoryImpl.getInstance().createRandomPowerUp(this.getPosition());
         this.actualDirection = duckDirection;
+        this.duckType = duckType;
         this.lastDirectionUpdate = 0;
         this.movement = true;
         this.decelerate = false;
@@ -175,5 +179,10 @@ public class StandardDuck extends AbstractCharacter implements Duck {
         if (!this.decelerate) {
             this.decelerate = true;
         }
+    }
+
+    @Override
+    public final DuckProperty getProperty() {
+        return this.duckType;
     }
 }

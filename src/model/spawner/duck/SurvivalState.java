@@ -45,21 +45,24 @@ public class SurvivalState extends AbstractDuckState {
         final DuckDirection direction = SpawnSide.getSpawnSide(); //Init direction
         int posX = SpawnSide.initPosX(direction);
         int posY = SpawnSide.getRandomPosY();
-        final Velocity velocity = SpawnSide.getVelocity(direction, DuckProperty.STANDARD_DUCK);
         final Shape shape = new Rectangle(posX, posY, StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK);
-        final Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
+        Velocity velocity = SpawnSide.getVelocity(direction, DuckProperty.STANDARD_DUCK);
+        Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction, DuckProperty.STANDARD_DUCK);
         if (this.currentDifficulty < BEGINNER_DIFFICULTY) {
             duck = standardDuck;
         } else if (currentDifficulty >= BEGINNER_DIFFICULTY
-            && this.currentDifficulty < NORMAL_DIFFICULTY) {
-            standardDuck.setVelocity(SpawnSide.getVelocity(direction, DuckProperty.YELLOW_DUCK));
+                    && this.currentDifficulty < NORMAL_DIFFICULTY) {
+            velocity = SpawnSide.getVelocity(direction, DuckProperty.YELLOW_DUCK);
+            standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction, DuckProperty.YELLOW_DUCK);
             duck = super.getDuckFactory().createYellowDuck(standardDuck);
         } else if (this.currentDifficulty >= NORMAL_DIFFICULTY 
             && this.currentDifficulty < HARD_DIFFICULTY) {
-            standardDuck.setVelocity(SpawnSide.getVelocity(direction, DuckProperty.ORANGE_DUCK));
+            velocity = SpawnSide.getVelocity(direction, DuckProperty.ORANGE_DUCK);
+            standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction, DuckProperty.ORANGE_DUCK);
             duck = super.getDuckFactory().createOrangeDuck(standardDuck);
         } else {
-            standardDuck.setVelocity(SpawnSide.getVelocity(direction, DuckProperty.PINK_DUCK));
+            velocity = SpawnSide.getVelocity(direction, DuckProperty.PINK_DUCK);
+            standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction, DuckProperty.PINK_DUCK);
             duck = super.getDuckFactory().createPinkDuck(standardDuck);
         }
         return duck;

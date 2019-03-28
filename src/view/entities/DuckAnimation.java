@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.swing.plaf.synth.SynthSpinnerUI;
-
 import javafx.scene.image.Image;
 import model.decorator.OrangeDuck;
 import model.decorator.PinkDuck;
@@ -101,7 +99,6 @@ public class DuckAnimation implements EntityImageAnimation {
             color = "Pink";
         } 
 
-  
         switch (this.duck.getActualDirection()) {
             case RIGHT:
                 if (this.index >= this.duckRightImages.get(color).size()) {

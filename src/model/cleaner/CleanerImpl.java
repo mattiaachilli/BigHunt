@@ -3,10 +3,8 @@ package model.cleaner;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.ModelImpl;
 import model.entities.DogImpl;
 import model.entities.Duck;
-import model.entities.Entity;
 import model.entities.powerup.PowerUp;
 
 /**

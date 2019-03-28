@@ -38,7 +38,8 @@ public class DuckTest {
         duck = new StandardDuck(new Rectangle(INITIAL_POSITION_X, INITIAL_POSITION_Y,
                                     StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK),
                                     velocity,
-                                    DIRECTION);
+                                    DIRECTION,
+                                    DuckProperty.STANDARD_DUCK);
     }
 
     private void flyAwayDuck() {
