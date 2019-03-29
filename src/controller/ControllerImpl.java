@@ -97,6 +97,15 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
+    public Optional<UserData> getUser() {
+        if (this.user.isPresent()) {
+            return this.user;
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public boolean registerUser(final String username, final String password) {
         this.user = this.userManager.register(username, password);
         return this.user.isPresent();
@@ -143,10 +152,8 @@ public final class ControllerImpl implements Controller {
     }
 
     private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
-        return this.model.getEntities().stream()
-                            .map(e -> EntitiesConverter
-                            .convertEntity(e, elapsed))
-                            .collect(Collectors.toList());
+        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed))
+        .collect(Collectors.toList());
     }
 
     private class GameLoop extends Thread {

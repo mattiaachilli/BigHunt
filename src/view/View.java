@@ -22,7 +22,6 @@ import view.scenefactory.SceneFactory;
  */
 public interface View {
 
-
     /**
      * 
      * @param controller the controller of the game
@@ -56,20 +55,6 @@ public interface View {
      * @return a map of achievements.
      */
     Map<AchievementType, Achievement> getAchievements();
-    
-    /**
-     * 
-     * @return
-     *          a list of story mode highScores.
-     */
-    List<HighScore> getStoryHighScores();
-    
-    /**
-     * 
-     * @return
-     *          a list of survival mode high scores.
-     */
-    List<HighScore> getSurvivalHighScores();
 
     /**
      * 
@@ -85,11 +70,11 @@ public interface View {
 
     /**
      * 
-     * @return
-     *          the match data of logged user.
+     * @return the match data of logged user.
      */
-    
+
     MatchData getMatchData();
+
     /**
      * 
      * @return .
@@ -98,22 +83,24 @@ public interface View {
 
     /**
      * 
-     * @param matchData the final data of an ended match
+     * @param matchData    the final data of an ended match
      * @param isHighScores true if the score of the match is an high score
      */
     void closeGame(MatchData matchData, boolean isHighScores);
 
     /**
      * View update.
+     * 
      * @param viewEntities entities in the view
-     * @param matchData data of the match
+     * @param matchData    data of the match
      */
     void render(List<Optional<ViewEntity>> viewEntities, MatchData matchData);
 
     /**
      * Start a new match.
+     * 
      * @param gameSceneController .
-     * @param gameMode the match's game mode
+     * @param gameMode            the match's game mode
      */
     void startGame(GameSceneController gameSceneController, GameMode gameMode);
 
@@ -126,4 +113,10 @@ public interface View {
      * Stop the view thread.
      */
     void stopRender();
+
+    /**
+     * 
+     * @return the controller.
+     */
+    Controller getController();
 }
