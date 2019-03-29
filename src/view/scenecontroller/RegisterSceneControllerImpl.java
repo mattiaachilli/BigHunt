@@ -17,12 +17,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import model.data.UserData;
+import view.View;
+
 /**
  * 
  * Sample Skeleton for 'Register.fxml' Controller Class
  *
  */
-public class RegisterSceneControllerImpl extends AbstractSceneController {
+public class RegisterSceneControllerImpl extends AbstractSceneController implements RegisterSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -42,10 +44,14 @@ public class RegisterSceneControllerImpl extends AbstractSceneController {
     @FXML // fx:id="pwdTextField"
     private PasswordField pwdTextField; // Value injected by FXMLLoader
 
-    private final UserManager user = new UserManagerImpl();
+    // private final UserManager user = new UserManagerImpl();
+    private View view;
 
-    //private final Controller controller; 
-    
+    @Override
+    public void setView(final View view) {
+        this.view = view;
+    }
+
     @FXML
     void quitGame() {
         Runtime.getRuntime().exit(0);
@@ -53,17 +59,18 @@ public class RegisterSceneControllerImpl extends AbstractSceneController {
 
     @FXML
     void registerBtn() {
-        /*Optional<UserData> userData = user.register(this.userTextField.getText(), this.passwordTextField.getText());
-        if(userData.isPresent()) {
-            //inserire??
+        // Optional<UserData> userData = user.register(this.userTextField.getText(),
+        // this.passwordTextField.getText());
+        if (this.view.getController().registerUser(this.userTextField.getText(), this.pwdTextField.getText())) {
+            // inserire??
             this.getSceneFactory().openMenuScene();
         } else {
             Alert alert = new Alert(AlertType.ERROR, "USER GIA' ESISTENTE", ButtonType.OK);
             alert.showAndWait();
-            
-        }*/
-        //view.getcontr.loginuser/regUser
-        this.getSceneFactory().openMenuScene();
+
+        }
+        // view.getcontr.loginuser/regUser
+        // this.getSceneFactory().openMenuScene();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

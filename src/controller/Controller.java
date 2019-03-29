@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.Optional;
+
 import controller.matches.GameMode;
+import model.data.UserData;
 
 /**
  * 
@@ -39,6 +42,12 @@ public interface Controller {
      * Logout of the user.
      */
     void logoutUser();
+
+    /**
+     * 
+     * @return an optional of the  current user.
+     */
+    Optional<UserData> getUser();
 
     /**
      * Registration of a user.

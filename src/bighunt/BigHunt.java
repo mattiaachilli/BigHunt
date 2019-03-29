@@ -1,13 +1,10 @@
 package bighunt;
 
-import java.util.function.Supplier;
-
 import controller.Controller;
 import controller.ControllerImpl;
 import controller.files.FilesHomeManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.Model;
 import model.ModelImpl;
 import view.View;
 import view.ViewImpl;
@@ -34,7 +31,6 @@ public final class BigHunt extends Application {
     public void start(final Stage primaryStage) throws Exception {
         FilesHomeManager.setupApplication();
         final View view = new ViewImpl(primaryStage);
-        final Supplier<Model> modelSupplier;
         final Controller controller = new ControllerImpl(() -> new ModelImpl(), view);
         view.viewLauncher(controller);
     }
