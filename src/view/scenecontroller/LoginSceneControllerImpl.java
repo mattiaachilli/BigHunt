@@ -15,12 +15,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import model.data.UserData;
+import view.View;
+
 /**
  * 
  * Sample Skeleton for 'Login.fxml' Controller Class
  *
  */
-public class LoginSceneControllerImpl extends AbstractSceneController {
+public class LoginSceneControllerImpl extends AbstractSceneController implements LoginSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -39,8 +41,14 @@ public class LoginSceneControllerImpl extends AbstractSceneController {
 
     @FXML // fx:id="exitBtn"
     private Button exitBtn; // Value injected by FXMLLoader
-    
-    private final UserManager user = new UserManagerImpl();
+
+    // private final UserManager user = new UserManagerImpl();
+    private View view;
+
+    @Override
+    public void setView(final View view) {
+        this.view = view;
+    }
 
     @FXML
     void quitGame() {
@@ -49,14 +57,14 @@ public class LoginSceneControllerImpl extends AbstractSceneController {
 
     @FXML
     void login() {
-        Optional<UserData> userData = user.login(this.userTextField.getText(), this.passwordTextField.getText());
-        if(userData.isPresent()) {
-            //inserire??
+        // Optional<UserData> userData = user.login(this.userTextField.getText(),
+        // this.passwordTextField.getText());
+        if (this.view.getController().loginUser(this.userTextField.getText(), this.passwordTextField.getText())) {
             this.getSceneFactory().openMenuScene();
         } else {
             Alert alert = new Alert(AlertType.ERROR, "USER E/O PASSWORD ERRATI", ButtonType.OK);
             alert.showAndWait();
-            
+
         }
     }
 

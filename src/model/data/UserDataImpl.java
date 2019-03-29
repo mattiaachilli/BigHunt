@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import model.achievements.Achievement;
 import model.achievements.AchievementImpl;
@@ -43,7 +44,7 @@ public class UserDataImpl implements UserData {
         this.powerUpsUsed = 0;
         this.globalScore = 0;
 
-        this.achievements = new EnumMap<>(AchievementType.class);
+        this.achievements = this.initAchievements();
     }
 
     @Override
@@ -89,6 +90,15 @@ public class UserDataImpl implements UserData {
         this.killedDucks += matchdata.getKilledDucks();
         this.globalScore += matchdata.getGlobalScore();
         this.powerUpsUsed += matchdata.getNumberOfUsedPowerUps();
+        this.updateAchievements();
+    }
+    
+    private Map<AchievementType, Achievement> initAchievements() {
+        Map<AchievementType, Achievement> achievements = new EnumMap<>(AchievementType.class);
+        for(AchievementType type : AchievementType.values()) {
+            achievements.put(type, new AchievementImpl(type, 0));
+        }
+        return achievements;
     }
 
     private void writeObject(final ObjectOutputStream out) throws IOException {
@@ -98,5 +108,6 @@ public class UserDataImpl implements UserData {
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
     }
+    
 
 }

@@ -44,8 +44,6 @@ public class ViewImpl implements View {
     private final SceneFactory sceneFactory;
     private Stage stage;
     private Map<AchievementType, Achievement> achievements;
-    private List<HighScore> survivalModeHighsScores;
-    private List<HighScore> storyModeHighsScores;
     private Podium storyPodium;
     private Podium survivalPodium;
     private boolean gamePaused;
@@ -69,7 +67,7 @@ public class ViewImpl implements View {
         this.stage.setTitle(GAME_TITLE);
         this.stage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));
         this.sceneFactory.setStage(this.stage);
-        //this.sceneFactory.openMenuScene();
+        // this.sceneFactory.openMenuScene();
         this.sceneFactory.openAccountSelectionScene();
     }
 
@@ -110,13 +108,12 @@ public class ViewImpl implements View {
 
     @Override
     public Map<AchievementType, Achievement> getAchievements() {
-        return null;
-        //return this.achievements;
+        return this.achievements;
     }
 
     @Override
     public void setAchievements(final Map<AchievementType, Achievement> achievements) {
-        //this.achievements = achievements;
+        this.achievements = achievements;
     }
 
     @Override
@@ -131,31 +128,20 @@ public class ViewImpl implements View {
 
     @Override
     public final Podium getStoryPodium() {
-        // TODO Auto-generated method stub
         return this.storyPodium;
     }
 
     @Override
     public final Podium getSurvivalPodium() {
-        // TODO Auto-generated method stub
         return this.survivalPodium;
     }
-    
+
     @Override
     public MatchData getMatchData() {
         return this.matchData;
     }
-    
-    @Override
-    public List<HighScore> getStoryHighScores() {
-        return this.storyModeHighsScores;
-    }
 
     @Override
-    public List<HighScore> getSurvivalHighScores() {
-        return this.survivalModeHighsScores;
-    }
-    
     public SceneFactory getSceneFactory() {
         return this.sceneFactory;
     }
@@ -176,7 +162,6 @@ public class ViewImpl implements View {
         private final GraphicsContext gamecanvas;
         private final ImageView backgroundImage;
 
-
         Render(final GameSceneController gameSceneController) {
             super();
             this.period = MILLIS_FROM_SECOND / SettingsImpl.getSettings().getSelectedFPS();
@@ -184,9 +169,10 @@ public class ViewImpl implements View {
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
 
-            this.backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"), 
-                                                 SettingsImpl.getSettings().getSelectedResolution().getKey(),
-                                                 SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+            this.backgroundImage = new ImageView(
+            new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
+            SettingsImpl.getSettings().getSelectedResolution().getKey(),
+            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
         }
 
         @Override
@@ -212,7 +198,7 @@ public class ViewImpl implements View {
                         final ViewEntity ve = viewEntity.get();
                         final Rectangle rectangle = (Rectangle) ve.getShape();
                         this.gamecanvas.drawImage(ve.getPicture(), ve.getPosition().getX(), ve.getPosition().getY(),
-                                                    rectangle.getWidth(), rectangle.getHeight());
+                        rectangle.getWidth(), rectangle.getHeight());
                     }
                 }
                 Utilities.waitForNextFrame(period, currentTime);
@@ -220,8 +206,9 @@ public class ViewImpl implements View {
         }
 
         private void updateBackground() {
-            this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(), 
-                                      SettingsImpl.getSettings().getSelectedResolution().getValue());
+            this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0,
+            SettingsImpl.getSettings().getSelectedResolution().getKey(),
+            SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
         }
 
@@ -233,7 +220,11 @@ public class ViewImpl implements View {
         public void start() {
             this.running = true;
             super.start();
-        }   
+        }
+    }
+
+    @Override
+    public Controller getController() {
+        return this.controller;
     }
 }
-

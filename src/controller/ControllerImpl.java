@@ -17,7 +17,6 @@ import model.data.Podium;
 import model.data.UserData;
 import utility.Utilities;
 import view.View;
-import view.entities.EntityImageTypeImpl;
 import view.entities.ViewEntity;
 
 /**
@@ -98,6 +97,15 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
+    public Optional<UserData> getUser() {
+        if (this.user.isPresent()) {
+            return this.user;
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public boolean registerUser(final String username, final String password) {
         this.user = this.userManager.register(username, password);
         return this.user.isPresent();
@@ -144,7 +152,8 @@ public final class ControllerImpl implements Controller {
     }
 
     private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
-        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
+        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed))
+        .collect(Collectors.toList());
     }
 
     private class GameLoop extends Thread {
@@ -177,13 +186,10 @@ public final class ControllerImpl implements Controller {
         }
 
         private void processInput() {
-            /*try {
-                mutex.acquire();
-                mutex.release();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            */
+            /*
+             * try { mutex.acquire(); mutex.release(); } catch (InterruptedException e) {
+             * e.printStackTrace(); }
+             */
         }
 
         public void pauseLoop() {
