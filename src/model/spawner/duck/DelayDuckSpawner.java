@@ -21,7 +21,7 @@ public enum DelayDuckSpawner {
     /**
      * SURVIVAL DELAY.
      */
-    SURVIVAL_DELAY(4000),
+    SURVIVAL_DELAY(3000),
     /**
      * FIRST ROUND DELAY.
      */

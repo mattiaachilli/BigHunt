@@ -16,13 +16,10 @@ import model.data.Podium;
 import java.util.concurrent.Semaphore;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import model.data.HighScore;
 import model.data.MatchData;
 import settings.SettingsImpl;
 import utility.Utilities;
-import view.entities.DogType;
-import view.entities.PowerUpImages;
 import view.entities.ViewEntity;
 import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;
@@ -209,7 +206,7 @@ public class ViewImpl implements View {
                 final long currentTime = System.currentTimeMillis();
 
                 this.updateBackground();
-                
+
                 for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
                     if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {
                         final ViewEntity ve = viewEntity.get();
