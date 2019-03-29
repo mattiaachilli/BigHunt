@@ -16,6 +16,7 @@ import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
 import model.entities.EntityStatus;
+import model.entities.StandardDuck;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
 import model.gun.BulletType;
@@ -47,10 +48,7 @@ public final class ModelImpl implements Model {
      */
     public static final int MAX_MAGAZINES = 20;
 
-    /**
-     * Max of time elapsed before the update.
-     */
-    private static final int UPDATE_TIME = 6000;
+    private static final int NEXT_DUCKS_POWERUP = 3;
 
     /**
      * All objects of the game world.
@@ -66,8 +64,9 @@ public final class ModelImpl implements Model {
     private GlobalDifficulty difficulty;
     private DogStatus lastDogStatus;
     private Cleaner cleaner;
-    private int duckDoubleScore;
-    private int timeElapsed = 0;
+    private int duckPowerUp;
+    private Optional<PowerUpType> powerUpActive;
+    private int timeElapsedPowerUp = 0;
     private int lastRound;
 
     /**
@@ -86,7 +85,8 @@ public final class ModelImpl implements Model {
         }
         this.match = Optional.empty();
         this.difficulty = GlobalDifficulty.EASY;
-        this.duckDoubleScore = 0;
+        this.duckPowerUp = 0;
+        this.powerUpActive = Optional.empty();
     }
 
     @Override
@@ -121,7 +121,6 @@ public final class ModelImpl implements Model {
 
         // Update spawner when dog is in grass
         if (this.dog.isInGrass()) {
-            this.timeElapsed += timeElapsed;
             this.getCurrentMagazine().update(timeElapsed);
             spawner.update(timeElapsed);
             if (spawner.canSpawnDuck()) {
@@ -137,16 +136,11 @@ public final class ModelImpl implements Model {
 
         //Update ducks
         this.ducks.forEach(d -> {
-            if (this.timeElapsed >= UPDATE_TIME) {
-                if (d.getStatus() == EntityStatus.ALIVE) {
-                    this.timeElapsed -= UPDATE_TIME;
+            if (d.getStatus() == EntityStatus.ALIVE && d.getPosition().getX() >= StandardDuck.COLLISION_X && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) {
+                if (d.hasPowerUp()) {
                     d.kill();
-                    /*
-                    if (d.hasPowerUp()) {
-                        d.getPowerUp().get().hit();
-                    }*/
-                    final int score = this.duckDoubleScore > 0 ? d.getScore() * 2 : d.getScore();
-                    this.duckDoubleScore = this.duckDoubleScore > 0 ? this.duckDoubleScore-- : 0;
+                    final int score = this.powerUpActive.isPresent() && this.powerUpActive.get() == PowerUpType.DOUBLE_SCORE ? d.getScore() * 2 : d.getScore();
+                    this.duckPowerUp = this.duckPowerUp > 0 ? this.duckPowerUp-- : 0;
                     this.match.get().getMatchData().incrementScoreOf(score);
                     this.dog.setLastDuckKilled(d);
                 }
@@ -160,21 +154,33 @@ public final class ModelImpl implements Model {
         });
         // Update PowerUp list
         this.powerUp.forEach(p -> {
+            if (p.isVisible()) {
+                this.timeElapsedPowerUp += timeElapsed;
+                if (this.timeElapsedPowerUp >= 1500) {
+                    this.timeElapsedPowerUp -= 1500;
+                    p.hit();
+                }
+            }
             if (p.isHit()) {
-                this.activePowerUp(p.getType());
+                this.duckPowerUp = NEXT_DUCKS_POWERUP;
+                this.powerUpActive = Optional.of(p.getType());
             }
             p.update(timeElapsed);
         });
+        if (this.duckPowerUp > 0 && this.powerUpActive.isPresent()) {
+            this.activePowerUp(powerUpActive.get());
+        }
         //Clean objects not necessary
         this.cleaner.clean(this.ducks, this.powerUp);
     }
 
     private void updateRoundNumber() {
         //Only for STORY MODE
-        if (this.gameMode == GameMode.STORY_MODE) {
+        if (this.gameMode == GameMode.STORY_MODE && this.ducks.isEmpty()) {
             if (this.spawner.getActualRound() != this.lastRound) {
                 this.dog = new DogImpl();
                 this.ducks.clear();
+                this.powerUp.clear();
                 this.lastRound = this.spawner.getActualRound();
             }
         }
@@ -196,28 +202,40 @@ public final class ModelImpl implements Model {
 
     private void activePowerUp(final PowerUpType powerUp) {
         switch (powerUp) {
-            case DOUBLE_SCORE:
-                this.ducks.stream()
-                          .filter(d -> d.isAlive())
-                          .forEach(d -> {
-                              this.duckDoubleScore++;
-                          });
-                break;
             case INFINITE_AMMO:
                 this.getCurrentMagazine().setBulletType(BulletType.INFINITE_BULLETS);
                 break;
             case SLOW_DOWN:
                 this.ducks.stream()
-                          .filter(d -> d.isAlive())
-                          .forEach(d -> d.setDecelerate());
+                          .filter(d -> d.isAlive() 
+                                  && d.getPosition().getX() >= StandardDuck.COLLISION_X
+                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X)
+                          .forEach(d -> {
+                              if (this.duckPowerUp > 0) {
+                                  d.setDecelerate();
+                                  this.duckPowerUp--;
+                              }
+                          });
                 break;
             case KILL_ALL:
                 this.ducks.stream()
-                          .filter(d -> d.isAlive())
-                          .forEach(d -> d.kill());
+                          .filter(d -> d.isAlive() 
+                                  && d.getPosition().getX() >= StandardDuck.COLLISION_X
+                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X)
+                          .forEach(d -> {
+                              if (this.duckPowerUp > 0) {
+                                  d.kill(); 
+                                  this.dog.setLastDuckKilled(d);
+                                  this.duckPowerUp--;
+                                  this.match.get().getMatchData().incrementScoreOf(d.getScore());
+                              }
+                          });
                 break;
             default:
                 break;
+        }
+        if (this.duckPowerUp == 0) {
+            this.powerUpActive = Optional.empty();
         }
     }
 

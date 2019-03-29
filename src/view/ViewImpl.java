@@ -207,8 +207,8 @@ public class ViewImpl implements View {
 
         private void updateBackground() {
             this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0,
-            SettingsImpl.getSettings().getSelectedResolution().getKey(),
-            SettingsImpl.getSettings().getSelectedResolution().getValue());
+                                      SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                      SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
         }
 
@@ -224,7 +224,7 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public Controller getController() {
+    public final Controller getController() {
         return this.controller;
     }
 }

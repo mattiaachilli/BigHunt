@@ -152,8 +152,7 @@ public final class ControllerImpl implements Controller {
     }
 
     private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
-        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed))
-        .collect(Collectors.toList());
+        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
     }
 
     private class GameLoop extends Thread {
