@@ -48,10 +48,6 @@ Label{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
 
-#game{
-     -fx-background-image: url("../backgrounds/gameBackground.png");
-}
-
 #menulogo{
 	 -fx-image: url("../logo/logo.png");
 }
@@ -70,6 +66,9 @@ Label{
 
 #selectmode{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
+}
+
+#bottomGrid {-fx-background-color: transparent;
 }
 
 #pause{

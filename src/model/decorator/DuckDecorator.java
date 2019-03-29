@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javafx.scene.shape.Shape;
 import model.entities.Duck;
+import model.entities.DuckProperty;
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.properties.DuckDirection;
@@ -142,6 +143,11 @@ public abstract class DuckDecorator implements Duck {
     @Override
     public final void setDecelerate() {
         this.duck.setDecelerate();
+    }
+
+    @Override
+    public final DuckProperty getProperty() {
+        return this.duck.getProperty();
     }
 
     /**

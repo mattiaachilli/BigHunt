@@ -4,10 +4,17 @@ package view.scenecontroller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
-public class GameOverSceneControllerImpl extends AbstractSecondarySceneController{
+import model.data.MatchData;
+import settings.observers.GameDifficultyObserver;
+/**
+ * 
+ * Sample Skeleton for 'GameOver.fxml' Controller Class
+ *
+ */
+public class GameOverSceneControllerImpl extends AbstractSecondarySceneController implements GameOverSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -47,5 +54,12 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
         assert title != null : "fx:id=\"title\" was not injected: check your FXML file 'GameOver.fxml'.";
         assert timePlayedLabel != null : "fx:id=\"timePlayedLabel\" was not injected: check your FXML file 'GameOver.fxml'.";
 
+    }
+
+    @Override
+    public void setMatchData(MatchData matchData) {
+        this.timePlayedLabel.setText(String.valueOf(matchData.getTimerFromStart()));
+        this.killsLabel.setText(String.valueOf(matchData.getKilledDucks()));
+        this.scoreLabel.setText(String.valueOf(matchData.getGlobalScore()));
     }
 }

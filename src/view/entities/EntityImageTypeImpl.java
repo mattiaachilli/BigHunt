@@ -62,7 +62,6 @@ public final class EntityImageTypeImpl implements EntityImageType {
         if (entity instanceof Dog) {
             this.dogAnimation.update(entity, elapsed);
         } else if (entity instanceof Duck) {
-            System.out.println("ok");
             this.duckAnimation.update(entity, elapsed);
         }
     }

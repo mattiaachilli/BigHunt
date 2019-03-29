@@ -1,5 +1,4 @@
 package model.test;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,9 +19,9 @@ import model.properties.VelocityImpl;
  */
 public class DogTest {
     private static final double INIT_POS_X = 0;
-    private static final double INIT_POS_Y = ModelImpl.GAME_HEIGHT / 2 + ModelImpl.GAME_HEIGHT / 3;
+    private static final double INIT_POS_Y = ModelImpl.GAME_HEIGHT * 0.85;
     private static final double FINAL_POS_X = ModelImpl.GAME_WIDTH / 2;
-    private static final double FINAL_POS_Y = ModelImpl.GAME_HEIGHT / 2 + ModelImpl.GAME_HEIGHT / 4 - 100;
+    private static final double FINAL_POS_Y = ModelImpl.GAME_HEIGHT * 0.70;
     private static final int UPDATE_MOVEMENT = 500;
     private static final int UPDATE_GAME_LOOP = 16;
     private static final Velocity ATTENTION_VELOCITY = new VelocityImpl(0, 0);

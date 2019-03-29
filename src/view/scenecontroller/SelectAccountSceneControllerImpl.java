@@ -5,6 +5,11 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+/**
+ * 
+ * Sample Skeleton for 'SelecAccount.fxml' Controller Class
+ *
+ */
 public class SelectAccountSceneControllerImpl extends AbstractSceneController {
     
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -21,13 +26,11 @@ public class SelectAccountSceneControllerImpl extends AbstractSceneController {
 
     @FXML
     void goToLogin() {
-        //salva dati
         this.getSceneFactory().openLoginScene();
     }
 
     @FXML
     void goToRegister() {
-        //salva dati
         this.getSceneFactory().openRegisterScene();
     }
 

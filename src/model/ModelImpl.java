@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -138,20 +137,20 @@ public final class ModelImpl implements Model {
 
         //Update ducks
         this.ducks.forEach(d -> {
-            //SIMULATE KILL EACH 4000ms = 5s
-            /*if (this.timeElapsed >= 4000) {
+            if (this.timeElapsed >= UPDATE_TIME) {
                 if (d.getStatus() == EntityStatus.ALIVE) {
-                    this.timeElapsed -= 4000;
+                    this.timeElapsed -= UPDATE_TIME;
                     d.kill();
+                    /*
                     if (d.hasPowerUp()) {
                         d.getPowerUp().get().hit();
-                    }
+                    }*/
                     final int score = this.duckDoubleScore > 0 ? d.getScore() * 2 : d.getScore();
                     this.duckDoubleScore = this.duckDoubleScore > 0 ? this.duckDoubleScore-- : 0;
                     this.match.get().getMatchData().incrementScoreOf(score);
-                    dog.setDogStatus(DogStatus.HAPPY);
+                    this.dog.setLastDuckKilled(d);
                 }
-            }*/
+            }
             if (d.canFlyAway()) {
                 d.computeFlyAway();
                 dog.setDogStatus(DogStatus.LAUGH);
@@ -230,7 +229,8 @@ public final class ModelImpl implements Model {
         switch (this.gameMode) {
             case STORY_MODE:
                 gameOver = this.spawner.getActualRound() > this.lastRound 
-                            && matchData.getGlobalScore() < matchScore || this.currentMagazine > MAX_MAGAZINES || this.spawner.isSpawnFinished();
+                            && matchData.getGlobalScore() < matchScore || this.currentMagazine > MAX_MAGAZINES 
+                            || this.spawner.isSpawnFinished();
             break;
             case SURVIVAL_MODE:
                 gameOver = matchData.getFlownDucks() >= this.match.get().getDifficulty().getLimitOfDifficulty()

@@ -78,4 +78,11 @@ public interface Duck extends Character {
      * Set the velocity of this duck decelerate.
      */
     void setDecelerate();
+
+    /**
+     * Get the property of the duck.
+     * @return
+     *       duck's property.
+     */
+    DuckProperty getProperty();
 }

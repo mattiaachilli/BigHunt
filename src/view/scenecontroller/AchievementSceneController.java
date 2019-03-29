@@ -1,8 +1,9 @@
 package view.scenecontroller;
 
-import java.util.List;
+import java.util.Map;
 
 import model.achievements.Achievement;
+import model.achievements.AchievementType;
 
 /**
  * interface for update achievements.
@@ -14,5 +15,5 @@ public interface AchievementSceneController {
      * @param achievements
      *          achievements of the player
      */
-    public void setAchievements(final List<Achievement> achievements);
+    void setAchievements(Map<AchievementType, Achievement> achievements);
 }

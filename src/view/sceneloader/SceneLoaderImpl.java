@@ -5,11 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import model.data.HighScore;
 import settings.SettingsImpl;
 import view.View;
 import view.scenecontroller.AchievementSceneController;
-import view.scenecontroller.AchievementsSceneControllerImpl;
+import view.scenecontroller.GameOverSceneController;
 import view.scenecontroller.GameSceneController;
+import view.scenecontroller.HighScoresSceneController;
 import view.scenecontroller.SceneController;
 import view.utilities.Screens;
 
@@ -62,45 +64,42 @@ public class SceneLoaderImpl implements SceneLoader {
                 stage.centerOnScreen();
             }
             
-            if(!stage.isShowing()) {
+            if (!stage.isShowing()) {
                 stage.show();
             }
             
-            switch(screen) {
+            switch (screen) {
             case SELECT_ACCOUNT:
                 //this.view.resetGame();
                 break;
+            case MENU: 
+            //    this.view.resetGame();
+                break;
             case LOGIN:
+                //caricare i file o non ce bisogno??
                 break;
             case REGISTER:
+                //caricare il file o non ce bisogno??
                 break;
             case GAME:
                 this.view.startGame((GameSceneController) controller,gameMode);
                 break;
             case GAME_OVER:
-                //
+                final GameOverSceneController gameOver = (GameOverSceneController) controller;
+                gameOver.setMatchData(this.view.getMatchData());
                 break;
             case ACHIEVEMENTS:
                 final AchievementSceneController achievementController = (AchievementSceneController) controller;
-                //achievementController.setAchievements(this.view.getAchievements());
+                achievementController.setAchievements(this.view.getAchievements());
                 break;
             case HIGH_SCORES:
+                final HighScoresSceneController highScores = (HighScoresSceneController) controller;
+                highScores.setStoryModeHighScores(this.view.getStoryHighScores());
+                highScores.setSurvivalModeHighScores(this.view.getSurvivalHighScores());
                 break;
-            case MENU: 
-            //    this.view.resetGame();
-                break;
-           /* case MANUAL:
-                break;
-            case PAUSE: 
-                break;
-            case SELECTMODE: 
-                break;
-            case SETTINGS: 
-                break;*/
             default:
                 break;
             }
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
