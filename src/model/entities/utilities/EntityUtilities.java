@@ -16,8 +16,8 @@ import model.properties.VelocityImpl;
  *
  */
 public final class EntityUtilities {
-    private static final int FLY_AWAY_VELOCITY = 1500;
-    private static final int KILLED_VELOCITY = 400;
+    private static final double FLY_AWAY_VELOCITY = ModelImpl.GAME_WIDTH / 1.2;
+    private static final double KILLED_VELOCITY = ModelImpl.GAME_WIDTH / 4;
     private static final double MAX_DOWN_Y = ModelImpl.GAME_HEIGHT * 0.60;
 
     /**
