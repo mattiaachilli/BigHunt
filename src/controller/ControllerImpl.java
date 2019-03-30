@@ -7,7 +7,11 @@ import controller.files.PodiumManager;
 import controller.files.PodiumManagerImpl;
 import controller.files.UserManager;
 import controller.files.UserManagerImpl;
+import controller.input.CommandType;
 import controller.input.InputController;
+import controller.input.Pause;
+import controller.input.Recharge;
+import controller.input.Shoot;
 import controller.matches.GameMode;
 import model.Model;
 import model.data.Podium;
@@ -68,6 +72,20 @@ public final class ControllerImpl implements Controller {
     public void stopGame() {
         gameLoop.stopGameLoop();
         // view method
+    }
+
+    @Override
+    public void notifyCommand(final CommandType command) {
+        switch (command) {
+        case PAUSE:
+            this.input.setCommand(new Pause());
+        case RECHARGE:
+            this.input.setCommand(new Recharge());
+        case SHOOT:
+            this.input.setCommand(new Shoot());
+        default:
+            break;
+        }
     }
 
     @Override
@@ -151,7 +169,7 @@ public final class ControllerImpl implements Controller {
         }
 
         private void processInput() {
-            // Input from mouse command example
+            input.executeCommand(model);
         }
 
         public void stopGameLoop() {

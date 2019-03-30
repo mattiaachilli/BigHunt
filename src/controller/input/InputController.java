@@ -35,7 +35,9 @@ public class InputController implements CommandReader, CommandWriter {
 
     @Override
     public final void executeCommand(final Model model) {
-        this.commands.poll().execute(model);
+        if (!this.commands.isEmpty()) {
+            this.commands.poll().execute(model);
+        }
     }
 
 }
