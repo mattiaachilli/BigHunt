@@ -271,9 +271,6 @@ public final class ModelImpl extends Canvas implements Model {
     public void shoot() {
         if (this.canShoot()) {
             this.getCurrentMagazine().shoot();
-        } else {
-            this.recharge();
-            this.shoot();
         }
     }
 

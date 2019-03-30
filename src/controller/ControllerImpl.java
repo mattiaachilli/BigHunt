@@ -7,6 +7,7 @@ import controller.files.PodiumManager;
 import controller.files.PodiumManagerImpl;
 import controller.files.UserManager;
 import controller.files.UserManagerImpl;
+import controller.input.InputController;
 import controller.matches.GameMode;
 import model.Model;
 import model.data.Podium;
@@ -30,6 +31,7 @@ public final class ControllerImpl implements Controller {
     private final Supplier<Model> modelSupplier;
     private Model model;
     private final View view;
+    private final InputController input;
     private final PodiumManager podiumManager;
     private final UserManager userManager;
     private Optional<Podium> podium;
@@ -46,6 +48,7 @@ public final class ControllerImpl implements Controller {
     public ControllerImpl(final Supplier<Model> modelSupplier, final View view) {
         this.modelSupplier = modelSupplier;
         this.view = view;
+        this.input = new InputController();
         this.podiumManager = new PodiumManagerImpl();
         this.userManager = new UserManagerImpl();
         this.podium = Optional.empty();
