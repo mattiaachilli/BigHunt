@@ -55,6 +55,7 @@ public class SceneLoaderImpl implements SceneLoader {
             root.getChildrenUnmodifiable().stream().forEach(e -> {
                 e.setScaleX(SettingsImpl.getSettings().getScaleFactory());
                 e.setScaleY(SettingsImpl.getSettings().getScaleFactory());
+                System.out.println(SettingsImpl.getSettings().getScaleFactory());
             });
 
             stage.setScene(new Scene(root));

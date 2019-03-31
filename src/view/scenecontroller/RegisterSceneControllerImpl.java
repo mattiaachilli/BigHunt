@@ -59,18 +59,24 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
 
     @FXML
     void registerBtn() {
-        // Optional<UserData> userData = user.register(this.userTextField.getText(),
-        // this.passwordTextField.getText());
-        if (this.view.getController().registerUser(this.userTextField.getText(), this.pwdTextField.getText())) {
-            // inserire??
+        if(this.pwdTextField.getText().isEmpty() || this.userTextField.getText().isEmpty()) {
+            this.showAlert("COMPILARE TUTTI I CAMPI");
+        } else if (this.view.getController().registerUser(this.userTextField.getText(), this.pwdTextField.getText())) {
             this.getSceneFactory().openMenuScene();
         } else {
-            Alert alert = new Alert(AlertType.ERROR, "USER GIA' ESISTENTE", ButtonType.OK);
-            alert.showAndWait();
-
+            this.showAlert("USER GIA' ESISTENTE");
+            this.resetTextField();
         }
-        // view.getcontr.loginuser/regUser
-        // this.getSceneFactory().openMenuScene();
+    }
+    
+    private void showAlert(final String text) {
+        Alert alert = new Alert(AlertType.ERROR, text, ButtonType.OK);
+        alert.showAndWait();
+    }
+    
+    private void resetTextField() {
+        this.userTextField.setText("");
+        this.pwdTextField.setText("");
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
