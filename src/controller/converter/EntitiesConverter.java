@@ -1,5 +1,8 @@
 package controller.converter;
 
+import javafx.scene.image.Image;
+import java.util.Optional;
+
 import model.entities.Entity;
 import view.entities.EntityImageTypeImpl;
 import view.entities.ViewEntity;
@@ -20,9 +23,13 @@ public final class EntitiesConverter {
      * 
      * @param entity
      *          entity to convert.
+     * @param elapsed
+     *          elapsed from the last update, used for animation of entities.
      * @return the entity for the view.
      */
-    public static ViewEntity convertEntity(final Entity entity) {
-        return new ViewEntityImpl(entity.getShape(), EntityImageTypeImpl.getInstance().getImageType(entity));
+    public static Optional<ViewEntity> convertEntity(final Entity entity, final int elapsed) {
+        EntityImageTypeImpl.getInstance().updateEntity(entity, elapsed);
+        Optional<Image> image = EntityImageTypeImpl.getInstance().getImageType(entity);
+        return image.isPresent() ? Optional.of(new ViewEntityImpl(entity.getShape(), image.get())) : Optional.empty();
     }
 }

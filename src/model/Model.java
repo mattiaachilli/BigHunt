@@ -43,6 +43,12 @@ public interface Model {
 
     /**
      * 
+     * @return the list of ducks
+     */
+    List<Duck> getDucks();
+
+    /**
+     * 
      * @return data of the actual match
      */
     MatchData getMatchData();
@@ -69,6 +75,11 @@ public interface Model {
      * 
      * Method used to handle bullets after each shot.
      */
+    //List<Bullet> getBullets();
+    
+    /**
+     * 
+     */
     void shoot();
 
     /**
@@ -88,12 +99,6 @@ public interface Model {
      * @return the magazine being used.
      */
     Magazine getCurrentMagazine();
-
-    /**
-     * 
-     * @return the list of ducks.
-     */
-    List<Duck> getDucks();
 
     /**
      * test.

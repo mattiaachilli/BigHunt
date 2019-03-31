@@ -1,8 +1,10 @@
 package model.entities;
 
+import model.ModelImpl;
+
 /**
  * 
- * Enum that represents the various properties of ducks such as velocity speed, 
+ * Enumeration that represents the various properties of ducks such as velocity speed, 
  * score multiplier, fly away time and duckRarity.
  *
  */
@@ -12,19 +14,19 @@ public enum DuckProperty {
     /**
      * STANDARD DUCK INFORMATIONS.
      */
-    STANDARD_DUCK(1000, 8000, "Standard Duck"),
+    STANDARD_DUCK(ModelImpl.GAME_WIDTH / 3, 8000, "Standard Duck"),
     /**
      * YELLOW DUCK INFORMATIONS.
      */
-    YELLOW_DUCK(1400, 7000, "Yellow Duck"),
+    YELLOW_DUCK(ModelImpl.GAME_WIDTH / 3 + 200, 7000, "Yellow Duck"),
     /**
      * ORANGE DUCK INFORMATIONS.
      */
-    ORANGE_DUCK(1700, 6000, "Orange Duck"),
+    ORANGE_DUCK(ModelImpl.GAME_WIDTH / 3 + 500, 6000, "Orange Duck"),
     /**
      * PINK DUCK INFORMATIONS.
      */
-    PINK_DUCK(2000, 5000, "Pink Duck");
+    PINK_DUCK(ModelImpl.GAME_WIDTH / 3 + 800, 4000, "Pink Duck");
 
 
     private final double velocity;
@@ -32,8 +34,7 @@ public enum DuckProperty {
     private final String duckType;
 
 
-    DuckProperty(final double velocity,
-                final int timeFlyAway, final String duckType) {
+    DuckProperty(final double velocity, final int timeFlyAway, final String duckType) {
         this.velocity = velocity;
         this.timeFlyAway = timeFlyAway;
         this.duckType = duckType;

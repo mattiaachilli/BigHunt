@@ -34,18 +34,20 @@ public class SecondRoundState extends AbstractDuckState {
         final DuckDirection direction = SpawnSide.getSpawnSide(); //Init direction
         int posX = SpawnSide.initPosX(direction);
         int posY = SpawnSide.getRandomPosY();
-        final Velocity velocity = SpawnSide.getVelocity(direction, DuckProperty.STANDARD_DUCK);
         final Shape shape = new Rectangle(posX, posY, StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK);
-        final Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
+        Velocity velocity = SpawnSide.getVelocity(direction, DuckProperty.STANDARD_DUCK);
+        Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction, DuckProperty.STANDARD_DUCK);
         if (super.getDuckSpawned() <= FIRST_WAVE) {
             return standardDuck;
         } else if (super.getDuckSpawned() > FIRST_WAVE 
                    && 
                    super.getDuckSpawned() <= FIRST_WAVE + SECOND_WAVE) {
-            standardDuck.setVelocity(SpawnSide.getVelocity(direction, DuckProperty.YELLOW_DUCK));
+            velocity = SpawnSide.getVelocity(direction, DuckProperty.YELLOW_DUCK);
+            standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction, DuckProperty.YELLOW_DUCK);
             return super.getDuckFactory().createYellowDuck(standardDuck);
-        } else { //Last wave of two ducks
-            standardDuck.setVelocity(SpawnSide.getVelocity(direction, DuckProperty.ORANGE_DUCK));
+        } else {
+            velocity = SpawnSide.getVelocity(direction, DuckProperty.ORANGE_DUCK);
+            standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction, DuckProperty.ORANGE_DUCK);
             return super.getDuckFactory().createOrangeDuck(standardDuck);
         }
     }

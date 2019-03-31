@@ -1,10 +1,5 @@
 package model.spawner.duck;
 
-import java.util.Arrays;
-import java.util.List;
-
-import model.entities.utilities.EntityUtilities;
-
 /**
  * 
  * This enum represents the delay between two ducks in a round in milliseconds.
@@ -18,7 +13,7 @@ public enum DelayDuckSpawner {
     /**
      * DOG DELAY, WAIT DOG.
      */
-    DOG_DELAY(3000),
+    DOG_DELAY(2000),
     /**
      * ROUND DELAY BETWEEN TWO ROUNDS.
      */
@@ -26,7 +21,7 @@ public enum DelayDuckSpawner {
     /**
      * SURVIVAL DELAY.
      */
-    SURVIVAL_DELAY(4000),
+    SURVIVAL_DELAY(3000),
     /**
      * FIRST ROUND DELAY.
      */

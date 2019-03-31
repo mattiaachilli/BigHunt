@@ -48,7 +48,24 @@ public enum DogType {
     /**
      * DOG SNIFF.
      */
-    DOG_SNIFF1("dogSniff1.png");
+    DOG_SNIFF1("dogSniff1.png"),
+
+    /**
+     * DOG HAPPY, STANDARD DUCK.
+     */
+    DOG_HAPPY_STANDARD("dogHappy.png"),
+    /**
+     * DOG HAPPY, YELLOW DUCK.
+     */
+    DOG_HAPPY_YELLOW("yellowDogHappy.png"),
+    /**
+     * DOG HAPPY, ORANGE DUCK.
+     */
+    DOG_HAPPY_ORANGE("orangeDogHappy.png"),
+    /**
+     * DOG HAPPY, PINK DUCK.
+     */
+    DOG_HAPPY_PINK("pinkDogHappy.png");
 
     private static final String PATH = "/view/dog/";
     private Image picture;

@@ -59,7 +59,13 @@ public interface Settings {
      * @return a list of supported resolutions
      */
     List<Pair<Integer, Integer>> getSupportedResolutions();
-
+    
+    /**
+     * 
+     * @return
+     *          default screen resolution.
+     */
+    Pair<Integer, Integer> getDefaultResolutions();
     /**
      * 
      * @return true if fullScreenMode is enable, false otherwise
@@ -87,4 +93,24 @@ public interface Settings {
      *          is true if background audio is active, false otherwise
      */
     void setBackgroundAudio(boolean backgroundAudio);
+
+    /**
+     * 
+     * @param difficulty
+     *          the selected game difficulty.
+     */
+    void setDifficulty(String difficulty);
+    /**
+     * 
+     * @return
+     *          the actual game difficulty.
+     */
+    String getSelectedDifficulty();
+    
+    /**
+     * 
+     * @return
+     *          all game difficulty.
+     */
+    List<String> getGameDifficulties();
 }

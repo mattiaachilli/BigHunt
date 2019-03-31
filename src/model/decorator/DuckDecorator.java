@@ -1,10 +1,10 @@
 package model.decorator;
 
-import java.awt.Graphics2D;
 import java.util.Optional;
 
 import javafx.scene.shape.Shape;
 import model.entities.Duck;
+import model.entities.DuckProperty;
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.properties.DuckDirection;
@@ -145,15 +145,15 @@ public abstract class DuckDecorator implements Duck {
         this.duck.setDecelerate();
     }
 
+    @Override
+    public final DuckProperty getProperty() {
+        return this.duck.getProperty();
+    }
+
     /**
      * Get score multiplier of the duck.
      * 
      * @return the score multiplier of the duck
      */
     public abstract int getScoreMultiplier();
-
-    @Override
-    public final void render(final Graphics2D g) {
-        this.duck.render(g);
-    }
 }

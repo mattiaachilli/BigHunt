@@ -11,6 +11,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import settings.observers.BackGroundAudioObserver;
 import settings.observers.FpsObserver;
+import settings.observers.GameDifficultyObserver;
 import settings.observers.Observer;
 import settings.observers.ResolutionObserver;
 
@@ -28,45 +29,41 @@ public class SettingsSceneControllerImpl extends AbstractSecondarySceneControlle
     @FXML // fx:id="settingsApplyBtn"
     private Button settingsApplyBtn; // Value injected by FXMLLoader
 
+    @FXML // fx:id="bgAudioCheckBox"
+    private CheckBox bgAudioCheckBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="difficultyComboBox"
+    private ComboBox<String> difficultyComboBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="resolutionComboBox"
+    private ComboBox<String> resolutionComboBox; // Value injected by FXMLLoader
+
     @FXML // fx:id="backBtn"
     private Button backBtn; // Value injected by FXMLLoader
 
-    private ComboBox<String> resolutionComboBox;
-    private ComboBox<String> difficultyComboBox;
-    private ComboBox<Integer> fpsComboBox;
-    private CheckBox bgAudioCheckBox;
+    @FXML // fx:id="fpsComboBox"
+    private ComboBox<Integer> fpsComboBox; // Value injected by FXMLLoader
     
     private final List<Observer> observers = new ArrayList<>();
     
     @FXML
     private void applyChanges() {
         this.observers.forEach(observer -> observer.update());
-        //this.saveSettingsToFile();
         this.getSceneFactory().openSettingsScene();
     }
 
-    @FXML
-    protected void backToMenu() {
-     /*
-      * non andrebbe poichè è nella classe da cui eredita
-      */
-        this.getSceneFactory().openMenuScene();
-    }
-
-   // @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    private void initialize() {
         this.observers.addAll(Arrays.asList(
             new ResolutionObserver(this.resolutionComboBox),
             new FpsObserver(this.fpsComboBox),
-            new BackGroundAudioObserver(this.bgAudioCheckBox)));
-        //aggungere anche difficulty observer???
+            new BackGroundAudioObserver(this.bgAudioCheckBox),
+            new GameDifficultyObserver(this.difficultyComboBox)));
+        this.settingsApplyBtn.setDisable(true);
     }
     
-    private void enableApplyButton() {
+    @FXML
+    private void enableApplyBtn() {
         this.settingsApplyBtn.setDisable(false);
-    }
-    
-    private void saveSettingsToFile() {
-        /// da fare ????
     }
 }

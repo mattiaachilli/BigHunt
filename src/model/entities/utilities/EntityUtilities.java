@@ -1,10 +1,8 @@
 package model.entities.utilities;
 
-import model.decorator.YellowDuck;
+
 import model.entities.StandardDuck;
 import model.ModelImpl;
-import model.decorator.OrangeDuck;
-import model.decorator.PinkDuck;
 import model.entities.Duck;
 import model.entities.DuckProperty;
 import model.entities.EntityStatus;
@@ -18,8 +16,9 @@ import model.properties.VelocityImpl;
  *
  */
 public final class EntityUtilities {
-    private static final int FLY_AWAY_VELOCITY = 1500;
-    private static final int KILLED_VELOCITY = 400;
+    private static final double FLY_AWAY_VELOCITY = ModelImpl.GAME_WIDTH / 1.2;
+    private static final double KILLED_VELOCITY = ModelImpl.GAME_WIDTH / 4;
+    private static final double MAX_DOWN_Y = ModelImpl.GAME_HEIGHT * 0.60;
 
     /**
      * Check if fly away is possible.
@@ -42,28 +41,18 @@ public final class EntityUtilities {
      */
     public static boolean checkFlyAway(final Duck duck) {
         int time;
-        if (duck instanceof StandardDuck) {
+        if (duck.getProperty() == DuckProperty.STANDARD_DUCK) {
             time = DuckProperty.STANDARD_DUCK.getTimeFlyAway();
-        } else if (duck instanceof YellowDuck) {
+        } else if (duck.getProperty() == DuckProperty.YELLOW_DUCK) {
             time = DuckProperty.YELLOW_DUCK.getTimeFlyAway();
-        } else if (duck instanceof OrangeDuck) {
+        } else if (duck.getProperty() == DuckProperty.ORANGE_DUCK) {
             time = DuckProperty.ORANGE_DUCK.getTimeFlyAway();
-        } else if (duck instanceof PinkDuck) {
+        } else if (duck.getProperty() == DuckProperty.PINK_DUCK) {
             time = DuckProperty.PINK_DUCK.getTimeFlyAway();
         } else {
             throw new IllegalArgumentException();
         }
         return duck.getTimeFromBirth() >= time && duck.getStatus() == EntityStatus.ALIVE;
-    }
-
-    /**
-     * 
-     * @param velocity
-     *            the velocity's entity.
-     * @return the velocity for diagonal.
-     */
-    public static Double diagonalVelocity(final double velocity) {
-        return Math.sqrt(Math.pow(velocity, 2) / 2);
     }
 
     /**
@@ -75,17 +64,18 @@ public final class EntityUtilities {
      * @param decelerate
      *          if duck must slow down.
      */
-    public static void setNewPosition(final Duck duck, final boolean decelerate, final DuckDirection direction) {
+    public static void setNewPosition(final Duck duck, final boolean decelerate,
+                                    final DuckDirection direction) {
         Velocity velocity = new VelocityImpl(0, 0);
         double movement = 0;
         double deceleration = decelerate ? 0.5 : 1;
-        if (duck instanceof StandardDuck) {
+        if (duck.getProperty() == DuckProperty.STANDARD_DUCK) {
             movement = DuckProperty.STANDARD_DUCK.getVelocity() * deceleration;
-        } else if (duck instanceof YellowDuck) {
+        } else if (duck.getProperty() == DuckProperty.YELLOW_DUCK) {
             movement = DuckProperty.YELLOW_DUCK.getVelocity() * deceleration;
-        } else if (duck instanceof OrangeDuck) {
+        } else if (duck.getProperty() == DuckProperty.ORANGE_DUCK) {
             movement = DuckProperty.ORANGE_DUCK.getVelocity() * deceleration;
-        } else if (duck instanceof PinkDuck) {
+        } else if (duck.getProperty() == DuckProperty.PINK_DUCK) {
             movement = DuckProperty.PINK_DUCK.getVelocity() * deceleration;
         }
         if (duck.getActualDirection() != direction) {
@@ -97,21 +87,22 @@ public final class EntityUtilities {
                     velocity = new VelocityImpl(-movement, 0);
                     break;
                 case RIGHT_UP:
-                    velocity = new VelocityImpl(diagonalVelocity(movement), -diagonalVelocity(movement));
+                    velocity = new VelocityImpl(movement, -movement);
                     break;
                 case RIGHT_DOWN:
-                    velocity = new VelocityImpl(diagonalVelocity(movement), diagonalVelocity(movement));
+                    velocity = new VelocityImpl(movement, movement);
                     break;
                 case LEFT_UP:
-                    velocity = new VelocityImpl(-diagonalVelocity(movement), -diagonalVelocity(movement));
+                    velocity = new VelocityImpl(-movement, -movement);
                     break;
                 case LEFT_DOWN:
-                    velocity = new VelocityImpl(-diagonalVelocity(movement), movement);
+                    velocity = new VelocityImpl(-movement, movement);
                     break;
                 case FLOWN_AWAY:
                     velocity = new VelocityImpl(0, -FLY_AWAY_VELOCITY);
                     break;
                 case KILLED:
+                case PRECIPITATE:
                     velocity = new VelocityImpl(0, KILLED_VELOCITY);
                     break;
                 default:
@@ -125,26 +116,26 @@ public final class EntityUtilities {
      * Check duck collision with the window, if there are, change duck's position.
      * 
      * @param duck
-     *          check collision
+     *          duck.
      * @param actualDirection
-     *          duck's flying
+     *          duck's flying.
      * @param decelerate
      *          if duck must slow down.
      */
     public static void checkCollision(final Duck duck, final boolean decelerate, final DuckDirection actualDirection) {
         //RIGHT
         if (actualDirection == DuckDirection.RIGHT) {
-            if (duck.getPosition().getX() >= ModelImpl.GAME_WIDTH - StandardDuck.WIDTH_DUCK / 2) {
+            if (duck.getPosition().getX() >= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) {
                 EntityUtilities.setNewPosition(duck, decelerate, actualDirection.getOpponentPosition().get());
             } 
-        } else if (actualDirection == DuckDirection.LEFT) { //LEFT
+        } else if (actualDirection == DuckDirection.LEFT) {
             if (duck.getPosition().getX() <= StandardDuck.COLLISION_X) {
                 EntityUtilities.setNewPosition(duck, decelerate, actualDirection.getOpponentPosition().get());
             }
         }
         //LEFT/RIGHT DOWN
         if (actualDirection == DuckDirection.LEFT_DOWN) {
-            if (duck.getPosition().getY() >= ModelImpl.GAME_HEIGHT / 4 * 2) {
+            if (duck.getPosition().getY() >= MAX_DOWN_Y) {
                 EntityUtilities.setNewPosition(duck, decelerate, DuckDirection.LEFT_UP);
             }
             if (duck.getPosition().getX() <= StandardDuck.COLLISION_X) {
@@ -152,10 +143,10 @@ public final class EntityUtilities {
             }
         }
         if (actualDirection == DuckDirection.RIGHT_DOWN) {
-            if (duck.getPosition().getY() >= ModelImpl.GAME_HEIGHT / 4 * 2) {
+            if (duck.getPosition().getY() >= MAX_DOWN_Y) {
                 EntityUtilities.setNewPosition(duck, decelerate, DuckDirection.RIGHT_UP);
             } 
-            if (duck.getPosition().getX() >= ModelImpl.GAME_WIDTH - StandardDuck.WIDTH_DUCK / 2) {
+            if (duck.getPosition().getX() >= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) {
                 EntityUtilities.setNewPosition(duck, decelerate, actualDirection.getOpponentPosition().get());
             }
         }
@@ -172,7 +163,7 @@ public final class EntityUtilities {
             if (duck.getPosition().getY() <= StandardDuck.COLLISION_Y) {
                 EntityUtilities.setNewPosition(duck, decelerate, DuckDirection.RIGHT_DOWN);
             } 
-            if (duck.getPosition().getX() >= ModelImpl.GAME_WIDTH - StandardDuck.WIDTH_DUCK / 2) {
+            if (duck.getPosition().getX() >= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) {
                 EntityUtilities.setNewPosition(duck, decelerate, actualDirection.getOpponentPosition().get());
             }
         }

@@ -12,6 +12,7 @@ public class Pause implements Command {
     @Override
     public void execute(final Model model) {
         //model.pause();
+        System.out.println("pause");
     }
 
 }

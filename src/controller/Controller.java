@@ -1,7 +1,10 @@
 package controller;
 
+import java.util.Optional;
+
 import controller.input.CommandType;
 import controller.matches.GameMode;
+import model.data.UserData;
 
 /**
  * 
@@ -18,9 +21,14 @@ public interface Controller {
     void initGame(GameMode gameMode);
 
     /**
+     * Start the game loop.
+     */
+    void startGameLoop();
+
+    /**
      * Stop the game loop.
      */
-    void stopGame();
+    void stopGameLoop();
 
     /**
      * Adds the command to the command list.
@@ -42,6 +50,12 @@ public interface Controller {
      * Logout of the user.
      */
     void logoutUser();
+
+    /**
+     * 
+     * @return an optional of the  current user.
+     */
+    Optional<UserData> getUser();
 
     /**
      * Registration of a user.
@@ -69,7 +83,8 @@ public interface Controller {
 
     /**
      * Adds an high score to the podium.
-     * @param score    the new high score
+     * 
+     * @param score the new high score
      */
     void addToPodium(int score);
 
@@ -77,4 +92,14 @@ public interface Controller {
      * No more podium needed.
      */
     void emptyPodium();
+
+    /**
+     * Pauses the game loop.
+     */
+    void pause();
+
+    /**
+     * Resume the game loop.
+     */
+    void resume();
 }

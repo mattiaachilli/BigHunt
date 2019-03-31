@@ -1,36 +1,38 @@
 package model.entities;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import java.util.Optional;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import model.ModelImpl;
+import model.properties.PositionImpl;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
-
 /**
  * 
  * This class represents the dog, animation etc..
  *
  */
 public final class DogImpl extends AbstractEntity implements Dog {
+    /**
+     * MAX POS Y, USED FOR DOG AND DUCKS.
+     */
+    public static final double FINAL_POS_Y = ModelImpl.GAME_HEIGHT * 0.70;
     private static final double INIT_POS_X = 0;
-    private static final double INIT_POS_Y = ModelImpl.GAME_HEIGHT / 2 + ModelImpl.GAME_HEIGHT / 3;
+    private static final double INIT_POS_Y = ModelImpl.GAME_HEIGHT * 0.85;
     private static final double FINAL_POS_X = ModelImpl.GAME_WIDTH / 2;
-    private static final double FINAL_POS_Y = ModelImpl.GAME_HEIGHT / 2 + ModelImpl.GAME_HEIGHT / 4 - 100;
-    private static final double WIDTH = 70;
-    private static final double HEIGHT = 50;
-    private static final double VELOCITY_X = 100.0;
-    private static final double VELOCITY_JUMP_Y = -300.0;
+    private static final double WIDTH = ModelImpl.GAME_WIDTH / 10;
+    private static final double HEIGHT = ModelImpl.GAME_HEIGHT / 10;
+    private static final double VELOCITY_X = ModelImpl.GAME_WIDTH / 12;
+    private static final double VELOCITY_JUMP_Y = -ModelImpl.GAME_WIDTH / 5;
     private static final int WAITING_MILLIS = 750;
     private static final int UPDATE_MILLIS = 500;
     private static final int LAUGH_MILLIS = 1000;
-    private static final int HAPPY_MILLIS = 1500;
+    private static final int HAPPY_MILLIS = 1000;
 
     private DogStatus status;
     private int waitingTime;
+    private Optional<Duck> lastDuck;
 
     /**
      * 
@@ -43,6 +45,7 @@ public final class DogImpl extends AbstractEntity implements Dog {
         super(shape, velocity);
         this.status = DogStatus.RIGHT;
         this.waitingTime = 0;
+        this.lastDuck = Optional.empty();
     }
 
     /**
@@ -111,6 +114,8 @@ public final class DogImpl extends AbstractEntity implements Dog {
             if (this.waitingTime >= HAPPY_MILLIS) {
                 this.waitingTime -= HAPPY_MILLIS;
                 this.setDogStatus(DogStatus.IN_GRASS);
+                this.lastDuck = Optional.empty();
+                this.setPosition(new PositionImpl(FINAL_POS_X, FINAL_POS_Y));
                 this.inGrass();
             }
         }
@@ -118,16 +123,14 @@ public final class DogImpl extends AbstractEntity implements Dog {
 
     @Override
     public void update(final int timeElapsed) {
+        if (this.lastDuck.isPresent()) {
+            if (this.lastDuck.get().getPosition().getY() >= FINAL_POS_Y) {
+                this.setPosition(new PositionImpl(this.lastDuck.get().getPosition().getX(), this.getPosition().getY()));
+                this.setDogStatus(DogStatus.HAPPY);
+            }
+        }
         this.updateDogStatus(timeElapsed);
         super.update(timeElapsed);
-    }
-
-    @Override
-    public void render(final Graphics2D g) {
-        if (!this.isInGrass()) {
-            g.setColor(Color.blue);
-            g.fill(new Rectangle2D.Double(this.getPosition().getX(), this.getPosition().getY(), WIDTH, HEIGHT));
-        }
     }
 
     @Override
@@ -138,5 +141,15 @@ public final class DogImpl extends AbstractEntity implements Dog {
     @Override
     public DogStatus getDogStatus() {
         return this.status;
+    }
+
+    @Override
+    public void setLastDuckKilled(final Duck duck) {
+        this.lastDuck = Optional.of(duck);
+    }
+
+    @Override
+    public Optional<Duck> getLastDuckKilled() {
+        return this.lastDuck;
     }
 }

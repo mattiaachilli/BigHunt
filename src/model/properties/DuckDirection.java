@@ -43,7 +43,11 @@ public enum DuckDirection {
     /**
      * KILLED(DOWN) DIRECTION.
      */
-    KILLED(8); 
+    KILLED(8),
+    /**
+     * PRECIPITATE(DOWN) DIRECTION.
+     */
+    PRECIPITATE(9);
 
     private final int codeId;
 
