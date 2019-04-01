@@ -35,7 +35,7 @@ public interface Controller {
      * @param command
      *          the commandType to add.
      */
-    void notifyCommand(CommandType command);
+    void notifyCommand(CommandType command, double x, double y);
 
     /**
      * Login of a player.

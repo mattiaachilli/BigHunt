@@ -190,15 +190,15 @@ public class ViewImpl implements View {
                 default:
                     break;
                 }
-                commandType.ifPresent(command -> controller.notifyCommand(command));
+                commandType.ifPresent(command -> controller.notifyCommand(command, 0, 0));
             });
 
-            ViewImpl.this.sceneFactory.getStage().addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            ViewImpl.this.sceneFactory.getStage().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
                 Optional<CommandType> commandType = Optional.empty();
-                if (e.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+                if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
                     commandType = Optional.ofNullable(CommandType.SHOOT);
                 }
-                commandType.ifPresent(command -> controller.notifyCommand(command));
+                commandType.ifPresent(command -> controller.notifyCommand(command, e.getX(), e.getY()));
             });
         }
 

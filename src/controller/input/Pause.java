@@ -9,10 +9,16 @@ import model.Model;
  */
 public class Pause implements Command {
 
+    private final CommandType type = CommandType.PAUSE;
+
     @Override
     public void execute(final Model model) {
-        //model.pause();
         System.out.println("pause");
+    }
+
+    @Override
+    public CommandType getType() {
+        return this.type;
     }
 
 }

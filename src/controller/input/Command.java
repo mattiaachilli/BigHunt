@@ -16,4 +16,10 @@ public interface Command {
      */
     void execute(Model model);
 
+    /**
+     * 
+     * @return the type of the command.
+     */
+    CommandType getType();
+
 }

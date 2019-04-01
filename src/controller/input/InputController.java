@@ -40,4 +40,9 @@ public class InputController implements CommandReader, CommandWriter {
         }
     }
 
+    @Override
+    public final Queue<Command> getCommands() {
+        return this.commands;
+    }
+
 }

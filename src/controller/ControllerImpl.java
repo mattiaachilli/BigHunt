@@ -87,7 +87,7 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public void notifyCommand(final CommandType command) {
+    public void notifyCommand(final CommandType command, final double x, final double y) {
         try {
             mutex.acquire();
             switch (command) {
@@ -98,7 +98,7 @@ public final class ControllerImpl implements Controller {
                 this.input.setCommand(new Recharge());
                 break;
             case SHOOT:
-                this.input.setCommand(new Shoot());
+                this.input.setCommand(new Shoot(x, y));
                 break;
             default:
                 break;
@@ -214,6 +214,9 @@ public final class ControllerImpl implements Controller {
         private void processInput() {
             try {
                 ControllerImpl.this.mutex.acquire();
+                if (!input.getCommands().isEmpty() && input.getCommands().peek().getType().equals(CommandType.PAUSE)) {
+                    this.pauseLoop();
+                }
                 input.executeCommand(model);
                 ControllerImpl.this.mutex.release();
             } catch (InterruptedException e) {
