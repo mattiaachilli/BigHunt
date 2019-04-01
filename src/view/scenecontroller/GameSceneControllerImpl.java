@@ -40,6 +40,14 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
 
     @FXML // fx:id="ammoLabel"
     private Label ammoLabel; // Value injected by FXMLLoader
+    
+    InvalidationListener listener = new InvalidationListener() {
+        
+        @Override
+        public void invalidated(Observable observable) {
+            SettingsImpl.getSettings().getScaleFactory();            
+        }
+    };
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
