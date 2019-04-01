@@ -14,7 +14,7 @@ public enum DuckProperty {
     /**
      * STANDARD DUCK INFORMATIONS.
      */
-    STANDARD_DUCK(ModelImpl.GAME_WIDTH / 3, 8000, "Standard Duck"),
+    STANDARD_DUCK(ModelImpl.GAME_WIDTH / 3, 15000, "Standard Duck"),
     /**
      * YELLOW DUCK INFORMATIONS.
      */

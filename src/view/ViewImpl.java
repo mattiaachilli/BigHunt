@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import controller.Controller;
 import controller.matches.GameMode;
+import controller.input.CommandType;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -14,8 +15,11 @@ import model.achievements.Achievement;
 import model.achievements.AchievementType;
 import model.data.Podium;
 import java.util.concurrent.Semaphore;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import model.data.HighScore;
 import model.data.MatchData;
 import settings.SettingsImpl;
@@ -173,6 +177,29 @@ public class ViewImpl implements View {
             new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
             SettingsImpl.getSettings().getSelectedResolution().getKey(),
             SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+
+            ViewImpl.this.sceneFactory.getStage().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                Optional<CommandType> commandType = Optional.empty();
+                switch (e.getCode()) {
+                case ESCAPE:
+                    commandType = Optional.of(CommandType.PAUSE);
+                    break;
+                case R:
+                    commandType = Optional.of(CommandType.RECHARGE);
+                    break;
+                default:
+                    break;
+                }
+                commandType.ifPresent(command -> controller.notifyCommand(command, 0, 0));
+            });
+
+            ViewImpl.this.sceneFactory.getStage().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+                Optional<CommandType> commandType = Optional.empty();
+                if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+                    commandType = Optional.ofNullable(CommandType.SHOOT);
+                }
+                commandType.ifPresent(command -> controller.notifyCommand(command, e.getX(), e.getY()));
+            });
         }
 
         @Override

@@ -11,6 +11,11 @@ import controller.files.PodiumManager;
 import controller.files.PodiumManagerImpl;
 import controller.files.UserManager;
 import controller.files.UserManagerImpl;
+import controller.input.CommandType;
+import controller.input.InputController;
+import controller.input.Pause;
+import controller.input.Recharge;
+import controller.input.Shoot;
 import controller.matches.GameMode;
 import model.Model;
 import model.data.Podium;
@@ -36,15 +41,13 @@ public final class ControllerImpl implements Controller {
     private GameLoop gameLoop;
     private final Supplier<Model> modelSupplier;
     private Model model;
+    private final InputController input;
     private final Semaphore mutex;
     private final View view;
     private final PodiumManager podiumManager;
     private final UserManager userManager;
     private Optional<Podium> podium;
     private Optional<UserData> user;
-    // Command list, mouse
-
-    // finisci podiumManager e il suo loading
 
     /**
      * Constructor of the controller.
@@ -55,6 +58,7 @@ public final class ControllerImpl implements Controller {
     public ControllerImpl(final Supplier<Model> modelSupplier, final View view) {
         this.modelSupplier = modelSupplier;
         this.view = view;
+        this.input = new InputController();
         this.podiumManager = new PodiumManagerImpl();
         this.userManager = new UserManagerImpl();
         this.podium = Optional.empty();
@@ -80,6 +84,29 @@ public final class ControllerImpl implements Controller {
     public void stopGameLoop() {
         gameLoop.stopGameLoop();
         // view method
+    }
+
+    @Override
+    public void notifyCommand(final CommandType command, final double x, final double y) {
+        try {
+            mutex.acquire();
+            switch (command) {
+            case PAUSE:
+                this.input.setCommand(new Pause());
+                break;
+            case RECHARGE:
+                this.input.setCommand(new Recharge());
+                break;
+            case SHOOT:
+                this.input.setCommand(new Shoot(x, y));
+                break;
+            default:
+                break;
+            }
+            mutex.release();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -185,10 +212,16 @@ public final class ControllerImpl implements Controller {
         }
 
         private void processInput() {
-            /*
-             * try { mutex.acquire(); mutex.release(); } catch (InterruptedException e) {
-             * e.printStackTrace(); }
-             */
+            try {
+                ControllerImpl.this.mutex.acquire();
+                if (!input.getCommands().isEmpty() && input.getCommands().peek().getType().equals(CommandType.PAUSE)) {
+                    this.pauseLoop();
+                }
+                input.executeCommand(model);
+                ControllerImpl.this.mutex.release();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         public void pauseLoop() {

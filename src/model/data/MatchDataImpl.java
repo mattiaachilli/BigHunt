@@ -115,4 +115,5 @@ public class MatchDataImpl implements MatchData {
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
     }
+
 }
