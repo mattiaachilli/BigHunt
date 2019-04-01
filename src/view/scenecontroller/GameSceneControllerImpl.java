@@ -11,7 +11,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import model.ModelImpl;
 import model.data.MatchData;
+import model.gun.Magazine;
+import model.gun.MagazineImpl;
 import settings.SettingsImpl;
 /**
  * 
@@ -40,14 +43,6 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
 
     @FXML // fx:id="ammoLabel"
     private Label ammoLabel; // Value injected by FXMLLoader
-    
-    InvalidationListener listener = new InvalidationListener() {
-        
-        @Override
-        public void invalidated(Observable observable) {
-            SettingsImpl.getSettings().getScaleFactory();            
-        }
-    };
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -62,25 +57,20 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     public final Canvas getCanvas() {
         //   this.canvas.setHeight(SettingsImpl.getSettings().getDefaultResolutions().getValue() /*+ this.bottomGrid.getHeight()*/);
         //   this.canvas.setWidth(SettingsImpl.getSettings().getDefaultResolutions().getKey());
-     System.out.println("canvas-->" + this.canvas.getWidth());
-        System.out.println("canvas-->"+ this.canvas.getHeight()); 
-        System.out.println("game-->" +this.game.getWidth());
-        System.out.println("game-->"+ this.game.getHeight()); 
         this.canvas.setWidth(this.game.getWidth());
         this.canvas.setHeight(this.game.getHeight());
      /*   this.canvas.minWidth(this.game.getWidth());
         this.canvas.minHeight(this.game.getHeight());
         this.canvas.maxWidth(this.game.getWidth());
         this.canvas.maxHeight(this.game.getHeight());
-      */  System.out.println(this.canvas.isResizable());
-        System.out.println("dopo canvas-->" + this.canvas.getWidth());
-        System.out.println("dopo canvas-->"+ this.canvas.getHeight()); 
+      */ 
 
         return this.canvas;
     }
 
     @Override
-    public void setGameData(MatchData gameData) {
-        //set game data
+    public void setGameData(final MatchData gameData, final Magazine magazine) {
+        this.scoreLabel.setText(String.valueOf(gameData.getGlobalScore()));
+        this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")" + "/" + ModelImpl.MAX_MAGAZINES);
     }
 }

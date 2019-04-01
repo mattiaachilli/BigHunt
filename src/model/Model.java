@@ -1,12 +1,14 @@
 package model;
 
 import java.util.List;
+import java.util.Optional;
 
 import controller.matches.GameMode;
 import model.data.MatchData;
 import model.entities.Duck;
 import model.entities.Entity;
 import model.entities.powerup.PowerUp;
+import model.entities.powerup.PowerUpType;
 import model.gun.Magazine;
 
 /**
@@ -104,4 +106,11 @@ public interface Model {
      * test.
      */
     void deactivateInfAmmo();
+
+    /**
+     * Get powerUp active at the moment.
+     * 
+     * @return if exist the power up active.
+     */
+    Optional<PowerUpType> getPowerUpActive();
 }

@@ -3,6 +3,8 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -42,7 +44,7 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
 
     @FXML
     void startNewGame() {
-        //start new game
+        this.getSceneFactory().openSelectModeScene();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -55,10 +57,17 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
         assert timePlayedLabel != null : "fx:id=\"timePlayedLabel\" was not injected: check your FXML file 'GameOver.fxml'.";
 
     }
+    private String getTime(final int millis) {
+        final int m = (int) TimeUnit.MILLISECONDS.toMinutes(millis);
+        final int s = (int) TimeUnit.MILLISECONDS.toSeconds(millis) - (int) TimeUnit.MINUTES.toSeconds(m);
+        final int ms = (int) TimeUnit.MILLISECONDS.toMillis(millis) - (int) TimeUnit.SECONDS.toMillis(s)
+                - (int) TimeUnit.MINUTES.toMillis(m);
+        return String.format("%d", m) + ":" + String.format("%02d", s) + ":" + String.format("%03d", ms);
+    }
 
     @Override
     public void setMatchData(MatchData matchData) {
-        this.timePlayedLabel.setText(String.valueOf(matchData.getTimerFromStart()));
+        this.timePlayedLabel.setText(this.getTime(matchData.getTimerFromStart()));
         this.killsLabel.setText(String.valueOf(matchData.getKilledDucks()));
         this.scoreLabel.setText(String.valueOf(matchData.getGlobalScore()));
     }
