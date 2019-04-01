@@ -10,13 +10,13 @@
       <Label id="title" alignment="CENTER" text="MENU" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
             <GridPane prefHeight="400.0" prefWidth="800.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" />
                   <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="270.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="0.0" />
                 <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
                 <ColumnConstraints hgrow="SOMETIMES" />
