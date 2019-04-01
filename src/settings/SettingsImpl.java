@@ -22,12 +22,14 @@ public final class SettingsImpl implements Settings {
 
     private static final int DEFAULT_X_RESOLUTION = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private static final int DEFAULT_Y_RESOLUTION = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-
+    private static final Pair<Integer, Integer> DEFAULT_RESOLUTION = new ImmutablePair<>(DEFAULT_X_RESOLUTION,
+    DEFAULT_Y_RESOLUTION);
+    
+    private static final int PREF_X_RESOLUTION = 1366;
+    private static final int PREF_Y_RESOLUTION = 768;
+    
     private static final int FIRST_SCREEN_PROPORTION = 3;
     private static final int LAST_SCREEN_PROPORTION = 8;
-
-    private static final Pair<Integer, Integer> DEFAULT_RESOLUTION = new ImmutablePair<>(DEFAULT_X_RESOLUTION,
-        DEFAULT_Y_RESOLUTION);
 
     private static final Pair<Integer, Integer> SCREEN_RESOLUTION = DEFAULT_RESOLUTION;
 
@@ -104,8 +106,8 @@ public final class SettingsImpl implements Settings {
 
     @Override
     public double getScaleFactory() {
-        return Math.min((double) this.selectedResolution.getValue() / SettingsImpl.DEFAULT_RESOLUTION.getValue(), 
-            (double) this.selectedResolution.getKey() / SettingsImpl.DEFAULT_RESOLUTION.getKey());
+        return Math.min((double) this.selectedResolution.getValue() / SettingsImpl.PREF_Y_RESOLUTION, 
+            (double) this.selectedResolution.getKey() / SettingsImpl.PREF_X_RESOLUTION);
     }
 
     @Override
