@@ -13,7 +13,6 @@ import settings.observers.BackGroundAudioObserver;
 import settings.observers.FpsObserver;
 import settings.observers.GameDifficultyObserver;
 import settings.observers.Observer;
-import settings.observers.ResolutionObserver;
 
 /**
  * Sample Skeleton for 'Settings.fxml' Controller Class.
@@ -35,9 +34,6 @@ public class SettingsSceneControllerImpl extends AbstractSecondarySceneControlle
     @FXML // fx:id="difficultyComboBox"
     private ComboBox<String> difficultyComboBox; // Value injected by FXMLLoader
 
-    @FXML // fx:id="resolutionComboBox"
-    private ComboBox<String> resolutionComboBox; // Value injected by FXMLLoader
-
     @FXML // fx:id="backBtn"
     private Button backBtn; // Value injected by FXMLLoader
 
@@ -55,7 +51,6 @@ public class SettingsSceneControllerImpl extends AbstractSecondarySceneControlle
     @FXML // This method is called by the FXMLLoader when initialization is complete
     private void initialize() {
         this.observers.addAll(Arrays.asList(
-            new ResolutionObserver(this.resolutionComboBox),
             new FpsObserver(this.fpsComboBox),
             new BackGroundAudioObserver(this.bgAudioCheckBox),
             new GameDifficultyObserver(this.difficultyComboBox)));

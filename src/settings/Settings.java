@@ -13,14 +13,6 @@ import org.apache.commons.lang3.tuple.Pair;
 public interface Settings {
 
     /**
-     * Set the game resolution.
-     * 
-     * @param selectedResolution
-     *                  the selected resolution
-     */
-    void setSelectedResolution(Pair<Integer, Integer> selectedResolution);
-
-    /**
      * 
      * @return the current game resolution
      */
@@ -52,13 +44,6 @@ public interface Settings {
      * @return a Set of default FPS
      */
     Set<Integer> getSupportedFPS();
-
-    /**
-     * Provides all the supported resolutions.
-     * 
-     * @return a list of supported resolutions
-     */
-    List<Pair<Integer, Integer>> getSupportedResolutions();
     
     /**
      * 

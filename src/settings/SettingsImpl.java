@@ -33,8 +33,6 @@ public final class SettingsImpl implements Settings {
 
     private static final Pair<Integer, Integer> SCREEN_RESOLUTION = DEFAULT_RESOLUTION;
 
-    private final List<Pair<Integer, Integer>> supportedResolutions = new ArrayList<>();
-
     private Pair<Integer, Integer> selectedResolution = new ImmutablePair<>(
         SettingsImpl.SCREEN_RESOLUTION.getKey(), SettingsImpl.SCREEN_RESOLUTION.getValue());
 
@@ -70,26 +68,6 @@ public final class SettingsImpl implements Settings {
     }
 
     @Override
-    public void setSelectedResolution(final Pair<Integer, Integer> selectedResolution) {
-        if (this.supportedResolutions.isEmpty()) {
-            this.loadScreenResolutions();
-        }
-
-        if (!this.supportedResolutions.contains(selectedResolution)) {
-            this.selectedResolution = DEFAULT_RESOLUTION;
-        } else {
-            this.selectedResolution = selectedResolution;
-        }
-
-        if (this.selectedResolution.getKey().equals(SettingsImpl.DEFAULT_X_RESOLUTION) &&
-            this.selectedResolution.getValue().equals(SettingsImpl.DEFAULT_Y_RESOLUTION)) {
-            this.setFullScreen(true);
-        } else {
-            this.setFullScreen(false);
-        }
-    }
-
-    @Override
     public Pair<Integer, Integer> getSelectedResolution() {
         return this.selectedResolution;
     }
@@ -113,12 +91,6 @@ public final class SettingsImpl implements Settings {
     @Override
     public Set<Integer> getSupportedFPS() {
         return this.supportedFPS;
-    }
-
-    @Override
-    public List<Pair<Integer, Integer>> getSupportedResolutions() {
-        this.loadScreenResolutions();
-        return this.supportedResolutions.stream().distinct().collect(Collectors.toList());
     }
 
     @Override
@@ -172,15 +144,6 @@ public final class SettingsImpl implements Settings {
         }
         
         return difficulty;
-    }
-    
-    private void loadScreenResolutions() {
-        this.supportedResolutions.clear();
-        for (int i = SettingsImpl.FIRST_SCREEN_PROPORTION; i <= SettingsImpl.LAST_SCREEN_PROPORTION; i++) {
-            this.supportedResolutions.add(new ImmutablePair<>(
-                (int) SettingsImpl.SCREEN_RESOLUTION.getKey() * i / SettingsImpl.LAST_SCREEN_PROPORTION,
-                (int) SettingsImpl.SCREEN_RESOLUTION.getValue() * i / SettingsImpl.LAST_SCREEN_PROPORTION));
-        }
     }
 
     @Override
