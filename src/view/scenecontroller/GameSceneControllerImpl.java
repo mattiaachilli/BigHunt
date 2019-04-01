@@ -4,6 +4,7 @@ package view.scenecontroller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import controller.matches.GameMode;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.fxml.FXML;
@@ -69,8 +70,13 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     }
 
     @Override
-    public void setGameData(final MatchData gameData, final Magazine magazine) {
-        this.scoreLabel.setText(String.valueOf(gameData.getGlobalScore()));
-        this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")" + "/" + ModelImpl.MAX_MAGAZINES);
+    public final void setGameData(final MatchData gameData, final Magazine magazine) {
+        if (this.getSceneFactory().getView().getActualGameMode() == GameMode.STORY_MODE) {
+            this.scoreLabel.setText(String.valueOf(gameData.getGlobalScore()));
+            this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")" + "/" + ModelImpl.MAX_MAGAZINES);
+        } else {
+            this.scoreLabel.setText(String.valueOf(gameData.getFlownDucks()));
+            this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")");
+        }
     }
 }

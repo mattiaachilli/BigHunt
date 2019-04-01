@@ -77,11 +77,8 @@ public final class ModelImpl implements Model {
         this.ducks = new ArrayList<>();
         this.powerUp = new ArrayList<>();
         this.cleaner = new CleanerImpl();
-        this.currentMagazine = 1;
         this.match = Optional.empty();
         this.difficulty = GlobalDifficulty.EASY;
-        this.duckPowerUp = 0;
-        this.powerUpActive = Optional.empty();
     }
 
     @Override
@@ -91,19 +88,22 @@ public final class ModelImpl implements Model {
         ducks.clear();
         powerUp.clear();
         this.magazine = new MagazineImpl(1);
+        this.currentMagazine = 1;
+        this.duckPowerUp = 0;
+        this.powerUpActive = Optional.empty();
         switch (gameMode) {
         case STORY_MODE:
-            this.match = Optional.of(new StoryMatch(this.difficulty));
-            this.spawner = new StoryModeSpawner();
-            this.lastRound = this.spawner.getActualRound();
-            break;
-        case SURVIVAL_MODE:
-            this.match = Optional.of(new SurvivalMatch(this.difficulty));
-            this.spawner = new SurvivalModeSpawner();
-            this.lastRound = this.spawner.getActualRound();
-            break;
-        default:
-            break;
+                this.match = Optional.of(new StoryMatch(this.difficulty));
+                this.spawner = new StoryModeSpawner();
+                this.lastRound = this.spawner.getActualRound();
+                break;
+            case SURVIVAL_MODE:
+                this.match = Optional.of(new SurvivalMatch(this.difficulty));
+                this.spawner = new SurvivalModeSpawner();
+                this.lastRound = this.spawner.getActualRound();
+                break;
+            default:
+                break;
         }
     }
 
@@ -237,7 +237,9 @@ public final class ModelImpl implements Model {
         switch (this.gameMode) {
             case STORY_MODE:
                 gameOver = this.spawner.getActualRound() > this.lastRound 
-                            && matchData.getGlobalScore() < matchScore || this.currentMagazine >= MAX_MAGAZINES 
+                            && matchData.getGlobalScore() < matchScore 
+                            || this.currentMagazine > MAX_MAGAZINES
+                            || this.getBullets() == 0 && this.currentMagazine == MAX_MAGAZINES
                             || this.spawner.isSpawnFinished();
             break;
             case SURVIVAL_MODE:

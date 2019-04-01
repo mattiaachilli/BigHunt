@@ -120,4 +120,16 @@ public interface View {
      * @return the controller.
      */
     Controller getController();
+
+    /**
+     * Get actual game mode.
+     * 
+     * @return the actual game mode.
+     */
+    GameMode getActualGameMode();
+
+    /**
+     * Reset the game when GameOver.
+     */
+    void reset();
 }

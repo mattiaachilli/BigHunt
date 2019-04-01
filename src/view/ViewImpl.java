@@ -23,7 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import model.data.HighScore;
 import model.data.MatchData;
 import settings.SettingsImpl;
 import utility.Utilities;
@@ -55,6 +54,7 @@ public class ViewImpl implements View {
     private Podium survivalPodium;
     private boolean gamePaused;
     private Magazine magazine;
+    private GameMode gameMode;
 
     /**
      * Constructor.
@@ -67,6 +67,7 @@ public class ViewImpl implements View {
         this.achievements = new HashMap<>();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
+        this.gamePaused = true;
     }
 
     @Override
@@ -80,9 +81,21 @@ public class ViewImpl implements View {
 
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
-        this.render = new Render(gameSceneController);
+        this.reset();
+        this.gameMode = gameMode;
+        this.render = new Render(gameSceneController, gameMode);
         controller.initGame(gameMode);
         this.startRender();
+    }
+
+    @Override
+    public final GameMode getActualGameMode() {
+        return this.gameMode;
+    }
+
+    @Override
+    public final void reset() {
+        this.gamePaused = true;
     }
 
     @Override
@@ -109,18 +122,19 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public void closeGame(final MatchData matchData, final boolean isHighScores) {
+    public final void closeGame(final MatchData matchData, final boolean isHighScores) {
         this.matchData = matchData;
         this.render.endGame();
+        this.reset();
     }
 
     @Override
-    public Map<AchievementType, Achievement> getAchievements() {
+    public final Map<AchievementType, Achievement> getAchievements() {
         return this.achievements;
     }
 
     @Override
-    public void setAchievements(final Map<AchievementType, Achievement> achievements) {
+    public final void setAchievements(final Map<AchievementType, Achievement> achievements) {
         this.achievements = achievements;
     }
 
@@ -145,12 +159,12 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public MatchData getMatchData() {
+    public final MatchData getMatchData() {
         return this.matchData;
     }
 
     @Override
-    public SceneFactory getSceneFactory() {
+    public final SceneFactory getSceneFactory() {
         return this.sceneFactory;
     }
 
@@ -170,13 +184,15 @@ public class ViewImpl implements View {
         private final GraphicsContext gamecanvas;
         private final ImageView backgroundImage;
         private Magazine currentMagazine;
+        private final GameMode gameMode;
 
-        Render(final GameSceneController gameSceneController) {
+        Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
             this.period = MILLIS_FROM_SECOND / SettingsImpl.getSettings().getSelectedFPS();
             this.gameSceneController = gameSceneController;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
+            this.gameMode = gameMode;
 
             this.backgroundImage = new ImageView(
             new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
@@ -209,7 +225,14 @@ public class ViewImpl implements View {
 
         @Override
         public final void run() { 
-            controller.startGameLoop();
+            if (!gamePaused) {
+                controller.startGameLoop();
+            } else {
+                gamePaused = false;
+                controller.initGame(this.gameMode);
+                controller.initGameLoop();
+                controller.startGameLoop();
+            }
 
             while (this.running) {
                 try {

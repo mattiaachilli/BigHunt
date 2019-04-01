@@ -2,6 +2,7 @@ package view.scenefactory;
 
 import controller.matches.GameMode;
 import javafx.stage.Stage;
+import view.View;
 
 /**
  * 
@@ -69,6 +70,11 @@ public interface SceneFactory {
      * Opens the game over scene.
      */
     void openGameOverScene();
+
+    /**
+     * Open pause scene menu.
+     */
+    void openPauseScene();
     /**
      * Set the game over scene.
      * 
@@ -76,4 +82,11 @@ public interface SceneFactory {
      *          the game mode must be loaded
      */
     void setGameMode(GameMode gameMode);
+
+    /**
+     * Get view.
+     * 
+     * @return view
+     */
+    View getView();
 }
