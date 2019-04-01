@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import model.data.HighScore;
 import settings.SettingsImpl;
 import view.View;
 import view.scenecontroller.AchievementSceneController;
@@ -13,9 +12,7 @@ import view.scenecontroller.GameOverSceneController;
 import view.scenecontroller.GameSceneController;
 import view.scenecontroller.HighScoresSceneController;
 import view.scenecontroller.LoginSceneController;
-import view.scenecontroller.LoginSceneControllerImpl;
 import view.scenecontroller.RegisterSceneController;
-import view.scenecontroller.RegisterSceneControllerImpl;
 import view.scenecontroller.SceneController;
 import view.utilities.Screens;
 
@@ -55,6 +52,7 @@ public class SceneLoaderImpl implements SceneLoader {
             root.getChildrenUnmodifiable().stream().forEach(e -> {
                 e.setScaleX(SettingsImpl.getSettings().getScaleFactory());
                 e.setScaleY(SettingsImpl.getSettings().getScaleFactory());
+                System.out.println(SettingsImpl.getSettings().getScaleFactory());
             });
 
             stage.setScene(new Scene(root));

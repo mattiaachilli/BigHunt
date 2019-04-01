@@ -1,6 +1,7 @@
 package model.entities.powerup;
 
 import javafx.scene.shape.Shape;
+import model.ModelImpl;
 import model.entities.AbstractEntity;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
@@ -12,7 +13,7 @@ import model.properties.VelocityImpl;
  */
 public class PowerUpImpl extends AbstractEntity implements PowerUp {
 
-    private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0.0, 100.0);
+    private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0.0, ModelImpl.GAME_HEIGHT / 10);
     private final PowerUpType type;
     private boolean visible;
     private boolean hit;

@@ -6,6 +6,7 @@ import controller.matches.GameMode;
 import model.data.MatchData;
 import model.entities.Duck;
 import model.entities.Entity;
+import model.entities.powerup.PowerUp;
 import model.gun.Magazine;
 
 /**
@@ -49,6 +50,12 @@ public interface Model {
 
     /**
      * 
+     * @return the list of powerups
+     */
+    List<PowerUp> getPowerUps();
+
+    /**
+     * 
      * @return data of the actual match
      */
     MatchData getMatchData();
@@ -65,18 +72,6 @@ public interface Model {
      */
     int getBullets();
 
-    /**
-     * 
-     * @return the list of magazines carried.
-     */
-    List<Magazine> getAmmo();
-
-    /**
-     * 
-     * Method used to handle bullets after each shot.
-     */
-    //List<Bullet> getBullets();
-    
     /**
      * 
      */

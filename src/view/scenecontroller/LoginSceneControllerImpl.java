@@ -57,15 +57,24 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
 
     @FXML
     void login() {
-        // Optional<UserData> userData = user.login(this.userTextField.getText(),
-        // this.passwordTextField.getText());
-        if (this.view.getController().loginUser(this.userTextField.getText(), this.passwordTextField.getText())) {
+        if (this.userTextField.getText().isEmpty() || this.passwordTextField.getText().isEmpty()) {
+            this.showAlert("COMPILARE CAMPI USER E PASSWORD");
+        } else if (this.view.getController().loginUser(this.userTextField.getText(), this.passwordTextField.getText())) {
             this.getSceneFactory().openMenuScene();
         } else {
-            Alert alert = new Alert(AlertType.ERROR, "USER E/O PASSWORD ERRATI", ButtonType.OK);
-            alert.showAndWait();
-
+            this.showAlert("USER E/O PASSWORD ERRATI");
+            this.resetTextField();
         }
+    }
+    
+    private void showAlert(final String text) {
+        Alert alert = new Alert(AlertType.ERROR, text, ButtonType.OK);
+        alert.showAndWait();
+    }
+    
+    private void resetTextField() {
+        this.userTextField.setText("");
+        this.passwordTextField.setText("");
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -74,6 +83,5 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
         assert passwordTextField != null : "fx:id=\"passwordTextField\" was not injected: check your FXML file 'Login.fxml'.";
         assert loginBtn != null : "fx:id=\"loginBtn\" was not injected: check your FXML file 'Login.fxml'.";
         assert exitBtn != null : "fx:id=\"exitBtn\" was not injected: check your FXML file 'Login.fxml'.";
-
     }
 }

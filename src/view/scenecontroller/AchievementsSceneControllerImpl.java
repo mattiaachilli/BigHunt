@@ -79,7 +79,6 @@ implements AchievementSceneController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'Achievements.fxml'.";
-
     }
 
 }

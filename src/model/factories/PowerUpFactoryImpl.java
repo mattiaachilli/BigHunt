@@ -20,10 +20,10 @@ import model.rarity.ItemRarity;
  */
 public final class PowerUpFactoryImpl implements PowerUpFactory {
 
-    private static final int POWER_UP_VERY_COMMON = 4;
-    private static final int POWER_UP_COMMON = 7;
-    private static final int POWER_UP_RARE = 10;
-    private static final int POWER_UP_VERY_RARE = 15;
+    private static final int POWER_UP_VERY_COMMON = 5;
+    private static final int POWER_UP_COMMON = 11;
+    private static final int POWER_UP_RARE = 16;
+    private static final int POWER_UP_VERY_RARE = 21;
 
     private static final double POWER_UP_SIDE = 50.0;
     private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0, 0); 
@@ -50,13 +50,14 @@ public final class PowerUpFactoryImpl implements PowerUpFactory {
         final ItemRarity rarityPowerUp;
         this.randPowerUpCounter++;
 
-        if (this.randPowerUpCounter % POWER_UP_VERY_COMMON == 0) {
+        if (this.randPowerUpCounter <= POWER_UP_VERY_COMMON && this.randPowerUpCounter % POWER_UP_VERY_COMMON == 0) {
             rarityPowerUp = ItemRarity.VERY_COMMON;
-        } else if (this.randPowerUpCounter % POWER_UP_COMMON == 0) {
+        } else if (this.randPowerUpCounter <= POWER_UP_COMMON && this.randPowerUpCounter % POWER_UP_COMMON == 0) {
             rarityPowerUp = ItemRarity.COMMON;
-        } else if (this.randPowerUpCounter % POWER_UP_RARE == 0) {
+        } else if (this.randPowerUpCounter <= POWER_UP_RARE && this.randPowerUpCounter % POWER_UP_RARE == 0) {
             rarityPowerUp = ItemRarity.RARE;
-        } else if (this.randPowerUpCounter % POWER_UP_VERY_RARE == 0) {
+        } else if (this.randPowerUpCounter <= POWER_UP_VERY_RARE && this.randPowerUpCounter % POWER_UP_VERY_RARE == 0) {
+            this.randPowerUpCounter = 0;
             rarityPowerUp = ItemRarity.VERY_RARE;
         } else {
             return Optional.empty();

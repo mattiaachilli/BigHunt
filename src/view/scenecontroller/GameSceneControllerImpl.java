@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.data.MatchData;
@@ -66,7 +67,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
         System.out.println(this.canvas.getWidth());
         System.out.println(this.canvas.getHeight()); 
         System.out.println(this.game.getWidth());
-        System.out.println(this.game.getHeight()); 
+        System.out.println(this.game.getHeight());
 
         return this.canvas;
     }

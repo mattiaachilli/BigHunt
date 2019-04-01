@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 import controller.matches.AbstractMatch;
 import controller.matches.GameMode;
 import controller.matches.StoryMatch;
@@ -16,6 +18,7 @@ import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
 import model.entities.EntityStatus;
+import model.entities.StandardDuck;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
 import model.gun.BulletType;
@@ -47,10 +50,7 @@ public final class ModelImpl implements Model {
      */
     public static final int MAX_MAGAZINES = 20;
 
-    /**
-     * Max of time elapsed before the update.
-     */
-    private static final int UPDATE_TIME = 6000;
+    private static final int NEXT_DUCKS_POWERUP = 3;
 
     /**
      * All objects of the game world.
@@ -58,16 +58,17 @@ public final class ModelImpl implements Model {
     private Dog dog;
     private final List<Duck> ducks;
     private final List<PowerUp> powerUp;
-    private final List<Magazine> ammo;
     private int currentMagazine;
+    private Magazine magazine;
     private Optional<AbstractMatch> match;
     private DuckSpawner spawner;
     private GameMode gameMode;
     private GlobalDifficulty difficulty;
     private DogStatus lastDogStatus;
     private Cleaner cleaner;
-    private int duckDoubleScore;
-    private int timeElapsed = 0;
+    private int duckPowerUp;
+    private Optional<PowerUpType> powerUpActive;
+    private int timeElapsedPowerUp = 0;
     private int lastRound;
 
     /**
@@ -80,13 +81,10 @@ public final class ModelImpl implements Model {
         this.powerUp = new ArrayList<>();
         this.cleaner = new CleanerImpl();
         this.currentMagazine = 1;
-        this.ammo = new ArrayList<>();
-        for (int i = 1; i <= MAX_MAGAZINES; i++) {
-            this.ammo.add(new MagazineImpl(i));
-        }
         this.match = Optional.empty();
         this.difficulty = GlobalDifficulty.EASY;
-        this.duckDoubleScore = 0;
+        this.duckPowerUp = 0;
+        this.powerUpActive = Optional.empty();
     }
 
     @Override
@@ -95,6 +93,7 @@ public final class ModelImpl implements Model {
         this.dog = new DogImpl();
         ducks.clear();
         powerUp.clear();
+        this.magazine = new MagazineImpl(1);
         switch (gameMode) {
         case STORY_MODE:
             this.match = Optional.of(new StoryMatch(this.difficulty));
@@ -121,7 +120,6 @@ public final class ModelImpl implements Model {
 
         // Update spawner when dog is in grass
         if (this.dog.isInGrass()) {
-            this.timeElapsed += timeElapsed;
             this.getCurrentMagazine().update(timeElapsed);
             spawner.update(timeElapsed);
             if (spawner.canSpawnDuck()) {
@@ -137,20 +135,15 @@ public final class ModelImpl implements Model {
 
         //Update ducks
         this.ducks.forEach(d -> {
-            if (this.timeElapsed >= UPDATE_TIME) {
-                if (d.getStatus() == EntityStatus.ALIVE) {
-                    this.timeElapsed -= UPDATE_TIME;
-                    d.kill();
-                    /*
-                    if (d.hasPowerUp()) {
-                        d.getPowerUp().get().hit();
-                    }*/
-                    final int score = this.duckDoubleScore > 0 ? d.getScore() * 2 : d.getScore();
-                    this.duckDoubleScore = this.duckDoubleScore > 0 ? this.duckDoubleScore-- : 0;
-                    this.match.get().getMatchData().incrementScoreOf(score);
-                    this.dog.setLastDuckKilled(d);
-                }
-            }
+//            if (d.getStatus() == EntityStatus.ALIVE && d.getPosition().getX() >= StandardDuck.COLLISION_X && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) {
+//                if (d.hasPowerUp()) {
+//                    d.kill();
+//                    final int score = this.powerUpActive.isPresent() && this.powerUpActive.get() == PowerUpType.DOUBLE_SCORE ? d.getScore() * 2 : d.getScore();
+//                    this.duckPowerUp = this.duckPowerUp > 0 ? this.duckPowerUp-- : 0;
+//                    this.match.get().getMatchData().incrementScoreOf(score);
+//                    this.dog.setLastDuckKilled(d);
+//                }
+//            }
             if (d.canFlyAway()) {
                 d.computeFlyAway();
                 dog.setDogStatus(DogStatus.LAUGH);
@@ -160,21 +153,29 @@ public final class ModelImpl implements Model {
         });
         // Update PowerUp list
         this.powerUp.forEach(p -> {
+            if (p.isVisible()) {
+                this.timeElapsedPowerUp += timeElapsed;
+            }
             if (p.isHit()) {
-                this.activePowerUp(p.getType());
+                this.duckPowerUp = NEXT_DUCKS_POWERUP;
+                this.powerUpActive = Optional.of(p.getType());
             }
             p.update(timeElapsed);
         });
+        if (this.duckPowerUp > 0 && this.powerUpActive.isPresent()) {
+            this.activePowerUp(powerUpActive.get());
+        }
         //Clean objects not necessary
         this.cleaner.clean(this.ducks, this.powerUp);
     }
 
     private void updateRoundNumber() {
         //Only for STORY MODE
-        if (this.gameMode == GameMode.STORY_MODE) {
+        if (this.gameMode == GameMode.STORY_MODE && this.ducks.isEmpty()) {
             if (this.spawner.getActualRound() != this.lastRound) {
                 this.dog = new DogImpl();
                 this.ducks.clear();
+                this.powerUp.clear();
                 this.lastRound = this.spawner.getActualRound();
             }
         }
@@ -182,42 +183,50 @@ public final class ModelImpl implements Model {
 
     @Override
     public void activateInfAmmo() {
-        this.ammo.stream()
-        .filter(m -> m.getNumber() == this.currentMagazine)
-        .findFirst().get().setBulletType(BulletType.INFINITE_BULLETS);
+        this.magazine.setBulletType(BulletType.INFINITE_BULLETS);
     }
 
     @Override
     public void deactivateInfAmmo() {
-        this.ammo.stream()
-        .filter(m -> m.getNumber() == this.currentMagazine)
-        .findFirst().get().setBulletType(BulletType.NORMAL_BULLET);
+        this.magazine.setBulletType(BulletType.NORMAL_BULLET);
     }
 
     private void activePowerUp(final PowerUpType powerUp) {
         switch (powerUp) {
-            case DOUBLE_SCORE:
-                this.ducks.stream()
-                          .filter(d -> d.isAlive())
-                          .forEach(d -> {
-                              this.duckDoubleScore++;
-                          });
-                break;
             case INFINITE_AMMO:
                 this.getCurrentMagazine().setBulletType(BulletType.INFINITE_BULLETS);
                 break;
             case SLOW_DOWN:
                 this.ducks.stream()
-                          .filter(d -> d.isAlive())
-                          .forEach(d -> d.setDecelerate());
+                          .filter(d -> d.isAlive() 
+                                  && d.getPosition().getX() >= StandardDuck.COLLISION_X
+                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X)
+                          .forEach(d -> {
+                              if (this.duckPowerUp > 0) {
+                                  d.setDecelerate();
+                                  this.duckPowerUp--;
+                              }
+                          });
                 break;
             case KILL_ALL:
                 this.ducks.stream()
-                          .filter(d -> d.isAlive())
-                          .forEach(d -> d.kill());
+                          .filter(d -> d.isAlive() 
+                                  && d.getPosition().getX() >= StandardDuck.COLLISION_X
+                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X)
+                          .forEach(d -> {
+                              if (this.duckPowerUp > 0) {
+                                  d.kill(); 
+                                  this.dog.setLastDuckKilled(d);
+                                  this.duckPowerUp--;
+                                  this.match.get().getMatchData().incrementScoreOf(d.getScore());
+                              }
+                          });
                 break;
             default:
                 break;
+        }
+        if (this.duckPowerUp == 0) {
+            this.powerUpActive = Optional.empty();
         }
     }
 
@@ -234,7 +243,7 @@ public final class ModelImpl implements Model {
             break;
             case SURVIVAL_MODE:
                 gameOver = matchData.getFlownDucks() >= this.match.get().getDifficulty().getLimitOfDifficulty()
-                           || this.currentMagazine > MAX_MAGAZINES || this.spawner.isSpawnFinished();
+                            || this.spawner.isSpawnFinished();
             break;
             default:
                 break;
@@ -275,9 +284,6 @@ public final class ModelImpl implements Model {
     public void shoot() {
         if (this.canShoot()) {
             this.getCurrentMagazine().shoot();
-        } else {
-            this.recharge();
-            this.shoot();
         }
     }
 
@@ -288,19 +294,32 @@ public final class ModelImpl implements Model {
 
     @Override
     public void recharge() {
-        this.currentMagazine++;
-    }
-
-    @Override
-    public List<Magazine> getAmmo() {
-        return this.ammo;
+        if (this.gameMode != null) {
+            switch (this.gameMode) {
+            case STORY_MODE:
+                if (this.currentMagazine < MAX_MAGAZINES) {
+                    this.currentMagazine++;
+                    this.magazine = new MagazineImpl(this.currentMagazine);
+                }
+                break;
+            case SURVIVAL_MODE:
+                this.currentMagazine++;
+                this.magazine = new MagazineImpl(this.currentMagazine);
+                break;
+            default:
+                break;
+            }
+        }
     }
 
     @Override
     public Magazine getCurrentMagazine() {
-        return this.ammo.stream()
-        .filter(m -> m.getNumber() == currentMagazine)
-        .findFirst().get();
+        return this.magazine;
+    }
+
+    @Override
+    public List<PowerUp> getPowerUps() {
+        return this.powerUp;
     }
 }
 

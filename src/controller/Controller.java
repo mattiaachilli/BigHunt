@@ -2,6 +2,7 @@ package controller;
 
 import java.util.Optional;
 
+import controller.input.CommandType;
 import controller.matches.GameMode;
 import model.data.UserData;
 
@@ -28,6 +29,13 @@ public interface Controller {
      * Stop the game loop.
      */
     void stopGameLoop();
+
+    /**
+     * Adds the command to the command list.
+     * @param command
+     *          the commandType to add.
+     */
+    void notifyCommand(CommandType command, double x, double y);
 
     /**
      * Login of a player.

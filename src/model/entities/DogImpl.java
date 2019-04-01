@@ -23,8 +23,8 @@ public final class DogImpl extends AbstractEntity implements Dog {
     private static final double FINAL_POS_X = ModelImpl.GAME_WIDTH / 2;
     private static final double WIDTH = ModelImpl.GAME_WIDTH / 10;
     private static final double HEIGHT = ModelImpl.GAME_HEIGHT / 10;
-    private static final double VELOCITY_X = 150.0;
-    private static final double VELOCITY_JUMP_Y = -300.0;
+    private static final double VELOCITY_X = ModelImpl.GAME_WIDTH / 12;
+    private static final double VELOCITY_JUMP_Y = -ModelImpl.GAME_WIDTH / 5;
     private static final int WAITING_MILLIS = 750;
     private static final int UPDATE_MILLIS = 500;
     private static final int LAUGH_MILLIS = 1000;
