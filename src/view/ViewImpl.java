@@ -1,10 +1,10 @@
 package view;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import controller.Controller;
 import controller.matches.GameMode;
 import controller.input.CommandType;
