@@ -43,6 +43,9 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
 
     @FXML // fx:id="pwdTextField"
     private PasswordField pwdTextField; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="backBtn"
+    private Button backBtn; // Value injected by FXMLLoader
 
     // private final UserManager user = new UserManagerImpl();
     private View view;
@@ -55,6 +58,11 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
     @FXML
     void quitGame() {
         Runtime.getRuntime().exit(0);
+    }
+    
+    @FXML
+    void goToLogin() {
+        this.getSceneFactory().openLoginScene();
     }
 
     @FXML
@@ -85,6 +93,6 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
         assert settingsApplyBtn != null : "fx:id=\"settingsApplyBtn\" was not injected: check your FXML file 'Register.fxml'.";
         assert exitBtn != null : "fx:id=\"exitBtn\" was not injected: check your FXML file 'Register.fxml'.";
         assert pwdTextField != null : "fx:id=\"pwdTextField\" was not injected: check your FXML file 'Register.fxml'.";
-
-    }
+        assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'Register.fxml'.";
+        }
 }

@@ -33,14 +33,17 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
     @FXML // fx:id="userTextField"
     private TextField userTextField; // Value injected by FXMLLoader
 
+    @FXML // fx:id="settingsApplyBtn"
+    private Button settingsApplyBtn; // Value injected by FXMLLoader
+
     @FXML // fx:id="passwordTextField"
     private PasswordField passwordTextField; // Value injected by FXMLLoader
 
-    @FXML // fx:id="loginBtn"
-    private Button loginBtn; // Value injected by FXMLLoader
-
     @FXML // fx:id="exitBtn"
     private Button exitBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="backBtn"
+    private Button backBtn; // Value injected by FXMLLoader
 
     // private final UserManager user = new UserManagerImpl();
     private View view;
@@ -53,6 +56,11 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
     @FXML
     void quitGame() {
         Runtime.getRuntime().exit(0);
+    }   
+    
+    @FXML
+    void openRegister() {
+        this.getSceneFactory().openRegisterScene();
     }
 
     @FXML
@@ -80,8 +88,9 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert userTextField != null : "fx:id=\"userTextField\" was not injected: check your FXML file 'Login.fxml'.";
+        assert settingsApplyBtn != null : "fx:id=\"settingsApplyBtn\" was not injected: check your FXML file 'Login.fxml'.";
         assert passwordTextField != null : "fx:id=\"passwordTextField\" was not injected: check your FXML file 'Login.fxml'.";
-        assert loginBtn != null : "fx:id=\"loginBtn\" was not injected: check your FXML file 'Login.fxml'.";
         assert exitBtn != null : "fx:id=\"exitBtn\" was not injected: check your FXML file 'Login.fxml'.";
-    }
+        assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'Login.fxml'.";
+ }
 }
