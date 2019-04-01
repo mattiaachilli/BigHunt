@@ -40,7 +40,8 @@ public final class ControllerImpl implements Controller {
     private final View view;
     private final PodiumManager podiumManager;
     private final UserManager userManager;
-    private Optional<Podium> podium;
+    private Podium storyPodium;
+    private Podium survivalPodium;
     private Optional<UserData> user;
     // Command list, mouse
 
@@ -56,8 +57,9 @@ public final class ControllerImpl implements Controller {
         this.modelSupplier = modelSupplier;
         this.view = view;
         this.podiumManager = new PodiumManagerImpl();
+        this.storyPodium = this.podiumManager.loadStoryPodium().get();
+        this.survivalPodium = this.podiumManager.loadSurvivalPodium().get();
         this.userManager = new UserManagerImpl();
-        this.podium = Optional.empty();
         this.user = Optional.empty();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
     }
@@ -66,7 +68,6 @@ public final class ControllerImpl implements Controller {
     public void initGame(final GameMode gameMode) {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
-        this.loadPodium(gameMode);
         this.view.render(getEntitiesForView(0), this.model.getMatchData());
     }
 
@@ -112,33 +113,29 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public boolean loadPodium(final GameMode gamemode) {
-        switch (gamemode) {
+    public boolean isHighScore(final GameMode gameMode, final int score) {
+        switch (gameMode) {
         case STORY_MODE:
-            this.podium = this.podiumManager.loadStoryHighScores();
+            return this.storyPodium.isHighScore(score);
+        case SURVIVAL_MODE:
+            return this.survivalPodium.isHighScore(score);
+        default:
+            return false;
+        }
+    }
+
+    @Override
+    public void addToPodium(final GameMode gameMode, final int score) {
+        switch (gameMode) {
+        case STORY_MODE:
+            this.storyPodium.addHighScore(score, this.user.get().getName());
             break;
         case SURVIVAL_MODE:
-            this.podium = this.podiumManager.loadSurvivalHighScores();
+            this.survivalPodium.addHighScore(score, this.user.get().getName());
             break;
         default:
             break;
         }
-        return this.podium.isPresent();
-    }
-
-    @Override
-    public boolean isHighScore(final int score) {
-        return this.podium.get().isHighScore(score);
-    }
-
-    @Override
-    public void addToPodium(final int score) {
-        this.podium.get().addHighScore(score, this.user.get().getName());
-    }
-
-    @Override
-    public void emptyPodium() {
-        this.podium = Optional.empty();
     }
 
     @Override

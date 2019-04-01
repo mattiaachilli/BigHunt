@@ -100,8 +100,8 @@ public class SceneLoaderImpl implements SceneLoader {
                 break;
             case HIGH_SCORES:
                 final HighScoresSceneController highScores = (HighScoresSceneController) controller;
-                highScores.setStoryModeHighScores(this.view.getStoryHighScores());
-                highScores.setSurvivalModeHighScores(this.view.getSurvivalHighScores());
+                highScores.setStoryModePodium(this.view.getStoryPodium());
+                highScores.setSurvivalModePodium(this.view.getSurvivalPodium());
                 break;
             default:
                 break;

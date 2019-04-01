@@ -25,12 +25,12 @@ import model.data.PodiumImpl;
 public class PodiumManagerImpl implements PodiumManager {
 
     @Override
-    public Optional<Podium> loadStoryHighScores() {
+    public Optional<Podium> loadStoryPodium() {
         return this.load(FilesHomeManager.STORY_SCORES);
     }
 
     @Override
-    public Optional<Podium> loadSurvivalHighScores() {
+    public Optional<Podium> loadSurvivalPodium() {
         return this.load(FilesHomeManager.SURVIVAL_SCORES);
     }
 

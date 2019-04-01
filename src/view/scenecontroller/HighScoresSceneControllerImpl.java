@@ -1,14 +1,11 @@
 package view.scenecontroller;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import model.data.HighScore;
+import model.data.Podium;
 /**
  * 
  * Sample Skeleton for 'HighScores.fxml' Controller Class
@@ -73,36 +70,57 @@ implements HighScoresSceneController {
     }
 
     @Override
-    public void setStoryModeHighScores(List<HighScore> highScores) {
-        if (!highScores.isEmpty()) {
-            final List<HighScore> sortedHighScores = highScores.stream().sorted((a,b) ->
-                Integer.compare(b.getScore(), a.getScore())).collect(Collectors.toList());
-            for(int i = 0; i < sortedHighScores.size(); i++) {
-                switch(i) {
+    public void setStoryModePodium(final Podium storyPodium) {
+        if (!storyPodium.getHighScores().isEmpty()) {
+            for (int i = 0; i < storyPodium.getHighScores().size(); i++) {
+                switch (i) {
                 case 1:
-                    story1.setText(String.valueOf(sortedHighScores.get(i).getScore()));
+                    story1.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
                 case 2:
-                    story2.setText(String.valueOf(sortedHighScores.get(i).getScore()));
+                    story2.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
                 case 3:
-                    story3.setText(String.valueOf(sortedHighScores.get(i).getScore()));
+                    story3.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
                 case 4:
-                    story4.setText(String.valueOf(sortedHighScores.get(i).getScore()));
+                    story4.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
                 case 5:
-                    story5.setText(String.valueOf(sortedHighScores.get(i).getScore()));
+                    story5.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
-                    }   
-            }
+                default:
+                    break;
+                }
+            } 
         }
     }
 
     @Override
-    public void setSurvivalModeHighScores(List<HighScore> highScores) {
-        // TODO Auto-generated method stub
-        
+    public void setSurvivalModePodium(final Podium survivalPodium) {
+        if (!survivalPodium.getHighScores().isEmpty()) {
+            for (int i = 0; i < survivalPodium.getHighScores().size(); i++) {
+                switch (i) {
+                case 1:
+                    survival1.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
+                    break;
+                case 2:
+                    survival2.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
+                    break;
+                case 3:
+                    survival3.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
+                    break;
+                case 4:
+                    survival4.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
+                    break;
+                case 5:
+                    survival5.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
+                    break;
+                default:
+                    break;
+                }
+            } 
+        }
     }
 
 }

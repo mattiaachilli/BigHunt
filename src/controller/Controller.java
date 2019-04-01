@@ -60,30 +60,19 @@ public interface Controller {
 
     /**
      * 
-     * @param gamemode the game mode of the match, used to decide which is the
-     *                 podium to load
-     * @return true if the podium is correctly loaded
-     */
-    boolean loadPodium(GameMode gamemode);
-
-    /**
-     * 
+     * @param gameMode the game mode played
      * @param score the score to control
      * @return true if the @param score is an high score
      */
-    boolean isHighScore(int score);
+    boolean isHighScore(GameMode gameMode, int score);
 
     /**
      * Adds an high score to the podium.
      * 
+     * @param gameMode the game mode played
      * @param score the new high score
      */
-    void addToPodium(int score);
-
-    /**
-     * No more podium needed.
-     */
-    void emptyPodium();
+    void addToPodium(GameMode gameMode, int score);
 
     /**
      * Pauses the game loop.
