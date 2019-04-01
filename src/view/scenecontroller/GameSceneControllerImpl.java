@@ -3,6 +3,9 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
@@ -37,6 +40,14 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
 
     @FXML // fx:id="ammoLabel"
     private Label ammoLabel; // Value injected by FXMLLoader
+    
+    InvalidationListener listener = new InvalidationListener() {
+        
+        @Override
+        public void invalidated(Observable observable) {
+            SettingsImpl.getSettings().getScaleFactory();            
+        }
+    };
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -45,28 +56,25 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'Game.fxml'.";
         assert botomHBox != null : "fx:id=\"botomHBox\" was not injected: check your FXML file 'Game.fxml'.";
         assert ammoLabel != null : "fx:id=\"ammoLabel\" was not injected: check your FXML file 'Game.fxml'.";
-
     }
 
     @Override
     public final Canvas getCanvas() {
-     //   this.game.setPrefHeight(SettingsImpl.getSettings().getSelectedResolution().getValue());
-     //   this.game.setPrefWidth(SettingsImpl.getSettings().getSelectedResolution().getKey());
-      //  this.canvas.setHeight(SettingsImpl.getSettings().getSelectedResolution().getValue());
-     //   this.canvas.setWidth(SettingsImpl.getSettings().getSelectedResolution().getKey());
-   ////     this.canvas.setHeight(this.game.getHeight()) ;
-  ////      this.canvas.setWidth(this.game.getWidth());
-   //         SettingsImpl.getSettings().setGameResolution((int) this.botomHBox.getHeight());
-           this.canvas.setHeight(SettingsImpl.getSettings().getDefaultResolutions().getValue() /*+ this.bottomGrid.getHeight()*/);
-           this.canvas.setWidth(SettingsImpl.getSettings().getDefaultResolutions().getKey());
-     //   this.vGameBox.setMaxHeight(SettingsImpl.getSettings().getDefaultResolutions().getValue());
-    //    this.vGameBox.setMaxWidth(SettingsImpl.getSettings().getDefaultResolutions().getKey());
-       // this.vGameBox.setPrefHeight(SettingsImpl.getSettings().getDefaultResolutions().getValue());
-        //this.vGameBox.setPrefWidth(SettingsImpl.getSettings().getDefaultResolutions().getKey());
-        System.out.println(this.canvas.getWidth());
-        System.out.println(this.canvas.getHeight()); 
-        System.out.println(this.game.getWidth());
-        System.out.println(this.game.getHeight()); 
+        //   this.canvas.setHeight(SettingsImpl.getSettings().getDefaultResolutions().getValue() /*+ this.bottomGrid.getHeight()*/);
+        //   this.canvas.setWidth(SettingsImpl.getSettings().getDefaultResolutions().getKey());
+     System.out.println("canvas-->" + this.canvas.getWidth());
+        System.out.println("canvas-->"+ this.canvas.getHeight()); 
+        System.out.println("game-->" +this.game.getWidth());
+        System.out.println("game-->"+ this.game.getHeight()); 
+        this.canvas.setWidth(this.game.getWidth());
+        this.canvas.setHeight(this.game.getHeight());
+     /*   this.canvas.minWidth(this.game.getWidth());
+        this.canvas.minHeight(this.game.getHeight());
+        this.canvas.maxWidth(this.game.getWidth());
+        this.canvas.maxHeight(this.game.getHeight());
+      */  System.out.println(this.canvas.isResizable());
+        System.out.println("dopo canvas-->" + this.canvas.getWidth());
+        System.out.println("dopo canvas-->"+ this.canvas.getHeight()); 
 
         return this.canvas;
     }
