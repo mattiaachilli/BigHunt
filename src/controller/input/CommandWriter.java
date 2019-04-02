@@ -20,4 +20,9 @@ public interface CommandWriter {
      */
     void removeCommand(Command command);
 
+    /**
+     * Remove all commands in queue.
+     */
+    void removeAll();
+
 }

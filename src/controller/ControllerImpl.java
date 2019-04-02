@@ -13,18 +13,15 @@ import controller.files.UserManager;
 import controller.files.UserManagerImpl;
 import controller.input.CommandType;
 import controller.input.InputController;
-import controller.input.Pause;
 import controller.input.Recharge;
 import controller.input.Shoot;
 import controller.matches.GameMode;
 import model.Model;
 import model.data.Podium;
 import model.data.UserData;
-import settings.SettingsImpl;
 import utility.Utilities;
 import view.View;
 import view.entities.ViewEntity;
-import view.entities.ViewEntityImpl;
 
 /**
  * 
@@ -43,7 +40,7 @@ public final class ControllerImpl implements Controller {
     private GameLoop gameLoop;
     private final Supplier<Model> modelSupplier;
     private Model model;
-    private final InputController input;
+    private InputController input;
     private final Semaphore mutex;
     private final View view;
     private final PodiumManager podiumManager;
@@ -73,7 +70,6 @@ public final class ControllerImpl implements Controller {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
         this.loadPodium(gameMode);
-        this.view.reset();
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine());
     }
 

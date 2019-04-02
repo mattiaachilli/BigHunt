@@ -91,6 +91,7 @@ public final class ModelImpl implements Model {
         this.currentMagazine = 1;
         this.duckPowerUp = 0;
         this.powerUpActive = Optional.empty();
+        this.timeElapsedPowerUp = 0;
         switch (gameMode) {
         case STORY_MODE:
                 this.match = Optional.of(new StoryMatch(this.difficulty));
