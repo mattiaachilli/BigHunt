@@ -1,5 +1,8 @@
 package view;
 
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +12,7 @@ import controller.Controller;
 import controller.matches.GameMode;
 import controller.input.CommandType;
 import javafx.application.Platform;
+import javafx.scene.ImageCursor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -18,6 +22,8 @@ import model.data.Podium;
 import model.gun.Magazine;
 
 import java.util.concurrent.Semaphore;
+
+import javax.swing.ImageIcon;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -177,9 +183,9 @@ public class ViewImpl implements View {
             this.gameSceneController = gameSceneController;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
-
-            this.backgroundImage = new ImageView(
-            new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
+            Image cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
+            this.gamecanvas.getCanvas().setCursor(new ImageCursor(cursorImage, cursorImage.getWidth() / 2, cursorImage.getHeight() / 2));
+            this.backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
             SettingsImpl.getSettings().getSelectedResolution().getKey(),
             SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
 

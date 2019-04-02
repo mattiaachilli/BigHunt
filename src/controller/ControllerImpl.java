@@ -13,7 +13,6 @@ import controller.files.UserManager;
 import controller.files.UserManagerImpl;
 import controller.input.CommandType;
 import controller.input.InputController;
-import controller.input.Pause;
 import controller.input.Recharge;
 import controller.input.Shoot;
 import controller.matches.GameMode;
@@ -94,7 +93,8 @@ public final class ControllerImpl implements Controller {
             mutex.acquire();
             switch (command) {
             case PAUSE:
-                this.input.setCommand(new Pause());
+                input.clearCommands();
+                this.pause();
                 break;
             case RECHARGE:
                 this.input.setCommand(new Recharge());
@@ -220,10 +220,7 @@ public final class ControllerImpl implements Controller {
         private void processInput() {
             try {
                 ControllerImpl.this.mutex.acquire();
-                if (!input.getCommands().isEmpty() && input.getCommands().peek().getType().equals(CommandType.PAUSE)) {
-                    input.clearCommands();
-                    this.pauseLoop();
-                } else {
+                if (!input.getCommands().isEmpty()) {
                     input.executeCommand(model);
                 }
                 ControllerImpl.this.mutex.release();
