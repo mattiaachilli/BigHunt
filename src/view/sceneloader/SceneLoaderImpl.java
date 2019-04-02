@@ -102,8 +102,8 @@ public class SceneLoaderImpl implements SceneLoader {
                 achievementController.setAchievements(this.view.getAchievements());
                 break;
             case HIGH_SCORES:
-                final HighScoresSceneController highScores = (HighScoresSceneController) controller;
-                /*highScores.setStoryModeHighScores(this.view.getStoryHighScores());
+                /*final HighScoresSceneController highScores = (HighScoresSceneController) controller;
+                highScores.setStoryModeHighScores(this.view.getStoryHighScores());
                 highScores.setSurvivalModeHighScores(this.view.getSurvivalHighScores());*/
                 break;
             default:
