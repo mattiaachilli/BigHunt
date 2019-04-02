@@ -42,9 +42,8 @@ public final class SettingsImpl implements Settings {
 
     private int selectedFPS = DEFAULT_FPS;
 
-    private static final String DEFAULT_DIFFICULTY = GlobalDifficulty.MEDIUM.getGlobalDifficulty();
-    private String selectedDifficulty = DEFAULT_DIFFICULTY;
-    private List<String> gameDifficulty = this.writeGameDifficulty();
+    private static final GlobalDifficulty DEFAULT_DIFFICULTY = GlobalDifficulty.MEDIUM;
+    private GlobalDifficulty selectedDifficulty = DEFAULT_DIFFICULTY;
     
     private boolean fullScreen = true;
     private boolean backgroundAudio = true;
@@ -114,35 +113,25 @@ public final class SettingsImpl implements Settings {
 
     @Override
     public void setDifficulty(final String difficulty) {
-        if(this.gameDifficulty.isEmpty()) {
-            this.gameDifficulty = this.writeGameDifficulty();
-        }
-        if(!this.gameDifficulty.contains(difficulty)) {
-            this.selectedDifficulty = DEFAULT_DIFFICULTY;
-        } else {
-            this.selectedDifficulty = difficulty; 
+        switch (difficulty) {
+            case "EASY":
+                this.selectedDifficulty = GlobalDifficulty.EASY;
+                break;
+            case "MEDIUM":
+                this.selectedDifficulty = GlobalDifficulty.MEDIUM;
+                break;
+            case "HARD":
+                this.selectedDifficulty = GlobalDifficulty.HARD;
+                break;
+            default:
+                this.selectedDifficulty = DEFAULT_DIFFICULTY;
+                break;
         }
     }
 
     @Override
-    public String getSelectedDifficulty() {
+    public GlobalDifficulty getSelectedDifficulty() {
         return this.selectedDifficulty;
-    }
-
-    @Override
-    public List<String> getGameDifficulties() {
-        return this.gameDifficulty;
-    }
-    
-    private List<String> writeGameDifficulty() {
-        
-        final List<String> difficulty = new ArrayList<>();
-
-        for (int i = 0; i < GlobalDifficulty.values().length; i++) {
-            difficulty.add(GlobalDifficulty.values()[i].getGlobalDifficulty());
-        }
-        
-        return difficulty;
     }
 
     @Override

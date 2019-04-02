@@ -113,4 +113,9 @@ public interface Model {
      * @return if exist the power up active.
      */
     Optional<PowerUpType> getPowerUpActive();
+
+    /**
+     * @return the point to pass the round or max number flown away ducks.
+     */
+    int getInfo();
 }

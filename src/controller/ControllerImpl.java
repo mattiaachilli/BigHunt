@@ -19,7 +19,6 @@ import controller.matches.GameMode;
 import model.Model;
 import model.data.Podium;
 import model.data.UserData;
-import settings.SettingsImpl;
 import utility.Utilities;
 import view.View;
 import view.entities.ViewEntity;
@@ -41,7 +40,7 @@ public final class ControllerImpl implements Controller {
     private GameLoop gameLoop;
     private final Supplier<Model> modelSupplier;
     private Model model;
-    private final InputController input;
+    private InputController input;
     private final Semaphore mutex;
     private final View view;
     private final PodiumManager podiumManager;
@@ -72,7 +71,11 @@ public final class ControllerImpl implements Controller {
         this.model.initGame(gameMode);
         this.input.clearCommands();
         this.loadPodium(gameMode);
-        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine());
+        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
+    }
+
+    @Override
+    public void initGameLoop() {
         this.gameLoop = new GameLoop();
     }
 
@@ -92,18 +95,18 @@ public final class ControllerImpl implements Controller {
         try {
             mutex.acquire();
             switch (command) {
-            case PAUSE:
-                input.clearCommands();
-                this.pause();
-                break;
-            case RECHARGE:
-                this.input.setCommand(new Recharge());
-                break;
-            case SHOOT:
-                this.input.setCommand(new Shoot(x, y));
-                break;
-            default:
-                break;
+                case PAUSE:
+                    this.input.clearCommands();
+                    this.stopGameLoop();
+                    this.view.getSceneFactory().openPauseScene();
+                case RECHARGE:
+                    this.input.setCommand(new Recharge());
+                    break;
+                case SHOOT:
+                    this.input.setCommand(new Shoot(x, y));
+                    break;
+                default:
+                    break;
             }
             mutex.release();
         } catch (InterruptedException e) {
@@ -170,16 +173,6 @@ public final class ControllerImpl implements Controller {
         this.podium = Optional.empty();
     }
 
-    @Override
-    public void pause() {
-        this.gameLoop.pauseLoop();
-    }
-
-    @Override
-    public void resume() {
-        this.gameLoop.resumeLoop();
-    }
-
     private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
         return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
     }
@@ -191,26 +184,22 @@ public final class ControllerImpl implements Controller {
 
     private class GameLoop extends Thread {
         private volatile boolean running;
-        private boolean paused;
 
         GameLoop() {
             super();
             running = true;
-            paused = false;
         }
 
         public void run() {
             long lastTime = System.currentTimeMillis();
-            while (running && !model.isGameOver()) { /* Running and not gameover */
-                if (!this.paused) {
-                    final long current = System.currentTimeMillis();
-                    final int elapsed = (int) (current - lastTime);
-                    processInput();
-                    model.update(elapsed);
-                    view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine());
-                    Utilities.waitForNextFrame(PERIOD, current);
-                    lastTime = current;
-                }
+            while (running && !model.isGameOver()) { /* Not gameover */
+                final long current = System.currentTimeMillis();
+                final int elapsed = (int) (current - lastTime);
+                processInput();
+                model.update(elapsed);
+                view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(), model.getInfo());
+                Utilities.waitForNextFrame(PERIOD, current);
+                lastTime = current;
             }
             if (model.isGameOver()) {
                 ControllerImpl.this.endGame();
@@ -227,14 +216,6 @@ public final class ControllerImpl implements Controller {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-
-        public void pauseLoop() {
-            this.paused = true;
-        }
-
-        public void resumeLoop() {
-            this.paused = false;
         }
 
         public void stopGameLoop() {

@@ -95,8 +95,18 @@ public class SceneFactoryImpl implements SceneFactory {
     }
 
     @Override
+    public final void openPauseScene() {
+        this.openNewScene(Screens.PAUSE);
+    }
+
+    @Override
     public final void setGameMode(final GameMode gameMode) {
         this.gameMode = gameMode;
+    }
+
+    @Override
+    public final View getView() {
+        return this.view;
     }
 
     private void openNewScene(final Screens screen) {
