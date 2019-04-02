@@ -32,6 +32,8 @@ public interface Controller {
 
     /**
      * Adds the command to the command list.
+     * @param x the x component of the command
+     * @param y the y component of the command
      * @param command
      *          the commandType to add.
      */

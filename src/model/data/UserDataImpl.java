@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import model.achievements.Achievement;
 import model.achievements.AchievementImpl;
@@ -48,12 +47,12 @@ public class UserDataImpl implements UserData {
     }
 
     @Override
-    public Map<AchievementType, Achievement> getAchievements() {
+    public final Map<AchievementType, Achievement> getAchievements() {
         return Collections.unmodifiableMap(this.achievements);
     }
 
     @Override
-    public void updateAchievements() {
+    public final void updateAchievements() {
         for (AchievementType type : AchievementType.values()) {
             switch (type) {
 
@@ -80,22 +79,22 @@ public class UserDataImpl implements UserData {
     }
 
     @Override
-    public String getName() {
+    public final String getName() {
         return this.name;
     }
 
     @Override
-    public void addMatchData(final MatchData matchdata) {
+    public final void addMatchData(final MatchData matchdata) {
         this.matchesPlayed++;
         this.killedDucks += matchdata.getKilledDucks();
         this.globalScore += matchdata.getGlobalScore();
         this.powerUpsUsed += matchdata.getNumberOfUsedPowerUps();
         this.updateAchievements();
     }
-    
+
     private Map<AchievementType, Achievement> initAchievements() {
         Map<AchievementType, Achievement> achievements = new EnumMap<>(AchievementType.class);
-        for(AchievementType type : AchievementType.values()) {
+        for (AchievementType type : AchievementType.values()) {
             achievements.put(type, new AchievementImpl(type, 0));
         }
         return achievements;
@@ -108,6 +107,4 @@ public class UserDataImpl implements UserData {
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
     }
-    
-
 }
