@@ -73,16 +73,15 @@ public final class ModelImpl implements Model {
      */
     public ModelImpl() {
         super();
-        this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
         this.powerUp = new ArrayList<>();
         this.cleaner = new CleanerImpl();
         this.match = Optional.empty();
-        this.difficulty = GlobalDifficulty.EASY;
     }
 
     @Override
     public void initGame(final GameMode gameMode) {
+        this.difficulty = SettingsImpl.getSettings().getSelectedDifficulty();
         this.gameMode = gameMode;
         this.dog = new DogImpl();
         ducks.clear();
@@ -93,7 +92,7 @@ public final class ModelImpl implements Model {
         this.powerUpActive = Optional.empty();
         this.timeElapsedPowerUp = 0;
         switch (gameMode) {
-        case STORY_MODE:
+            case STORY_MODE:
                 this.match = Optional.of(new StoryMatch(this.difficulty));
                 this.spawner = new StoryModeSpawner();
                 this.lastRound = this.spawner.getActualRound();
@@ -173,6 +172,22 @@ public final class ModelImpl implements Model {
                 this.powerUpActive = Optional.empty();
             }
         }
+    }
+
+    @Override
+    public int getInfo() {
+        int info = 0;
+        switch (this.gameMode) {
+            case STORY_MODE:
+                info = this.lastRound *  this.match.get().getDifficulty().getLimitOfDifficulty();
+                break;
+            case SURVIVAL_MODE:
+                info = this.match.get().getDifficulty().getLimitOfDifficulty();
+                break;
+            default:
+                break;
+        }
+        return info;
     }
 
     @Override

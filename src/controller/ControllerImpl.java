@@ -70,7 +70,7 @@ public final class ControllerImpl implements Controller {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
         this.loadPodium(gameMode);
-        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine());
+        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
     }
 
     @Override
@@ -195,7 +195,7 @@ public final class ControllerImpl implements Controller {
                 final int elapsed = (int) (current - lastTime);
                 processInput();
                 model.update(elapsed);
-                view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine());
+                view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(), model.getInfo());
                 Utilities.waitForNextFrame(PERIOD, current);
                 lastTime = current;
             }

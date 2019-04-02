@@ -90,12 +90,5 @@ public interface Settings {
      * @return
      *          the actual game difficulty.
      */
-    String getSelectedDifficulty();
-    
-    /**
-     * 
-     * @return
-     *          all game difficulty.
-     */
-    List<String> getGameDifficulties();
+    GlobalDifficulty getSelectedDifficulty();
 }

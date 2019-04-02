@@ -1,10 +1,10 @@
 package view;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import controller.Controller;
 import controller.matches.GameMode;
 import controller.input.CommandType;
@@ -54,6 +54,7 @@ public class ViewImpl implements View {
     private Podium survivalPodium;
     private boolean gamePaused;
     private Magazine magazine;
+    private int infoLimit;
     private GameMode gameMode;
 
     /**
@@ -109,12 +110,14 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData, final Magazine magazine) {
+    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData, final Magazine magazine,
+                            final int info) {
         try {
             this.mutex.acquire();
             this.viewEntities = viewEntities;
             this.matchData = matchData;
             this.magazine = magazine;
+            this.infoLimit = info;
             this.mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -185,6 +188,7 @@ public class ViewImpl implements View {
         private final ImageView backgroundImage;
         private Magazine currentMagazine;
         private final GameMode gameMode;
+        private int info;
 
         Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
@@ -240,6 +244,7 @@ public class ViewImpl implements View {
                     this.viewEntitiesGame = viewEntities;
                     this.currentMatchData = matchData;
                     this.currentMagazine = magazine;
+                    this.info = infoLimit;
                     mutex.release();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -250,7 +255,7 @@ public class ViewImpl implements View {
                 Platform.runLater(() -> {
                     this.updateBackground();
 
-                    this.gameSceneController.setGameData(this.currentMatchData, this.currentMagazine);
+                    this.gameSceneController.setGameData(this.currentMatchData, this.currentMagazine, this.info);
 
                     for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
                         if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {
