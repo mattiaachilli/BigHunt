@@ -81,7 +81,7 @@
                   </GridPane>
                </children>
             </GridPane>
-            <HBox alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" prefWidth="1366.0">
                <children>
                   <GridPane prefHeight="150.0" prefWidth="400.0">
                     <columnConstraints>
