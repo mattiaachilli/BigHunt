@@ -3,8 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
-
 import controller.matches.AbstractMatch;
 import controller.matches.GameMode;
 import controller.matches.StoryMatch;
@@ -17,7 +15,6 @@ import model.entities.DogImpl;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
-import model.entities.EntityStatus;
 import model.entities.StandardDuck;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
@@ -112,6 +109,7 @@ public final class ModelImpl implements Model {
 
     @Override
     public void update(final int timeElapsed) {
+        this.getMatchData().addTimeToTimer(timeElapsed);
         this.updateRoundNumber();
         this.dog.update(timeElapsed);
         if (this.dog.getDogStatus() != this.lastDogStatus) {
@@ -120,7 +118,6 @@ public final class ModelImpl implements Model {
 
         // Update spawner when dog is in grass
         if (this.dog.isInGrass()) {
-            this.getCurrentMagazine().update(timeElapsed);
             spawner.update(timeElapsed);
             if (spawner.canSpawnDuck()) {
                 final Optional<Duck> duckSpawn = spawner.spawnDuck();
@@ -133,17 +130,11 @@ public final class ModelImpl implements Model {
             }
         }
 
+        // Update magazine
+        this.getCurrentMagazine().update(timeElapsed);
+
         //Update ducks
         this.ducks.forEach(d -> {
-//            if (d.getStatus() == EntityStatus.ALIVE && d.getPosition().getX() >= StandardDuck.COLLISION_X && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) {
-//                if (d.hasPowerUp()) {
-//                    d.kill();
-//                    final int score = this.powerUpActive.isPresent() && this.powerUpActive.get() == PowerUpType.DOUBLE_SCORE ? d.getScore() * 2 : d.getScore();
-//                    this.duckPowerUp = this.duckPowerUp > 0 ? this.duckPowerUp-- : 0;
-//                    this.match.get().getMatchData().incrementScoreOf(score);
-//                    this.dog.setLastDuckKilled(d);
-//                }
-//            }
             if (d.canFlyAway()) {
                 d.computeFlyAway();
                 dog.setDogStatus(DogStatus.LAUGH);
@@ -177,6 +168,8 @@ public final class ModelImpl implements Model {
                 this.ducks.clear();
                 this.powerUp.clear();
                 this.lastRound = this.spawner.getActualRound();
+                this.duckPowerUp = 0;
+                this.powerUpActive = Optional.empty();
             }
         }
     }
@@ -230,6 +223,12 @@ public final class ModelImpl implements Model {
         }
     }
 
+
+    @Override
+    public Optional<PowerUpType> getPowerUpActive() {
+        return this.powerUpActive;
+    }
+
     @Override
     public boolean isGameOver() {
         final MatchData matchData = this.match.get().getMatchData();
@@ -238,7 +237,7 @@ public final class ModelImpl implements Model {
         switch (this.gameMode) {
             case STORY_MODE:
                 gameOver = this.spawner.getActualRound() > this.lastRound 
-                            && matchData.getGlobalScore() < matchScore || this.currentMagazine > MAX_MAGAZINES 
+                            && matchData.getGlobalScore() < matchScore || this.currentMagazine >= MAX_MAGAZINES 
                             || this.spawner.isSpawnFinished();
             break;
             case SURVIVAL_MODE:

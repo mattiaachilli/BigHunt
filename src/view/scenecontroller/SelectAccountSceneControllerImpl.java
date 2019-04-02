@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.text.Font;
+import settings.SettingsImpl;
 
 /**
  * 
@@ -43,6 +45,6 @@ public class SelectAccountSceneControllerImpl extends AbstractSceneController {
     void initialize() {
         assert loginBtn != null : "fx:id=\"loginBtn\" was not injected: check your FXML file 'SelectAccount.fxml'.";
         assert exitBtn != null : "fx:id=\"exitBtn\" was not injected: check your FXML file 'SelectAccount.fxml'.";
-
+        this.exitBtn.setFont(new Font(26));
     }
 }

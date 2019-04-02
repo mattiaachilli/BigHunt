@@ -7,7 +7,7 @@ package model.gun;
  */
 public class MagazineImpl implements Magazine {
 
-    private static final int MAX_AMMO = 5;
+    private static final int MAX_AMMO = 8;
     private static final int MAX_TIME = 5000;
 
     private long powerUpTime;

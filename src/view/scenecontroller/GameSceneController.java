@@ -2,6 +2,7 @@ package view.scenecontroller;
 
 import javafx.scene.canvas.Canvas;
 import model.data.MatchData;
+import model.gun.Magazine;
 
 /**
  * 
@@ -12,5 +13,5 @@ public interface GameSceneController {
 
     Canvas getCanvas();
     
-    void setGameData(MatchData gameData);
+    void setGameData(MatchData gameData, Magazine magazine);
 }

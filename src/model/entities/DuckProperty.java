@@ -14,19 +14,19 @@ public enum DuckProperty {
     /**
      * STANDARD DUCK INFORMATIONS.
      */
-    STANDARD_DUCK(ModelImpl.GAME_WIDTH / 3, 15000, "Standard Duck"),
+    STANDARD_DUCK(ModelImpl.GAME_WIDTH / 3.5, 8000, "Standard Duck"),
     /**
      * YELLOW DUCK INFORMATIONS.
      */
-    YELLOW_DUCK(ModelImpl.GAME_WIDTH / 3 + 200, 7000, "Yellow Duck"),
+    YELLOW_DUCK(ModelImpl.GAME_WIDTH / 3.5 + 200, 7000, "Yellow Duck"),
     /**
      * ORANGE DUCK INFORMATIONS.
      */
-    ORANGE_DUCK(ModelImpl.GAME_WIDTH / 3 + 500, 6000, "Orange Duck"),
+    ORANGE_DUCK(ModelImpl.GAME_WIDTH / 3.5 + 500, 6000, "Orange Duck"),
     /**
      * PINK DUCK INFORMATIONS.
      */
-    PINK_DUCK(ModelImpl.GAME_WIDTH / 3 + 800, 4000, "Pink Duck");
+    PINK_DUCK(ModelImpl.GAME_WIDTH / 3.5 + 800, 4000, "Pink Duck");
 
 
     private final double velocity;
