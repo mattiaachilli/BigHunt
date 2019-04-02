@@ -1,36 +1,30 @@
 package view.scenecontroller;
 
 
-import java.awt.FlowLayout;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import controller.matches.GameMode;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import model.ModelImpl;
 import model.data.MatchData;
 import model.gun.Magazine;
-import model.gun.MagazineImpl;
-import settings.SettingsImpl;
 /**
  * 
- * Sample Skeleton for 'Game.fxml' Controller Class
+ * Sample Skeleton for 'Game.fxml' Controller Class.
  *
  */
 public class GameSceneControllerImpl extends AbstractSceneController implements GameSceneController {
 
-
     private static final String STORY = "Score:";
     private static final String SURVIVAL = "Flown away:";
+    private static final int UPDATE_TIME = 5000;
+    private long time = System.currentTimeMillis();
+    private boolean lastLabel;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -57,6 +51,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     private Label ammoLabel; // Value injected by FXMLLoader
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
+    final
     void initialize() {
         assert infoLabel != null : "fx:id=\"scoreLabel\" was not injected: check your FXML file 'Game.fxml'.";
         assert game != null : "fx:id=\"game\" was not injected: check your FXML file 'Game.fxml'.";
@@ -94,8 +89,21 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
             }
             this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")" + "/" + ModelImpl.MAX_MAGAZINES);
         } else {
-            this.infoLabel.setText(SURVIVAL);
-            this.scoreLabel.setText(String.valueOf(gameData.getFlownDucks()) + "/" + info);
+            if (!lastLabel) {
+                this.infoLabel.setText(SURVIVAL);
+                this.scoreLabel.setText(String.valueOf(gameData.getFlownDucks()) + "/" + info);
+                if ((System.currentTimeMillis() - time) >= UPDATE_TIME) {
+                    time = System.currentTimeMillis();
+                    this.lastLabel = true;
+                }
+            } else {
+                this.infoLabel.setText(STORY);
+                this.scoreLabel.setText(String.valueOf(gameData.getGlobalScore()));
+                if ((System.currentTimeMillis() - time) >= UPDATE_TIME) {
+                    time = System.currentTimeMillis();
+                    this.lastLabel = false;
+                }
+            } 
             this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")");
             this.scoreLabel.setTextFill(Color.BLACK);
         }
