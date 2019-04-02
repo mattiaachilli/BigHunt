@@ -18,6 +18,7 @@ import controller.input.Recharge;
 import controller.input.Shoot;
 import controller.matches.GameMode;
 import model.Model;
+import model.data.MatchData;
 import model.data.Podium;
 import model.data.UserData;
 import utility.Utilities;
@@ -179,9 +180,33 @@ public final class ControllerImpl implements Controller {
         return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
     }
 
+    /**
+     * 
+     * Stop the game loop.
+     * Refresh all the values obtained from the match (achievements and eventual high scores).
+     */
     private void endGame() {
         this.view.closeGame(this.model.getMatchData(), false);
         this.stopGameLoop();
+
+        final MatchData matchdata = this.model.getMatchData();
+
+        this.user.get().addMatchData(matchdata);
+
+        switch (this.model.getGameMode()) {
+        case STORY_MODE:
+            if (this.storyPodium.isHighScore(matchdata.getGlobalScore())) {
+                this.storyPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
+            }
+            break;
+        case SURVIVAL_MODE:
+            if (this.survivalPodium.isHighScore(matchdata.getGlobalScore())) {
+                this.survivalPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
+            }
+            break;
+            default:
+                break;
+        }
     }
 
     private class GameLoop extends Thread {

@@ -320,5 +320,10 @@ public final class ModelImpl implements Model {
     public List<PowerUp> getPowerUps() {
         return this.powerUp;
     }
+
+    @Override
+    public GameMode getGameMode() {
+        return this.gameMode;
+    }
 }
 

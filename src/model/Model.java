@@ -113,4 +113,10 @@ public interface Model {
      * @return if exist the power up active.
      */
     Optional<PowerUpType> getPowerUpActive();
+
+    /**
+     * 
+     * @return the game mode of the match
+     */
+    GameMode getGameMode();
 }
