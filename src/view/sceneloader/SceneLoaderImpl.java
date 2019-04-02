@@ -3,6 +3,7 @@ package view.sceneloader;
 import controller.matches.GameMode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import settings.SettingsImpl;
@@ -50,9 +51,10 @@ public class SceneLoaderImpl implements SceneLoader {
             SettingsImpl.getSettings().getSelectedResolution().getValue());
 
             root.getChildrenUnmodifiable().stream().forEach(e -> {
-                e.setScaleX(SettingsImpl.getSettings().getScaleFactory());
-                e.setScaleY(SettingsImpl.getSettings().getScaleFactory());
-                System.out.println(SettingsImpl.getSettings().getScaleFactory());
+                if (screen == Screens.GAME && e instanceof Label || screen != Screens.GAME) {
+                    e.setScaleX(SettingsImpl.getSettings().getScaleFactory());
+                    e.setScaleY(SettingsImpl.getSettings().getScaleFactory());
+                }
             });
 
             stage.setScene(new Scene(root));

@@ -11,6 +11,7 @@ import model.achievements.AchievementType;
 import model.data.HighScore;
 import model.data.MatchData;
 import model.data.Podium;
+import model.gun.Magazine;
 import view.entities.ViewEntity;
 import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;
@@ -94,7 +95,7 @@ public interface View {
      * @param viewEntities entities in the view
      * @param matchData    data of the match
      */
-    void render(List<Optional<ViewEntity>> viewEntities, MatchData matchData);
+    void render(List<Optional<ViewEntity>> viewEntities, MatchData matchData, Magazine magazine);
 
     /**
      * Start a new match.

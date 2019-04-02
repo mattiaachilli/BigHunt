@@ -30,6 +30,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#quitGame" text="EXIT" />
+                  <Button fx:id="backBtn" mnemonicParsing="false" onAction="#openRegister" text="GO TO REGISTER" />
               	  <Button fx:id="settingsApplyBtn" mnemonicParsing="false" onAction="#login" text="LOGIN" />
                </children>
             </HBox>

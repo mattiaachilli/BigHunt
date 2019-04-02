@@ -31,14 +31,17 @@ public class Shoot implements Command {
     @Override
     public void execute(final Model model) {
         if (model.canShoot()) {
-            System.out.println("shot");
+            int score = 0;
             model.shoot();
-            for (Duck d : model.getDucks()) {
-                if (d.getShape().contains(x, y) && d.getStatus().equals(EntityStatus.ALIVE)) {
+            for (final Duck d : model.getDucks()) {
+                if (d.getShape().contains(x, y) && d.getStatus() == EntityStatus.ALIVE) {
                     d.kill();
+                    score = model.getPowerUpActive().isPresent() ? d.getScore() * 2 : d.getScore();
+                    model.getMatchData().incrementScoreOf(score);
+                    model.getMatchData().incrementKilledDucks();
                 }
             }
-            for (PowerUp p : model.getPowerUps()) {
+            for (final PowerUp p : model.getPowerUps()) {
                 if (p.getShape().contains(x, y)) {
                     p.hit();
                 }

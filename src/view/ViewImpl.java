@@ -8,12 +8,15 @@ import java.util.Optional;
 import controller.Controller;
 import controller.matches.GameMode;
 import controller.input.CommandType;
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
 import model.data.Podium;
+import model.gun.Magazine;
+
 import java.util.concurrent.Semaphore;
 
 import javafx.scene.image.Image;
@@ -50,6 +53,7 @@ public class ViewImpl implements View {
     private Podium storyPodium;
     private Podium survivalPodium;
     private boolean gamePaused;
+    private Magazine magazine;
 
     /**
      * Constructor.
@@ -70,7 +74,6 @@ public class ViewImpl implements View {
         this.stage.setTitle(GAME_TITLE);
         this.stage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));
         this.sceneFactory.setStage(this.stage);
-        // this.sceneFactory.openMenuScene();
         this.sceneFactory.openAccountSelectionScene();
     }
 
@@ -92,11 +95,12 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData) {
+    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData, final Magazine magazine) {
         try {
             this.mutex.acquire();
             this.viewEntities = viewEntities;
             this.matchData = matchData;
+            this.magazine = magazine;
             this.mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -105,8 +109,8 @@ public class ViewImpl implements View {
 
     @Override
     public void closeGame(final MatchData matchData, final boolean isHighScores) {
-        // TODO Auto-generated method stub
-
+        this.matchData = matchData;
+        this.render.endGame();
     }
 
     @Override
@@ -157,13 +161,14 @@ public class ViewImpl implements View {
     private class Render extends Thread {
         private static final int MILLIS_FROM_SECOND = 1000;
 
-        private boolean running;
+        private volatile boolean running, end;
         private final int period;
         private List<Optional<ViewEntity>> viewEntitiesGame;
         private MatchData currentMatchData;
         private final GameSceneController gameSceneController;
         private final GraphicsContext gamecanvas;
         private final ImageView backgroundImage;
+        private Magazine currentMagazine;
 
         Render(final GameSceneController gameSceneController) {
             super();
@@ -202,7 +207,7 @@ public class ViewImpl implements View {
         }
 
         @Override
-        public final void run() {
+        public final void run() { 
             controller.startGameLoop();
 
             while (this.running) {
@@ -210,6 +215,7 @@ public class ViewImpl implements View {
                     mutex.acquire();
                     this.viewEntitiesGame = viewEntities;
                     this.currentMatchData = matchData;
+                    this.currentMagazine = magazine;
                     mutex.release();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -217,17 +223,27 @@ public class ViewImpl implements View {
 
                 final long currentTime = System.currentTimeMillis();
 
-                this.updateBackground();
+                Platform.runLater(() -> {
+                    this.updateBackground();
 
-                for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
-                    if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {
-                        final ViewEntity ve = viewEntity.get();
-                        final Rectangle rectangle = (Rectangle) ve.getShape();
-                        this.gamecanvas.drawImage(ve.getPicture(), ve.getPosition().getX(), ve.getPosition().getY(),
-                        rectangle.getWidth(), rectangle.getHeight());
+                    this.gameSceneController.setGameData(this.currentMatchData, this.currentMagazine);
+
+                    for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
+                        if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {
+                            final ViewEntity ve = viewEntity.get();
+                            final Rectangle rectangle = (Rectangle) ve.getShape();
+                            this.gamecanvas.drawImage(ve.getPicture(), ve.getPosition().getX(), ve.getPosition().getY(),
+                            rectangle.getWidth(), rectangle.getHeight());
+                        }
                     }
-                }
+                });
                 Utilities.waitForNextFrame(period, currentTime);
+            }
+
+            if (this.end) {
+                Platform.runLater(() -> {
+                    sceneFactory.openGameOverScene();
+                });
             }
         }
 
@@ -236,6 +252,10 @@ public class ViewImpl implements View {
                                       SettingsImpl.getSettings().getSelectedResolution().getKey(),
                                       SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
+        }
+
+        public final void endGame() {
+            this.end = true;
         }
 
         public final void stopRender() {

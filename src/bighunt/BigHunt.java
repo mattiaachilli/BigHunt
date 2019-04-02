@@ -12,7 +12,7 @@ import view.ViewImpl;
 /**
  * 
  * 
- * @author mattia Provides methods to initialize the game.
+ * Provides methods to initialize the game.
  */
 
 public final class BigHunt extends Application {

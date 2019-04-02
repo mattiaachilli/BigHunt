@@ -72,19 +72,19 @@ public final class ControllerImpl implements Controller {
     public void initGame(final GameMode gameMode) {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
-        this.view.render(getEntitiesForView(0), this.model.getMatchData());
+        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine());
+        this.gameLoop = new GameLoop();
     }
 
     @Override
     public void startGameLoop() {
-        gameLoop = new GameLoop();
         gameLoop.start();
     }
 
     @Override
     public void stopGameLoop() {
         gameLoop.stopGameLoop();
-        // view method
+        view.stopRender();
     }
 
     @Override
@@ -179,6 +179,11 @@ public final class ControllerImpl implements Controller {
         return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
     }
 
+    private void endGame() {
+        this.view.closeGame(this.model.getMatchData(), false);
+        this.stopGameLoop();
+    }
+
     private class GameLoop extends Thread {
         private volatile boolean running;
         private boolean paused;
@@ -197,14 +202,13 @@ public final class ControllerImpl implements Controller {
                     final int elapsed = (int) (current - lastTime);
                     processInput();
                     model.update(elapsed);
-                    view.render(getEntitiesForView(elapsed), model.getMatchData());
+                    view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine());
                     Utilities.waitForNextFrame(PERIOD, current);
                     lastTime = current;
                 }
             }
             if (model.isGameOver()) {
-                ControllerImpl.this.stopGameLoop();
-                System.exit(0);
+                ControllerImpl.this.endGame();
             }
         }
 
