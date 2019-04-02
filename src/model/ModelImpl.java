@@ -79,7 +79,7 @@ public final class ModelImpl implements Model {
         this.cleaner = new CleanerImpl();
         this.currentMagazine = 1;
         this.match = Optional.empty();
-        this.difficulty = GlobalDifficulty.EASY;
+        this.difficulty = SettingsImpl.getSettings().getSelectedDifficulty();
         this.duckPowerUp = 0;
         this.powerUpActive = Optional.empty();
     }
