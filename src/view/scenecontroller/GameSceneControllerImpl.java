@@ -31,6 +31,9 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
 
     @FXML // fx:id="scoreLabel"
     private Label scoreLabel; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="mainLable"
+    private Label mainLable; // Value injected by FXMLLoader
 
     @FXML // fx:id="game"
     private BorderPane game; // Value injected by FXMLLoader
@@ -48,6 +51,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     void initialize() {
         assert scoreLabel != null : "fx:id=\"scoreLabel\" was not injected: check your FXML file 'Game.fxml'.";
         assert game != null : "fx:id=\"game\" was not injected: check your FXML file 'Game.fxml'.";
+        assert mainLable != null : "fx:id=\"mainLable\" was not injected: check your FXML file 'Game.fxml'.";
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'Game.fxml'.";
         assert botomHBox != null : "fx:id=\"botomHBox\" was not injected: check your FXML file 'Game.fxml'.";
         assert ammoLabel != null : "fx:id=\"ammoLabel\" was not injected: check your FXML file 'Game.fxml'.";
