@@ -70,6 +70,7 @@ public final class ControllerImpl implements Controller {
     public void initGame(final GameMode gameMode) {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
+        this.input.clearCommands();
         this.loadPodium(gameMode);
         this.view.render(getEntitiesForView(0), this.model.getMatchData());
     }
@@ -215,9 +216,11 @@ public final class ControllerImpl implements Controller {
             try {
                 ControllerImpl.this.mutex.acquire();
                 if (!input.getCommands().isEmpty() && input.getCommands().peek().getType().equals(CommandType.PAUSE)) {
+                    input.clearCommands();
                     this.pauseLoop();
+                } else {
+                    input.executeCommand(model);
                 }
-                input.executeCommand(model);
                 ControllerImpl.this.mutex.release();
             } catch (InterruptedException e) {
                 e.printStackTrace();

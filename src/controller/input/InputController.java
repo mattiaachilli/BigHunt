@@ -27,10 +27,8 @@ public class InputController implements CommandReader, CommandWriter {
     }
 
     @Override
-    public final void removeCommand(final Command command) {
-        if (this.commands.contains(command)) {
-            this.commands.remove(command);
-        }
+    public final void clearCommands() {
+        this.commands.clear();
     }
 
     @Override
