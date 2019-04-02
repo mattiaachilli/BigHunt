@@ -253,6 +253,7 @@ public final class ModelImpl implements Model {
         switch (this.gameMode) {
             case STORY_MODE:
                 gameOver = this.spawner.getActualRound() > this.lastRound 
+                            && matchData.getGlobalScore() < matchScore || this.currentMagazine > MAX_MAGAZINES 
                             && matchData.getGlobalScore() < matchScore 
                             || this.currentMagazine > MAX_MAGAZINES
                             || this.getBullets() == 0 && this.currentMagazine == MAX_MAGAZINES
@@ -312,20 +313,8 @@ public final class ModelImpl implements Model {
     @Override
     public void recharge() {
         if (this.gameMode != null) {
-            switch (this.gameMode) {
-            case STORY_MODE:
-                if (this.currentMagazine < MAX_MAGAZINES) {
-                    this.currentMagazine++;
-                    this.magazine = new MagazineImpl(this.currentMagazine);
-                }
-                break;
-            case SURVIVAL_MODE:
-                this.currentMagazine++;
-                this.magazine = new MagazineImpl(this.currentMagazine);
-                break;
-            default:
-                break;
-            }
+            this.currentMagazine++;
+            this.magazine = new MagazineImpl(this.currentMagazine);
         }
     }
 

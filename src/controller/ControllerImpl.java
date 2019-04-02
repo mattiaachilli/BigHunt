@@ -69,6 +69,7 @@ public final class ControllerImpl implements Controller {
     public void initGame(final GameMode gameMode) {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
+        this.input.clearCommands();
         this.loadPodium(gameMode);
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
     }
@@ -95,6 +96,7 @@ public final class ControllerImpl implements Controller {
             mutex.acquire();
             switch (command) {
                 case PAUSE:
+                    this.input.clearCommands();
                     this.stopGameLoop();
                     this.view.getSceneFactory().openPauseScene();
                 case RECHARGE:
