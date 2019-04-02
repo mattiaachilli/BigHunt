@@ -34,8 +34,7 @@ public class PodiumImpl implements Podium {
 
     @Override
     public final boolean isHighScore(final int score) {
-        return this.highScores.size() < MAX_OF_HIGH_SCORES
-        || score > this.highScores.get(MAX_OF_HIGH_SCORES).getScore();
+        return score > this.highScores.get(MAX_OF_HIGH_SCORES - 1).getScore();
     }
 
     @Override

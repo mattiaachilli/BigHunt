@@ -197,16 +197,20 @@ public final class ControllerImpl implements Controller {
         case STORY_MODE:
             if (this.storyPodium.isHighScore(matchdata.getGlobalScore())) {
                 this.storyPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
+                this.podiumManager.saveStoryHighScores(this.storyPodium);
             }
             break;
         case SURVIVAL_MODE:
             if (this.survivalPodium.isHighScore(matchdata.getGlobalScore())) {
                 this.survivalPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
+                this.podiumManager.saveSurvivalHighScores(this.survivalPodium);
             }
             break;
             default:
                 break;
         }
+
+        this.userManager.save(this.user.get());
     }
 
     private class GameLoop extends Thread {
