@@ -43,9 +43,10 @@ public final class ModelImpl implements Model {
      */
     public static final int GAME_HEIGHT = SettingsImpl.getSettings().getSelectedResolution().getValue();
     /**
-     * Maximum number of magazines carriable.
+     * Maximum number of magazines carriable in story mode.
      */
     public static final int MAX_MAGAZINES = 20;
+    private static final int FIRST_MAGAZINE = 1;
 
     private static final int NEXT_DUCKS_POWERUP = 3;
 
@@ -86,8 +87,8 @@ public final class ModelImpl implements Model {
         this.dog = new DogImpl();
         ducks.clear();
         powerUp.clear();
-        this.magazine = new MagazineImpl(1);
-        this.currentMagazine = 1;
+        this.currentMagazine = FIRST_MAGAZINE;
+        this.magazine = new MagazineImpl(this.currentMagazine);
         this.duckPowerUp = 0;
         this.powerUpActive = Optional.empty();
         this.timeElapsedPowerUp = 0;

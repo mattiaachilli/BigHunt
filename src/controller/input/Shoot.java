@@ -29,10 +29,15 @@ public class Shoot implements Command {
     }
 
     @Override
-    public void execute(final Model model) {
+    public final void execute(final Model model) {
         if (model.canShoot()) {
             int score = 0;
             model.shoot();
+            for (final PowerUp p : model.getPowerUps()) {
+                if (p.getShape().contains(x, y)) {
+                    p.hit();
+                }
+            }
             for (final Duck d : model.getDucks()) {
                 if (d.getShape().contains(x, y) && d.getStatus() == EntityStatus.ALIVE) {
                     d.kill();
@@ -41,16 +46,11 @@ public class Shoot implements Command {
                     model.getMatchData().incrementKilledDucks();
                 }
             }
-            for (final PowerUp p : model.getPowerUps()) {
-                if (p.getShape().contains(x, y)) {
-                    p.hit();
-                }
-            }
         }
     }
 
     @Override
-    public CommandType getType() {
+    public final CommandType getType() {
         return this.type;
     }
 
