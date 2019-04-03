@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane id="gameover" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameOverSceneControllerImpl">
+<BorderPane id="gameover" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameOverSceneControllerImpl">
    <center>
-      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" BorderPane.alignment="CENTER">
          <children>
             <GridPane prefHeight="400.0" prefWidth="800.0">
               <columnConstraints>
@@ -36,7 +36,7 @@
                   <Label fx:id="title" text="GAME OVER" GridPane.columnIndex="2" />
                </children>
             </GridPane>
-            <HBox alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" maxWidth="1366.0">
                <children>
                   <GridPane prefHeight="150.0" prefWidth="400.0">
                     <columnConstraints>

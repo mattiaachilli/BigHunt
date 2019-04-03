@@ -10,7 +10,7 @@
       <Label id="title" alignment="CENTER" text="HIGH SCORES" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="1366.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" BorderPane.alignment="CENTER">
          <children>
             <GridPane prefHeight="550.0" prefWidth="1366.0">
               <columnConstraints>

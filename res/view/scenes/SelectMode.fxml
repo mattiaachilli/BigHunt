@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane id="selectmode" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.SelectModeSceneControllerImpl">
+<BorderPane id="selectmode" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.SelectModeSceneControllerImpl">
    <top>
       <Label id="title" alignment="CENTER" text="SELECT GAME MODE" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="1366.0" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <GridPane prefHeight="400.0" prefWidth="800.0">
               <columnConstraints>
@@ -32,7 +32,7 @@
                   <Button fx:id="survivalBtn" mnemonicParsing="false" onAction="#startSurvivalGame" text="SURVIVAL" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <HBox alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" maxWidth="1366.0">
                <children>
                   <GridPane prefHeight="150.0" prefWidth="400.0">
                     <columnConstraints>
