@@ -2,6 +2,7 @@ package controller.input;
 
 import model.Model;
 import model.ModelImpl;
+import model.entities.Dog;
 import model.entities.Duck;
 import model.entities.Entity;
 import model.entities.EntityStatus;
@@ -63,6 +64,13 @@ public class Shoot implements Command {
                         if (p.getShape().contains(x, y)) {
                             p.hit();
                             hit = true;
+                            model.getMatchData().powerUpCollected(p.getType());
+                        }
+                    } else if (entity instanceof Dog) {
+                        final Dog d = (Dog) entity;
+                        if (d.getShape().contains(x, y) && !d.isInGrass()) {
+                            hit = true;
+                            model.getMatchData().decrementScoreOf(d.getDogNegativeScore());
                         }
                     }
                 }
