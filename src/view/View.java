@@ -8,7 +8,6 @@ import controller.Controller;
 import controller.matches.GameMode;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
-import model.data.HighScore;
 import model.data.MatchData;
 import model.data.Podium;
 import model.gun.Magazine;
@@ -94,8 +93,10 @@ public interface View {
      * 
      * @param viewEntities entities in the view
      * @param matchData    data of the match
+     * @param magazine     current magazine useful to view bullets
+     * @param info         info about limits round/flown away ducks
      */
-    void render(List<Optional<ViewEntity>> viewEntities, MatchData matchData, Magazine magazine);
+    void render(List<Optional<ViewEntity>> viewEntities, MatchData matchData, Magazine magazine, int info);
 
     /**
      * Start a new match.
@@ -120,4 +121,16 @@ public interface View {
      * @return the controller.
      */
     Controller getController();
+
+    /**
+     * Get actual game mode.
+     * 
+     * @return the actual game mode.
+     */
+    GameMode getActualGameMode();
+
+    /**
+     * Reset the game when GameOver.
+     */
+    void reset();
 }

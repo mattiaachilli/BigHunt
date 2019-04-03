@@ -1,14 +1,18 @@
 package view;
 
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import controller.Controller;
 import controller.matches.GameMode;
 import controller.input.CommandType;
 import javafx.application.Platform;
+import javafx.scene.ImageCursor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -18,6 +22,8 @@ import model.data.Podium;
 import model.gun.Magazine;
 
 import java.util.concurrent.Semaphore;
+
+import javax.swing.ImageIcon;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -54,6 +60,8 @@ public class ViewImpl implements View {
     private Podium survivalPodium;
     private boolean gamePaused;
     private Magazine magazine;
+    private int infoLimit;
+    private GameMode gameMode;
 
     /**
      * Constructor.
@@ -66,6 +74,7 @@ public class ViewImpl implements View {
         this.achievements = new HashMap<>();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
+        this.gamePaused = true;
     }
 
     @Override
@@ -79,9 +88,21 @@ public class ViewImpl implements View {
 
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
-        this.render = new Render(gameSceneController);
+        this.reset();
+        this.gameMode = gameMode;
+        this.render = new Render(gameSceneController, gameMode);
         controller.initGame(gameMode);
         this.startRender();
+    }
+
+    @Override
+    public final GameMode getActualGameMode() {
+        return this.gameMode;
+    }
+
+    @Override
+    public final void reset() {
+        this.gamePaused = true;
     }
 
     @Override
@@ -95,12 +116,14 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData, final Magazine magazine) {
+    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData, final Magazine magazine,
+                            final int info) {
         try {
             this.mutex.acquire();
             this.viewEntities = viewEntities;
             this.matchData = matchData;
             this.magazine = magazine;
+            this.infoLimit = info;
             this.mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -108,18 +131,19 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public void closeGame(final MatchData matchData, final boolean isHighScores) {
+    public final void closeGame(final MatchData matchData, final boolean isHighScores) {
         this.matchData = matchData;
         this.render.endGame();
+        this.reset();
     }
 
     @Override
-    public Map<AchievementType, Achievement> getAchievements() {
+    public final Map<AchievementType, Achievement> getAchievements() {
         return this.achievements;
     }
 
     @Override
-    public void setAchievements(final Map<AchievementType, Achievement> achievements) {
+    public final void setAchievements(final Map<AchievementType, Achievement> achievements) {
         this.achievements = achievements;
     }
 
@@ -144,12 +168,12 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public MatchData getMatchData() {
+    public final MatchData getMatchData() {
         return this.matchData;
     }
 
     @Override
-    public SceneFactory getSceneFactory() {
+    public final SceneFactory getSceneFactory() {
         return this.sceneFactory;
     }
 
@@ -169,13 +193,18 @@ public class ViewImpl implements View {
         private final GraphicsContext gamecanvas;
         private final ImageView backgroundImage;
         private Magazine currentMagazine;
+        private final GameMode gameMode;
+        private int info;
 
-        Render(final GameSceneController gameSceneController) {
+        Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
             this.period = MILLIS_FROM_SECOND / SettingsImpl.getSettings().getSelectedFPS();
             this.gameSceneController = gameSceneController;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
+            Image cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
+            this.gamecanvas.getCanvas().setCursor(new ImageCursor(cursorImage, cursorImage.getWidth() / 2, cursorImage.getHeight() / 2));
+            this.gameMode = gameMode;
 
             this.backgroundImage = new ImageView(
             new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
@@ -208,7 +237,14 @@ public class ViewImpl implements View {
 
         @Override
         public final void run() { 
-            controller.startGameLoop();
+            if (!gamePaused) {
+                controller.startGameLoop();
+            } else {
+                gamePaused = false;
+                controller.initGame(this.gameMode);
+                controller.initGameLoop();
+                controller.startGameLoop();
+            }
 
             while (this.running) {
                 try {
@@ -216,6 +252,7 @@ public class ViewImpl implements View {
                     this.viewEntitiesGame = viewEntities;
                     this.currentMatchData = matchData;
                     this.currentMagazine = magazine;
+                    this.info = infoLimit;
                     mutex.release();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -226,7 +263,7 @@ public class ViewImpl implements View {
                 Platform.runLater(() -> {
                     this.updateBackground();
 
-                    this.gameSceneController.setGameData(this.currentMatchData, this.currentMagazine);
+                    this.gameSceneController.setGameData(this.currentMatchData, this.currentMagazine, this.info);
 
                     for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
                         if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {

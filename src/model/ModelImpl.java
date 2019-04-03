@@ -73,37 +73,37 @@ public final class ModelImpl implements Model {
      */
     public ModelImpl() {
         super();
-        this.dog = new DogImpl();
         this.ducks = new ArrayList<>();
         this.powerUp = new ArrayList<>();
         this.cleaner = new CleanerImpl();
-        this.currentMagazine = 1;
         this.match = Optional.empty();
-        this.difficulty = GlobalDifficulty.EASY;
-        this.duckPowerUp = 0;
-        this.powerUpActive = Optional.empty();
     }
 
     @Override
     public void initGame(final GameMode gameMode) {
+        this.difficulty = SettingsImpl.getSettings().getSelectedDifficulty();
         this.gameMode = gameMode;
         this.dog = new DogImpl();
         ducks.clear();
         powerUp.clear();
         this.magazine = new MagazineImpl(1);
+        this.currentMagazine = 1;
+        this.duckPowerUp = 0;
+        this.powerUpActive = Optional.empty();
+        this.timeElapsedPowerUp = 0;
         switch (gameMode) {
-        case STORY_MODE:
-            this.match = Optional.of(new StoryMatch(this.difficulty));
-            this.spawner = new StoryModeSpawner();
-            this.lastRound = this.spawner.getActualRound();
-            break;
-        case SURVIVAL_MODE:
-            this.match = Optional.of(new SurvivalMatch(this.difficulty));
-            this.spawner = new SurvivalModeSpawner();
-            this.lastRound = this.spawner.getActualRound();
-            break;
-        default:
-            break;
+            case STORY_MODE:
+                this.match = Optional.of(new StoryMatch(this.difficulty));
+                this.spawner = new StoryModeSpawner();
+                this.lastRound = this.spawner.getActualRound();
+                break;
+            case SURVIVAL_MODE:
+                this.match = Optional.of(new SurvivalMatch(this.difficulty));
+                this.spawner = new SurvivalModeSpawner();
+                this.lastRound = this.spawner.getActualRound();
+                break;
+            default:
+                break;
         }
     }
 
@@ -175,6 +175,22 @@ public final class ModelImpl implements Model {
     }
 
     @Override
+    public int getInfo() {
+        int info = 0;
+        switch (this.gameMode) {
+            case STORY_MODE:
+                info = this.lastRound *  this.match.get().getDifficulty().getLimitOfDifficulty();
+                break;
+            case SURVIVAL_MODE:
+                info = this.match.get().getDifficulty().getLimitOfDifficulty();
+                break;
+            default:
+                break;
+        }
+        return info;
+    }
+
+    @Override
     public void activateInfAmmo() {
         this.magazine.setBulletType(BulletType.INFINITE_BULLETS);
     }
@@ -237,7 +253,9 @@ public final class ModelImpl implements Model {
         switch (this.gameMode) {
             case STORY_MODE:
                 gameOver = this.spawner.getActualRound() > this.lastRound 
-                            && matchData.getGlobalScore() < matchScore || this.currentMagazine > MAX_MAGAZINES 
+                            && matchData.getGlobalScore() < matchScore 
+                            || this.currentMagazine > MAX_MAGAZINES
+                            || this.getBullets() == 0 && this.currentMagazine == MAX_MAGAZINES
                             || this.spawner.isSpawnFinished();
             break;
             case SURVIVAL_MODE:
@@ -294,6 +312,7 @@ public final class ModelImpl implements Model {
     @Override
     public void recharge() {
         if (this.gameMode != null) {
+
 //            switch (this.gameMode) {
 //            case STORY_MODE:
 //                if (this.currentMagazine < MAX_MAGAZINES) {

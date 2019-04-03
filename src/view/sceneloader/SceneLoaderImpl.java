@@ -36,7 +36,7 @@ public class SceneLoaderImpl implements SceneLoader {
     }
 
     @Override
-    public void loadScene(final Stage stage, final Screens screen, final GameMode gameMode) {
+    public final void loadScene(final Stage stage, final Screens screen, final GameMode gameMode) {
         final Region root;
         final FXMLLoader loader = new FXMLLoader();
 
@@ -73,10 +73,10 @@ public class SceneLoaderImpl implements SceneLoader {
 
             switch (screen) {
             case SELECT_ACCOUNT:
-                // this.view.resetGame();
+                this.view.reset();
                 break;
             case MENU:
-                // this.view.resetGame();
+                this.view.reset();
                 break;
             case LOGIN:
                 final LoginSceneController log = (LoginSceneController) controller;
@@ -92,6 +92,7 @@ public class SceneLoaderImpl implements SceneLoader {
             case GAME_OVER:
                 final GameOverSceneController gameOver = (GameOverSceneController) controller;
                 gameOver.setMatchData(this.view.getMatchData());
+                this.view.reset();
                 break;
             case ACHIEVEMENTS:
                 final AchievementSceneController achievementController = (AchievementSceneController) controller;

@@ -37,6 +37,12 @@ public class PauseSceneControllerImpl extends AbstractSecondarySceneController {
         this.getSceneFactory().openGameScene();
     }
 
+    @Override
+    protected final void backToMenu() {
+        this.getSceneFactory().getView().reset();
+        super.backToMenu();
+    }
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert resumeGameBtn != null : "fx:id=\"resumeGameBtn\" was not injected: check your FXML file 'Pause.fxml'.";
@@ -45,4 +51,6 @@ public class PauseSceneControllerImpl extends AbstractSecondarySceneController {
         assert pause != null : "fx:id=\"pause\" was not injected: check your FXML file 'Pause.fxml'.";
 
     }
+    
+    
 }

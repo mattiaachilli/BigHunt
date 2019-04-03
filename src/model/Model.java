@@ -119,4 +119,9 @@ public interface Model {
      * @return the game mode of the match
      */
     GameMode getGameMode();
+
+    /**
+     * @return the point to pass the round or max number flown away ducks.
+     */
+    int getInfo();
 }

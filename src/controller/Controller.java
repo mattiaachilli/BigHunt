@@ -21,6 +21,10 @@ public interface Controller {
     void initGame(GameMode gameMode);
 
     /**
+     * Init the game loop.
+     */
+    void initGameLoop();
+    /**
      * Start the game loop.
      */
     void startGameLoop();
@@ -32,10 +36,12 @@ public interface Controller {
 
     /**
      * Adds the command to the command list.
-     * @param x the x component of the command
-     * @param y the y component of the command
      * @param command
      *          the commandType to add.
+     * @param x
+     *          x coordinate.
+     * @param y
+     *          y coordinate.
      */
     void notifyCommand(CommandType command, double x, double y);
 
@@ -83,14 +89,4 @@ public interface Controller {
      * @param score the new high score
      */
     void addToPodium(GameMode gameMode, int score);
-
-    /**
-     * Pauses the game loop.
-     */
-    void pause();
-
-    /**
-     * Resume the game loop.
-     */
-    void resume();
 }

@@ -13,7 +13,6 @@ import controller.files.UserManager;
 import controller.files.UserManagerImpl;
 import controller.input.CommandType;
 import controller.input.InputController;
-import controller.input.Pause;
 import controller.input.Recharge;
 import controller.input.Shoot;
 import controller.matches.GameMode;
@@ -42,7 +41,7 @@ public final class ControllerImpl implements Controller {
     private GameLoop gameLoop;
     private final Supplier<Model> modelSupplier;
     private Model model;
-    private final InputController input;
+    private InputController input;
     private final Semaphore mutex;
     private final View view;
     private final PodiumManager podiumManager;
@@ -73,7 +72,12 @@ public final class ControllerImpl implements Controller {
     public void initGame(final GameMode gameMode) {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
-        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine());
+        this.input.clearCommands();
+        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
+    }
+
+    @Override
+    public void initGameLoop() {
         this.gameLoop = new GameLoop();
     }
 
@@ -93,17 +97,18 @@ public final class ControllerImpl implements Controller {
         try {
             mutex.acquire();
             switch (command) {
-            case PAUSE:
-                this.input.setCommand(new Pause());
-                break;
-            case RECHARGE:
-                this.input.setCommand(new Recharge());
-                break;
-            case SHOOT:
-                this.input.setCommand(new Shoot(x, y));
-                break;
-            default:
-                break;
+                case PAUSE:
+                    this.input.clearCommands();
+                    this.stopGameLoop();
+                    this.view.getSceneFactory().openPauseScene();
+                case RECHARGE:
+                    this.input.setCommand(new Recharge());
+                    break;
+                case SHOOT:
+                    this.input.setCommand(new Shoot(x, y));
+                    break;
+                default:
+                    break;
             }
             mutex.release();
         } catch (InterruptedException e) {
@@ -166,16 +171,6 @@ public final class ControllerImpl implements Controller {
         }
     }
 
-    @Override
-    public void pause() {
-        this.gameLoop.pauseLoop();
-    }
-
-    @Override
-    public void resume() {
-        this.gameLoop.resumeLoop();
-    }
-
     private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
         return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
     }
@@ -215,26 +210,22 @@ public final class ControllerImpl implements Controller {
 
     private class GameLoop extends Thread {
         private volatile boolean running;
-        private boolean paused;
 
         GameLoop() {
             super();
             running = true;
-            paused = false;
         }
 
         public void run() {
             long lastTime = System.currentTimeMillis();
-            while (running && !model.isGameOver()) { /* Running and not gameover */
-                if (!this.paused) {
-                    final long current = System.currentTimeMillis();
-                    final int elapsed = (int) (current - lastTime);
-                    processInput();
-                    model.update(elapsed);
-                    view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine());
-                    Utilities.waitForNextFrame(PERIOD, current);
-                    lastTime = current;
-                }
+            while (running && !model.isGameOver()) { /* Not gameover */
+                final long current = System.currentTimeMillis();
+                final int elapsed = (int) (current - lastTime);
+                processInput();
+                model.update(elapsed);
+                view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(), model.getInfo());
+                Utilities.waitForNextFrame(PERIOD, current);
+                lastTime = current;
             }
             if (model.isGameOver()) {
                 ControllerImpl.this.endGame();
@@ -244,22 +235,13 @@ public final class ControllerImpl implements Controller {
         private void processInput() {
             try {
                 ControllerImpl.this.mutex.acquire();
-                if (!input.getCommands().isEmpty() && input.getCommands().peek().getType().equals(CommandType.PAUSE)) {
-                    this.pauseLoop();
+                if (!input.getCommands().isEmpty()) {
+                    input.executeCommand(model);
                 }
-                input.executeCommand(model);
                 ControllerImpl.this.mutex.release();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-
-        public void pauseLoop() {
-            this.paused = true;
-        }
-
-        public void resumeLoop() {
-            this.paused = false;
         }
 
         public void stopGameLoop() {

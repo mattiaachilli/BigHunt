@@ -18,6 +18,11 @@ public interface CommandWriter {
      * @param command
      *          the command to remove.
      */
-    void removeCommand(Command command);
+    void clearCommands();
+
+    /**
+     * Remove all commands in queue.
+     */
+    void removeAll();
 
 }

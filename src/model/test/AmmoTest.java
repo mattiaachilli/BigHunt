@@ -1,4 +1,4 @@
-package model.gun;
+package model.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,24 +15,24 @@ class AmmoTest {
     @Test
     void test() {
         this.model.shoot();
-        assertEquals(this.model.getCurrentMagazine(), 1);
+        assertEquals(this.model.getCurrentMagazine().getNumber(), 1);
         assertEquals(this.model.getBullets(), 4);
         for (int i = 0; i <= ModelImpl.MAX_MAGAZINES / 4; i++) {
             this.model.shoot();
         }
-        assertEquals(this.model.getCurrentMagazine(), 2);
+        assertEquals(this.model.getCurrentMagazine().getNumber(), 2);
         assertEquals(this.model.getBullets(), 3);
-        this.model.activateInfAmmo();
-        for (int i = 0; i <= ModelImpl.MAX_MAGAZINES; i++) {
-            this.model.shoot();
-        }
-        assertEquals(this.model.getCurrentMagazine(), 2);
-        assertEquals(this.model.getBullets(), 3);
-        this.model.deactivateInfAmmo();
+//        this.model.activateInfAmmo();
+//        for (int i = 0; i <= ModelImpl.MAX_MAGAZINES; i++) {
+//            this.model.shoot();
+//        }
+//        assertEquals(this.model.getCurrentMagazine().getNumber(), 2);
+//        assertEquals(this.model.getBullets(), 3);
+//        this.model.deactivateInfAmmo();
         for (int i = 0; i <= ModelImpl.MAX_MAGAZINES / 4; i++) {
             this.model.shoot();
         }
-        assertEquals(this.model.getCurrentMagazine(), 3);
+        assertEquals(this.model.getCurrentMagazine().getNumber(), 3);
         assertEquals(this.model.getBullets(), 2);
 //        for (int i = 0; i < ModelImpl.MAX_MAGAZINES * 5; i++) {
 //            this.model.shoot();
