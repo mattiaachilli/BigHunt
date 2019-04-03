@@ -13,7 +13,7 @@ import model.properties.VelocityImpl;
  */
 public class PowerUpImpl extends AbstractEntity implements PowerUp {
 
-    private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0.0, ModelImpl.GAME_HEIGHT / 10);
+    private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0.0, ModelImpl.GAME_HEIGHT / 5);
     private final PowerUpType type;
     private boolean visible;
     private boolean hit;

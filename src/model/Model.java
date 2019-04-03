@@ -98,16 +98,6 @@ public interface Model {
     Magazine getCurrentMagazine();
 
     /**
-     * test.
-     */
-    void activateInfAmmo();
-
-    /**
-     * test.
-     */
-    void deactivateInfAmmo();
-
-    /**
      * Get powerUp active at the moment.
      * 
      * @return if exist the power up active.
@@ -119,6 +109,11 @@ public interface Model {
      * @return the game mode of the match
      */
     GameMode getGameMode();
+
+    /**
+     * End actual powerUp.
+     */
+    void endPowerUp();
 
     /**
      * @return the point to pass the round or max number flown away ducks.
