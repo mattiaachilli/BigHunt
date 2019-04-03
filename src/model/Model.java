@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import controller.matches.GameMode;
 import model.data.MatchData;
+import model.entities.Dog;
 import model.entities.Duck;
 import model.entities.Entity;
 import model.entities.powerup.PowerUp;
@@ -113,4 +114,12 @@ public interface Model {
      * @return the point to pass the round or max number flown away ducks.
      */
     int getInfo();
+
+    /**
+     * Get dog of the game.
+     * 
+     * @return dog
+     * @return
+     */
+    Dog getDog();
 }

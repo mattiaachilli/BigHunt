@@ -5,21 +5,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane id="highscores" prefHeight="1366.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameOverSceneControllerImpl">
+<BorderPane id="highscores" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameOverSceneControllerImpl">
    <top>
       <Label id="title" alignment="CENTER" text="HIGH SCORES" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="1366.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane prefHeight="400.0" prefWidth="800.0">
+            <GridPane prefHeight="550.0" prefWidth="1366.0">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="0.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="10.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="20.0" prefWidth="200.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints vgrow="SOMETIMES" />
@@ -81,11 +81,11 @@
                   </GridPane>
                </children>
             </GridPane>
-            <HBox alignment="CENTER_LEFT" prefWidth="1366.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="100.0" maxWidth="1366.0">
                <children>
-                  <GridPane prefHeight="150.0" prefWidth="400.0">
+                  <GridPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="400.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="200.0" />
                       <ColumnConstraints hgrow="SOMETIMES" />
                       <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>

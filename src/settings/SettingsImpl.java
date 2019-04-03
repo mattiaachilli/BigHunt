@@ -138,4 +138,5 @@ public final class SettingsImpl implements Settings {
     public Pair<Integer, Integer> getDefaultResolutions() {
         return SettingsImpl.DEFAULT_RESOLUTION;
     }
+
 }

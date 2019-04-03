@@ -1,8 +1,11 @@
 package view.sceneloader;
 
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+
 import controller.matches.GameMode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -54,7 +57,7 @@ public class SceneLoaderImpl implements SceneLoader {
             SettingsImpl.getSettings().getSelectedResolution().getValue());
 
             root.getChildrenUnmodifiable().stream().forEach(e -> {
-                if (screen == Screens.GAME && e instanceof Label || screen != Screens.GAME) {
+                if ((screen == Screens.GAME && e instanceof Label) || screen != Screens.GAME) {
                     e.setScaleX(SettingsImpl.getSettings().getScaleFactory());
                     e.setScaleY(SettingsImpl.getSettings().getScaleFactory());
                 }
@@ -63,7 +66,7 @@ public class SceneLoaderImpl implements SceneLoader {
             stage.setScene(new Scene(root));
 
             stage.getScene().getStylesheets().add(STYLE_CSS_PATH);
-            stage.setResizable(false);
+           stage.setResizable(false);
 
             if (!SettingsImpl.getSettings().isFullScreen()) {
                 stage.sizeToScene();

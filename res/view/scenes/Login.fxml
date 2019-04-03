@@ -43,7 +43,7 @@
             <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Label text="PASSWORD" />
-                  <PasswordField fx:id="passwordTextField" alignment="CENTER" maxHeight="20.0" maxWidth="200.0" />
+                  <PasswordField fx:id="passwordTextField" alignment="CENTER" maxWidth="200.0" />
                </children>
             </VBox>
          </children>

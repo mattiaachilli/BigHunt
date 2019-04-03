@@ -140,10 +140,6 @@ public final class ModelImpl implements Model {
                 this.getCurrentMagazine().setBulletType(BulletType.NORMAL_BULLET);
             }
         }
-//        if (!this.getCurrentMagazine().update(timeElapsed)) {
-//            this.endPowerUp();
-//            this.getCurrentMagazine().setBulletType(BulletType.NORMAL_BULLET);
-//        }
 
         //Update ducks
         this.ducks.forEach(d -> {
@@ -300,6 +296,11 @@ public final class ModelImpl implements Model {
     @Override
     public List<Duck> getDucks() {
         return this.ducks;
+    }
+
+    @Override
+    public Dog getDog() {
+        return this.dog;
     }
 
     @Override
