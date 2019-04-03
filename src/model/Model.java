@@ -98,21 +98,16 @@ public interface Model {
     Magazine getCurrentMagazine();
 
     /**
-     * test.
-     */
-    void activateInfAmmo();
-
-    /**
-     * test.
-     */
-    void deactivateInfAmmo();
-
-    /**
      * Get powerUp active at the moment.
      * 
      * @return if exist the power up active.
      */
     Optional<PowerUpType> getPowerUpActive();
+
+    /**
+     * End actual powerUp.
+     */
+    void endPowerUp();
 
     /**
      * @return the point to pass the round or max number flown away ducks.

@@ -47,8 +47,12 @@ public final class ModelImpl implements Model {
      */
     public static final int MAX_MAGAZINES = 20;
     private static final int FIRST_MAGAZINE = 1;
+    private static final long MAX_TIME = 3000;
 
-    private static final int NEXT_DUCKS_POWERUP = 3;
+    /** 
+     * Next ducks to activate the power Up.
+     */
+    public static final int NEXT_DUCKS_POWERUP = 3;
 
     /**
      * All objects of the game world.
@@ -66,8 +70,8 @@ public final class ModelImpl implements Model {
     private Cleaner cleaner;
     private int duckPowerUp;
     private Optional<PowerUpType> powerUpActive;
-    private int timeElapsedPowerUp = 0;
     private int lastRound;
+    private long powerUpTime;
 
     /**
      * Constructor of the model.
@@ -90,8 +94,8 @@ public final class ModelImpl implements Model {
         this.currentMagazine = FIRST_MAGAZINE;
         this.magazine = new MagazineImpl(this.currentMagazine);
         this.duckPowerUp = 0;
+        this.powerUpTime = 0;
         this.powerUpActive = Optional.empty();
-        this.timeElapsedPowerUp = 0;
         switch (gameMode) {
             case STORY_MODE:
                 this.match = Optional.of(new StoryMatch(this.difficulty));
@@ -132,7 +136,17 @@ public final class ModelImpl implements Model {
         }
 
         // Update magazine
-        this.getCurrentMagazine().update(timeElapsed);
+        if (this.getCurrentMagazine().getBulletType().equals(BulletType.INFINITE_BULLETS)) {
+            this.powerUpTime = this.powerUpTime + timeElapsed;
+            if (this.powerUpTime > MAX_TIME) {
+                this.endPowerUp();
+                this.getCurrentMagazine().setBulletType(BulletType.NORMAL_BULLET);
+            }
+        }
+//        if (!this.getCurrentMagazine().update(timeElapsed)) {
+//            this.endPowerUp();
+//            this.getCurrentMagazine().setBulletType(BulletType.NORMAL_BULLET);
+//        }
 
         //Update ducks
         this.ducks.forEach(d -> {
@@ -145,9 +159,6 @@ public final class ModelImpl implements Model {
         });
         // Update PowerUp list
         this.powerUp.forEach(p -> {
-            if (p.isVisible()) {
-                this.timeElapsedPowerUp += timeElapsed;
-            }
             if (p.isHit()) {
                 this.duckPowerUp = NEXT_DUCKS_POWERUP;
                 this.powerUpActive = Optional.of(p.getType());
@@ -170,7 +181,7 @@ public final class ModelImpl implements Model {
                 this.powerUp.clear();
                 this.lastRound = this.spawner.getActualRound();
                 this.duckPowerUp = 0;
-                this.powerUpActive = Optional.empty();
+                this.endPowerUp();
             }
         }
     }
@@ -191,16 +202,6 @@ public final class ModelImpl implements Model {
         return info;
     }
 
-    @Override
-    public void activateInfAmmo() {
-        this.magazine.setBulletType(BulletType.INFINITE_BULLETS);
-    }
-
-    @Override
-    public void deactivateInfAmmo() {
-        this.magazine.setBulletType(BulletType.NORMAL_BULLET);
-    }
-
     private void activePowerUp(final PowerUpType powerUp) {
         switch (powerUp) {
             case INFINITE_AMMO:
@@ -210,7 +211,7 @@ public final class ModelImpl implements Model {
                 this.ducks.stream()
                           .filter(d -> d.isAlive() 
                                   && d.getPosition().getX() >= StandardDuck.COLLISION_X
-                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X)
+                                  && d.getPosition().getX() <= (ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) * 2)
                           .forEach(d -> {
                               if (this.duckPowerUp > 0) {
                                   d.setDecelerate();
@@ -222,7 +223,7 @@ public final class ModelImpl implements Model {
                 this.ducks.stream()
                           .filter(d -> d.isAlive() 
                                   && d.getPosition().getX() >= StandardDuck.COLLISION_X
-                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X)
+                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - (StandardDuck.COLLISION_X * 3))
                           .forEach(d -> {
                               if (this.duckPowerUp > 0) {
                                   d.kill(); 
@@ -236,7 +237,7 @@ public final class ModelImpl implements Model {
                 break;
         }
         if (this.duckPowerUp == 0) {
-            this.powerUpActive = Optional.empty();
+            this.endPowerUp();
         }
     }
 
@@ -244,6 +245,13 @@ public final class ModelImpl implements Model {
     @Override
     public Optional<PowerUpType> getPowerUpActive() {
         return this.powerUpActive;
+    }
+
+    @Override
+    public void endPowerUp() {
+        if (this.powerUpActive.isPresent()) {
+            this.powerUpActive = Optional.empty();
+        }
     }
 
     @Override

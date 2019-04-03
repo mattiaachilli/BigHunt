@@ -8,9 +8,7 @@ package model.gun;
 public class MagazineImpl implements Magazine {
 
     private static final int MAX_AMMO = 8;
-    private static final int MAX_TIME = 000;
 
-    private long powerUpTime;
     private int magNumber;
     private int ammo;
     private BulletType bulletType;
@@ -46,24 +44,11 @@ public class MagazineImpl implements Magazine {
     @Override
     public final void setBulletType(final BulletType bulletType) {
         this.bulletType = bulletType;
-        if (this.bulletType.equals(BulletType.INFINITE_BULLETS)) {
-            this.powerUpTime = System.currentTimeMillis();
-        }
     }
 
     @Override
     public final BulletType getBulletType() {
         return this.bulletType;
-    }
-
-    @Override
-    public final void update(final int timeElapsed) {
-        if (this.bulletType.equals(BulletType.INFINITE_BULLETS)) {
-            this.powerUpTime = timeElapsed + this.powerUpTime;
-            if (System.currentTimeMillis() - this.powerUpTime > MAX_TIME) {
-                this.setBulletType(BulletType.NORMAL_BULLET);
-            }
-        }
     }
 
 }
