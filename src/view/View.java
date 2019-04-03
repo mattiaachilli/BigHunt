@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.Optional;
 
 import controller.Controller;
-import controller.matches.GameMode;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
 import model.data.MatchData;
 import model.data.Podium;
 import model.gun.Magazine;
+import model.matches.GameMode;
 import view.entities.ViewEntity;
 import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;

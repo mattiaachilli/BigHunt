@@ -1,5 +1,8 @@
 package model.data;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +16,10 @@ import java.util.stream.Stream;
  */
 public class PodiumImpl implements Podium {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private static final int MAX_OF_HIGH_SCORES = 5;
     private static final Comparator<HighScore> COMPARATOR = (first, second) -> Integer.compare(second.getScore(),
     first.getScore());
@@ -46,5 +53,13 @@ public class PodiumImpl implements Podium {
             }
             this.highScores.sort(COMPARATOR);
         }
+    }
+
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
+
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
     }
 }

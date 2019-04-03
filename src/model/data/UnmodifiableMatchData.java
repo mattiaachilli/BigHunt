@@ -77,16 +77,6 @@ public class UnmodifiableMatchData implements MatchData {
     }
 
     @Override
-    public final boolean hasPowerUp() {
-        return this.matchdata.hasPowerUp();
-    }
-
-    @Override
-    public final void powerUpEnded() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public final UnmodifiableMatchData unmodifiableCopy() {
         return this;
     }

@@ -3,8 +3,8 @@ package controller;
 import java.util.Optional;
 
 import controller.input.CommandType;
-import controller.matches.GameMode;
 import model.data.UserData;
+import model.matches.GameMode;
 
 /**
  * 

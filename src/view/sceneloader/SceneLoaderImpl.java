@@ -1,11 +1,11 @@
 package view.sceneloader;
 
-import controller.matches.GameMode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import model.matches.GameMode;
 import settings.SettingsImpl;
 import view.View;
 import view.scenecontroller.AchievementSceneController;

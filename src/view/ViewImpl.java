@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import controller.Controller;
-import controller.matches.GameMode;
 import controller.input.CommandType;
 import javafx.application.Platform;
 import javafx.scene.ImageCursor;
@@ -20,6 +19,7 @@ import model.achievements.Achievement;
 import model.achievements.AchievementType;
 import model.data.Podium;
 import model.gun.Magazine;
+import model.matches.GameMode;
 
 import java.util.concurrent.Semaphore;
 

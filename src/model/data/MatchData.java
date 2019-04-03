@@ -81,18 +81,6 @@ public interface MatchData {
 
     /**
      * 
-     * @return true if the player has already a power up
-     */
-    boolean hasPowerUp();
-
-    /**
-     * 
-     * Removes the power up.
-     */
-    void powerUpEnded();
-
-    /**
-     * 
      * @return an unmodifiable copy of a match
      */
    UnmodifiableMatchData unmodifiableCopy();

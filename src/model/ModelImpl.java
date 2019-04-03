@@ -3,10 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import controller.matches.AbstractMatch;
-import controller.matches.GameMode;
-import controller.matches.StoryMatch;
-import controller.matches.SurvivalMatch;
+
 import model.cleaner.Cleaner;
 import model.cleaner.CleanerImpl;
 import model.data.MatchData;
@@ -21,6 +18,10 @@ import model.entities.powerup.PowerUpType;
 import model.gun.BulletType;
 import model.gun.Magazine;
 import model.gun.MagazineImpl;
+import model.matches.AbstractMatch;
+import model.matches.GameMode;
+import model.matches.StoryMatch;
+import model.matches.SurvivalMatch;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
@@ -201,6 +202,7 @@ public final class ModelImpl implements Model {
     }
 
     private void activePowerUp(final PowerUpType powerUp) {
+        this.match.get().getMatchData().powerUpCollected(powerUp);
         switch (powerUp) {
             case INFINITE_AMMO:
                 this.getCurrentMagazine().setBulletType(BulletType.INFINITE_BULLETS);

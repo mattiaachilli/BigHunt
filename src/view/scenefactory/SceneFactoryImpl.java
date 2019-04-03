@@ -1,9 +1,9 @@
 
 package view.scenefactory;
 
-import controller.matches.GameMode;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.matches.GameMode;
 import settings.SettingsImpl;
 import view.View;
 import view.sceneloader.SceneLoaderImpl;
