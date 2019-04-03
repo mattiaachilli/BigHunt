@@ -34,12 +34,14 @@ public class PauseSceneControllerImpl extends AbstractSecondarySceneController {
 
     @FXML
     void resumeGame() {
+        this.getSceneFactory().getView().getController().resumeGameLoop();
         this.getSceneFactory().openGameScene();
+        this.getSceneFactory().getView().resume();
     }
 
     @Override
     protected final void backToMenu() {
-        this.getSceneFactory().getView().reset();
+        //this.getSceneFactory().getView().resume();
         super.backToMenu();
     }
 

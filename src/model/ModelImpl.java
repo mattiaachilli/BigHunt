@@ -189,7 +189,6 @@ public final class ModelImpl implements Model {
     }
 
     private void activePowerUp(final PowerUpType powerUp) {
-        this.match.get().getMatchData().powerUpCollected(powerUp);
         switch (powerUp) {
             case INFINITE_AMMO:
                 this.getCurrentMagazine().setBulletType(BulletType.INFINITE_BULLETS);

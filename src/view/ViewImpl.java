@@ -1,8 +1,5 @@
 package view;
 
-import java.awt.Cursor;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.util.HashMap;
 
 import java.util.List;
@@ -22,8 +19,6 @@ import model.gun.Magazine;
 import model.matches.GameMode;
 
 import java.util.concurrent.Semaphore;
-
-import javax.swing.ImageIcon;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -74,7 +69,7 @@ public class ViewImpl implements View {
         this.achievements = new HashMap<>();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
-        this.gamePaused = true;
+        this.gamePaused = false;
     }
 
     @Override
@@ -88,7 +83,6 @@ public class ViewImpl implements View {
 
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
-        this.reset();
         this.gameMode = gameMode;
         this.render = new Render(gameSceneController, gameMode);
         controller.initGame(gameMode);
@@ -101,11 +95,6 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void reset() {
-        this.gamePaused = true;
-    }
-
-    @Override
     public final void startRender() {
         this.render.start();
     }
@@ -115,9 +104,22 @@ public class ViewImpl implements View {
         this.render.stopRender();
     }
 
+    public void pauseRender() {
+        this.gamePaused = true;
+    }
+    
+    public void resume() {
+        this.gamePaused = false;
+    }
+    
     @Override
-    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData, final Magazine magazine,
-                            final int info) {
+    public boolean isPaused() {
+        return this.gamePaused;
+    }
+
+    @Override
+    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData,
+    final Magazine magazine, final int info) {
         try {
             this.mutex.acquire();
             this.viewEntities = viewEntities;
@@ -134,7 +136,6 @@ public class ViewImpl implements View {
     public final void closeGame(final MatchData matchData, final boolean isHighScores) {
         this.matchData = matchData;
         this.render.endGame();
-        this.reset();
     }
 
     @Override
@@ -203,7 +204,8 @@ public class ViewImpl implements View {
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
             Image cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
-            this.gamecanvas.getCanvas().setCursor(new ImageCursor(cursorImage, cursorImage.getWidth() / 2, cursorImage.getHeight() / 2));
+            this.gamecanvas.getCanvas()
+            .setCursor(new ImageCursor(cursorImage, cursorImage.getWidth() / 2, cursorImage.getHeight() / 2));
             this.gameMode = gameMode;
 
             this.backgroundImage = new ImageView(
@@ -236,17 +238,22 @@ public class ViewImpl implements View {
         }
 
         @Override
-        public final void run() { 
-            if (!gamePaused) {
-                controller.startGameLoop();
-            } else {
-                gamePaused = false;
-                controller.initGame(this.gameMode);
-                controller.initGameLoop();
-                controller.startGameLoop();
-            }
+        public final void run() {
+//            if (!gamePaused) {
+//                controller.startGameLoop();
+//            } else {
+//                gamePaused = false;
+//                controller.initGame(this.gameMode);
+//                controller.initGameLoop();
+//                controller.startGameLoop();
+//            }
+
+            //controller.initGame(this.gameMode);
+            controller.initGameLoop();
+            controller.startGameLoop();
 
             while (this.running) {
+
                 try {
                     mutex.acquire();
                     this.viewEntitiesGame = viewEntities;
@@ -274,9 +281,10 @@ public class ViewImpl implements View {
                         }
                     }
                 });
-                Utilities.waitForNextFrame(period, currentTime);
-            }
 
+                Utilities.waitForNextFrame(period, currentTime);
+
+            }
             if (this.end) {
                 Platform.runLater(() -> {
                     sceneFactory.openGameOverScene();
@@ -286,8 +294,8 @@ public class ViewImpl implements View {
 
         private void updateBackground() {
             this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0,
-                                      SettingsImpl.getSettings().getSelectedResolution().getKey(),
-                                      SettingsImpl.getSettings().getSelectedResolution().getValue());
+            SettingsImpl.getSettings().getSelectedResolution().getKey(),
+            SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
         }
 

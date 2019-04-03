@@ -130,7 +130,15 @@ public interface View {
     GameMode getActualGameMode();
 
     /**
-     * Reset the game when GameOver.
+     * 
+     * @return true if the game is paused. 
      */
-    void reset();
+    boolean isPaused();
+    
+    /**
+     * Pause the view loop.
+     */
+    void pauseRender();
+    
+    void resume();
 }

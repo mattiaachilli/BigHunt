@@ -30,6 +30,12 @@ public interface Controller {
     void startGameLoop();
 
     /**
+     * Resumes the game loop.
+     * Method to be called by the button RESUME.
+     */
+    void resumeGameLoop();
+
+    /**
      * Stop the game loop.
      */
     void stopGameLoop();
@@ -73,20 +79,4 @@ public interface Controller {
      * @return true if the user is correctly registered
      */
     boolean registerUser(String username, String password);
-
-    /**
-     * 
-     * @param gameMode the game mode played
-     * @param score the score to control
-     * @return true if the @param score is an high score
-     */
-    boolean isHighScore(GameMode gameMode, int score);
-
-    /**
-     * Adds an high score to the podium.
-     * 
-     * @param gameMode the game mode played
-     * @param score the new high score
-     */
-    void addToPodium(GameMode gameMode, int score);
 }

@@ -87,6 +87,12 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
+    public void resumeGameLoop() {
+        this.input.clearCommands();
+        this.gameLoop.resumeLoop();
+    }
+
+    @Override
     public void stopGameLoop() {
         gameLoop.stopGameLoop();
         view.stopRender();
@@ -99,8 +105,10 @@ public final class ControllerImpl implements Controller {
             switch (command) {
                 case PAUSE:
                     this.input.clearCommands();
-                    this.stopGameLoop();
+                    this.gameLoop.pauseLoop();
+                    this.view.pauseRender();
                     this.view.getSceneFactory().openPauseScene();
+                    break;
                 case RECHARGE:
                     this.input.setCommand(new Recharge());
                     break;
@@ -145,32 +153,6 @@ public final class ControllerImpl implements Controller {
         return this.user.isPresent();
     }
 
-    @Override
-    public boolean isHighScore(final GameMode gameMode, final int score) {
-        switch (gameMode) {
-        case STORY_MODE:
-            return this.storyPodium.isHighScore(score);
-        case SURVIVAL_MODE:
-            return this.survivalPodium.isHighScore(score);
-        default:
-            return false;
-        }
-    }
-
-    @Override
-    public void addToPodium(final GameMode gameMode, final int score) {
-        switch (gameMode) {
-        case STORY_MODE:
-            this.storyPodium.addHighScore(score, this.user.get().getName());
-            break;
-        case SURVIVAL_MODE:
-            this.survivalPodium.addHighScore(score, this.user.get().getName());
-            break;
-        default:
-            break;
-        }
-    }
-
     private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
         return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
     }
@@ -183,6 +165,8 @@ public final class ControllerImpl implements Controller {
     private void endGame() {
         this.view.closeGame(this.model.getMatchData(), false);
         this.stopGameLoop();
+
+        this.model.endMatch();
 
         final MatchData matchdata = this.model.getMatchData();
 
@@ -206,29 +190,36 @@ public final class ControllerImpl implements Controller {
         }
 
         this.userManager.save(this.user.get());
+
+        //this.model = null;
     }
 
     private class GameLoop extends Thread {
         private volatile boolean running;
+        private volatile boolean paused;
 
         GameLoop() {
             super();
             running = true;
+            paused = false;
         }
 
         public void run() {
             long lastTime = System.currentTimeMillis();
-            while (running && !model.isGameOver()) { /* Not gameover */
-                final long current = System.currentTimeMillis();
-                final int elapsed = (int) (current - lastTime);
-                processInput();
-                model.update(elapsed);
-                view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(), model.getInfo());
-                Utilities.waitForNextFrame(PERIOD, current);
-                lastTime = current;
-            }
-            if (model.isGameOver()) {
-                ControllerImpl.this.endGame();
+            while (running) {
+                while (!this.paused && !model.isGameOver()) {
+                    final long current = System.currentTimeMillis();
+                    final int elapsed = (int) (current - lastTime);
+                    processInput();
+                    model.update(elapsed);
+                    view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
+                    model.getInfo());
+                    Utilities.waitForNextFrame(PERIOD, current);
+                    lastTime = current;
+                }
+                if (model.isGameOver()) {
+                    ControllerImpl.this.endGame();
+                }
             }
         }
 
@@ -242,6 +233,14 @@ public final class ControllerImpl implements Controller {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+
+        public void pauseLoop() {
+            this.paused = true;
+        }
+
+        public void resumeLoop() {
+            this.paused = false;
         }
 
         public void stopGameLoop() {

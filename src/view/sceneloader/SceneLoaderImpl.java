@@ -26,6 +26,8 @@ public class SceneLoaderImpl implements SceneLoader {
 
     private final View view;
     private static final String STYLE_CSS_PATH = "/view/style/style.css";
+    private static Scene gameScreen;
+    private static SceneController gameSceneController;
 
     /**
      * 
@@ -39,27 +41,40 @@ public class SceneLoaderImpl implements SceneLoader {
     public final void loadScene(final Stage stage, final Screens screen, final GameMode gameMode) {
         final Region root;
         final FXMLLoader loader = new FXMLLoader();
+        final SceneController controller;
+        final Scene scene;
 
         try {
-            loader.setLocation(getClass().getResource(screen.getPath()));
-            root = loader.load();
 
-            final SceneController controller = loader.getController();
-            controller.setSceneFactory(this.view.getSceneFactory());
+            if (screen != Screens.GAME || gameScreen == null) {
+                loader.setLocation(getClass().getResource(screen.getPath()));
+                root = loader.load();
 
-            root.setPrefSize(SettingsImpl.getSettings().getSelectedResolution().getKey(),
-            SettingsImpl.getSettings().getSelectedResolution().getValue());
+                controller = loader.getController();
+                controller.setSceneFactory(this.view.getSceneFactory());
 
-            root.getChildrenUnmodifiable().stream().forEach(e -> {
-                if (screen == Screens.GAME && e instanceof Label || screen != Screens.GAME) {
-                    e.setScaleX(SettingsImpl.getSettings().getScaleFactory());
-                    e.setScaleY(SettingsImpl.getSettings().getScaleFactory());
+                root.setPrefSize(SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                SettingsImpl.getSettings().getSelectedResolution().getValue());
+
+                root.getChildrenUnmodifiable().stream().forEach(e -> {
+                    if (screen == Screens.GAME && e instanceof Label || screen != Screens.GAME) {
+                        e.setScaleX(SettingsImpl.getSettings().getScaleFactory());
+                        e.setScaleY(SettingsImpl.getSettings().getScaleFactory());
+                    }
+                });
+                scene = new Scene(root);
+                scene.getStylesheets().add(STYLE_CSS_PATH);
+
+                if (screen == Screens.GAME) {
+                    gameScreen = scene;
+                    gameSceneController = controller;
                 }
-            });
+            } else {
+                scene = gameScreen;
+                controller = gameSceneController;
+            }
+            stage.setScene(scene);
 
-            stage.setScene(new Scene(root));
-
-            stage.getScene().getStylesheets().add(STYLE_CSS_PATH);
             stage.setResizable(false);
 
             if (!SettingsImpl.getSettings().isFullScreen()) {
@@ -73,10 +88,10 @@ public class SceneLoaderImpl implements SceneLoader {
 
             switch (screen) {
             case SELECT_ACCOUNT:
-                this.view.reset();
+                // this.view.resume();
                 break;
             case MENU:
-                this.view.reset();
+                // this.view.resume();
                 break;
             case LOGIN:
                 final LoginSceneController log = (LoginSceneController) controller;
@@ -87,12 +102,14 @@ public class SceneLoaderImpl implements SceneLoader {
                 reg.setView(this.view);
                 break;
             case GAME:
-                this.view.startGame((GameSceneController) controller, gameMode);
+                if (!this.view.isPaused()) {
+                    this.view.startGame((GameSceneController) controller, gameMode);
+                }
                 break;
             case GAME_OVER:
                 final GameOverSceneController gameOver = (GameOverSceneController) controller;
                 gameOver.setMatchData(this.view.getMatchData());
-                this.view.reset();
+                // this.view.resume();
                 break;
             case ACHIEVEMENTS:
                 final AchievementSceneController achievementController = (AchievementSceneController) controller;
