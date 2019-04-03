@@ -46,8 +46,10 @@ public final class ModelImpl implements Model {
      * Maximum number of magazines carriable.
      */
     public static final int MAX_MAGAZINES = 20;
-
-    private static final int NEXT_DUCKS_POWERUP = 3;
+    /** 
+     * Next ducks to activate the power Up.
+     */
+    public static final int NEXT_DUCKS_POWERUP = 3;
 
     /**
      * All objects of the game world.
@@ -65,7 +67,6 @@ public final class ModelImpl implements Model {
     private Cleaner cleaner;
     private int duckPowerUp;
     private Optional<PowerUpType> powerUpActive;
-    private int timeElapsedPowerUp = 0;
     private int lastRound;
 
     /**
@@ -90,7 +91,6 @@ public final class ModelImpl implements Model {
         this.currentMagazine = 1;
         this.duckPowerUp = 0;
         this.powerUpActive = Optional.empty();
-        this.timeElapsedPowerUp = 0;
         switch (gameMode) {
             case STORY_MODE:
                 this.match = Optional.of(new StoryMatch(this.difficulty));
@@ -144,9 +144,6 @@ public final class ModelImpl implements Model {
         });
         // Update PowerUp list
         this.powerUp.forEach(p -> {
-            if (p.isVisible()) {
-                this.timeElapsedPowerUp += timeElapsed;
-            }
             if (p.isHit()) {
                 this.duckPowerUp = NEXT_DUCKS_POWERUP;
                 this.powerUpActive = Optional.of(p.getType());
@@ -169,7 +166,7 @@ public final class ModelImpl implements Model {
                 this.powerUp.clear();
                 this.lastRound = this.spawner.getActualRound();
                 this.duckPowerUp = 0;
-                this.powerUpActive = Optional.empty();
+                this.endPowerUp();
             }
         }
     }
@@ -190,16 +187,6 @@ public final class ModelImpl implements Model {
         return info;
     }
 
-    @Override
-    public void activateInfAmmo() {
-        this.magazine.setBulletType(BulletType.INFINITE_BULLETS);
-    }
-
-    @Override
-    public void deactivateInfAmmo() {
-        this.magazine.setBulletType(BulletType.NORMAL_BULLET);
-    }
-
     private void activePowerUp(final PowerUpType powerUp) {
         switch (powerUp) {
             case INFINITE_AMMO:
@@ -209,7 +196,7 @@ public final class ModelImpl implements Model {
                 this.ducks.stream()
                           .filter(d -> d.isAlive() 
                                   && d.getPosition().getX() >= StandardDuck.COLLISION_X
-                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X)
+                                  && d.getPosition().getX() <= (ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) * 2)
                           .forEach(d -> {
                               if (this.duckPowerUp > 0) {
                                   d.setDecelerate();
@@ -221,7 +208,7 @@ public final class ModelImpl implements Model {
                 this.ducks.stream()
                           .filter(d -> d.isAlive() 
                                   && d.getPosition().getX() >= StandardDuck.COLLISION_X
-                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X)
+                                  && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - (StandardDuck.COLLISION_X * 3))
                           .forEach(d -> {
                               if (this.duckPowerUp > 0) {
                                   d.kill(); 
@@ -235,7 +222,7 @@ public final class ModelImpl implements Model {
                 break;
         }
         if (this.duckPowerUp == 0) {
-            this.powerUpActive = Optional.empty();
+            this.endPowerUp();
         }
     }
 
@@ -243,6 +230,13 @@ public final class ModelImpl implements Model {
     @Override
     public Optional<PowerUpType> getPowerUpActive() {
         return this.powerUpActive;
+    }
+
+    @Override
+    public void endPowerUp() {
+        if (this.powerUpActive.isPresent()) {
+            this.powerUpActive = Optional.empty();
+        }
     }
 
     @Override

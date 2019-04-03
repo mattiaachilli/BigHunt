@@ -30,8 +30,7 @@ public class CleanerImpl implements Cleaner {
         indexes.clear();
 
         for (int i = 0; i < powerUps.size(); i++) {
-            if (powerUps.get(i).isHit() 
-                || powerUps.get(i).getPosition().getY() <= 0
+            if (powerUps.get(i).isHit() && powerUps.get(i).isVisible() 
                 || powerUps.get(i).getPosition().getY() >= DogImpl.FINAL_POS_Y) {
                 indexes.add(i);
             }
