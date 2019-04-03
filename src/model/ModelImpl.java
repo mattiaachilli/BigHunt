@@ -43,9 +43,12 @@ public final class ModelImpl implements Model {
      */
     public static final int GAME_HEIGHT = SettingsImpl.getSettings().getSelectedResolution().getValue();
     /**
-     * Maximum number of magazines carriable.
+     * Maximum number of magazines carriable in story mode.
      */
     public static final int MAX_MAGAZINES = 20;
+    private static final int FIRST_MAGAZINE = 1;
+    private static final long MAX_TIME = 3000;
+
     /** 
      * Next ducks to activate the power Up.
      */
@@ -68,6 +71,7 @@ public final class ModelImpl implements Model {
     private int duckPowerUp;
     private Optional<PowerUpType> powerUpActive;
     private int lastRound;
+    private long powerUpTime;
 
     /**
      * Constructor of the model.
@@ -87,9 +91,10 @@ public final class ModelImpl implements Model {
         this.dog = new DogImpl();
         ducks.clear();
         powerUp.clear();
-        this.magazine = new MagazineImpl(1);
-        this.currentMagazine = 1;
+        this.currentMagazine = FIRST_MAGAZINE;
+        this.magazine = new MagazineImpl(this.currentMagazine);
         this.duckPowerUp = 0;
+        this.powerUpTime = 0;
         this.powerUpActive = Optional.empty();
         switch (gameMode) {
             case STORY_MODE:
@@ -131,7 +136,17 @@ public final class ModelImpl implements Model {
         }
 
         // Update magazine
-        this.getCurrentMagazine().update(timeElapsed);
+        if (this.getCurrentMagazine().getBulletType().equals(BulletType.INFINITE_BULLETS)) {
+            this.powerUpTime = this.powerUpTime + timeElapsed;
+            if (this.powerUpTime > MAX_TIME) {
+                this.endPowerUp();
+                this.getCurrentMagazine().setBulletType(BulletType.NORMAL_BULLET);
+            }
+        }
+//        if (!this.getCurrentMagazine().update(timeElapsed)) {
+//            this.endPowerUp();
+//            this.getCurrentMagazine().setBulletType(BulletType.NORMAL_BULLET);
+//        }
 
         //Update ducks
         this.ducks.forEach(d -> {
