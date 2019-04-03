@@ -64,7 +64,6 @@ public final class ModelImpl implements Model {
     private DuckSpawner spawner;
     private GameMode gameMode;
     private GlobalDifficulty difficulty;
-    private DogStatus lastDogStatus;
     private Cleaner cleaner;
     private int duckPowerUp;
     private Optional<PowerUpType> powerUpActive;
@@ -113,9 +112,6 @@ public final class ModelImpl implements Model {
         this.getMatchData().addTimeToTimer(timeElapsed);
         this.updateRoundNumber();
         this.dog.update(timeElapsed);
-        if (this.dog.getDogStatus() != this.lastDogStatus) {
-            this.lastDogStatus = this.dog.getDogStatus();
-        }
 
         // Update spawner when dog is in grass
         if (this.dog.isInGrass()) {
@@ -147,11 +143,11 @@ public final class ModelImpl implements Model {
         });
         // Update PowerUp list
         this.powerUp.forEach(p -> {
+            p.update(timeElapsed);
             if (p.isHit()) {
                 this.duckPowerUp = NEXT_DUCKS_POWERUP;
                 this.powerUpActive = Optional.of(p.getType());
             }
-            p.update(timeElapsed);
         });
         if (this.duckPowerUp > 0 && this.powerUpActive.isPresent()) {
             this.activePowerUp(powerUpActive.get());
