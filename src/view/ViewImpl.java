@@ -1,8 +1,5 @@
 package view;
 
-import java.awt.Cursor;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.util.HashMap;
 
 import java.util.List;
@@ -22,8 +19,6 @@ import model.data.Podium;
 import model.gun.Magazine;
 
 import java.util.concurrent.Semaphore;
-
-import javax.swing.ImageIcon;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
