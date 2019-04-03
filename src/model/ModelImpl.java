@@ -15,6 +15,7 @@ import model.entities.DogImpl;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
+import model.entities.EntityStatus;
 import model.entities.StandardDuck;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
@@ -135,12 +136,14 @@ public final class ModelImpl implements Model {
 
         //Update ducks
         this.ducks.forEach(d -> {
+            d.update(timeElapsed);
             if (d.canFlyAway()) {
                 d.computeFlyAway();
                 dog.setDogStatus(DogStatus.LAUGH);
+            }
+            if (d.getStatus() == EntityStatus.FLOWN_AWAY && d.getPosition().getY() <= 0) {
                 this.match.get().getMatchData().incrementFlownDucks();
             }
-            d.update(timeElapsed);
         });
         // Update PowerUp list
         this.powerUp.forEach(p -> {
@@ -191,6 +194,7 @@ public final class ModelImpl implements Model {
         switch (powerUp) {
             case INFINITE_AMMO:
                 this.getCurrentMagazine().setBulletType(BulletType.INFINITE_BULLETS);
+                this.endPowerUp();
                 break;
             case SLOW_DOWN:
                 this.ducks.stream()
