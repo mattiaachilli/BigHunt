@@ -77,7 +77,7 @@ public class SceneLoaderImpl implements SceneLoader {
             stage.setScene(scene);
 
             stage.setResizable(false);
-            stage.getIcons().add(new Image(LOGO_PATH));
+            //stage.getIcons().add(new Image(LOGO_PATH));
 
             if (!SettingsImpl.getSettings().isFullScreen()) {
                 stage.sizeToScene();
@@ -103,7 +103,6 @@ public class SceneLoaderImpl implements SceneLoader {
                 break;
             case GAME:
                 if (!this.view.isPaused()) {
-                    //System.out.println("Scena game caricata, inizializzo partita");
                     this.view.startGame((GameSceneController) controller, gameMode);
                 }
                 break;

@@ -43,6 +43,7 @@ public class ViewImpl implements View {
 
     private Controller controller;
     private Render render;
+    private int renderId;
     private List<Optional<ViewEntity>> viewEntities;
     private MatchData matchData;
     private final Semaphore mutex;
@@ -70,6 +71,7 @@ public class ViewImpl implements View {
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
         this.gamePaused = false;
+        this.renderId = 0;
     }
 
     @Override
@@ -89,7 +91,7 @@ public class ViewImpl implements View {
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
         this.gameMode = gameMode;
-        //System.out.println("Nuovo render");
+        this.renderId++;
         this.render = new Render(gameSceneController, gameMode);
         this.startRender();
     }
@@ -101,7 +103,6 @@ public class ViewImpl implements View {
 
     @Override
     public final void startRender() {
-        //System.out.println("Avvio il render");
         this.render.start();
     }
 
@@ -223,38 +224,38 @@ public class ViewImpl implements View {
             SettingsImpl.getSettings().getSelectedResolution().getKey(),
             SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
 
-            ViewImpl.this.sceneFactory.getStage().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-                Optional<CommandType> commandType = Optional.empty();
-                switch (e.getCode()) {
-                case ESCAPE:
-                    commandType = Optional.of(CommandType.PAUSE);
-                    break;
-                case R:
-                    commandType = Optional.of(CommandType.RECHARGE);
-                    break;
-                default:
-                    break;
-                }
-                commandType.ifPresent(command -> controller.notifyCommand(command, 0, 0));
-            });
+            if (renderId == 1) {
 
-            ViewImpl.this.sceneFactory.getStage().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-                Optional<CommandType> commandType = Optional.empty();
-                if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-                    commandType = Optional.ofNullable(CommandType.SHOOT);
-                }
-                commandType.ifPresent(command -> controller.notifyCommand(command, e.getX(), e.getY()));
-            });
+                ViewImpl.this.sceneFactory.getStage().getScene().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                    Optional<CommandType> commandType = Optional.empty();
+                    switch (e.getCode()) {
+                    case ESCAPE:
+                        commandType = Optional.of(CommandType.PAUSE);
+                        break;
+                    case R:
+                        commandType = Optional.of(CommandType.RECHARGE);
+                        break;
+                    default:
+                        break;
+                    }
+                    commandType.ifPresent(command -> controller.notifyCommand(command, 0, 0));
+                });
+
+                ViewImpl.this.sceneFactory.getStage().getScene().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+                    Optional<CommandType> commandType = Optional.empty();
+                    if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+                        commandType = Optional.ofNullable(CommandType.SHOOT);
+                    }
+                    commandType.ifPresent(command -> controller.notifyCommand(command, e.getX(), e.getY()));
+                });
+            }
         }
 
         @Override
         public final void run() {
 
-            //System.out.println("Inizializzo la partita");
             controller.initGame(gameMode);
-            //System.out.println("Inizializzo il game loop");
             controller.initGameLoop();
-            //System.out.println("Avvio il game loop");
             controller.startGameLoop();
 
             while (this.running) {

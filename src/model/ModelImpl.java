@@ -99,7 +99,6 @@ public final class ModelImpl implements Model {
         this.powerUpActive = Optional.empty();
         switch (gameMode) {
             case STORY_MODE:
-                System.out.println("Storia");
                 this.match = Optional.of(new StoryMatch(this.difficulty));
                 this.spawner = new StoryModeSpawner();
                 this.lastRound = this.spawner.getActualRound();

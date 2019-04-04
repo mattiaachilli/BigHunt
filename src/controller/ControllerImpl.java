@@ -70,9 +70,7 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public void initGame(final GameMode gameMode) {
-        //System.out.println("Nuovo model");
         this.model = this.modelSupplier.get();
-        //System.out.println("Nuova partita");
         this.model.initGame(gameMode);
         this.input.clearCommands();
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
@@ -211,7 +209,6 @@ public final class ControllerImpl implements Controller {
         }
 
         public void run() {
-            //System.out.println("Game loop partito");
             long lastTime = System.currentTimeMillis();
             while (running) {
                 while (!model.isGameOver()) {
