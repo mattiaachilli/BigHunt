@@ -70,7 +70,9 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public void initGame(final GameMode gameMode) {
+        //System.out.println("Nuovo model");
         this.model = this.modelSupplier.get();
+        //System.out.println("Nuova partita");
         this.model.initGame(gameMode);
         this.input.clearCommands();
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
@@ -83,7 +85,7 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public void startGameLoop() {
-        gameLoop.start();
+        this.gameLoop.start();
     }
 
     @Override
@@ -104,10 +106,16 @@ public final class ControllerImpl implements Controller {
             mutex.acquire();
             switch (command) {
                 case PAUSE:
-                    this.input.clearCommands();
-                    this.gameLoop.pauseLoop();
-                    this.view.pauseRender();
-                    this.view.getSceneFactory().openPauseScene();
+                    if (!this.gameLoop.isPaused()) {
+                        this.gameLoop.pauseLoop();
+                        this.view.pauseRender();
+                        this.view.getSceneFactory().openPauseScene();
+                    } else {
+                        this.input.clearCommands();
+                        this.gameLoop.resumeLoop();
+                        this.view.getSceneFactory().openGameScene();
+                        this.view.resumeRender();
+                    }
                     break;
                 case RECHARGE:
                     this.input.setCommand(new Recharge());
@@ -163,10 +171,9 @@ public final class ControllerImpl implements Controller {
      * Refresh all the values obtained from the match (achievements and eventual high scores).
      */
     private void endGame() {
-        this.view.closeGame(this.model.getMatchData(), false);
+        this.view.closeGame(this.model.getMatchData(), true);
         this.stopGameLoop();
 
-        this.model.endMatch();
 
         final MatchData matchdata = this.model.getMatchData();
 
@@ -189,9 +196,8 @@ public final class ControllerImpl implements Controller {
                 break;
         }
 
+        this.model.endMatch();
         this.userManager.save(this.user.get());
-
-        //this.model = null;
     }
 
     private class GameLoop extends Thread {
@@ -205,20 +211,23 @@ public final class ControllerImpl implements Controller {
         }
 
         public void run() {
+            //System.out.println("Game loop partito");
             long lastTime = System.currentTimeMillis();
             while (running) {
-                while (!this.paused && !model.isGameOver()) {
+                while (!model.isGameOver()) {
                     final long current = System.currentTimeMillis();
                     final int elapsed = (int) (current - lastTime);
-                    processInput();
-                    model.update(elapsed);
-                    view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
-                    model.getInfo());
+                    if (!this.paused) {
+                        processInput();
+                        model.update(elapsed);
+                        view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
+                            model.getInfo());
+                    }
                     Utilities.waitForNextFrame(PERIOD, current);
                     lastTime = current;
                 }
                 if (model.isGameOver()) {
-                    ControllerImpl.this.endGame();
+                    endGame();
                 }
             }
         }
@@ -241,6 +250,10 @@ public final class ControllerImpl implements Controller {
 
         public void resumeLoop() {
             this.paused = false;
+        }
+
+        public boolean isPaused() {
+            return this.paused;
         }
 
         public void stopGameLoop() {

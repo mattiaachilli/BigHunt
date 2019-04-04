@@ -88,10 +88,8 @@ public class SceneLoaderImpl implements SceneLoader {
 
             switch (screen) {
             case SELECT_ACCOUNT:
-                // this.view.resume();
                 break;
             case MENU:
-                // this.view.resume();
                 break;
             case LOGIN:
                 final LoginSceneController log = (LoginSceneController) controller;
@@ -103,13 +101,13 @@ public class SceneLoaderImpl implements SceneLoader {
                 break;
             case GAME:
                 if (!this.view.isPaused()) {
+                    //System.out.println("Scena game caricata, inizializzo partita");
                     this.view.startGame((GameSceneController) controller, gameMode);
                 }
                 break;
             case GAME_OVER:
                 final GameOverSceneController gameOver = (GameOverSceneController) controller;
                 gameOver.setMatchData(this.view.getMatchData());
-                // this.view.resume();
                 break;
             case ACHIEVEMENTS:
                 final AchievementSceneController achievementController = (AchievementSceneController) controller;

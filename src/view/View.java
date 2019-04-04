@@ -84,9 +84,9 @@ public interface View {
     /**
      * 
      * @param matchData    the final data of an ended match
-     * @param isHighScores true if the score of the match is an high score
+     * @param matchCompleted true if the game is over, false if the player quits the game by returning to the menu
      */
-    void closeGame(MatchData matchData, boolean isHighScores);
+    void closeGame(MatchData matchData, boolean matchCompleted);
 
     /**
      * View update.
@@ -134,11 +134,14 @@ public interface View {
      * @return true if the game is paused. 
      */
     boolean isPaused();
-    
+
     /**
      * Pause the view loop.
      */
     void pauseRender();
-    
-    void resume();
+
+    /**
+     * Resume the view loop.
+     */
+    void resumeRender();
 }

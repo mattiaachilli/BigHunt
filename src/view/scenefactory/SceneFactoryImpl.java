@@ -18,7 +18,7 @@ public class SceneFactoryImpl implements SceneFactory {
 
     private Stage stage;
     private final View view;
-    private GameMode gameMode = GameMode.STORY_MODE;
+    private GameMode gameMode;
 
     /**
      * Constructor of SceneFactory.
@@ -81,6 +81,7 @@ public class SceneFactoryImpl implements SceneFactory {
 
     @Override
     public final void openGameScene() {
+        //System.out.println("Apre scena partita");
         this.openNewScene(Screens.GAME);
     }
 

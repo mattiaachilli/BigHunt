@@ -82,10 +82,15 @@ public class ViewImpl implements View {
     }
 
     @Override
+    public final Controller getController() {
+        return this.controller;
+    }
+
+    @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
         this.gameMode = gameMode;
+        //System.out.println("Nuovo render");
         this.render = new Render(gameSceneController, gameMode);
-        controller.initGame(gameMode);
         this.startRender();
     }
 
@@ -96,6 +101,7 @@ public class ViewImpl implements View {
 
     @Override
     public final void startRender() {
+        //System.out.println("Avvio il render");
         this.render.start();
     }
 
@@ -104,16 +110,18 @@ public class ViewImpl implements View {
         this.render.stopRender();
     }
 
-    public void pauseRender() {
+    @Override
+    public final void pauseRender() {
         this.gamePaused = true;
     }
-    
-    public void resume() {
+
+    @Override
+    public final void resumeRender() {
         this.gamePaused = false;
     }
-    
+
     @Override
-    public boolean isPaused() {
+    public final boolean isPaused() {
         return this.gamePaused;
     }
 
@@ -133,9 +141,11 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void closeGame(final MatchData matchData, final boolean isHighScores) {
+    public final void closeGame(final MatchData matchData, final boolean matchCompleted) {
         this.matchData = matchData;
-        this.render.endGame();
+        if (matchCompleted) {
+            this.render.endGame();
+        }
     }
 
     @Override
@@ -239,17 +249,12 @@ public class ViewImpl implements View {
 
         @Override
         public final void run() {
-//            if (!gamePaused) {
-//                controller.startGameLoop();
-//            } else {
-//                gamePaused = false;
-//                controller.initGame(this.gameMode);
-//                controller.initGameLoop();
-//                controller.startGameLoop();
-//            }
 
-            //controller.initGame(this.gameMode);
+            //System.out.println("Inizializzo la partita");
+            controller.initGame(gameMode);
+            //System.out.println("Inizializzo il game loop");
             controller.initGameLoop();
+            //System.out.println("Avvio il game loop");
             controller.startGameLoop();
 
             while (this.running) {
@@ -285,11 +290,13 @@ public class ViewImpl implements View {
                 Utilities.waitForNextFrame(period, currentTime);
 
             }
+
             if (this.end) {
                 Platform.runLater(() -> {
                     sceneFactory.openGameOverScene();
                 });
             }
+
         }
 
         private void updateBackground() {
@@ -312,10 +319,5 @@ public class ViewImpl implements View {
             this.running = true;
             super.start();
         }
-    }
-
-    @Override
-    public final Controller getController() {
-        return this.controller;
     }
 }
