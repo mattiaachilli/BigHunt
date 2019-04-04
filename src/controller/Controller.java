@@ -3,8 +3,8 @@ package controller;
 import java.util.Optional;
 
 import controller.input.CommandType;
-import controller.matches.GameMode;
 import model.data.UserData;
+import model.matches.GameMode;
 
 /**
  * 
@@ -28,6 +28,12 @@ public interface Controller {
      * Start the game loop.
      */
     void startGameLoop();
+
+    /**
+     * Resumes the game loop.
+     * Method to be called by the button RESUME.
+     */
+    void resumeGameLoop();
 
     /**
      * Stop the game loop.
@@ -73,31 +79,4 @@ public interface Controller {
      * @return true if the user is correctly registered
      */
     boolean registerUser(String username, String password);
-
-    /**
-     * 
-     * @param gamemode the game mode of the match, used to decide which is the
-     *                 podium to load
-     * @return true if the podium is correctly loaded
-     */
-    boolean loadPodium(GameMode gamemode);
-
-    /**
-     * 
-     * @param score the score to control
-     * @return true if the @param score is an high score
-     */
-    boolean isHighScore(int score);
-
-    /**
-     * Adds an high score to the podium.
-     * 
-     * @param score the new high score
-     */
-    void addToPodium(int score);
-
-    /**
-     * No more podium needed.
-     */
-    void emptyPodium();
 }

@@ -3,7 +3,7 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import controller.matches.GameMode;
+
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import model.ModelImpl;
 import model.data.MatchData;
 import model.gun.Magazine;
+import model.matches.GameMode;
 /**
  * 
  * Sample Skeleton for 'Game.fxml' Controller Class.

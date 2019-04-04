@@ -1,4 +1,4 @@
-package controller.matches;
+package model.matches;
 
 /**
  * 

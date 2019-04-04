@@ -1,5 +1,6 @@
 package model.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @author simone
  *
  */
-public interface Podium {
+public interface Podium extends Serializable {
 
     /**
      * 

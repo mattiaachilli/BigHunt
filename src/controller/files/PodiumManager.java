@@ -15,13 +15,13 @@ public interface PodiumManager {
      * 
      * @return the story high scores
      */
-    Optional<Podium> loadStoryHighScores();
+    Optional<Podium> loadStoryPodium();
 
     /**
      * 
      * @return the survival high scores
      */
-    Optional<Podium> loadSurvivalHighScores();
+    Optional<Podium> loadSurvivalPodium();
 
     /**
      * @param podium

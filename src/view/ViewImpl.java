@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import controller.Controller;
-import controller.matches.GameMode;
 import controller.input.CommandType;
 import javafx.application.Platform;
 import javafx.scene.ImageCursor;
@@ -17,6 +16,7 @@ import model.achievements.Achievement;
 import model.achievements.AchievementType;
 import model.data.Podium;
 import model.gun.Magazine;
+import model.matches.GameMode;
 
 import java.util.concurrent.Semaphore;
 
@@ -69,7 +69,7 @@ public class ViewImpl implements View {
         this.achievements = new HashMap<>();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
-        this.gamePaused = true;
+        this.gamePaused = false;
     }
 
     @Override
@@ -82,11 +82,15 @@ public class ViewImpl implements View {
     }
 
     @Override
+    public final Controller getController() {
+        return this.controller;
+    }
+
+    @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
-        this.reset();
         this.gameMode = gameMode;
+        //System.out.println("Nuovo render");
         this.render = new Render(gameSceneController, gameMode);
-        controller.initGame(gameMode);
         this.startRender();
     }
 
@@ -96,12 +100,8 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void reset() {
-        this.gamePaused = true;
-    }
-
-    @Override
     public final void startRender() {
+        //System.out.println("Avvio il render");
         this.render.start();
     }
 
@@ -111,8 +111,23 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData, final Magazine magazine,
-                            final int info) {
+    public final void pauseRender() {
+        this.gamePaused = true;
+    }
+
+    @Override
+    public final void resumeRender() {
+        this.gamePaused = false;
+    }
+
+    @Override
+    public final boolean isPaused() {
+        return this.gamePaused;
+    }
+
+    @Override
+    public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData,
+    final Magazine magazine, final int info) {
         try {
             this.mutex.acquire();
             this.viewEntities = viewEntities;
@@ -126,10 +141,11 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void closeGame(final MatchData matchData, final boolean isHighScores) {
+    public final void closeGame(final MatchData matchData, final boolean matchCompleted) {
         this.matchData = matchData;
-        this.render.endGame();
-        this.reset();
+        if (matchCompleted) {
+            this.render.endGame();
+        }
     }
 
     @Override
@@ -198,7 +214,8 @@ public class ViewImpl implements View {
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
             Image cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
-            this.gamecanvas.getCanvas().setCursor(new ImageCursor(cursorImage, cursorImage.getWidth() / 2, cursorImage.getHeight() / 2));
+            this.gamecanvas.getCanvas()
+            .setCursor(new ImageCursor(cursorImage, cursorImage.getWidth() / 2, cursorImage.getHeight() / 2));
             this.gameMode = gameMode;
 
             this.backgroundImage = new ImageView(
@@ -231,17 +248,17 @@ public class ViewImpl implements View {
         }
 
         @Override
-        public final void run() { 
-            if (!gamePaused) {
-                controller.startGameLoop();
-            } else {
-                gamePaused = false;
-                controller.initGame(this.gameMode);
-                controller.initGameLoop();
-                controller.startGameLoop();
-            }
+        public final void run() {
+
+            //System.out.println("Inizializzo la partita");
+            controller.initGame(gameMode);
+            //System.out.println("Inizializzo il game loop");
+            controller.initGameLoop();
+            //System.out.println("Avvio il game loop");
+            controller.startGameLoop();
 
             while (this.running) {
+
                 try {
                     mutex.acquire();
                     this.viewEntitiesGame = viewEntities;
@@ -269,7 +286,9 @@ public class ViewImpl implements View {
                         }
                     }
                 });
+
                 Utilities.waitForNextFrame(period, currentTime);
+
             }
 
             if (this.end) {
@@ -277,12 +296,13 @@ public class ViewImpl implements View {
                     sceneFactory.openGameOverScene();
                 });
             }
+
         }
 
         private void updateBackground() {
             this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0,
-                                      SettingsImpl.getSettings().getSelectedResolution().getKey(),
-                                      SettingsImpl.getSettings().getSelectedResolution().getValue());
+            SettingsImpl.getSettings().getSelectedResolution().getKey(),
+            SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
         }
 
@@ -299,10 +319,5 @@ public class ViewImpl implements View {
             this.running = true;
             super.start();
         }
-    }
-
-    @Override
-    public final Controller getController() {
-        return this.controller;
     }
 }

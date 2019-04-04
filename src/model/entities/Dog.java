@@ -45,4 +45,10 @@ public interface Dog extends Entity {
      * @return last duck killed.
      */
     Optional<Duck> getLastDuckKilled();
+
+    /**
+     * 
+     * @return the negative score for hitting the dog.
+     */
+    int getDogNegativeScore();
 }

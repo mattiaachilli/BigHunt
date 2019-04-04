@@ -76,7 +76,6 @@ public class SceneLoaderImpl implements SceneLoader {
             }
             stage.setScene(scene);
 
-            stage.getScene().getStylesheets().add(STYLE_CSS_PATH);
             stage.setResizable(false);
             stage.getIcons().add(new Image(LOGO_PATH));
 

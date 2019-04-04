@@ -30,6 +30,8 @@ public final class DogImpl extends AbstractEntity implements Dog {
     private static final int LAUGH_MILLIS = 1000;
     private static final int HAPPY_MILLIS = 1000;
 
+    private static final int DOG_HIT = 50;
+
     private DogStatus status;
     private int waitingTime;
     private Optional<Duck> lastDuck;
@@ -151,5 +153,10 @@ public final class DogImpl extends AbstractEntity implements Dog {
     @Override
     public Optional<Duck> getLastDuckKilled() {
         return this.lastDuck;
+    }
+
+    @Override
+    public int getDogNegativeScore() {
+        return DOG_HIT;
     }
 }
