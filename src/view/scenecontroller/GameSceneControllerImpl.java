@@ -3,6 +3,7 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import controller.matches.GameMode;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -14,7 +15,7 @@ import model.ModelImpl;
 import model.data.MatchData;
 import model.gun.Magazine;
 /**
- * 
+ *
  * Sample Skeleton for 'Game.fxml' Controller Class.
  *
  */
@@ -49,7 +50,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
 
     @FXML // fx:id="ammoLabel"
     private Label ammoLabel; // Value injected by FXMLLoader
-    
+
     @FXML // fx:id="rechargeLabel"
     private Label rechargeLabel; // Value injected by FXMLLoader
 
@@ -100,7 +101,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
                     time = System.currentTimeMillis();
                     this.lastLabel = false;
                 }
-            } 
+            }
             this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")");
             this.scoreGameLabel.setTextFill(Color.BLACK);
         }

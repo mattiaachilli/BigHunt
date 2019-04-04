@@ -3,27 +3,22 @@ package view.sceneloader;
 import controller.matches.GameMode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import model.data.HighScore;
 import settings.SettingsImpl;
 import view.View;
 import view.scenecontroller.AchievementSceneController;
 import view.scenecontroller.GameOverSceneController;
 import view.scenecontroller.GameSceneController;
-import view.scenecontroller.HighScoresSceneController;
 import view.scenecontroller.LoginSceneController;
-import view.scenecontroller.LoginSceneControllerImpl;
 import view.scenecontroller.RegisterSceneController;
-import view.scenecontroller.RegisterSceneControllerImpl;
 import view.scenecontroller.SceneController;
 import view.utilities.Screens;
 
 /**
- * 
+ *
  * Implements scene loader scene.
  *
  */
@@ -32,9 +27,9 @@ public class SceneLoaderImpl implements SceneLoader {
     private final View view;
     private static final String STYLE_CSS_PATH = "/view/style/style.css";
     private static final String LOGO_PATH = "/view/logo/logo.png";
-    
+
     /**
-     * 
+     *
      * @param view object contains the entire view
      */
     public SceneLoaderImpl(final View view) {

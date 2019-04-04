@@ -10,11 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import model.data.HighScore;
 /**
- * 
- * Sample Skeleton for 'HighScores.fxml' Controller Class
+ *
+ * Sample Skeleton for 'HighScores.fxml' Controller Class.
  *
  */
-public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController 
+public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController
 implements HighScoresSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -73,11 +73,11 @@ implements HighScoresSceneController {
     }
 
     @Override
-    public void setStoryModeHighScores(List<HighScore> highScores) {
+    public void setStoryModeHighScores(final List<HighScore> highScores) {
         if (!highScores.isEmpty()) {
-            final List<HighScore> sortedHighScores = highScores.stream().sorted((a,b) ->
+            final List<HighScore> sortedHighScores = highScores.stream().sorted((a, b) ->
                 Integer.compare(b.getScore(), a.getScore())).collect(Collectors.toList());
-            for(int i = 0; i < sortedHighScores.size(); i++) {
+            for (int i = 0; i < sortedHighScores.size(); i++) {
                 switch(i) {
                 case 1:
                     story1.setText(String.valueOf(sortedHighScores.get(i).getScore()));
@@ -94,7 +94,9 @@ implements HighScoresSceneController {
                 case 5:
                     story5.setText(String.valueOf(sortedHighScores.get(i).getScore()));
                     break;
-                    }   
+                default:
+                    break;
+                    }
             }
         }
     }
@@ -102,7 +104,7 @@ implements HighScoresSceneController {
     @Override
     public void setSurvivalModeHighScores(List<HighScore> highScores) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }
