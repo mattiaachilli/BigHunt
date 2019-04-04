@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.Semaphore;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -15,10 +16,11 @@ import controller.input.CommandType;
 import controller.input.InputController;
 import controller.input.Recharge;
 import controller.input.Shoot;
-import controller.matches.GameMode;
 import model.Model;
+import model.data.MatchData;
 import model.data.Podium;
 import model.data.UserData;
+import model.matches.GameMode;
 import utility.Utilities;
 import view.View;
 import view.entities.ViewEntity;
@@ -45,7 +47,8 @@ public final class ControllerImpl implements Controller {
     private final View view;
     private final PodiumManager podiumManager;
     private final UserManager userManager;
-    private Optional<Podium> podium;
+    private Podium storyPodium;
+    private Podium survivalPodium;
     private Optional<UserData> user;
 
     /**
@@ -59,18 +62,20 @@ public final class ControllerImpl implements Controller {
         this.view = view;
         this.input = new InputController();
         this.podiumManager = new PodiumManagerImpl();
+        this.storyPodium = this.podiumManager.loadStoryPodium().get();
+        this.survivalPodium = this.podiumManager.loadSurvivalPodium().get();
         this.userManager = new UserManagerImpl();
-        this.podium = Optional.empty();
         this.user = Optional.empty();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
     }
 
     @Override
     public void initGame(final GameMode gameMode) {
+        //System.out.println("Nuovo model");
         this.model = this.modelSupplier.get();
+        //System.out.println("Nuova partita");
         this.model.initGame(gameMode);
         this.input.clearCommands();
-        this.loadPodium(gameMode);
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
     }
 
@@ -81,13 +86,19 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public void startGameLoop() {
-        gameLoop.start();
+        this.gameLoop.start();
+    }
+
+    @Override
+    public void resumeGameLoop() {
+        this.input.clearCommands();
+        this.gameLoop.resumeLoop();
     }
 
     @Override
     public void stopGameLoop() {
-        gameLoop.stopGameLoop();
-        view.stopRender();
+        this.gameLoop.stopGameLoop();
+        this.view.stopRender();
     }
 
     @Override
@@ -96,13 +107,25 @@ public final class ControllerImpl implements Controller {
             mutex.acquire();
             switch (command) {
                 case PAUSE:
-                    this.input.clearCommands();
-                    this.stopGameLoop();
-                    this.view.getSceneFactory().openPauseScene();
+                    if (!this.gameLoop.isPaused()) {
+                        System.out.println("PAUSA");
+                        this.input.clearCommands();
+                        this.gameLoop.pauseLoop();
+                        this.view.pauseRender();
+                        this.view.getSceneFactory().openPauseScene();
+                    } else {
+                        System.out.println("NON IN PAUSA");
+                        this.input.clearCommands();
+                        this.gameLoop.resumeLoop();
+                        this.view.getSceneFactory().openGameScene();
+                        this.view.resumeRender();
+                    }
+                    break;
                 case RECHARGE:
                     this.input.setCommand(new Recharge());
                     break;
                 case SHOOT:
+                    System.out.println("SPARA");
                     this.input.setCommand(new Shoot(x, y));
                     break;
                 default:
@@ -143,66 +166,81 @@ public final class ControllerImpl implements Controller {
         return this.user.isPresent();
     }
 
-    @Override
-    public boolean loadPodium(final GameMode gamemode) {
-        switch (gamemode) {
-        case STORY_MODE:
-            this.podium = this.podiumManager.loadStoryHighScores();
-            break;
-        case SURVIVAL_MODE:
-            this.podium = this.podiumManager.loadSurvivalHighScores();
-            break;
-        default:
-            break;
-        }
-        return this.podium.isPresent();
-    }
-
-    @Override
-    public boolean isHighScore(final int score) {
-        return this.podium.get().isHighScore(score);
-    }
-
-    @Override
-    public void addToPodium(final int score) {
-        this.podium.get().addHighScore(score, this.user.get().getName());
-    }
-
-    @Override
-    public void emptyPodium() {
-        this.podium = Optional.empty();
-    }
-
     private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
         return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
     }
 
+    /**
+     * 
+     * Stop the game loop.
+     * Refresh all the values obtained from the match (achievements and eventual high scores).
+     */
     private void endGame() {
-        this.view.closeGame(this.model.getMatchData(), false);
+        this.view.closeGame(this.model.getMatchData(), true);
         this.stopGameLoop();
+
+        final MatchData matchdata = this.model.getMatchData();
+
+        this.user.get().addMatchData(matchdata);
+
+        switch (this.model.getGameMode()) {
+        case STORY_MODE:
+            if (this.storyPodium.isHighScore(matchdata.getGlobalScore())) {
+                this.storyPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
+                this.podiumManager.saveStoryHighScores(this.storyPodium);
+            }
+            break;
+        case SURVIVAL_MODE:
+            if (this.survivalPodium.isHighScore(matchdata.getGlobalScore())) {
+                this.survivalPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
+                this.podiumManager.saveSurvivalHighScores(this.survivalPodium);
+            }
+            break;
+            default:
+                break;
+        }
+
+        this.model.endMatch();
+        this.userManager.save(this.user.get());
     }
 
     private class GameLoop extends Thread {
         private volatile boolean running;
+        private volatile boolean paused;
 
         GameLoop() {
             super();
             running = true;
+            paused = false;
         }
 
         public void run() {
+            this.cleanInput();
             long lastTime = System.currentTimeMillis();
-            while (running && !model.isGameOver()) { /* Not gameover */
+            while (running && !model.isGameOver()) {
                 final long current = System.currentTimeMillis();
                 final int elapsed = (int) (current - lastTime);
-                processInput();
-                model.update(elapsed);
-                view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(), model.getInfo());
+                if (!this.paused) {
+                    processInput();
+                    model.update(elapsed);
+                    view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
+                            model.getInfo());
+                }
                 Utilities.waitForNextFrame(PERIOD, current);
                 lastTime = current;
             }
             if (model.isGameOver()) {
-                ControllerImpl.this.endGame();
+                endGame();
+            }
+        }
+        
+        private void cleanInput() {
+            try {
+                ControllerImpl.this.mutex.acquire();
+                input.clearCommands();
+                ControllerImpl.this.mutex.release();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
@@ -216,6 +254,18 @@ public final class ControllerImpl implements Controller {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+
+        public void pauseLoop() {
+            this.paused = true;
+        }
+
+        public void resumeLoop() {
+            this.paused = false;
+        }
+
+        public boolean isPaused() {
+            return this.paused;
         }
 
         public void stopGameLoop() {

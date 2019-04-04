@@ -10,8 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import model.data.MatchData;
 
+
 /**
  *
+=======
+/**
+ *
+>>>>>>> 329e85a20e2fe11700b5d6c9883fc44fd60d22be
  * Sample Skeleton for 'GameOver.fxml' Controller Class.
  *
  */
@@ -43,6 +48,7 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
 
     @FXML
     void startNewGame() {
+        this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().openSelectModeScene();
     }
 

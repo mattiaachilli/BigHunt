@@ -3,8 +3,8 @@ package model.spawner.duck;
 import java.util.List;
 import java.util.Optional;
 
-import controller.matches.MaxOfRounds;
 import model.entities.Duck;
+import model.matches.MaxOfRounds;
 
 /**
  * 

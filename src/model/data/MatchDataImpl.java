@@ -3,7 +3,8 @@ package model.data;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.entities.powerup.PowerUpType;
 
@@ -18,8 +19,7 @@ public class MatchDataImpl implements MatchData {
     private int killedDucks;
     private int flownDucks;
     private int timer;
-    private int usedPowerUps;
-    private Optional<PowerUpType> powerUp;
+    private Map<PowerUpType, Integer> powerUps;
 
     /**
      * 
@@ -30,81 +30,77 @@ public class MatchDataImpl implements MatchData {
         this.killedDucks = 0;
         this.flownDucks = 0;
         this.timer = 0;
-        this.usedPowerUps = 0;
-        this.powerUp = Optional.empty();
+        this.powerUps = this.initPowerUps();
+        //this.powerUp = Optional.empty();
+    }
+
+    private Map<PowerUpType, Integer> initPowerUps() {
+        Map<PowerUpType, Integer> powerUps = new HashMap<PowerUpType, Integer>();
+        for (PowerUpType t : PowerUpType.values()) {
+            powerUps.put(t, 0);
+        }
+        return powerUps;
     }
 
     @Override
-    public int getGlobalScore() {
+    public final int getGlobalScore() {
         return this.score;
     }
 
     @Override
-    public void incrementKilledDucks() {
+    public final void incrementKilledDucks() {
         this.killedDucks++;
     }
 
     @Override
-    public int getKilledDucks() {
+    public final int getKilledDucks() {
         return this.killedDucks;
     }
 
     @Override
-    public void incrementFlownDucks() {
+    public final void incrementFlownDucks() {
         this.flownDucks++;
     }
 
     @Override
-    public int getFlownDucks() {
+    public final int getFlownDucks() {
         return this.flownDucks;
     }
 
     @Override
-    public void incrementScoreOf(final int score) {
+    public final void incrementScoreOf(final int score) {
         this.score += score;
 
     }
 
     @Override
-    public void decrementScoreOf(final int negativeScore) {
+    public final void decrementScoreOf(final int negativeScore) {
         this.score -= negativeScore;
     }
 
     @Override
-    public int getTimerFromStart() {
+    public final int getTimerFromStart() {
         return this.timer;
     }
 
     @Override
-    public void addTimeToTimer(final int timeElapsed) {
+    public final void addTimeToTimer(final int timeElapsed) {
         this.timer += timeElapsed;
     }
 
     @Override
-    public void powerUpCollected(final PowerUpType type) { 
-        this.usedPowerUps++;
-        if (!this.hasPowerUp()) {
-            this.powerUp = Optional.of(type);
-        }
+    public final void powerUpCollected(final PowerUpType type) { 
+        final Integer oldValue = this.powerUps.get(type);
+        this.powerUps.put(type, oldValue + 1);
     }
 
     @Override
-    public boolean hasPowerUp() { 
-        return this.powerUp.isPresent();
+    public final int getNumberOfUsedPowerUps() {
+        return this.powerUps.values().stream().reduce(0, Integer::sum);
     }
 
     @Override
-    public void powerUpEnded() { 
-        this.powerUp = Optional.empty();
-    }
-
-    @Override
-    public int getNumberOfUsedPowerUps() {
-        return this.usedPowerUps;
-    }
-
-    @Override
-    public UnmodifiableMatchData unmodifiableCopy() {
+    public final UnmodifiableMatchData unmodifiableCopy() {
         return new UnmodifiableMatchData(new MatchDataImpl());
     }
 

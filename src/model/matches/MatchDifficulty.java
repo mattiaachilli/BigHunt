@@ -1,4 +1,4 @@
-package controller.matches;
+package model.matches;
 
 /**
  * An enumeration with the different values that represent the score to surpass

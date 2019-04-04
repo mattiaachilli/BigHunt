@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import controller.matches.AbstractMatch;
-import controller.matches.GameMode;
-import controller.matches.StoryMatch;
-import controller.matches.SurvivalMatch;
 import model.cleaner.Cleaner;
 import model.cleaner.CleanerImpl;
 import model.data.MatchData;
@@ -23,6 +19,10 @@ import model.entities.powerup.PowerUpType;
 import model.gun.BulletType;
 import model.gun.Magazine;
 import model.gun.MagazineImpl;
+import model.matches.AbstractMatch;
+import model.matches.GameMode;
+import model.matches.StoryMatch;
+import model.matches.SurvivalMatch;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
@@ -98,6 +98,7 @@ public final class ModelImpl implements Model {
         this.powerUpActive = Optional.empty();
         switch (gameMode) {
             case STORY_MODE:
+                //System.out.println("Storia");
                 this.match = Optional.of(new StoryMatch(this.difficulty));
                 this.spawner = new StoryModeSpawner();
                 this.lastRound = this.spawner.getActualRound();
@@ -322,6 +323,21 @@ public final class ModelImpl implements Model {
     @Override
     public void recharge() {
         if (this.gameMode != null) {
+
+//            switch (this.gameMode) {
+//            case STORY_MODE:
+//                if (this.currentMagazine < MAX_MAGAZINES) {
+//                    this.currentMagazine++;
+//                    this.magazine = new MagazineImpl(this.currentMagazine);
+//                }
+//                break;
+//            case SURVIVAL_MODE:
+//                this.currentMagazine++;
+//                this.magazine = new MagazineImpl(this.currentMagazine);
+//                break;
+//            default:
+//                break;
+//            }
             this.currentMagazine++;
             this.magazine = new MagazineImpl(this.currentMagazine);
         }
@@ -335,6 +351,11 @@ public final class ModelImpl implements Model {
     @Override
     public List<PowerUp> getPowerUps() {
         return this.powerUp;
+    }
+
+    @Override
+    public GameMode getGameMode() {
+        return this.gameMode;
     }
 }
 

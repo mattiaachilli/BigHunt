@@ -28,7 +28,7 @@ public class UserManagerImpl implements UserManager {
     private static final String SEPARATOR = " ";
 
     @Override
-    public Optional<UserData> login(final String userName, final String password) {
+    public final Optional<UserData> login(final String userName, final String password) {
         final Optional<String[]> account = this.getUsersAndPasswords().filter(u -> u[0].equals(userName))
         .filter(u -> u[1].equals(Integer.toString(password.hashCode()))).findFirst();
         if (account.isPresent()) {
@@ -42,7 +42,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public boolean save(final UserData data) {
+    public final boolean save(final UserData data) {
         try {
             write(data);
             return true;
@@ -53,7 +53,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public Optional<UserData> register(final String userName, final String password) {
+    public final Optional<UserData> register(final String userName, final String password) {
         if (this.getUsersAndPasswords().filter(l -> l[0].equals(userName)).findFirst().isPresent()) {
             return Optional.empty();
         } else {

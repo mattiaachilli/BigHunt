@@ -8,9 +8,9 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import controller.matches.StoryMatch;
-import controller.matches.SurvivalMatch;
 import model.data.MatchData;
+import model.matches.StoryMatch;
+import model.matches.SurvivalMatch;
 import settings.GlobalDifficulty;
 
 /**

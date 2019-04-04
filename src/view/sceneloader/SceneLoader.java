@@ -1,7 +1,7 @@
 package view.sceneloader;
 
-import controller.matches.GameMode;
 import javafx.stage.Stage;
+import model.matches.GameMode;
 import view.utilities.Screens;
 
 /**

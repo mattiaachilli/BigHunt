@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.Optional;
 
 import controller.Controller;
-import controller.matches.GameMode;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
 import model.data.MatchData;
 import model.data.Podium;
 import model.gun.Magazine;
+import model.matches.GameMode;
 import view.entities.ViewEntity;
 import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;
@@ -84,9 +84,9 @@ public interface View {
     /**
      * 
      * @param matchData    the final data of an ended match
-     * @param isHighScores true if the score of the match is an high score
+     * @param matchCompleted true if the game is over, false if the player quits the game by returning to the menu
      */
-    void closeGame(MatchData matchData, boolean isHighScores);
+    void closeGame(MatchData matchData, boolean matchCompleted);
 
     /**
      * View update.
@@ -130,7 +130,18 @@ public interface View {
     GameMode getActualGameMode();
 
     /**
-     * Reset the game when GameOver.
+     * 
+     * @return true if the game is paused. 
      */
-    void reset();
+    boolean isPaused();
+
+    /**
+     * Pause the view loop.
+     */
+    void pauseRender();
+
+    /**
+     * Resume the view loop.
+     */
+    void resumeRender();
 }
