@@ -1,12 +1,11 @@
 package view.sceneloader;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
-
 import controller.matches.GameMode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import model.data.HighScore;
@@ -32,7 +31,8 @@ public class SceneLoaderImpl implements SceneLoader {
 
     private final View view;
     private static final String STYLE_CSS_PATH = "/view/style/style.css";
-
+    private static final String LOGO_PATH = "/view/logo/logo.png";
+    
     /**
      * 
      * @param view object contains the entire view
@@ -66,7 +66,8 @@ public class SceneLoaderImpl implements SceneLoader {
             stage.setScene(new Scene(root));
 
             stage.getScene().getStylesheets().add(STYLE_CSS_PATH);
-           stage.setResizable(false);
+            stage.setResizable(false);
+            stage.getIcons().add(new Image(LOGO_PATH));
 
             if (!SettingsImpl.getSettings().isFullScreen()) {
                 stage.sizeToScene();

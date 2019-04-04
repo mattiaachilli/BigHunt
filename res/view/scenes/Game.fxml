@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.canvas.*?>
@@ -23,16 +24,33 @@
                <padding>
                   <Insets bottom="50.0" right="200.0" />
                </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
             </Label>
             <Label text="Ammo:">
                <padding>
                   <Insets bottom="50.0" right="20.0" />
                </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
             </Label>
             <Label fx:id="ammoLabel" text="000">
                <padding>
                   <Insets bottom="50.0" />
                </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="rechargeLabel" text="press R to recharge" textFill="RED">
+               <padding>
+                  <Insets bottom="50.0" left="10.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
             </Label>
          </children>
          <BorderPane.margin>
