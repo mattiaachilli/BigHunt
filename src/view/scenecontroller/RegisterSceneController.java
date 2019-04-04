@@ -4,7 +4,6 @@ import view.View;
 
 /**
  * 
- * @author simone
  *
  */
 public interface RegisterSceneController {

@@ -42,6 +42,7 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
 
     @FXML
     void startNewGame() {
+        this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().openSelectModeScene();
     }
 

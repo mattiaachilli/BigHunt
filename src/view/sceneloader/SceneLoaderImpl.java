@@ -27,6 +27,7 @@ public class SceneLoaderImpl implements SceneLoader {
 
     private final View view;
     private static final String STYLE_CSS_PATH = "/view/style/style.css";
+    private static final String LOGO_PATH = "/view/logo/logo.png";
     private static Scene gameScreen;
     private static SceneController gameSceneController;
 
@@ -89,40 +90,39 @@ public class SceneLoaderImpl implements SceneLoader {
             }
 
             switch (screen) {
-            case SELECT_ACCOUNT:
-                break;
-            case MENU:
-                break;
-            case LOGIN:
-                final LoginSceneController log = (LoginSceneController) controller;
-                log.setView(this.view);
-                break;
-            case REGISTER:
-                final RegisterSceneController reg = (RegisterSceneController) controller;
-                reg.setView(this.view);
-                break;
-            case GAME:
-                if (!this.view.isPaused()) {
-                    //System.out.println("Scena game caricata, inizializzo partita");
-                    this.view.startGame((GameSceneController) controller, gameMode);
-                }
-                break;
-            case GAME_OVER:
-                final GameOverSceneController gameOver = (GameOverSceneController) controller;
-                gameOver.setMatchData(this.view.getMatchData());
-                break;
-            case ACHIEVEMENTS:
-                final AchievementSceneController achievementController = (AchievementSceneController) controller;
-                view.setAchievements(this.view.getController().getUser().get().getAchievements());
-                achievementController.setAchievements(this.view.getAchievements());
-                break;
-            case HIGH_SCORES:
-                final HighScoresSceneController highScores = (HighScoresSceneController) controller;
-                highScores.setStoryModePodium(this.view.getStoryPodium());
-                highScores.setSurvivalModePodium(this.view.getSurvivalPodium());
-                break;
-            default:
-                break;
+                case SELECT_ACCOUNT:
+                    break;
+                case MENU:
+                    break;
+                case LOGIN:
+                    final LoginSceneController log = (LoginSceneController) controller;
+                    log.setView(this.view);
+                    break;
+                case REGISTER:
+                    final RegisterSceneController reg = (RegisterSceneController) controller;
+                    reg.setView(this.view);
+                    break;
+                case GAME:
+                    if (!this.view.isPaused()) {
+                        this.view.startGame((GameSceneController) controller, gameMode);
+                    }
+                    break;
+                case GAME_OVER:
+                    final GameOverSceneController gameOver = (GameOverSceneController) controller;
+                    gameOver.setMatchData(this.view.getMatchData());
+                    break;
+                case ACHIEVEMENTS:
+                    final AchievementSceneController achievementController = (AchievementSceneController) controller;
+                    view.setAchievements(this.view.getController().getUser().get().getAchievements());
+                    achievementController.setAchievements(this.view.getAchievements());
+                    break;
+                case HIGH_SCORES:
+                    final HighScoresSceneController highScores = (HighScoresSceneController) controller;
+                    highScores.setStoryModePodium(this.view.getStoryPodium());
+                    highScores.setSurvivalModePodium(this.view.getSurvivalPodium());
+                    break;
+                default:
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

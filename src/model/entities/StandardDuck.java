@@ -42,8 +42,6 @@ public class StandardDuck extends AbstractCharacter implements Duck {
      */
     public static final double COLLISION_Y = ModelImpl.GAME_WIDTH / 30;
 
-    private long initTime; //Duck's creation time
-    private long dieTime; //Duck's died time
     private DuckDirection actualDirection;
     private DuckProperty duckType;
     private int lastDirectionUpdate;
@@ -71,7 +69,6 @@ public class StandardDuck extends AbstractCharacter implements Duck {
         this.lastDirectionUpdate = 0;
         this.movement = true;
         this.decelerate = false;
-        this.initTime = System.currentTimeMillis();
     }
 
     @Override
@@ -87,23 +84,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     @Override
     public final void kill() {
         super.kill();
-        this.dieTime = System.currentTimeMillis();
         EntityUtilities.setNewPosition(this, false, DuckDirection.KILLED);
         if (this.hasPowerUp()) {
             this.powerUp.get().setVisible();
         }
         this.lastDirectionUpdate = 0;
-    }
-
-    @Override
-    public final long getTimeFromBirth() {
-        long time;
-        if (this.isAlive()) {
-            time = System.currentTimeMillis() - this.initTime;
-        } else { //Died
-            time = this.dieTime - this.initTime;
-        }
-        return time;
     }
 
     @Override
@@ -118,6 +103,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
             if (this.hasPowerUp()) {
                 this.powerUp.get().setPosition(this.getPosition());
             }
+            super.addTimeElapsed(timeElapsed);
         } else if (this.getStatus() == EntityStatus.DEAD) {
             this.lastDirectionUpdate += timeElapsed;
             if (this.lastDirectionUpdate >= MILLIS_UPDATE_PRECIPITATE) {

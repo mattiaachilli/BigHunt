@@ -91,11 +91,6 @@ public abstract class DuckDecorator implements Duck {
     }
 
     @Override
-    public final long getTimeFromBirth() {
-        return this.duck.getTimeFromBirth();
-    }
-
-    @Override
     public final void kill() {
         this.duck.kill();
     }
