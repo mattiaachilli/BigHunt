@@ -19,7 +19,7 @@ import view.scenecontroller.SceneController;
 import view.utilities.Screens;
 
 /**
- * 
+ *
  * Implements scene loader scene.
  *
  */
@@ -32,7 +32,7 @@ public class SceneLoaderImpl implements SceneLoader {
     private static SceneController gameSceneController;
 
     /**
-     * 
+     *
      * @param view object contains the entire view
      */
     public SceneLoaderImpl(final View view) {

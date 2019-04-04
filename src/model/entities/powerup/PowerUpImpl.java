@@ -8,7 +8,7 @@ import model.properties.VelocityImpl;
 
 /**
  * 
- * This class represents a power up.
+ * This class represents a Power up.
  *
  */
 public class PowerUpImpl extends AbstractEntity implements PowerUp {

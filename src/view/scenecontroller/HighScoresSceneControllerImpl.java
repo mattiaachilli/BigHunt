@@ -2,16 +2,17 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import model.data.Podium;
 /**
- * 
- * Sample Skeleton for 'HighScores.fxml' Controller Class
+ *
+ * Sample Skeleton for 'HighScores.fxml' Controller Class.
  *
  */
-public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController 
+public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController
 implements HighScoresSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -69,6 +70,15 @@ implements HighScoresSceneController {
 
     }
 
+/*   @Override
+
+    public void setStoryModeHighScores(final List<HighScore> highScores) {
+        if (!highScores.isEmpty()) {
+            final List<HighScore> sortedHighScores = highScores.stream().sorted((a, b) ->
+                Integer.compare(b.getScore(), a.getScore())).collect(Collectors.toList());
+            for (int i = 0; i < sortedHighScores.size(); i++) {
+                switch(i) {
+*/
     @Override
     public void setStoryModePodium(final Podium storyPodium) {
         if (!storyPodium.getHighScores().isEmpty()) {
@@ -92,7 +102,7 @@ implements HighScoresSceneController {
                 default:
                     break;
                 }
-            } 
+            }
         }
     }
 
@@ -119,7 +129,7 @@ implements HighScoresSceneController {
                 default:
                     break;
                 }
-            } 
+            }
         }
     }
 

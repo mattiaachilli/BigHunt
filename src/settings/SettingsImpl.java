@@ -2,19 +2,16 @@ package settings;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
- * 
+ *
  * Implementation of the settings interface.
  *
  */
@@ -24,7 +21,7 @@ public final class SettingsImpl implements Settings {
     private static final int DEFAULT_Y_RESOLUTION = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     private static final Pair<Integer, Integer> DEFAULT_RESOLUTION = new ImmutablePair<>(DEFAULT_X_RESOLUTION,
         DEFAULT_Y_RESOLUTION);
-    
+
     private static final int PREF_X_RESOLUTION = 1366;
     private static final int PREF_Y_RESOLUTION = 768;
     private static final Pair<Integer, Integer> PREF_RESOLUTION = new ImmutablePair<>(PREF_X_RESOLUTION,
@@ -44,7 +41,7 @@ public final class SettingsImpl implements Settings {
 
     private static final GlobalDifficulty DEFAULT_DIFFICULTY = GlobalDifficulty.MEDIUM;
     private GlobalDifficulty selectedDifficulty = DEFAULT_DIFFICULTY;
-    
+
     private boolean fullScreen = true;
     private boolean backgroundAudio = true;
 
@@ -55,7 +52,7 @@ public final class SettingsImpl implements Settings {
     }
 
     /**
-     * 
+     *
      * @return the instance of this object, once.
      */
     public static SettingsImpl getSettings() {
@@ -82,7 +79,7 @@ public final class SettingsImpl implements Settings {
 
     @Override
     public double getScaleFactory() {
-        return Math.min((double) this.selectedResolution.getValue() / SettingsImpl.PREF_Y_RESOLUTION, 
+        return Math.min((double) this.selectedResolution.getValue() / SettingsImpl.PREF_Y_RESOLUTION,
             (double) this.selectedResolution.getKey() / SettingsImpl.PREF_X_RESOLUTION);
     }
 
