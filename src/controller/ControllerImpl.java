@@ -71,7 +71,8 @@ public final class ControllerImpl implements Controller {
         this.model.initGame(gameMode);
         this.input.clearCommands();
         this.loadPodium(gameMode);
-        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
+        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(),
+        this.model.getInfo());
     }
 
     @Override
@@ -95,18 +96,18 @@ public final class ControllerImpl implements Controller {
         try {
             mutex.acquire();
             switch (command) {
-                case PAUSE:
-                    this.input.clearCommands();
-                    this.stopGameLoop();
-                    this.view.getSceneFactory().openPauseScene();
-                case RECHARGE:
-                    this.input.setCommand(new Recharge());
-                    break;
-                case SHOOT:
-                    this.input.setCommand(new Shoot(x, y));
-                    break;
-                default:
-                    break;
+            case PAUSE:
+                this.input.clearCommands();
+                this.stopGameLoop();
+                this.view.getSceneFactory().openPauseScene();
+            case RECHARGE:
+                this.input.setCommand(new Recharge());
+                break;
+            case SHOOT:
+                this.input.setCommand(new Shoot(x, y));
+                break;
+            default:
+                break;
             }
             mutex.release();
         } catch (InterruptedException e) {
@@ -174,7 +175,8 @@ public final class ControllerImpl implements Controller {
     }
 
     private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
-        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed)).collect(Collectors.toList());
+        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed))
+        .collect(Collectors.toList());
     }
 
     private void endGame() {
@@ -197,7 +199,8 @@ public final class ControllerImpl implements Controller {
                 final int elapsed = (int) (current - lastTime);
                 processInput();
                 model.update(elapsed);
-                view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(), model.getInfo());
+                view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
+                model.getInfo());
                 Utilities.waitForNextFrame(PERIOD, current);
                 lastTime = current;
             }
