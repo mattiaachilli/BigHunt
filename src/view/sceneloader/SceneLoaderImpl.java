@@ -27,7 +27,6 @@ public class SceneLoaderImpl implements SceneLoader {
 
     private final View view;
     private static final String STYLE_CSS_PATH = "/view/style/style.css";
-    private static final String LOGO_PATH = "/view/logo/logo.png";
     private static Scene gameScreen;
     private static SceneController gameSceneController;
 
