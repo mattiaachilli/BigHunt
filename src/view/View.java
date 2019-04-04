@@ -144,4 +144,9 @@ public interface View {
      * Resume the view loop.
      */
     void resumeRender();
+
+    /**
+     * Set image cursor.
+     */
+    void setCursor();
 }

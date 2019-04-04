@@ -152,6 +152,8 @@ public final class ModelImpl implements Model {
             }
             if (d.getStatus() == EntityStatus.FLOWN_AWAY && d.getPosition().getY() <= 0) {
                 this.match.get().getMatchData().incrementFlownDucks();
+            } else if (d.getStatus() == EntityStatus.DEAD && d.getPosition().getY() >= DogImpl.FINAL_POS_Y) {
+                this.dog.setLastDuckKilled(d);
             }
         });
         // Update PowerUp list
@@ -162,7 +164,7 @@ public final class ModelImpl implements Model {
                 this.powerUpActive = Optional.of(p.getType());
             }
         });
-        if (this.duckPowerUp > 0 && this.powerUpActive.isPresent()) {
+        if (this.powerUpActive.isPresent()) {
             this.activePowerUp(powerUpActive.get());
         }
         //Clean objects not necessary
@@ -225,7 +227,6 @@ public final class ModelImpl implements Model {
                           .forEach(d -> {
                               if (this.duckPowerUp > 0) {
                                   d.kill(); 
-                                  this.dog.setLastDuckKilled(d);
                                   this.duckPowerUp--;
                                   this.match.get().getMatchData().incrementScoreOf(d.getScore());
                               }

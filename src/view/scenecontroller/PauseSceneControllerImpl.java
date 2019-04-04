@@ -37,6 +37,7 @@ public class PauseSceneControllerImpl extends AbstractSecondarySceneController {
         this.getSceneFactory().getView().getController().resumeGameLoop();
         this.getSceneFactory().openGameScene();
         this.getSceneFactory().getView().resumeRender();
+        this.getSceneFactory().getView().setCursor();
     }
 
     @Override

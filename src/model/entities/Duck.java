@@ -41,7 +41,7 @@ public interface Duck extends Character {
     boolean canFlyAway();
 
     /**
-     * Check if fly away is possible, if is possible change duck's status.
+     * Change duck's status, from alive to flownAway.
      */
     void computeFlyAway();
 

@@ -55,7 +55,6 @@ public class Shoot implements Command {
                                 this.numDuckDoubleScore = 0;
                                 model.endPowerUp();
                             }
-                            model.getDog().setLastDuckKilled(d);
                             model.getMatchData().incrementScoreOf(score);
                             model.getMatchData().incrementKilledDucks();
                             hit = true;

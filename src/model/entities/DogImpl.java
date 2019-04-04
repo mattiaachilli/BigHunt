@@ -28,7 +28,7 @@ public final class DogImpl extends AbstractEntity implements Dog {
     private static final int WAITING_MILLIS = 750;
     private static final int UPDATE_MILLIS = 500;
     private static final int LAUGH_MILLIS = 1000;
-    private static final int HAPPY_MILLIS = 1000;
+    private static final int HAPPY_MILLIS = 750;
 
     private static final int DOG_HIT = 50;
 
@@ -115,8 +115,8 @@ public final class DogImpl extends AbstractEntity implements Dog {
             this.waitingTime += timeElapsed;
             if (this.waitingTime >= HAPPY_MILLIS) {
                 this.waitingTime -= HAPPY_MILLIS;
-                this.setDogStatus(DogStatus.IN_GRASS);
                 this.lastDuck = Optional.empty();
+                this.setDogStatus(DogStatus.IN_GRASS);
                 this.setPosition(new PositionImpl(FINAL_POS_X, FINAL_POS_Y));
                 this.inGrass();
             }

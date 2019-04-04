@@ -2,7 +2,6 @@ package controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.Semaphore;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -108,13 +107,11 @@ public final class ControllerImpl implements Controller {
             switch (command) {
                 case PAUSE:
                     if (!this.gameLoop.isPaused()) {
-                        System.out.println("PAUSA");
                         this.input.clearCommands();
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
                         this.view.getSceneFactory().openPauseScene();
                     } else {
-                        System.out.println("NON IN PAUSA");
                         this.input.clearCommands();
                         this.gameLoop.resumeLoop();
                         this.view.getSceneFactory().openGameScene();
@@ -125,7 +122,6 @@ public final class ControllerImpl implements Controller {
                     this.input.setCommand(new Recharge());
                     break;
                 case SHOOT:
-                    System.out.println("SPARA");
                     this.input.setCommand(new Shoot(x, y));
                     break;
                 default:
@@ -215,7 +211,6 @@ public final class ControllerImpl implements Controller {
         }
 
         public void run() {
-            this.cleanInput();
             long lastTime = System.currentTimeMillis();
             while (running && !model.isGameOver()) {
                 final long current = System.currentTimeMillis();
@@ -231,16 +226,6 @@ public final class ControllerImpl implements Controller {
             }
             if (model.isGameOver()) {
                 endGame();
-            }
-        }
-        
-        private void cleanInput() {
-            try {
-                ControllerImpl.this.mutex.acquire();
-                input.clearCommands();
-                ControllerImpl.this.mutex.release();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
 
