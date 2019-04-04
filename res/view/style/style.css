@@ -55,14 +55,12 @@ Label{
     -fx-font-weight: bold;
 }
 
-#scoreLabel {
+#scoreGameLabel {
     -fx-font-size: 18pt;
-    -fx-text-fill: red ;
 }
 
 #ammoLabel {
     -fx-font-size: 18pt;
-    -fx-text-fill: black ;
 }
 
 #menu{
