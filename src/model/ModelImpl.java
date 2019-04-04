@@ -27,11 +27,10 @@ import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
 import settings.GlobalDifficulty;
-
 import settings.SettingsImpl;
 
 /**
- * 
+ *
  * Model implementation, contains all objects of the game.
  *
  */
@@ -51,7 +50,7 @@ public final class ModelImpl implements Model {
     private static final int FIRST_MAGAZINE = 1;
     private static final long MAX_TIME = 3000;
 
-    /** 
+    /**
      * Next ducks to activate the power Up.
      */
     public static final int NEXT_DUCKS_POWERUP = 3;
@@ -209,7 +208,7 @@ public final class ModelImpl implements Model {
                 break;
             case SLOW_DOWN:
                 this.ducks.stream()
-                          .filter(d -> d.isAlive() 
+                          .filter(d -> d.isAlive()
                                   && d.getPosition().getX() >= StandardDuck.COLLISION_X
                                   && d.getPosition().getX() <= (ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) * 2)
                           .forEach(d -> {
@@ -221,7 +220,7 @@ public final class ModelImpl implements Model {
                 break;
             case KILL_ALL:
                 this.ducks.stream()
-                          .filter(d -> d.isAlive() 
+                          .filter(d -> d.isAlive()
                                   && d.getPosition().getX() >= StandardDuck.COLLISION_X
                                   && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - (StandardDuck.COLLISION_X * 3))
                           .forEach(d -> {
@@ -260,8 +259,8 @@ public final class ModelImpl implements Model {
         final int matchScore = this.match.get().getDifficulty().getLimitOfDifficulty() * this.lastRound;
         switch (this.gameMode) {
             case STORY_MODE:
-                gameOver = this.spawner.getActualRound() > this.lastRound 
-                            && matchData.getGlobalScore() < matchScore 
+                gameOver = this.spawner.getActualRound() > this.lastRound
+                            && matchData.getGlobalScore() < matchScore
                             || this.currentMagazine > MAX_MAGAZINES
                             || this.getBullets() == 0 && this.currentMagazine == MAX_MAGAZINES
                             || this.spawner.isSpawnFinished();

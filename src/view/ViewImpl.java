@@ -224,8 +224,7 @@ public class ViewImpl implements View {
             this.cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
             this.setCursor();
 
-            this.backgroundImage = new ImageView(
-            new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
+            this.backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
             SettingsImpl.getSettings().getSelectedResolution().getKey(),
             SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
 

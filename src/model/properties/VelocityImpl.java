@@ -8,12 +8,12 @@ public class VelocityImpl implements Velocity {
     private final double x;
     private final double y;
 
-    /** 
+    /**
      * Constructor that passes this entity's velocity parameters to the super-class.
-     * @param x 
+     * @param x
      *          This entity's velocity axis X
-     * 
-     * @param y 
+     *
+     * @param y
      *          This entity's velocity axis Y
      */
     public VelocityImpl(final double x, final double y) {
@@ -28,7 +28,7 @@ public class VelocityImpl implements Velocity {
 
     @Override
     public final double module() {
-        return (double) Math.sqrt(this.x * this.x + this.y * this.y);
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
     @Override
@@ -49,8 +49,15 @@ public class VelocityImpl implements Velocity {
     /**
      * @return the description of the velocity
      */
+    @Override
     public String toString() {
         return "Velocity[x: " + this.x + ",y: " + this.y + "]";
     }
+
+    @Override
+    public boolean compareTo(final Velocity velocity) {
+        return this.x == velocity.getX() && this.y == velocity.getY();
+    }
+
 
 }

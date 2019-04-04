@@ -111,7 +111,7 @@ public final class ControllerImpl implements Controller {
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
                         this.view.getSceneFactory().openPauseScene();
-                    } else {
+                    } else if (this.gameLoop.isAlive()) {
                         this.input.clearCommands();
                         this.gameLoop.resumeLoop();
                         this.view.getSceneFactory().openGameScene();

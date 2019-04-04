@@ -15,7 +15,7 @@ import model.data.MatchData;
 import model.gun.Magazine;
 import model.matches.GameMode;
 /**
- * 
+ *
  * Sample Skeleton for 'Game.fxml' Controller Class.
  *
  */
@@ -36,8 +36,8 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     @FXML // fx:id="infoLabel"
     private Label infoLabel; // Value injected by FXMLLoader
 
-    @FXML // fx:id="scoreLabel"
-    private Label scoreLabel; // Value injected by FXMLLoader
+    @FXML // fx:id="scoreGameLabel"
+    private Label scoreGameLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="game"
     private BorderPane game; // Value injected by FXMLLoader
@@ -50,7 +50,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
 
     @FXML // fx:id="ammoLabel"
     private Label ammoLabel; // Value injected by FXMLLoader
-    
+
     @FXML // fx:id="rechargeLabel"
     private Label rechargeLabel; // Value injected by FXMLLoader
 
@@ -59,7 +59,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     void initialize() {
         assert infoLabel != null : "fx:id=\"scoreLabel\" was not injected: check your FXML file 'Game.fxml'.";
         assert game != null : "fx:id=\"game\" was not injected: check your FXML file 'Game.fxml'.";
-        assert scoreLabel != null : "fx:id=\"mainLable\" was not injected: check your FXML file 'Game.fxml'.";
+        assert scoreGameLabel != null : "fx:id=\"mainLable\" was not injected: check your FXML file 'Game.fxml'.";
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'Game.fxml'.";
         assert rechargeLabel != null : "fx:id=\"rechargeLabel\" was not injected: check your FXML file 'Game.fxml'.";
         assert botomHBox != null : "fx:id=\"botomHBox\" was not injected: check your FXML file 'Game.fxml'.";
@@ -79,34 +79,37 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
         this.ammoLabel.setTextFill(Color.BLACK);
         if (this.getSceneFactory().getView().getActualGameMode() == GameMode.STORY_MODE) {
             this.infoLabel.setText(STORY);
-            this.scoreLabel.setText(String.valueOf(gameData.getGlobalScore()) + "/" + info);
+            this.scoreGameLabel.setText(String.valueOf(gameData.getGlobalScore()) + "/" + info);
             if (gameData.getGlobalScore() < info) {
-                this.scoreLabel.setTextFill(Color.RED);
+                this.scoreGameLabel.setTextFill(Color.RED);
             } else {
-                this.scoreLabel.setTextFill(Color.LIME);
+                this.scoreGameLabel.setTextFill(Color.LIME);
             }
             this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")" + "/" + ModelImpl.MAX_MAGAZINES);
         } else {
             if (!lastLabel) {
                 this.infoLabel.setText(SURVIVAL);
-                this.scoreLabel.setText(String.valueOf(gameData.getFlownDucks()) + "/" + info);
+                this.scoreGameLabel.setText(String.valueOf(gameData.getFlownDucks()) + "/" + info);
                 if ((System.currentTimeMillis() - time) >= UPDATE_TIME) {
                     time = System.currentTimeMillis();
                     this.lastLabel = true;
                 }
             } else {
                 this.infoLabel.setText(STORY);
-                this.scoreLabel.setText(String.valueOf(gameData.getGlobalScore()));
+                this.scoreGameLabel.setText(String.valueOf(gameData.getGlobalScore()));
                 if ((System.currentTimeMillis() - time) >= UPDATE_TIME) {
                     time = System.currentTimeMillis();
                     this.lastLabel = false;
                 }
-            } 
+            }
             this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")");
-            this.scoreLabel.setTextFill(Color.BLACK);
+            this.scoreGameLabel.setTextFill(Color.BLACK);
         }
         if (magazine.getAmmo() == 0) {
+            this.rechargeLabel.setVisible(true);
             this.ammoLabel.setTextFill(Color.RED);
+        } else {
+            this.rechargeLabel.setVisible(false);
         }
     }
 }

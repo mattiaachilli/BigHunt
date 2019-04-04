@@ -38,4 +38,13 @@ public interface Velocity {
      */
     double getY();
 
+    /**
+     * Check if are equals.
+     *
+     * @param velocity
+     *          velocity to compare
+     * @return true if are equals.
+     */
+    boolean compareTo(Velocity velocity);
+
 }
