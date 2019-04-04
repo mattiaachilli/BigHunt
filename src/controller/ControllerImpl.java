@@ -94,8 +94,8 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public void stopGameLoop() {
-        gameLoop.stopGameLoop();
-        view.stopRender();
+        this.gameLoop.stopGameLoop();
+        this.view.stopRender();
     }
 
     @Override
@@ -105,10 +105,13 @@ public final class ControllerImpl implements Controller {
             switch (command) {
                 case PAUSE:
                     if (!this.gameLoop.isPaused()) {
+                        System.out.println("PAUSA");
+                        this.input.clearCommands();
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
                         this.view.getSceneFactory().openPauseScene();
                     } else {
+                        System.out.println("NON IN PAUSA");
                         this.input.clearCommands();
                         this.gameLoop.resumeLoop();
                         this.view.getSceneFactory().openGameScene();
@@ -119,6 +122,7 @@ public final class ControllerImpl implements Controller {
                     this.input.setCommand(new Recharge());
                     break;
                 case SHOOT:
+                    System.out.println("SPARA");
                     this.input.setCommand(new Shoot(x, y));
                     break;
                 default:
@@ -172,7 +176,6 @@ public final class ControllerImpl implements Controller {
         this.view.closeGame(this.model.getMatchData(), true);
         this.stopGameLoop();
 
-
         final MatchData matchdata = this.model.getMatchData();
 
         this.user.get().addMatchData(matchdata);
@@ -210,22 +213,20 @@ public final class ControllerImpl implements Controller {
 
         public void run() {
             long lastTime = System.currentTimeMillis();
-            while (running) {
-                while (!model.isGameOver()) {
-                    final long current = System.currentTimeMillis();
-                    final int elapsed = (int) (current - lastTime);
-                    if (!this.paused) {
-                        processInput();
-                        model.update(elapsed);
-                        view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
+            while (running && !model.isGameOver()) {
+                final long current = System.currentTimeMillis();
+                final int elapsed = (int) (current - lastTime);
+                if (!this.paused) {
+                    processInput();
+                    model.update(elapsed);
+                    view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
                             model.getInfo());
-                    }
-                    Utilities.waitForNextFrame(PERIOD, current);
-                    lastTime = current;
                 }
-                if (model.isGameOver()) {
-                    endGame();
-                }
+                Utilities.waitForNextFrame(PERIOD, current);
+                lastTime = current;
+            }
+            if (model.isGameOver()) {
+                endGame();
             }
         }
 

@@ -225,8 +225,8 @@ public class ViewImpl implements View {
             SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
 
             if (renderId == 1) {
-
                 ViewImpl.this.sceneFactory.getStage().getScene().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+
                     Optional<CommandType> commandType = Optional.empty();
                     switch (e.getCode()) {
                     case ESCAPE:

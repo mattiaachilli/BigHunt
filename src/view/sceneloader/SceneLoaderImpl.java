@@ -27,6 +27,7 @@ public class SceneLoaderImpl implements SceneLoader {
 
     private final View view;
     private static final String STYLE_CSS_PATH = "/view/style/style.css";
+    private static final String LOGO_PATH = "/view/logo/logo.png";
     private static Scene gameScreen;
     private static SceneController gameSceneController;
 
@@ -77,7 +78,7 @@ public class SceneLoaderImpl implements SceneLoader {
             stage.setScene(scene);
 
             stage.setResizable(false);
-            //stage.getIcons().add(new Image(LOGO_PATH));
+            stage.getIcons().add(new Image(LOGO_PATH));
 
             if (!SettingsImpl.getSettings().isFullScreen()) {
                 stage.sizeToScene();
