@@ -44,6 +44,27 @@ Label{
     -fx-font-weight: bold;
 }
 
+#infoLabel {
+    -fx-font-size: 18pt;
+    -fx-text-fill: white ;
+}
+
+#rechargeLabel {
+    -fx-font-size: 18pt;
+    -fx-text-fill: red ;
+    -fx-font-weight: bold;
+}
+
+#scoreLabel {
+    -fx-font-size: 18pt;
+    -fx-text-fill: red ;
+}
+
+#ammoLabel {
+    -fx-font-size: 18pt;
+    -fx-text-fill: black ;
+}
+
 #menu{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
@@ -68,7 +89,8 @@ Label{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
 
-#bottomGrid {-fx-background-color: transparent;
+#bottomGrid {
+	-fx-background-color: transparent;
 }
 
 #pause{

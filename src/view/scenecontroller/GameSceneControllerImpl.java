@@ -49,6 +49,9 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
 
     @FXML // fx:id="ammoLabel"
     private Label ammoLabel; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="rechargeLabel"
+    private Label rechargeLabel; // Value injected by FXMLLoader
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     final
@@ -57,22 +60,16 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
         assert game != null : "fx:id=\"game\" was not injected: check your FXML file 'Game.fxml'.";
         assert scoreLabel != null : "fx:id=\"mainLable\" was not injected: check your FXML file 'Game.fxml'.";
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'Game.fxml'.";
+        assert rechargeLabel != null : "fx:id=\"rechargeLabel\" was not injected: check your FXML file 'Game.fxml'.";
         assert botomHBox != null : "fx:id=\"botomHBox\" was not injected: check your FXML file 'Game.fxml'.";
         assert ammoLabel != null : "fx:id=\"ammoLabel\" was not injected: check your FXML file 'Game.fxml'.";
+        this.rechargeLabel.setVisible(false);
     }
 
     @Override
     public final Canvas getCanvas() {
-        //   this.canvas.setHeight(SettingsImpl.getSettings().getDefaultResolutions().getValue() /*+ this.bottomGrid.getHeight()*/);
-        //   this.canvas.setWidth(SettingsImpl.getSettings().getDefaultResolutions().getKey());
         this.canvas.setWidth(this.game.getWidth());
         this.canvas.setHeight(this.game.getHeight());
-     /*   this.canvas.minWidth(this.game.getWidth());
-        this.canvas.minHeight(this.game.getHeight());
-        this.canvas.maxWidth(this.game.getWidth());
-        this.canvas.maxHeight(this.game.getHeight());
-      */ 
-
         return this.canvas;
     }
 
