@@ -116,6 +116,7 @@ public final class ControllerImpl implements Controller {
                         this.gameLoop.resumeLoop();
                         this.view.getSceneFactory().openGameScene();
                         this.view.resumeRender();
+                        this.view.setCursor();
                     }
                     break;
                 case RECHARGE:

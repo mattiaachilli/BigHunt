@@ -142,6 +142,11 @@ public final class ModelImpl implements Model {
             }
         }
 
+        // Active powerUp if exist
+        if (this.powerUpActive.isPresent()) {
+            this.activePowerUp(powerUpActive.get());
+        }
+
         //Update ducks
         this.ducks.forEach(d -> {
             d.update(timeElapsed);
@@ -163,9 +168,6 @@ public final class ModelImpl implements Model {
                 this.powerUpActive = Optional.of(p.getType());
             }
         });
-        if (this.powerUpActive.isPresent()) {
-            this.activePowerUp(powerUpActive.get());
-        }
         //Clean objects not necessary
         this.cleaner.clean(this.ducks, this.powerUp);
     }
@@ -208,7 +210,8 @@ public final class ModelImpl implements Model {
                 break;
             case SLOW_DOWN:
                 this.ducks.stream()
-                          .filter(d -> d.isAlive()
+                          .filter(d -> d.isAlive() 
+                                  && !d.isDecelerated()
                                   && d.getPosition().getX() >= StandardDuck.COLLISION_X
                                   && d.getPosition().getX() <= (ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) * 2)
                           .forEach(d -> {

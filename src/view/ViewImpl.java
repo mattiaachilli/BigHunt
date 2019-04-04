@@ -319,7 +319,7 @@ public class ViewImpl implements View {
             this.running = true;
             super.start();
         }
-        
+
         public void setCursor() {
             this.gamecanvas.getCanvas().setCursor(new ImageCursor(cursorImage, this.cursorImage.getWidth() / 2, this.cursorImage.getHeight() / 2));
         }

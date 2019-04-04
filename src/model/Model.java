@@ -125,7 +125,6 @@ public interface Model {
      * Get dog of the game.
      * 
      * @return dog
-     * @return
      */
     Dog getDog();
 }

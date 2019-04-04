@@ -145,6 +145,11 @@ public abstract class DuckDecorator implements Duck {
         return this.duck.getProperty();
     }
 
+    @Override
+    public final boolean isDecelerated() {
+        return this.duck.isDecelerated();
+    }
+
     /**
      * Get score multiplier of the duck.
      * 

@@ -168,6 +168,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     }
 
     @Override
+    public final boolean isDecelerated() {
+        return this.decelerate;
+    }
+
+    @Override
     public final DuckProperty getProperty() {
         return this.duckType;
     }

@@ -79,4 +79,9 @@ public interface Duck extends Character {
      *       duck's property.
      */
     DuckProperty getProperty();
+
+    /**
+     * @return true if the velocity of this duck is decelerated.
+     */
+    boolean isDecelerated();
 }
