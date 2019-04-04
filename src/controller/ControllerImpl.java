@@ -195,14 +195,14 @@ public final class ControllerImpl implements Controller {
         public void run() {
             long lastTime = System.currentTimeMillis();
             while (running && !model.isGameOver()) { /* Not gameover */
-                final long current = System.currentTimeMillis();
-                final int elapsed = (int) (current - lastTime);
-                processInput();
-                model.update(elapsed);
-                view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
-                model.getInfo());
-                Utilities.waitForNextFrame(PERIOD, current);
-                lastTime = current;
+                    final long current = System.currentTimeMillis();
+                    final int elapsed = (int) (current - lastTime);
+                    processInput();
+                    model.update(elapsed);
+                    view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
+                    model.getInfo());
+                    Utilities.waitForNextFrame(PERIOD, current);
+                    lastTime = current;
             }
             if (model.isGameOver()) {
                 ControllerImpl.this.endGame();
