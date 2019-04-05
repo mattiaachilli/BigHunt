@@ -11,7 +11,6 @@ import model.entities.powerup.PowerUpType;
 
 /**
  * 
- * @author giuli
  *
  */
 public class Shoot implements Command {
@@ -19,7 +18,7 @@ public class Shoot implements Command {
     private final double x;
     private final double y;
     private final CommandType type = CommandType.SHOOT;
-    private int numDuckDoubleScore;
+    private static int numDuckDoubleScore = 0;
 
     /**
      * 
@@ -31,7 +30,6 @@ public class Shoot implements Command {
     public Shoot(final double x, final double y) {
         this.x = x;
         this.y = y;
-        this.numDuckDoubleScore = 0;
     }
 
     @Override
@@ -48,14 +46,13 @@ public class Shoot implements Command {
                             d.kill();
                             score = d.getScore(); 
                             if (model.getPowerUpActive().isPresent() && model.getPowerUpActive().get() == PowerUpType.DOUBLE_SCORE 
-                                && this.numDuckDoubleScore < ModelImpl.NEXT_DUCKS_POWERUP) {
+                                && numDuckDoubleScore < ModelImpl.NEXT_DUCKS_POWERUP) {
                                 score = d.getScore() * 2;
-                                this.numDuckDoubleScore++;
-                            } else if (this.numDuckDoubleScore >= ModelImpl.NEXT_DUCKS_POWERUP) {
-                                this.numDuckDoubleScore = 0;
+                                numDuckDoubleScore++;
+                            } else if (numDuckDoubleScore >= ModelImpl.NEXT_DUCKS_POWERUP) {
+                                numDuckDoubleScore = 0;
                                 model.endPowerUp();
                             }
-                            model.getDog().setLastDuckKilled(d);
                             model.getMatchData().incrementScoreOf(score);
                             model.getMatchData().incrementKilledDucks();
                             hit = true;

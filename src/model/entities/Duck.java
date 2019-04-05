@@ -41,7 +41,7 @@ public interface Duck extends Character {
     boolean canFlyAway();
 
     /**
-     * Check if fly away is possible, if is possible change duck's status.
+     * Change duck's status, from alive to flownAway.
      */
     void computeFlyAway();
 
@@ -79,4 +79,9 @@ public interface Duck extends Character {
      *       duck's property.
      */
     DuckProperty getProperty();
+
+    /**
+     * @return true if the velocity of this duck is decelerated.
+     */
+    boolean isDecelerated();
 }

@@ -14,9 +14,6 @@ import model.entities.Duck;
  */
 
 public abstract class AbstractSpawner implements DuckSpawner {
-
-    private static final int NUMBER_MAX_DUCK = 3; //Max number of ducks at the same time
-
     private int spawnDelay;
     private int ducksSpawned; //Total in all round
     private int timeElapsed; 
@@ -43,13 +40,30 @@ public abstract class AbstractSpawner implements DuckSpawner {
     @Override
     public final void update(final int elapsed) {
         this.timeElapsed += elapsed;
+        this.updateSurvival(elapsed);
     }
+
+    /**
+     * Useful for the survival to change the number of duck in the screen.
+     * 
+     * @param elapsed from the last update
+     */
+    protected void updateSurvival(final int elapsed) { }
 
     /**
      * Reset the time elapsed.
      */
     protected void resetTimeElapsed() {
         this.timeElapsed = 0;
+    }
+
+    /**
+     * Get time elapsed.
+     * 
+     * @return timeElapsed.
+     */
+    protected int getTimeElapsed() {
+        return this.timeElapsed;
     }
 
     /**
@@ -85,7 +99,7 @@ public abstract class AbstractSpawner implements DuckSpawner {
                 numDuckAlive++;
             }
         }
-        return numDuckAlive < NUMBER_MAX_DUCK;
+        return numDuckAlive < this.getDuckMax();
     }
 
     @Override
@@ -121,6 +135,13 @@ public abstract class AbstractSpawner implements DuckSpawner {
     public final void setState(final Optional<DuckState> state) {
         this.actualState = state;
     }
+
+    /**
+     * Get max duck to spawn.
+     * 
+     * @return number of duck to spawn max
+     */
+    protected abstract int getDuckMax();
 
     @Override
     public abstract Optional<Duck> spawnDuck();

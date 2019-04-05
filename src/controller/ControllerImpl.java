@@ -73,7 +73,8 @@ public final class ControllerImpl implements Controller {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
         this.input.clearCommands();
-        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
+        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo(), 
+            this.model.getRounds());
     }
 
     @Override
@@ -105,24 +106,22 @@ public final class ControllerImpl implements Controller {
             switch (command) {
                 case PAUSE:
                     if (!this.gameLoop.isPaused()) {
-                        System.out.println("PAUSA");
                         this.input.clearCommands();
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
                         this.view.getSceneFactory().openPauseScene();
-                    } else {
-                        System.out.println("NON IN PAUSA");
+                    } else if (this.gameLoop.isAlive()) {
                         this.input.clearCommands();
                         this.gameLoop.resumeLoop();
                         this.view.getSceneFactory().openGameScene();
                         this.view.resumeRender();
+                        this.view.setCursor();
                     }
                     break;
                 case RECHARGE:
                     this.input.setCommand(new Recharge());
                     break;
                 case SHOOT:
-                    System.out.println("SPARA");
                     this.input.setCommand(new Shoot(x, y));
                     break;
                 default:
@@ -220,7 +219,7 @@ public final class ControllerImpl implements Controller {
                     processInput();
                     model.update(elapsed);
                     view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
-                            model.getInfo());
+                            model.getInfo(), model.getRounds());
                 }
                 Utilities.waitForNextFrame(PERIOD, current);
                 lastTime = current;

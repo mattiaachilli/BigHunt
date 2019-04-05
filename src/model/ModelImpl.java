@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import model.cleaner.Cleaner;
 import model.cleaner.CleanerImpl;
 import model.data.MatchData;
@@ -21,17 +24,17 @@ import model.gun.Magazine;
 import model.gun.MagazineImpl;
 import model.matches.AbstractMatch;
 import model.matches.GameMode;
+import model.matches.MaxOfRounds;
 import model.matches.StoryMatch;
 import model.matches.SurvivalMatch;
 import model.spawner.duck.DuckSpawner;
 import model.spawner.duck.StoryModeSpawner;
 import model.spawner.duck.SurvivalModeSpawner;
 import settings.GlobalDifficulty;
-
 import settings.SettingsImpl;
 
 /**
- * 
+ *
  * Model implementation, contains all objects of the game.
  *
  */
@@ -51,7 +54,7 @@ public final class ModelImpl implements Model {
     private static final int FIRST_MAGAZINE = 1;
     private static final long MAX_TIME = 3000;
 
-    /** 
+    /**
      * Next ducks to activate the power Up.
      */
     public static final int NEXT_DUCKS_POWERUP = 3;
@@ -142,6 +145,11 @@ public final class ModelImpl implements Model {
             }
         }
 
+        // Active powerUp if exist
+        if (this.powerUpActive.isPresent()) {
+            this.activePowerUp(powerUpActive.get());
+        }
+
         //Update ducks
         this.ducks.forEach(d -> {
             d.update(timeElapsed);
@@ -151,6 +159,8 @@ public final class ModelImpl implements Model {
             }
             if (d.getStatus() == EntityStatus.FLOWN_AWAY && d.getPosition().getY() <= 0) {
                 this.match.get().getMatchData().incrementFlownDucks();
+            } else if (d.getStatus() == EntityStatus.DEAD && d.getPosition().getY() >= DogImpl.FINAL_POS_Y) {
+                this.dog.setLastDuckKilled(d);
             }
         });
         // Update PowerUp list
@@ -161,9 +171,6 @@ public final class ModelImpl implements Model {
                 this.powerUpActive = Optional.of(p.getType());
             }
         });
-        if (this.duckPowerUp > 0 && this.powerUpActive.isPresent()) {
-            this.activePowerUp(powerUpActive.get());
-        }
         //Clean objects not necessary
         this.cleaner.clean(this.ducks, this.powerUp);
     }
@@ -180,6 +187,15 @@ public final class ModelImpl implements Model {
                 this.endPowerUp();
             }
         }
+    }
+
+
+    @Override
+    public Pair<Integer, Integer> getRounds() {
+        if (this.gameMode == GameMode.STORY_MODE) {
+            return new ImmutablePair<>(this.lastRound, MaxOfRounds.FIVE_ROUNDS.getRounds());
+        }
+        return new ImmutablePair<>(this.lastRound, this.lastRound);
     }
 
     @Override
@@ -207,6 +223,7 @@ public final class ModelImpl implements Model {
             case SLOW_DOWN:
                 this.ducks.stream()
                           .filter(d -> d.isAlive() 
+                                  && !d.isDecelerated()
                                   && d.getPosition().getX() >= StandardDuck.COLLISION_X
                                   && d.getPosition().getX() <= (ModelImpl.GAME_WIDTH - StandardDuck.COLLISION_X) * 2)
                           .forEach(d -> {
@@ -218,13 +235,12 @@ public final class ModelImpl implements Model {
                 break;
             case KILL_ALL:
                 this.ducks.stream()
-                          .filter(d -> d.isAlive() 
+                          .filter(d -> d.isAlive()
                                   && d.getPosition().getX() >= StandardDuck.COLLISION_X
                                   && d.getPosition().getX() <= ModelImpl.GAME_WIDTH - (StandardDuck.COLLISION_X * 3))
                           .forEach(d -> {
                               if (this.duckPowerUp > 0) {
                                   d.kill(); 
-                                  this.dog.setLastDuckKilled(d);
                                   this.duckPowerUp--;
                                   this.match.get().getMatchData().incrementScoreOf(d.getScore());
                               }
@@ -258,8 +274,8 @@ public final class ModelImpl implements Model {
         final int matchScore = this.match.get().getDifficulty().getLimitOfDifficulty() * this.lastRound;
         switch (this.gameMode) {
             case STORY_MODE:
-                gameOver = this.spawner.getActualRound() > this.lastRound 
-                            && matchData.getGlobalScore() < matchScore 
+                gameOver = this.spawner.getActualRound() > this.lastRound
+                            && matchData.getGlobalScore() < matchScore
                             || this.currentMagazine > MAX_MAGAZINES
                             || this.getBullets() == 0 && this.currentMagazine == MAX_MAGAZINES
                             || this.spawner.isSpawnFinished();

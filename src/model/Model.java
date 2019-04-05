@@ -3,6 +3,8 @@ package model;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import model.data.MatchData;
 import model.entities.Dog;
 import model.entities.Duck;
@@ -125,7 +127,11 @@ public interface Model {
      * Get dog of the game.
      * 
      * @return dog
-     * @return
      */
     Dog getDog();
+
+    /**
+     * @return the actual round and max round to reach.
+     */
+    Pair<Integer, Integer> getRounds();
 }

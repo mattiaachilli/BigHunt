@@ -12,12 +12,16 @@ import model.entities.Duck;
 public class SurvivalModeSpawner extends AbstractSpawner {
 
     private static final int INIT_DELAY = DelayDuckSpawner.DOG_DELAY.getSecondDelay();
+    private static final int UPDATE_INCREMENT_DUCK = 10000;
+    private static int duckround = 2;
+    private int timeElapsedUpdate;
 
     /**
      * Survival spawner constructor.
      */
     public SurvivalModeSpawner() {
         super(INIT_DELAY, new SurvivalState());
+        this.timeElapsedUpdate = 0;
     }
 
     @Override
@@ -41,5 +45,19 @@ public class SurvivalModeSpawner extends AbstractSpawner {
     @Override
     public final int getActualRound() {
         return 1;
+    }
+
+    @Override
+    protected final void updateSurvival(final int elapsed) { 
+        this.timeElapsedUpdate += elapsed;
+        if (timeElapsedUpdate >= UPDATE_INCREMENT_DUCK) {
+            this.timeElapsedUpdate -= UPDATE_INCREMENT_DUCK;
+            duckround++;
+        }
+    }
+
+    @Override
+    protected final int getDuckMax() {
+        return duckround;
     }
 }
