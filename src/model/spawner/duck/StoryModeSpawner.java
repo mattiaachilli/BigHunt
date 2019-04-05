@@ -15,6 +15,7 @@ public class StoryModeSpawner extends AbstractSpawner {
 
     private static final int INIT_DELAY = DelayDuckSpawner.DOG_DELAY.getSecondDelay();
     private static final int ROUND_DELAY = DelayDuckSpawner.ROUND_DELAY.getSecondDelay();
+    private static final int DUCK_ROUND = 3;
     private int round;
 
     /**
@@ -75,5 +76,10 @@ public class StoryModeSpawner extends AbstractSpawner {
     @Override
     public final int getActualRound() {
         return this.round;
+    }
+
+    @Override
+    protected final int getDuckMax() {
+        return DUCK_ROUND;
     }
 }

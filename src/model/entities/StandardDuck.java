@@ -21,7 +21,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class StandardDuck extends AbstractCharacter implements Duck {
 
-    private static final int MILLIS_UPDATE_DIRECTION = 1500; //1.5 SECONDS
+    private static final int MILLIS_UPDATE_DIRECTION = 1000; //1 SECOND
     private static final int MILLIS_UPDATE_PRECIPITATE = 300; //300ms
     private static final int DEFAULT_SCORE = 50;
     private static final int POSSIBLE_DIRECTION = 6;
