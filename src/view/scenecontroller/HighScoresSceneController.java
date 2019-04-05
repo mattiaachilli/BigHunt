@@ -1,8 +1,6 @@
 package view.scenecontroller;
 
-import java.util.List;
-
-import model.data.HighScore;
+import model.data.Podium;
 
 /**
  * 
@@ -11,14 +9,14 @@ import model.data.HighScore;
 public interface HighScoresSceneController {
     /**
      * 
-     * @param highScores
+     * @param storyPodium
      *          high score to use
      */
-    void setStoryModeHighScores(List<HighScore> highScores);
+    void setStoryModePodium(Podium storyPodium);
     /**
      * 
-     * @param highScores
+     * @param survivalPodium
      *          survival mode score to use
      */
-    void setSurvivalModeHighScores(List<HighScore> highScores);
+    void setSurvivalModePodium(Podium survivalPodium);
 }

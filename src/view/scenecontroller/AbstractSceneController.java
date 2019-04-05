@@ -8,15 +8,15 @@ import view.scenefactory.SceneFactory;
  */
 public abstract class AbstractSceneController implements SceneController {
     private SceneFactory sceneFactory;
-    
+
     @Override
-    public void setSceneFactory(final SceneFactory sceneFactory) {
+    public final void setSceneFactory(final SceneFactory sceneFactory) {
         this.sceneFactory = sceneFactory;
     }
-    
+
     @Override
-    public SceneFactory getSceneFactory() {
+    public final SceneFactory getSceneFactory() {
         return this.sceneFactory;
     }
-    
+
 }

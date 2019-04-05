@@ -26,12 +26,12 @@ public class HighScoreImpl implements HighScore {
     }
 
     @Override
-    public String getName() {
+    public final String getName() {
         return this.name;
     }
 
     @Override
-    public int getScore() {
+    public final int getScore() {
         return this.score;
     }
 

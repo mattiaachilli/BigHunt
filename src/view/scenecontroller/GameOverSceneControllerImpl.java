@@ -6,14 +6,18 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import model.data.MatchData;
-import settings.observers.GameDifficultyObserver;
+
+
 /**
- * 
- * Sample Skeleton for 'GameOver.fxml' Controller Class
+ *
+=======
+/**
+ *
+>>>>>>> 329e85a20e2fe11700b5d6c9883fc44fd60d22be
+ * Sample Skeleton for 'GameOver.fxml' Controller Class.
  *
  */
 public class GameOverSceneControllerImpl extends AbstractSecondarySceneController implements GameOverSceneController {
@@ -44,6 +48,7 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
 
     @FXML
     void startNewGame() {
+        this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().openSelectModeScene();
     }
 
@@ -66,7 +71,7 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
     }
 
     @Override
-    public void setMatchData(MatchData matchData) {
+    public void setMatchData(final MatchData matchData) {
         this.timePlayedLabel.setText(this.getTime(matchData.getTimerFromStart()));
         this.killsLabel.setText(String.valueOf(matchData.getKilledDucks()));
         this.scoreLabel.setText(String.valueOf(matchData.getGlobalScore()));

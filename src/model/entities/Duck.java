@@ -20,12 +20,6 @@ public interface Duck extends Character {
     Optional<PowerUp> getPowerUp();
 
     /**
-     * Get the time in seconds since the duck was created, the duck may be died.
-     * @return time.
-     */
-    long getTimeFromBirth();
-
-    /**
      * Check if this duck has a PowerUp.
      * 
      * @return true if this duck has a PowerUp.

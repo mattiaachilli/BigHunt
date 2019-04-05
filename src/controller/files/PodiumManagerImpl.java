@@ -25,22 +25,22 @@ import model.data.PodiumImpl;
 public class PodiumManagerImpl implements PodiumManager {
 
     @Override
-    public Optional<Podium> loadStoryHighScores() {
+    public final Optional<Podium> loadStoryPodium() {
         return this.load(FilesHomeManager.STORY_SCORES);
     }
 
     @Override
-    public Optional<Podium> loadSurvivalHighScores() {
+    public final Optional<Podium> loadSurvivalPodium() {
         return this.load(FilesHomeManager.SURVIVAL_SCORES);
     }
 
     @Override
-    public boolean saveStoryHighScores(final Podium podium) {
+    public final boolean saveStoryHighScores(final Podium podium) {
         return this.save(podium, FilesHomeManager.STORY_SCORES);
     }
 
     @Override
-    public boolean saveSurvivalHighScores(final Podium podium) {
+    public final boolean saveSurvivalHighScores(final Podium podium) {
         return this.save(podium, FilesHomeManager.SURVIVAL_SCORES);
     }
 

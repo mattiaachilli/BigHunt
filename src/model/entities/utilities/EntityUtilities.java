@@ -52,7 +52,7 @@ public final class EntityUtilities {
         } else {
             throw new IllegalArgumentException();
         }
-        return duck.getTimeFromBirth() >= time && duck.getStatus() == EntityStatus.ALIVE;
+        return duck.getTimeElapsed() >= time && duck.getStatus() == EntityStatus.ALIVE;
     }
 
     /**
