@@ -75,7 +75,8 @@ public final class ControllerImpl implements Controller {
         //System.out.println("Nuova partita");
         this.model.initGame(gameMode);
         this.input.clearCommands();
-        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo());
+        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo(), 
+            this.model.getRounds());
     }
 
     @Override
@@ -220,7 +221,7 @@ public final class ControllerImpl implements Controller {
                     processInput();
                     model.update(elapsed);
                     view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
-                            model.getInfo());
+                            model.getInfo(), model.getRounds());
                 }
                 Utilities.waitForNextFrame(PERIOD, current);
                 lastTime = current;

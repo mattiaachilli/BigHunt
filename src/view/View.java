@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import controller.Controller;
 import model.achievements.Achievement;
 import model.achievements.AchievementType;
@@ -95,8 +97,9 @@ public interface View {
      * @param matchData    data of the match
      * @param magazine     current magazine useful to view bullets
      * @param info         info about limits round/flown away ducks
+     * @param round        left actual round, right max round
      */
-    void render(List<Optional<ViewEntity>> viewEntities, MatchData matchData, Magazine magazine, int info);
+    void render(List<Optional<ViewEntity>> viewEntities, MatchData matchData, Magazine magazine, int info, Pair<Integer, Integer> round);
 
     /**
      * Start a new match.

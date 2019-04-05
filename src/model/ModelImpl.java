@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import model.cleaner.Cleaner;
 import model.cleaner.CleanerImpl;
 import model.data.MatchData;
@@ -21,6 +24,7 @@ import model.gun.Magazine;
 import model.gun.MagazineImpl;
 import model.matches.AbstractMatch;
 import model.matches.GameMode;
+import model.matches.MaxOfRounds;
 import model.matches.StoryMatch;
 import model.matches.SurvivalMatch;
 import model.spawner.duck.DuckSpawner;
@@ -98,7 +102,6 @@ public final class ModelImpl implements Model {
         this.powerUpActive = Optional.empty();
         switch (gameMode) {
             case STORY_MODE:
-                //System.out.println("Storia");
                 this.match = Optional.of(new StoryMatch(this.difficulty));
                 this.spawner = new StoryModeSpawner();
                 this.lastRound = this.spawner.getActualRound();
@@ -184,6 +187,15 @@ public final class ModelImpl implements Model {
                 this.endPowerUp();
             }
         }
+    }
+
+
+    @Override
+    public Pair<Integer, Integer> getRounds() {
+        if (this.gameMode == GameMode.STORY_MODE) {
+            return new ImmutablePair<>(this.lastRound, MaxOfRounds.FIVE_ROUNDS.getRounds());
+        }
+        return new ImmutablePair<>(this.lastRound, this.lastRound);
     }
 
     @Override
