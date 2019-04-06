@@ -1,6 +1,8 @@
 package model.decorator;
 
+import model.ModelImpl;
 import model.entities.Duck;
+import model.entities.EntityStatus;
 
 /**
  * 
@@ -10,6 +12,12 @@ import model.entities.Duck;
 public final class YellowDuck extends DuckDecorator {
 
     private static final int SCORE_MULTIPLIER = 2;
+    /**
+     * Velocity of the duck.
+     */
+    public static final double VELOCITY = ModelImpl.GAME_WIDTH / 3.5 + 200;
+    private static final int FLY_AWAY_TIME = 7000;
+
 
     /**
      * 
@@ -25,4 +33,8 @@ public final class YellowDuck extends DuckDecorator {
         return SCORE_MULTIPLIER;
     }
 
+    @Override
+    public boolean canFlyAway() {
+        return this.getTimeElapsed() >= FLY_AWAY_TIME && this.getStatus() == EntityStatus.ALIVE;
+    }
 }

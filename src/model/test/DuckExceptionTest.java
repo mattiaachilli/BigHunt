@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import javafx.scene.shape.Rectangle;
 import model.entities.Duck;
-import model.entities.DuckProperty;
 import model.entities.EntityStatus;
 import model.entities.StandardDuck;
 import model.factories.DuckFactory;
@@ -39,8 +38,7 @@ public class DuckExceptionTest {
         return new StandardDuck(new Rectangle(INITIAL_POSITION_X, INITIAL_POSITION_Y, 
                                     StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK),
                                     VELOCITY,
-                                    DIRECTION,
-                                    DuckProperty.STANDARD_DUCK);
+                                    DIRECTION);
     }
 
     /**

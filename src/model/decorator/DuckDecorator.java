@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javafx.scene.shape.Shape;
 import model.entities.Duck;
-import model.entities.DuckProperty;
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.properties.DuckDirection;
@@ -56,13 +55,13 @@ public abstract class DuckDecorator implements Duck {
     }
 
     @Override
-    public final Velocity getVelocity() {
-        return this.duck.getVelocity();
+    public final void setVelocity(final Velocity velocity) {
+        this.duck.setVelocity(velocity);
     }
 
     @Override
-    public final void setVelocity(final Velocity velocity) {
-        this.duck.setVelocity(velocity);
+    public final Velocity getVelocity() {
+        return this.duck.getVelocity();
     }
 
     @Override
@@ -76,11 +75,6 @@ public abstract class DuckDecorator implements Duck {
     }
 
     @Override
-    public final void update(final int timeElapsed) {
-        this.duck.update(timeElapsed);
-    }
-
-    @Override
     public final Optional<PowerUp> getPowerUp() {
         return this.duck.getPowerUp();
     }
@@ -88,6 +82,11 @@ public abstract class DuckDecorator implements Duck {
     @Override
     public final boolean hasPowerUp() {
         return this.duck.hasPowerUp();
+    }
+
+    @Override
+    public final void update(final int timeElapsed) {
+        this.duck.update(timeElapsed);
     }
 
     @Override
@@ -126,11 +125,6 @@ public abstract class DuckDecorator implements Duck {
     }
 
     @Override
-    public final boolean canFlyAway() {
-        return this.duck.canFlyAway();
-    }
-
-    @Override
     public final void setMovementChange(final boolean change) {
         this.duck.setMovementChange(change);
     }
@@ -138,11 +132,6 @@ public abstract class DuckDecorator implements Duck {
     @Override
     public final void setDecelerate() {
         this.duck.setDecelerate();
-    }
-
-    @Override
-    public final DuckProperty getProperty() {
-        return this.duck.getProperty();
     }
 
     @Override

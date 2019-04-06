@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import javafx.scene.shape.Rectangle;
 import model.entities.Duck;
-import model.entities.DuckProperty;
 import model.entities.EntityStatus;
 import model.entities.StandardDuck;
 import model.properties.DuckDirection;
@@ -23,8 +22,8 @@ import model.spawner.duck.SpawnSide;
 public class DuckTest {
     private static final double INITIAL_POSITION_X = 200.0;
     private static final double INITIAL_POSITION_Y = 200.0;
-    private static final double STANDARD_VELOCITY_X = DuckProperty.STANDARD_DUCK.getVelocity();
-    private static final double STANDARD_VELOCITY_Y = DuckProperty.STANDARD_DUCK.getVelocity();
+    private static final double STANDARD_VELOCITY_X = StandardDuck.VELOCITY;
+    private static final double STANDARD_VELOCITY_Y = StandardDuck.VELOCITY;
     private static final double MODIFIED_VELOCITY_X = 10.0; //Movement without collisions
     private static final double MODIFIED_VELOCITY_Y = 10.0;
     private static final Velocity STANDARD_VELOCITY = new VelocityImpl(STANDARD_VELOCITY_X, STANDARD_VELOCITY_Y);
@@ -38,8 +37,7 @@ public class DuckTest {
         duck = new StandardDuck(new Rectangle(INITIAL_POSITION_X, INITIAL_POSITION_Y,
                                     StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK),
                                     velocity,
-                                    DIRECTION,
-                                    DuckProperty.STANDARD_DUCK);
+                                    DIRECTION);
     }
 
     private void flyAwayDuck() {

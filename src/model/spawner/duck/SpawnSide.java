@@ -3,7 +3,6 @@ package model.spawner.duck;
 import java.util.Random;
 
 import model.ModelImpl;
-import model.entities.DuckProperty;
 import model.entities.StandardDuck;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
@@ -39,16 +38,16 @@ public final class SpawnSide {
      * 
      * @param initDirection 
      *                  of the duck
-     * @param duckType 
-     *          is the duck's type
+     * @param velocityDuck
+     *                  velocity of the duck.
      * @return velocity
      */
-    public static Velocity getVelocity(final DuckDirection initDirection, final DuckProperty duckType) {
+    public static Velocity getVelocity(final DuckDirection initDirection, final double velocityDuck) {
         final Velocity velocity;
         if (initDirection == DuckDirection.LEFT) {
-            velocity = new VelocityImpl(-duckType.getVelocity(), 0);
+            velocity = new VelocityImpl(-velocityDuck, 0);
         } else {
-            velocity = new VelocityImpl(duckType.getVelocity(), 0);
+            velocity = new VelocityImpl(velocityDuck, 0);
         }
         return velocity;
     }
