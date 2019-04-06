@@ -54,13 +54,21 @@ public final class EntityUtilities {
     }
 
     private static boolean checkVelocity(final Duck duck, final double velocity) {
-        return duck.getVelocity().getX() == velocity 
+        return Double.compare(duck.getVelocity().getX(), velocity) == 0
                || 
-               duck.getVelocity().getY() == velocity
+               Double.compare(duck.getVelocity().getY(), velocity) == 0
                ||
-               duck.getVelocity().getX() == -velocity
+               Double.compare(duck.getVelocity().getX(), -velocity) == 0
                || 
-               duck.getVelocity().getY() == -velocity;
+               Double.compare(duck.getVelocity().getY(), -velocity) == 0
+               || 
+               Double.compare(duck.getVelocity().getX(), velocity * 0.5) == 0
+               || 
+               Double.compare(duck.getVelocity().getY(), velocity * 0.5) == 0
+               ||
+               Double.compare(duck.getVelocity().getX(), -velocity * 0.5) == 0
+               || 
+               Double.compare(duck.getVelocity().getY(), -velocity * 0.5) == 0;
     }
 
 
