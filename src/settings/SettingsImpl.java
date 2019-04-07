@@ -78,7 +78,7 @@ public final class SettingsImpl implements Settings {
     }
 
     @Override
-    public double getScaleFactory() {
+    public double getScaleFactor() {
         return Math.min((double) this.selectedResolution.getValue() / SettingsImpl.PREF_Y_RESOLUTION,
             (double) this.selectedResolution.getKey() / SettingsImpl.PREF_X_RESOLUTION);
     }

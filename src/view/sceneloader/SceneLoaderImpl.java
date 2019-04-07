@@ -60,8 +60,8 @@ public class SceneLoaderImpl implements SceneLoader {
 
                 root.getChildrenUnmodifiable().stream().forEach(e -> {
                     if (screen == Screens.GAME && e instanceof Label || screen != Screens.GAME) {
-                        e.setScaleX(SettingsImpl.getSettings().getScaleFactory());
-                        e.setScaleY(SettingsImpl.getSettings().getScaleFactory());
+                        e.setScaleX(SettingsImpl.getSettings().getScaleFactor());
+                        e.setScaleY(SettingsImpl.getSettings().getScaleFactor());
                     }
                 });
                 scene = new Scene(root);
@@ -90,10 +90,6 @@ public class SceneLoaderImpl implements SceneLoader {
             }
 
             switch (screen) {
-                case SELECT_ACCOUNT:
-                    break;
-                case MENU:
-                    break;
                 case LOGIN:
                     final LoginSceneController log = (LoginSceneController) controller;
                     log.setView(this.view);
