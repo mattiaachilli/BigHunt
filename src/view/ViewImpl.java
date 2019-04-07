@@ -222,6 +222,7 @@ public class ViewImpl implements View {
         private int info;
         private final Image cursorImage;
         private long initTimeBackroundRound;
+        private final SceneFactory renderSceneFactory = getSceneFactory();
 
         Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
@@ -247,7 +248,7 @@ public class ViewImpl implements View {
                                             SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
 
             if (renderId == 1) {
-                ViewImpl.this.sceneFactory.getStage().getScene().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                this.renderSceneFactory.getStage().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
 
                     Optional<CommandType> commandType = Optional.empty();
                     switch (e.getCode()) {
@@ -263,7 +264,7 @@ public class ViewImpl implements View {
                     commandType.ifPresent(command -> controller.notifyCommand(command, 0, 0));
                 });
 
-                ViewImpl.this.sceneFactory.getStage().getScene().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+                this.renderSceneFactory.getStage().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
                     Optional<CommandType> commandType = Optional.empty();
                     if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
                         commandType = Optional.ofNullable(CommandType.SHOOT);
