@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 /**
  * Enumeration used to dog images.
  */
-public enum DogType {
+public enum DogImageType {
     /**
      * All types of dog images.
      */
@@ -75,7 +75,7 @@ public enum DogType {
      * @param imageName,
      *            name of the image stored in resources
      */
-    DogType(final String imageName) {
+    DogImageType(final String imageName) {
         this.picture = new Image(getClass().getResourceAsStream(PATH + imageName));
     }
 

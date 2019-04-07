@@ -21,4 +21,9 @@ public interface Character extends Status {
      *          time to add
      */
     void addTimeElapsed(int timeElapsed);
+
+    /**
+     * Reset time elapsed.
+     */
+    void resetTimeElapsed();
 }
