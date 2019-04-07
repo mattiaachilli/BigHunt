@@ -6,6 +6,7 @@ import java.util.concurrent.Semaphore;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import audio.Sound;
 import controller.converter.EntitiesConverter;
 import controller.files.PodiumManager;
 import controller.files.PodiumManagerImpl;
@@ -77,6 +78,7 @@ public final class ControllerImpl implements Controller {
         this.input.clearCommands();
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo(), 
             this.model.getRounds());
+        Sound.GAME_INTRO.play();
     }
 
     @Override

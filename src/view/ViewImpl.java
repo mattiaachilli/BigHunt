@@ -21,6 +21,7 @@ import java.util.concurrent.Semaphore;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import audio.Sound;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -250,6 +251,7 @@ public class ViewImpl implements View {
                     switch (e.getCode()) {
                     case ESCAPE:
                         commandType = Optional.of(CommandType.PAUSE);
+                        Sound.GAME_INTRO.stop();
                         break;
                     case R:
                         commandType = Optional.of(CommandType.RECHARGE);
@@ -264,6 +266,7 @@ public class ViewImpl implements View {
                     Optional<CommandType> commandType = Optional.empty();
                     if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
                         commandType = Optional.ofNullable(CommandType.SHOOT);
+                        Sound.SHOOT.play();
                     }
                     commandType.ifPresent(command -> controller.notifyCommand(command, e.getX(), e.getY()));
                 });
@@ -273,6 +276,7 @@ public class ViewImpl implements View {
         @Override
         public final void run() {
             controller.initGame(gameMode);
+            Sound.GAME_INTRO.play();
             controller.initGameLoop();
             controller.startGameLoop();
 
