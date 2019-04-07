@@ -81,7 +81,6 @@ public class SceneFactoryImpl implements SceneFactory {
 
     @Override
     public final void openGameScene() {
-        //System.out.println("Apre scena partita");
         this.openNewScene(Screens.GAME);
     }
 

@@ -8,7 +8,6 @@ import java.util.Optional;
 import controller.Controller;
 import controller.input.CommandType;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.ImageCursor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
@@ -18,8 +17,9 @@ import model.achievements.AchievementType;
 import model.data.Podium;
 import model.gun.Magazine;
 import model.matches.GameMode;
-
 import java.util.concurrent.Semaphore;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,8 +57,9 @@ public class ViewImpl implements View {
     private boolean gamePaused;
     private Magazine magazine;
     private int infoLimit;
+    private Pair<Integer, Integer> round;
     private GameMode gameMode;
-    private int idRender;
+    private int renderId;
 
     /**
      * Constructor.
@@ -91,8 +92,7 @@ public class ViewImpl implements View {
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
         this.gameMode = gameMode;
-        //System.out.println("Nuovo render");
-        this.idRender++;
+        this.renderId++;
         this.render = new Render(gameSceneController, gameMode);
         this.startRender();
     }
@@ -129,13 +129,14 @@ public class ViewImpl implements View {
 
     @Override
     public final void render(final List<Optional<ViewEntity>> viewEntities, final MatchData matchData,
-    final Magazine magazine, final int info) {
+    final Magazine magazine, final int info, final Pair<Integer, Integer> round) {
         try {
             this.mutex.acquire();
             this.viewEntities = viewEntities;
             this.matchData = matchData;
             this.magazine = magazine;
             this.infoLimit = info;
+            this.round = round;
             this.mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -190,6 +191,11 @@ public class ViewImpl implements View {
         return this.sceneFactory;
     }
 
+
+    @Override
+    public final void setCursor() {
+        this.render.setCursor();
+    }
     /**
      * 
      * Thread that render graphics independent from game loop.
@@ -197,6 +203,7 @@ public class ViewImpl implements View {
      */
     private class Render extends Thread {
         private static final int MILLIS_FROM_SECOND = 1000;
+        private static final int UPDATE_IMAGE_ROUND = 5000;
 
         private volatile boolean running, end;
         private final int period;
@@ -205,9 +212,15 @@ public class ViewImpl implements View {
         private final GameSceneController gameSceneController;
         private final GraphicsContext gamecanvas;
         private final ImageView backgroundImage;
+        private final ImageView roundImage;
+        private final ImageView lastRoundImage;
         private Magazine currentMagazine;
+        private Pair<Integer, Integer> rounds;
+        private int actualRound;
         private final GameMode gameMode;
         private int info;
+        private final Image cursorImage;
+        private long initTimeBackroundRound;
 
         Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
@@ -215,17 +228,23 @@ public class ViewImpl implements View {
             this.gameSceneController = gameSceneController;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
-            Image cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
-            this.gamecanvas.getCanvas()
-            .setCursor(new ImageCursor(cursorImage, cursorImage.getWidth() / 2, cursorImage.getHeight() / 2));
             this.gameMode = gameMode;
+            this.actualRound = 1;
 
-            this.backgroundImage = new ImageView(
-            new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
-            SettingsImpl.getSettings().getSelectedResolution().getKey(),
-            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+            this.cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
+            this.setCursor();
 
-            if (idRender == 1) {
+            this.roundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/round/nextRound.png"),
+                                            SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+            this.lastRoundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/round/finalRound.png"),
+                                            SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+            this.backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
+                                            SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+
+            if (renderId == 1) {
                 ViewImpl.this.sceneFactory.getStage().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
                     Optional<CommandType> commandType = Optional.empty();
                     switch (e.getCode()) {
@@ -240,7 +259,7 @@ public class ViewImpl implements View {
                     }
                     commandType.ifPresent(command -> controller.notifyCommand(command, 0, 0));
                 });
-    
+
                 ViewImpl.this.sceneFactory.getStage().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
                     Optional<CommandType> commandType = Optional.empty();
                     if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
@@ -253,27 +272,25 @@ public class ViewImpl implements View {
 
         @Override
         public final void run() {
-            System.out.println("Render parte");
-            //System.out.println("Inizializzo la partita");
             controller.initGame(gameMode);
-            //System.out.println("Inizializzo il game loop");
             controller.initGameLoop();
-            //System.out.println("Avvio il game loop");
             controller.startGameLoop();
 
             while (this.running) {
-
                 try {
                     mutex.acquire();
                     this.viewEntitiesGame = viewEntities;
                     this.currentMatchData = matchData;
                     this.currentMagazine = magazine;
+                    this.rounds = round;
+                    if (this.actualRound < this.rounds.getLeft() && this.initTimeBackroundRound == 0) {
+                        this.initTimeBackroundRound = System.currentTimeMillis();
+                    }
                     this.info = infoLimit;
                     mutex.release();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 final long currentTime = System.currentTimeMillis();
 
                 Platform.runLater(() -> {
@@ -282,6 +299,9 @@ public class ViewImpl implements View {
                     this.gameSceneController.setGameData(this.currentMatchData, this.currentMagazine, this.info);
 
                     for (final Optional<ViewEntity> viewEntity : this.viewEntitiesGame) {
+                        if (this.actualRound < this.rounds.getLeft()) {
+                            this.updateRoundImage();
+                        }
                         if (viewEntity.isPresent() && viewEntity.get().getShape() instanceof Rectangle) {
                             final ViewEntity ve = viewEntity.get();
                             final Rectangle rectangle = (Rectangle) ve.getShape();
@@ -304,10 +324,20 @@ public class ViewImpl implements View {
         }
 
         private void updateBackground() {
-            this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0,
-            SettingsImpl.getSettings().getSelectedResolution().getKey(),
-            SettingsImpl.getSettings().getSelectedResolution().getValue());
+            this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                 SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
+        }
+
+        private void updateRoundImage() {
+            final Image image = this.actualRound == this.rounds.getRight() - 1 ? this.lastRoundImage.getImage() : this.roundImage.getImage();
+            this.gamecanvas.drawImage(image, 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                            SettingsImpl.getSettings().getSelectedResolution().getValue());
+            this.backgroundImage.setPreserveRatio(true);
+            if (System.currentTimeMillis() - this.initTimeBackroundRound > UPDATE_IMAGE_ROUND) {
+                this.actualRound = this.rounds.getLeft();
+                this.initTimeBackroundRound = 0;
+            }
         }
 
         public final void endGame() {
@@ -322,6 +352,10 @@ public class ViewImpl implements View {
         public void start() {
             this.running = true;
             super.start();
+        }
+
+        public void setCursor() {
+            this.gamecanvas.getCanvas().setCursor(new ImageCursor(cursorImage, this.cursorImage.getWidth() / 2, this.cursorImage.getHeight() / 2));
         }
     }
 }

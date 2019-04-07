@@ -75,8 +75,8 @@ public final class ControllerImpl implements Controller {
         // System.out.println("Nuova partita");
         this.model.initGame(gameMode);
         this.input.clearCommands();
-        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(),
-        this.model.getInfo());
+        this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo(), 
+            this.model.getRounds());
     }
 
     @Override
@@ -106,30 +106,28 @@ public final class ControllerImpl implements Controller {
         try {
             mutex.acquire();
             switch (command) {
-            case PAUSE:
-                if (!this.gameLoop.isPaused()) {
-                    System.out.println("PAUSA");
-                    this.input.clearCommands();
-                    this.gameLoop.pauseLoop();
-                    this.view.pauseRender();
-                    this.view.getSceneFactory().openPauseScene();
-                } else {
-                    System.out.println("NON IN PAUSA");
-                    this.input.clearCommands();
-                    this.gameLoop.resumeLoop();
-                    this.view.getSceneFactory().openGameScene();
-                    this.view.resumeRender();
-                }
-                break;
-            case RECHARGE:
-                this.input.setCommand(new Recharge());
-                break;
-            case SHOOT:
-                System.out.println("SPARA");
-                this.input.setCommand(new Shoot(x, y));
-                break;
-            default:
-                break;
+                case PAUSE:
+                    if (!this.gameLoop.isPaused()) {
+                        this.input.clearCommands();
+                        this.gameLoop.pauseLoop();
+                        this.view.pauseRender();
+                        this.view.getSceneFactory().openPauseScene();
+                    } else if (this.gameLoop.isAlive()) {
+                        this.input.clearCommands();
+                        this.gameLoop.resumeLoop();
+                        this.view.getSceneFactory().openGameScene();
+                        this.view.resumeRender();
+                        this.view.setCursor();
+                    }
+                    break;
+                case RECHARGE:
+                    this.input.setCommand(new Recharge());
+                    break;
+                case SHOOT:
+                    this.input.setCommand(new Shoot(x, y));
+                    break;
+                default:
+                    break;
             }
             mutex.release();
         } catch (InterruptedException e) {
@@ -216,7 +214,6 @@ public final class ControllerImpl implements Controller {
         }
 
         public void run() {
-            this.cleanInput();
             long lastTime = System.currentTimeMillis();
             while (running && !model.isGameOver()) {
                 final long current = System.currentTimeMillis();
@@ -225,23 +222,13 @@ public final class ControllerImpl implements Controller {
                     processInput();
                     model.update(elapsed);
                     view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
-                    model.getInfo());
+                            model.getInfo(), model.getRounds());
                 }
                 Utilities.waitForNextFrame(PERIOD, current);
                 lastTime = current;
             }
             if (model.isGameOver()) {
                 endGame();
-            }
-        }
-
-        private void cleanInput() {
-            try {
-                ControllerImpl.this.mutex.acquire();
-                input.clearCommands();
-                ControllerImpl.this.mutex.release();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
 
