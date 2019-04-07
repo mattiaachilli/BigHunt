@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import javafx.scene.shape.Rectangle;
 import model.ModelImpl;
 import model.entities.Duck;
-import model.entities.DuckProperty;
 import model.entities.StandardDuck;
 import model.entities.powerup.PowerUp;
 import model.properties.DuckDirection;
@@ -33,8 +32,7 @@ public class PowerUpTest {
     private Duck createDuck() {
         return new StandardDuck(new Rectangle(0, 0, StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK),
                                     new VelocityImpl(0, 0),
-                                    DuckDirection.RIGHT,
-                                    DuckProperty.STANDARD_DUCK);
+                                    DuckDirection.RIGHT);
     }
 
     /**

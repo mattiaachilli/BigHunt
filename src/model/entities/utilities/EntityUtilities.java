@@ -2,10 +2,16 @@ package model.entities.utilities;
 
 
 import model.entities.StandardDuck;
+
+import java.util.Random;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import model.ModelImpl;
+import model.decorator.OrangeDuck;
+import model.decorator.PinkDuck;
+import model.decorator.YellowDuck;
 import model.entities.Duck;
-import model.entities.DuckProperty;
-import model.entities.EntityStatus;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
@@ -16,6 +22,7 @@ import model.properties.VelocityImpl;
  *
  */
 public final class EntityUtilities {
+    private static final int POSSIBLE_DIRECTION = 6;
     private static final double FLY_AWAY_VELOCITY = ModelImpl.GAME_WIDTH / 1.2;
     private static final double KILLED_VELOCITY = ModelImpl.GAME_WIDTH / 4;
     private static final double MAX_DOWN_Y = ModelImpl.GAME_HEIGHT * 0.60;
@@ -32,30 +39,41 @@ public final class EntityUtilities {
     }
 
     /**
-     * Check if duck can fly away.
-     * 
+     * Change direction of the duck.
      * @param duck
-     *          is the duck to check if fly away is possible
-     *
-     * @return true if the duck can fly away
+     *          duck to change direction.
      */
-    public static boolean checkFlyAway(final Duck duck) {
-        int time;
-        if (duck.getProperty() == DuckProperty.STANDARD_DUCK) {
-            time = DuckProperty.STANDARD_DUCK.getTimeFlyAway();
-        } else if (duck.getProperty() == DuckProperty.YELLOW_DUCK) {
-            time = DuckProperty.YELLOW_DUCK.getTimeFlyAway();
-        } else if (duck.getProperty() == DuckProperty.ORANGE_DUCK) {
-            time = DuckProperty.ORANGE_DUCK.getTimeFlyAway();
-        } else if (duck.getProperty() == DuckProperty.PINK_DUCK) {
-            time = DuckProperty.PINK_DUCK.getTimeFlyAway();
-        } else {
-            throw new IllegalArgumentException();
+    public static void changeDirection(final Duck duck) {
+        int randomDirection = new Random().nextInt(POSSIBLE_DIRECTION) + 1;
+
+        for (Pair<DuckDirection, Integer> direction: DuckDirection.getRandomDirection()) {
+            if (direction.getRight() == randomDirection) {
+                EntityUtilities.setNewPosition(duck, duck.isDecelerated(), direction.getLeft());
+            }
         }
-        return duck.getTimeElapsed() >= time && duck.getStatus() == EntityStatus.ALIVE;
     }
 
+    private static boolean checkVelocity(final Duck duck, final double velocity) {
+        return Double.compare(duck.getVelocity().getX(), velocity) == 0
+               || 
+               Double.compare(duck.getVelocity().getY(), velocity) == 0
+               ||
+               Double.compare(duck.getVelocity().getX(), -velocity) == 0
+               || 
+               Double.compare(duck.getVelocity().getY(), -velocity) == 0
+               || 
+               Double.compare(duck.getVelocity().getX(), velocity * 0.5) == 0
+               || 
+               Double.compare(duck.getVelocity().getY(), velocity * 0.5) == 0
+               ||
+               Double.compare(duck.getVelocity().getX(), -velocity * 0.5) == 0
+               || 
+               Double.compare(duck.getVelocity().getY(), -velocity * 0.5) == 0;
+    }
+
+
     /**
+     * Set new position of the duck about its direction and velocity.
      * 
      * @param duck
      *          duck to set new position
@@ -69,15 +87,15 @@ public final class EntityUtilities {
         Velocity velocity = new VelocityImpl(0, 0);
         double movement = 0;
         double deceleration = decelerate ? 0.5 : 1;
-        if (duck.getProperty() == DuckProperty.STANDARD_DUCK) {
-            movement = DuckProperty.STANDARD_DUCK.getVelocity() * deceleration;
-        } else if (duck.getProperty() == DuckProperty.YELLOW_DUCK) {
-            movement = DuckProperty.YELLOW_DUCK.getVelocity() * deceleration;
-        } else if (duck.getProperty() == DuckProperty.ORANGE_DUCK) {
-            movement = DuckProperty.ORANGE_DUCK.getVelocity() * deceleration;
-        } else if (duck.getProperty() == DuckProperty.PINK_DUCK) {
-            movement = DuckProperty.PINK_DUCK.getVelocity() * deceleration;
-        }
+        if (checkVelocity(duck, StandardDuck.VELOCITY)) {
+            movement = StandardDuck.VELOCITY * deceleration;
+        } else if (checkVelocity(duck, YellowDuck.VELOCITY)) {
+            movement = YellowDuck.VELOCITY * deceleration;
+        } else if (checkVelocity(duck, OrangeDuck.VELOCITY)) {
+            movement = OrangeDuck.VELOCITY * deceleration;
+        } else if (checkVelocity(duck, PinkDuck.VELOCITY)) {
+            movement = PinkDuck.VELOCITY * deceleration;
+        } 
         if (duck.getActualDirection() != direction) {
             switch (direction) {
                 case RIGHT:

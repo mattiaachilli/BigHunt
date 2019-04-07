@@ -55,9 +55,7 @@ public class VelocityImpl implements Velocity {
     }
 
     @Override
-    public boolean compareTo(final Velocity velocity) {
+    public final boolean compareTo(final Velocity velocity) {
         return this.x == velocity.getX() && this.y == velocity.getY();
     }
-
-
 }
