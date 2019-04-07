@@ -1,7 +1,6 @@
 package model.entities;
 
 import java.util.Optional;
-import java.util.Random;
 
 import javafx.scene.shape.Shape;
 import model.ModelImpl;
@@ -11,7 +10,6 @@ import model.factories.PowerUpFactoryImpl;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
 import model.utilities.ExceptionRuntimeUtility;
-import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * 
@@ -24,7 +22,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     private static final int MILLIS_UPDATE_DIRECTION = 1000; //1 SECOND
     private static final int MILLIS_UPDATE_PRECIPITATE = 300; //300ms
     private static final int DEFAULT_SCORE = 50;
-    private static final int POSSIBLE_DIRECTION = 6;
+    /**
+     * Velocity of the duck.
+     */
+    public static final double VELOCITY = ModelImpl.GAME_WIDTH / 3.5;
+    private static final int FLY_AWAY_TIME = 8000;
     /**
      * WIDTH OF THE DUCK.
      */
@@ -43,7 +45,6 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     public static final double COLLISION_Y = ModelImpl.GAME_WIDTH / 30;
 
     private DuckDirection actualDirection;
-    private DuckProperty duckType;
     private int lastDirectionUpdate;
     private Optional<PowerUp> powerUp;
     private boolean movement;
@@ -58,14 +59,11 @@ public class StandardDuck extends AbstractCharacter implements Duck {
      *          of the duck
      * @param duckDirection
      *          initial direction
-     * @param duckType
-     *          duck's type.
      */
-    public StandardDuck(final Shape shape, final Velocity velocity, final DuckDirection duckDirection, final DuckProperty duckType) {
+    public StandardDuck(final Shape shape, final Velocity velocity, final DuckDirection duckDirection) {
         super(shape, velocity);
         this.powerUp = PowerUpFactoryImpl.getInstance().createRandomPowerUp(this.getPosition());
         this.actualDirection = duckDirection;
-        this.duckType = duckType;
         this.lastDirectionUpdate = 0;
         this.movement = true;
         this.decelerate = false;
@@ -97,7 +95,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
             this.lastDirectionUpdate += timeElapsed;
             if (this.canChangeDirection()) {
                 this.lastDirectionUpdate -= MILLIS_UPDATE_DIRECTION;
-                this.changeDirection();
+                EntityUtilities.changeDirection(this);
             }
             EntityUtilities.checkCollision(this, this.decelerate, this.actualDirection);
             if (this.hasPowerUp()) {
@@ -117,16 +115,6 @@ public class StandardDuck extends AbstractCharacter implements Duck {
         return this.lastDirectionUpdate >= MILLIS_UPDATE_DIRECTION;
     }
 
-    private void changeDirection() {
-        int randomDirection = new Random().nextInt(POSSIBLE_DIRECTION) + 1;
-
-        for (Pair<DuckDirection, Integer> direction: DuckDirection.getRandomDirection()) {
-            if (direction.getRight() == randomDirection) {
-                EntityUtilities.setNewPosition(this, this.decelerate, direction.getLeft());
-            }
-        }
-    }
-
     @Override
     public final int getScore() {
         ExceptionRuntimeUtility.checkException(this.isAlive() || this.getStatus() == EntityStatus.FLOWN_AWAY, new IllegalStateException());
@@ -135,7 +123,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 
     @Override
     public final boolean canFlyAway() {
-        return EntityUtilities.checkFlyAway(this);
+        return this.getTimeElapsed() >= FLY_AWAY_TIME && this.getStatus() == EntityStatus.ALIVE;
     }
 
     @Override
@@ -170,10 +158,5 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     @Override
     public final boolean isDecelerated() {
         return this.decelerate;
-    }
-
-    @Override
-    public final DuckProperty getProperty() {
-        return this.duckType;
     }
 }

@@ -5,7 +5,6 @@ import model.decorator.OrangeDuck;
 import model.decorator.PinkDuck;
 import model.decorator.YellowDuck;
 import model.entities.Duck;
-import model.entities.DuckProperty;
 import model.entities.StandardDuck;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
@@ -19,9 +18,8 @@ import model.properties.Velocity;
 public class DuckFactoryImpl implements DuckFactory {
 
     @Override
-    public final StandardDuck createStandardDuck(final Shape shape, final Velocity velocity, final DuckDirection direction,
-                                            final DuckProperty duckType) {
-        return new StandardDuck(shape, velocity, direction, duckType);
+    public final StandardDuck createStandardDuck(final Shape shape, final Velocity velocity, final DuckDirection direction) {
+        return new StandardDuck(shape, velocity, direction);
     }
 
     @Override

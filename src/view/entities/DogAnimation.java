@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.image.Image;
+import model.decorator.OrangeDuck;
+import model.decorator.PinkDuck;
+import model.decorator.YellowDuck;
 import model.entities.Dog;
 import model.entities.DogStatus;
 import model.entities.Duck;
 import model.entities.Entity;
+import model.entities.StandardDuck;
 
 /**
  * 
@@ -92,21 +96,14 @@ public class DogAnimation implements EntityImageAnimation {
             case HAPPY:
                 final Optional<Duck> duck = this.dog.getLastDuckKilled();
                 if (duck.isPresent()) {
-                    switch (duck.get().getProperty()) {
-                        case STANDARD_DUCK:
-                            image = Optional.of(DogType.DOG_HAPPY_STANDARD.getPicture());
-                            break;
-                        case YELLOW_DUCK:
-                            image = Optional.of(DogType.DOG_HAPPY_YELLOW.getPicture());
-                            break;
-                        case ORANGE_DUCK:
-                            image = Optional.of(DogType.DOG_HAPPY_ORANGE.getPicture());
-                            break;
-                        case PINK_DUCK:
-                            image = Optional.of(DogType.DOG_HAPPY_PINK.getPicture());
-                            break;
-                        default:
-                            break;
+                    if (duck.get() instanceof StandardDuck) {
+                        image = Optional.of(DogType.DOG_HAPPY_STANDARD.getPicture());
+                    } else if (duck.get() instanceof YellowDuck) {
+                        image = Optional.of(DogType.DOG_HAPPY_YELLOW.getPicture());
+                    } else if (duck.get() instanceof OrangeDuck) {
+                        image = Optional.of(DogType.DOG_HAPPY_ORANGE.getPicture());
+                    } else if (duck.get() instanceof PinkDuck) {
+                        image = Optional.of(DogType.DOG_HAPPY_PINK.getPicture());
                     }
                 }
                 break;
