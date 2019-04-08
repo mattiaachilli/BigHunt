@@ -10,10 +10,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import model.ModelImpl;
 import model.data.MatchData;
 import model.gun.Magazine;
 import model.matches.GameMode;
+import model.matches.StoryMatch;
 /**
  *
  * Sample Skeleton for 'Game.fxml' Controller Class.
@@ -85,7 +85,8 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
             } else {
                 this.scoreGameLabel.setTextFill(Color.LIME);
             }
-            this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")" + "/" + ModelImpl.MAX_MAGAZINES);
+            this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) 
+                        + "(" + magazine.getNumber() + ")" + "/" + StoryMatch.MAX_MAGAZINES);
         } else {
             if (!lastLabel) {
                 this.infoLabel.setText(SURVIVAL);

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane id="highscores" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameOverSceneControllerImpl">
+<BorderPane id="highscores" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.HighScoresSceneControllerImpl">
    <top>
       <Label id="title" alignment="CENTER" text="HIGH SCORES" BorderPane.alignment="CENTER" />
    </top>

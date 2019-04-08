@@ -12,8 +12,7 @@ import model.data.Podium;
  * Sample Skeleton for 'HighScores.fxml' Controller Class.
  *
  */
-public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController
-implements HighScoresSceneController {
+public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController implements HighScoresSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -70,33 +69,24 @@ implements HighScoresSceneController {
 
     }
 
-/*   @Override
-
-    public void setStoryModeHighScores(final List<HighScore> highScores) {
-        if (!highScores.isEmpty()) {
-            final List<HighScore> sortedHighScores = highScores.stream().sorted((a, b) ->
-                Integer.compare(b.getScore(), a.getScore())).collect(Collectors.toList());
-            for (int i = 0; i < sortedHighScores.size(); i++) {
-                switch(i) {
-*/
     @Override
     public void setStoryModePodium(final Podium storyPodium) {
         if (!storyPodium.getHighScores().isEmpty()) {
             for (int i = 0; i < storyPodium.getHighScores().size(); i++) {
                 switch (i) {
-                case 1:
+                case 0:
                     story1.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
-                case 2:
+                case 1:
                     story2.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
-                case 3:
+                case 2:
                     story3.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
-                case 4:
+                case 3:
                     story4.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
-                case 5:
+                case 4:
                     story5.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
                     break;
                 default:
@@ -111,19 +101,19 @@ implements HighScoresSceneController {
         if (!survivalPodium.getHighScores().isEmpty()) {
             for (int i = 0; i < survivalPodium.getHighScores().size(); i++) {
                 switch (i) {
-                case 1:
+                case 0:
                     survival1.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
                     break;
-                case 2:
+                case 1:
                     survival2.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
                     break;
-                case 3:
+                case 2:
                     survival3.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
                     break;
-                case 4:
+                case 3:
                     survival4.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
                     break;
-                case 5:
+                case 4:
                     survival5.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
                     break;
                 default:

@@ -16,7 +16,7 @@ import model.entities.Duck;
 public abstract class AbstractSpawner implements DuckSpawner {
     private int spawnDelay;
     private int ducksSpawned; //Total in all round
-    private int timeElapsed; 
+    private int timeElapsed;
 
     private Optional<DuckState> actualState;
     private final List<Duck> listDucksSpawned; //List of ducks spawned
@@ -67,7 +67,7 @@ public abstract class AbstractSpawner implements DuckSpawner {
     }
 
     /**
-     * Clear the list of ducks spawned.
+     * Clear the list of ducks spawned in order to enter the next round.
      */
     protected void clearDucksSpawned() {
         if (this instanceof StoryModeSpawner) {

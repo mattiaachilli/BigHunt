@@ -63,6 +63,8 @@ public final class ControllerImpl implements Controller {
         this.podiumManager = new PodiumManagerImpl();
         this.storyPodium = this.podiumManager.loadStoryPodium().get();
         this.survivalPodium = this.podiumManager.loadSurvivalPodium().get();
+        this.view.setStoryPodium(this.storyPodium);
+        this.view.setSurvivalPodium(this.survivalPodium);
         this.userManager = new UserManagerImpl();
         this.user = Optional.empty();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
@@ -172,10 +174,11 @@ public final class ControllerImpl implements Controller {
      * Refresh all the values obtained from the match (achievements and eventual high scores).
      */
     private void endGame() {
-        this.view.closeGame(this.model.getMatchData(), true);
+        final MatchData matchdata = this.model.getMatchData();
+
+        this.view.closeGame(matchdata, true);
         this.stopGameLoop();
 
-        final MatchData matchdata = this.model.getMatchData();
 
         this.user.get().addMatchData(matchdata);
 
@@ -184,19 +187,20 @@ public final class ControllerImpl implements Controller {
             if (this.storyPodium.isHighScore(matchdata.getGlobalScore())) {
                 this.storyPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
                 this.podiumManager.saveStoryHighScores(this.storyPodium);
+                this.view.setStoryPodium(this.storyPodium);
             }
             break;
         case SURVIVAL_MODE:
             if (this.survivalPodium.isHighScore(matchdata.getGlobalScore())) {
                 this.survivalPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
                 this.podiumManager.saveSurvivalHighScores(this.survivalPodium);
+                this.view.setSurvivalPodium(this.survivalPodium);
             }
             break;
-            default:
-                break;
+        default:
+            break;
         }
 
-        this.model.endMatch();
         this.userManager.save(this.user.get());
     }
 

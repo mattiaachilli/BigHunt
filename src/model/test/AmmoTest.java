@@ -1,7 +1,6 @@
 package model.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +9,7 @@ import model.ModelImpl;
 
 class AmmoTest {
 
+    private static final int MAX_MAGAZINES = 20;
     private final Model model = new ModelImpl();
 
     @Test
@@ -17,7 +17,7 @@ class AmmoTest {
         this.model.shoot();
         assertEquals(this.model.getCurrentMagazine().getNumber(), 1);
         assertEquals(this.model.getBullets(), 4);
-        for (int i = 0; i <= ModelImpl.MAX_MAGAZINES / 4; i++) {
+        for (int i = 0; i <=  MAX_MAGAZINES / 4; i++) {
             this.model.shoot();
         }
         assertEquals(this.model.getCurrentMagazine().getNumber(), 2);
@@ -29,7 +29,7 @@ class AmmoTest {
 //        assertEquals(this.model.getCurrentMagazine().getNumber(), 2);
 //        assertEquals(this.model.getBullets(), 3);
 //        this.model.deactivateInfAmmo();
-        for (int i = 0; i <= ModelImpl.MAX_MAGAZINES / 4; i++) {
+        for (int i = 0; i <= MAX_MAGAZINES / 4; i++) {
             this.model.shoot();
         }
         assertEquals(this.model.getCurrentMagazine().getNumber(), 3);

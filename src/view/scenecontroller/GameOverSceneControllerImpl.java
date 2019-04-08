@@ -13,10 +13,6 @@ import model.data.MatchData;
 
 /**
  *
-=======
-/**
- *
->>>>>>> 329e85a20e2fe11700b5d6c9883fc44fd60d22be
  * Sample Skeleton for 'GameOver.fxml' Controller Class.
  *
  */

@@ -1,5 +1,7 @@
 package model.matches;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import settings.GlobalDifficulty;
 
 /**
@@ -70,7 +72,11 @@ public class SurvivalMatch extends AbstractMatch {
      * @return true of the match is over
      */
     public boolean isMatchOver() {
-        return this.getCurrentRound() >= SurvivalMatch.MAX_OF_ROUNDS.getRounds()
-        || this.getMatchData().getFlownDucks() >= this.difficulty.getLimitOfDifficulty();
+        return this.getMatchData().getFlownDucks() >= this.difficulty.getLimitOfDifficulty();
+    }
+
+    @Override
+    public final ImmutablePair<Integer, Integer> getRounds() {
+        return new ImmutablePair<>(this.getCurrentRound(), this.getCurrentRound());
     }
 }

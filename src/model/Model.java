@@ -67,12 +67,6 @@ public interface Model {
 
     /**
      * 
-     * End the match.
-     */
-    void endMatch();
-
-    /**
-     * 
      * @return a map containing magazine and bullets.
      */
     int getBullets();
