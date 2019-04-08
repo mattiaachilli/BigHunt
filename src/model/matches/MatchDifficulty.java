@@ -14,12 +14,12 @@ public enum MatchDifficulty {
     STORY_EASY(500),
 
     /**
-     * The user has to score more than 200 to pass to the next round.
+     * The user has to score more than 750 to pass to the next round.
      */
     STORY_MEDIUM(750),
 
     /**
-     * The user has to score more than 300 to pass to the next round.
+     * The user has to score more than 1000 to pass to the next round.
      */
     STORY_HARD(1000),
 
