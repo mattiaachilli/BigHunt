@@ -3,13 +3,11 @@ package settings.observers;
 
 
 import javafx.scene.control.CheckBox;
-
-
 import settings.SettingsImpl;
 import settings.utilities.SettingsCheckBox;
 
 /**
- * 
+ *
  * this class implements audio observer changes.
  *
  */
@@ -18,7 +16,7 @@ public class BackGroundAudioObserver implements Observer {
     private final CheckBox bgAudioCheckbox;
 
     /**
-     * 
+     *
      * @param bgAudioCheckbox
      *          the graphics checkBox where users can change the audio settings
      */
