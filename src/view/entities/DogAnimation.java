@@ -43,15 +43,15 @@ public class DogAnimation implements EntityImageAnimation {
     }
 
     private void initializeDogImages() {
-        this.dogRightImages.add(DogType.DOG_RIGHT.getPicture());
-        this.dogRightImages.add(DogType.DOG_RIGHT1.getPicture());
-        this.dogRightImages.add(DogType.DOG_RIGHT2.getPicture());
-        this.dogSniffImages.add(DogType.DOG_SNIFF.getPicture());
-        this.dogSniffImages.add(DogType.DOG_SNIFF1.getPicture());
-        this.dogJumpImages.add(DogType.DOG_JUMP.getPicture());
-        this.dogJumpImages.add(DogType.DOG_LANDING.getPicture());
-        this.dogLaughImages.add(DogType.DOG_LAUGH.getPicture());
-        this.dogLaughImages.add(DogType.DOG_LAUGH1.getPicture());
+        this.dogRightImages.add(DogImageType.DOG_RIGHT.getPicture());
+        this.dogRightImages.add(DogImageType.DOG_RIGHT1.getPicture());
+        this.dogRightImages.add(DogImageType.DOG_RIGHT2.getPicture());
+        this.dogSniffImages.add(DogImageType.DOG_SNIFF.getPicture());
+        this.dogSniffImages.add(DogImageType.DOG_SNIFF1.getPicture());
+        this.dogJumpImages.add(DogImageType.DOG_JUMP.getPicture());
+        this.dogJumpImages.add(DogImageType.DOG_LANDING.getPicture());
+        this.dogLaughImages.add(DogImageType.DOG_LAUGH.getPicture());
+        this.dogLaughImages.add(DogImageType.DOG_LAUGH1.getPicture());
     }
 
 
@@ -67,7 +67,7 @@ public class DogAnimation implements EntityImageAnimation {
         Optional<Image> image = Optional.empty();
         switch (dog.getDogStatus()) {
             case ATTENTION:
-                image = Optional.of(DogType.DOG_ATTENTION.getPicture());
+                image = Optional.of(DogImageType.DOG_ATTENTION.getPicture());
                 break;
             case RIGHT:
                 if (this.index >= this.dogRightImages.size()) {
@@ -97,13 +97,13 @@ public class DogAnimation implements EntityImageAnimation {
                 final Optional<Duck> duck = this.dog.getLastDuckKilled();
                 if (duck.isPresent()) {
                     if (duck.get() instanceof StandardDuck) {
-                        image = Optional.of(DogType.DOG_HAPPY_STANDARD.getPicture());
+                        image = Optional.of(DogImageType.DOG_HAPPY_STANDARD.getPicture());
                     } else if (duck.get() instanceof YellowDuck) {
-                        image = Optional.of(DogType.DOG_HAPPY_YELLOW.getPicture());
+                        image = Optional.of(DogImageType.DOG_HAPPY_YELLOW.getPicture());
                     } else if (duck.get() instanceof OrangeDuck) {
-                        image = Optional.of(DogType.DOG_HAPPY_ORANGE.getPicture());
+                        image = Optional.of(DogImageType.DOG_HAPPY_ORANGE.getPicture());
                     } else if (duck.get() instanceof PinkDuck) {
-                        image = Optional.of(DogType.DOG_HAPPY_PINK.getPicture());
+                        image = Optional.of(DogImageType.DOG_HAPPY_PINK.getPicture());
                     }
                 }
                 break;

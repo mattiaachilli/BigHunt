@@ -7,7 +7,7 @@ import java.util.Optional;
  * Interface that represents the dog in the game, dog hasn't a health, score etc...
  *
  */
-public interface Dog extends Entity {
+public interface Dog extends Character {
 
     /**
      * Check if dog is in grass.

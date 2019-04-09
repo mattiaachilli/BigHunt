@@ -40,6 +40,11 @@ public abstract class DuckDecorator implements Duck {
     }
 
     @Override
+    public final void resetTimeElapsed() {
+        this.duck.resetTimeElapsed();
+    }
+
+    @Override
     public final boolean isAlive() {
         return this.duck.isAlive();
     }

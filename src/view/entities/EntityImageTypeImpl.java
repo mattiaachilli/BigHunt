@@ -1,6 +1,5 @@
 package view.entities;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import javafx.scene.image.Image;
@@ -21,23 +20,13 @@ public final class EntityImageTypeImpl implements EntityImageType {
     private final EntityImageAnimation dogAnimation;
     private final EntityImageAnimation duckAnimation;
 
-    private static EntityImageTypeImpl singleton;
-
-    private EntityImageTypeImpl() {
+    /**
+     * Constructor of EntityImageTypeImpl.
+     */
+    public EntityImageTypeImpl() {
         super();
         this.dogAnimation = new DogAnimation();
         this.duckAnimation = new DuckAnimation();
-    }
-
-    /**
-     * 
-     * @return the instance of this object, once.
-     */
-    public static EntityImageTypeImpl getInstance() {
-        if (Objects.isNull(singleton)) {
-            singleton = new EntityImageTypeImpl();
-        }
-        return singleton;
     }
 
     @Override

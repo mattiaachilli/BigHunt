@@ -2,9 +2,7 @@ package model.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -21,6 +19,9 @@ import settings.GlobalDifficulty;
  */
 public class MatchDataTest {
 
+    private static final int FIVE = 5;
+    private static final int FIFTY = 50;
+    private static final int TWENTY = 20;
     private final SurvivalMatch survivalMatch = new SurvivalMatch(GlobalDifficulty.EASY);
     private final StoryMatch storyMatch = new StoryMatch(GlobalDifficulty.EASY);
 
@@ -29,14 +30,10 @@ public class MatchDataTest {
      */
     @Test
     public final void testRounds() {
-        this.storyMatch.unpauseMatch();
-        this.survivalMatch.unpauseMatch();
         assertEquals(this.survivalMatch.getCurrentRound(), 1);
         assertEquals(this.storyMatch.getCurrentRound(), 1);
         this.storyMatch.incrementRound();
         assertNotEquals(this.storyMatch.getCurrentRound(), 2);
-        this.storyMatch.pauseMatch();
-        this.survivalMatch.pauseMatch();
         for (int i = 0; i < 3; i++) {
             this.survivalMatch.incrementRound();
             this.storyMatch.incrementRound();
@@ -48,7 +45,7 @@ public class MatchDataTest {
             this.storyMatch.incrementRound();
         }
         assertEquals(this.survivalMatch.getCurrentRound(), 1);
-        assertEquals(this.storyMatch.getCurrentRound(), 5);
+        assertEquals(this.storyMatch.getCurrentRound(), FIVE);
     }
 
     /**
@@ -57,35 +54,19 @@ public class MatchDataTest {
     @Test
     public final void testScore() {
         int score = 100;
-        int deltaScore = 50;
-        this.storyMatch.unpauseMatch();
+        int deltaScore = FIFTY;
         this.storyMatch.getMatchData().incrementScoreOf(score);
         assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
         score += deltaScore;
         this.storyMatch.getMatchData().incrementScoreOf(deltaScore);
         assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
-        deltaScore = 20;
+        deltaScore = TWENTY;
         score -= deltaScore;
         this.storyMatch.getMatchData().decrementScoreOf(deltaScore);
         assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
-        this.storyMatch.pauseMatch();
         score += deltaScore;
         this.storyMatch.getMatchData().incrementScoreOf(deltaScore);
         assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
-    }
-
-    /**
-     * Tests the pauses.
-     * The match starts with a pause in order to allow the dog to
-     * dive in the grass.
-     */
-    @Test
-    public final void testPause() {
-        assertFalse(this.survivalMatch.isMatchGoing());
-        this.survivalMatch.unpauseMatch();
-        assertTrue(this.survivalMatch.isMatchGoing());
-        this.survivalMatch.pauseMatch();
-        assertFalse(this.survivalMatch.isMatchGoing());
     }
 
     private void testUnsupported(final Runnable runnable) {
@@ -105,7 +86,7 @@ public class MatchDataTest {
     @Test
     public final void testUnmodifiableData() {
         final MatchData unmodifiable = this.storyMatch.getMatchData().unmodifiableCopy();
-        this.testUnsupported(() -> unmodifiable.incrementScoreOf(5));
+        this.testUnsupported(() -> unmodifiable.incrementScoreOf(FIVE));
     }
 
 }

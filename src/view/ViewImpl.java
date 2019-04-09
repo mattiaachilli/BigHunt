@@ -44,6 +44,7 @@ public class ViewImpl implements View {
 
     private Controller controller;
     private Render render;
+    private int renderId;
     private List<Optional<ViewEntity>> viewEntities;
     private MatchData matchData;
     private final Semaphore mutex;
@@ -59,7 +60,6 @@ public class ViewImpl implements View {
     private int infoLimit;
     private Pair<Integer, Integer> round;
     private GameMode gameMode;
-    private int renderId;
 
     /**
      * Constructor.
@@ -73,6 +73,7 @@ public class ViewImpl implements View {
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
         this.gamePaused = false;
+        this.renderId = 0;
     }
 
     @Override
@@ -221,6 +222,7 @@ public class ViewImpl implements View {
         private int info;
         private final Image cursorImage;
         private long initTimeBackroundRound;
+        private final SceneFactory renderSceneFactory = getSceneFactory();
 
         Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
@@ -229,6 +231,7 @@ public class ViewImpl implements View {
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
             this.gameMode = gameMode;
+
             this.actualRound = 1;
 
             this.cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
@@ -245,7 +248,8 @@ public class ViewImpl implements View {
                                             SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
 
             if (renderId == 1) {
-                ViewImpl.this.sceneFactory.getStage().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                this.renderSceneFactory.getStage().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+
                     Optional<CommandType> commandType = Optional.empty();
                     switch (e.getCode()) {
                     case ESCAPE:
@@ -260,7 +264,7 @@ public class ViewImpl implements View {
                     commandType.ifPresent(command -> controller.notifyCommand(command, 0, 0));
                 });
 
-                ViewImpl.this.sceneFactory.getStage().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+                this.renderSceneFactory.getStage().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
                     Optional<CommandType> commandType = Optional.empty();
                     if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
                         commandType = Optional.ofNullable(CommandType.SHOOT);
@@ -272,6 +276,7 @@ public class ViewImpl implements View {
 
         @Override
         public final void run() {
+
             controller.initGame(gameMode);
             controller.initGameLoop();
             controller.startGameLoop();

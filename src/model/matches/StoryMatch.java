@@ -1,5 +1,7 @@
 package model.matches;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import settings.GlobalDifficulty;
 
 /**
@@ -12,6 +14,11 @@ public class StoryMatch extends AbstractMatch {
 
     private static final GameMode GAME_MODE = GameMode.STORY_MODE;
     private static final MaxOfRounds MAX_OF_ROUNDS = MaxOfRounds.FIVE_ROUNDS;
+
+    /**
+     * The maximum of magazines that are given in the story mode.
+     */
+    public static final int MAX_MAGAZINES = 20;
 
     private MatchDifficulty difficulty;
 
@@ -70,7 +77,14 @@ public class StoryMatch extends AbstractMatch {
      * @return true if the match is over
      */
     public boolean isMatchOver() {
-        return this.getCurrentRound() >= StoryMatch.MAX_OF_ROUNDS.getRounds()
-        || this.getMatchData().getGlobalScore() < this.difficulty.getLimitOfDifficulty() * this.getCurrentRound();
+        return this.isRoundEnded() && this.getMatchData().getGlobalScore() < this.difficulty.getLimitOfDifficulty() * this.getCurrentRound()
+        || this.getCurrentRound() > this.getMaxOfRounds().getRounds()
+        || this.getCurrentMagazineNumber() > MAX_MAGAZINES
+        || this.getCurrentMagazine().getAmmo() == 0 && this.getCurrentMagazineNumber() == MAX_MAGAZINES;
+    }
+
+    @Override
+    public final ImmutablePair<Integer, Integer> getRounds() {
+        return new ImmutablePair<>(this.getCurrentRound(), this.getMaxOfRounds().getRounds());
     }
 }
