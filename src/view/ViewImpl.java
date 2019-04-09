@@ -134,7 +134,7 @@ public class ViewImpl implements View {
         try {
             this.mutex.acquire();
             this.viewEntities = viewEntities;
-            this.matchData = matchData;
+            this.matchData = matchData.unmodifiableCopy();
             this.magazine = magazine;
             this.infoLimit = info;
             this.round = round;

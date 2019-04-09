@@ -92,16 +92,16 @@ public final class ModelImpl implements Model {
             case STORY_MODE:
                 this.match = new StoryMatch(this.difficulty);
                 this.spawner = new StoryModeSpawner();
-                this.currentRound = this.match.getCurrentRound();
                 break;
             case SURVIVAL_MODE:
                 this.match = new SurvivalMatch(this.difficulty);
                 this.spawner = new SurvivalModeSpawner();
-                this.currentRound = this.match.getCurrentRound();
                 break;
             default:
                 break;
         }
+
+        this.currentRound = this.match.getCurrentRound();
     }
 
     @Override

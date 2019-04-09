@@ -14,6 +14,7 @@ import model.gun.MagazineImpl;
  *
  */
 public abstract class AbstractMatch {
+
     /**
      * Common fields among the different match modes.
      */
