@@ -24,12 +24,10 @@ public final class SettingsImpl implements Settings {
 
     private static final int PREF_X_RESOLUTION = 1366;
     private static final int PREF_Y_RESOLUTION = 768;
-    private static final Pair<Integer, Integer> PREF_RESOLUTION = new ImmutablePair<>(PREF_X_RESOLUTION,
-        PREF_Y_RESOLUTION);
 
     private static final Pair<Integer, Integer> SCREEN_RESOLUTION = DEFAULT_RESOLUTION;
 
-    private Pair<Integer, Integer> selectedResolution = new ImmutablePair<>(
+    private final Pair<Integer, Integer> selectedResolution = new ImmutablePair<>(
         SettingsImpl.SCREEN_RESOLUTION.getKey(), SettingsImpl.SCREEN_RESOLUTION.getValue());
 
     private static final int DEFAULT_FPS = 60;

@@ -2,12 +2,13 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 
 /**
- * Sample Skeleton for 'Manual.fxml' Controller Class
+ * Sample Skeleton for 'Manual.fxml' Controller Class.
  */
 public class ManualSceneControllerImpl extends AbstractSecondarySceneController {
 

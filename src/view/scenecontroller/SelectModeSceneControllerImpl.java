@@ -12,6 +12,10 @@ import javafx.scene.control.Button;
 //import utility.GameMode;
 import model.matches.GameMode;
 
+/**
+ * Class for manage new game mode.
+ *
+ */
 public class SelectModeSceneControllerImpl extends AbstractSecondarySceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -30,19 +34,19 @@ public class SelectModeSceneControllerImpl extends AbstractSecondarySceneControl
     private Button arcadeBtn; // Value injected by FXMLLoader
 
     @FXML
-    void startArcadeGame() {
+    final void startArcadeGame() {
         this.getSceneFactory().setGameMode(GameMode.STORY_MODE);
         this.getSceneFactory().openGameScene();
     }
 
     @FXML
-    void startSurvivalGame() {
+    final void startSurvivalGame() {
         this.getSceneFactory().setGameMode(GameMode.SURVIVAL_MODE);
         this.getSceneFactory().openGameScene();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    final void initialize() {
         assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'SelectMode.fxml'.";
         assert survivalBtn != null : "fx:id=\"survivalBtn\" was not injected: check your FXML file 'SelectMode.fxml'.";
         assert arcadeBtn != null : "fx:id=\"arcadeBtn\" was not injected: check your FXML file 'SelectMode.fxml'.";
