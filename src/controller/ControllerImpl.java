@@ -111,12 +111,10 @@ public final class ControllerImpl implements Controller {
                         this.input.clearCommands();
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
-                        this.view.getSceneFactory().openPauseScene();
                     } else if (this.gameLoop.isAlive()) {
                         this.input.clearCommands();
-                        this.gameLoop.resumeLoop();
-                        this.view.getSceneFactory().openGameScene();
                         this.view.resumeRender();
+                        this.gameLoop.resumeLoop();
                         this.view.setCursor();
                     }
                     break;
@@ -207,23 +205,31 @@ public final class ControllerImpl implements Controller {
     private class GameLoop extends Thread {
         private volatile boolean running;
         private volatile boolean paused;
+        private volatile boolean resumed;
 
         GameLoop() {
             super();
             running = true;
             paused = false;
+            resumed = false;
         }
 
         public void run() {
             long lastTime = System.currentTimeMillis();
             while (running && !model.isGameOver()) {
                 final long current = System.currentTimeMillis();
-                final int elapsed = (int) (current - lastTime);
+                final int elapsed;
+                if (this.resumed) {
+                    elapsed = PERIOD;
+                    this.resumed = false;
+                } else {
+                    elapsed = (int) (current - lastTime);
+                }
                 if (!this.paused) {
                     processInput();
                     model.update(elapsed);
                     view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
-                            model.getInfo(), model.getRounds());
+                    model.getInfo(), model.getRounds());
                 }
                 Utilities.waitForNextFrame(PERIOD, current);
                 lastTime = current;
@@ -245,19 +251,20 @@ public final class ControllerImpl implements Controller {
             }
         }
 
-        public void pauseLoop() {
+        public synchronized void pauseLoop() {
             this.paused = true;
         }
 
-        public void resumeLoop() {
+        public synchronized void resumeLoop() {
             this.paused = false;
+            this.resumed = true;
         }
 
-        public boolean isPaused() {
+        public synchronized boolean isPaused() {
             return this.paused;
         }
 
-        public void stopGameLoop() {
+        public synchronized void stopGameLoop() {
             this.running = false;
         }
 

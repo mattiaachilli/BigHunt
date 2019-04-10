@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -54,9 +55,20 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     @FXML // fx:id="rechargeLabel"
     private Label rechargeLabel; // Value injected by FXMLLoader
 
+    @FXML // fx:id="resumeGameBtn"
+    private Button resumeGameBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="goToMenuBtn"
+    private Button goToMenuBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="title"
+    private Label title; // Value injected by FXMLLoader
+
+    @FXML // fx:id="pause"
+    private BorderPane pause; // Value injected by FXMLLoader
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    final
-    void initialize() {
+    final void initialize() {
         assert infoLabel != null : "fx:id=\"scoreLabel\" was not injected: check your FXML file 'Game.fxml'.";
         assert game != null : "fx:id=\"game\" was not injected: check your FXML file 'Game.fxml'.";
         assert scoreGameLabel != null : "fx:id=\"mainLable\" was not injected: check your FXML file 'Game.fxml'.";
@@ -64,6 +76,10 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
         assert rechargeLabel != null : "fx:id=\"rechargeLabel\" was not injected: check your FXML file 'Game.fxml'.";
         assert botomHBox != null : "fx:id=\"botomHBox\" was not injected: check your FXML file 'Game.fxml'.";
         assert ammoLabel != null : "fx:id=\"ammoLabel\" was not injected: check your FXML file 'Game.fxml'.";
+        assert resumeGameBtn != null : "fx:id=\"resumeGameBtn\" was not injected: check your FXML file 'Pause.fxml'.";
+        assert goToMenuBtn != null : "fx:id=\"goToMenuBtn\" was not injected: check your FXML file 'Pause.fxml'.";
+        assert title != null : "fx:id=\"title\" was not injected: check your FXML file 'Pause.fxml'.";
+        assert pause != null : "fx:id=\"pause\" was not injected: check your FXML file 'Pause.fxml'.";
         this.rechargeLabel.setVisible(false);
     }
 
@@ -112,5 +128,25 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
         } else {
             this.rechargeLabel.setVisible(false);
         }
+    }
+
+    @FXML
+    final void resumeGame() {
+        this.getSceneFactory().getView().getController().resumeGameLoop();
+        this.getSceneFactory().getView().resumeRender();
+        this.getSceneFactory().getView().setCursor();
+    }
+
+    @FXML
+    final void backToMenu() {
+        this.getSceneFactory().getView().resumeRender();
+        this.getSceneFactory().getView().getController().stopGameLoop();
+        this.getSceneFactory().getView().closeGame(this.getSceneFactory().getView().getMatchData(), false);
+        this.getSceneFactory().openMenuScene();
+    }
+
+    @Override
+    public final void setPausePanelVisibility(final boolean isVisible) {
+        this.pause.setVisible(isVisible);
     }
 }
