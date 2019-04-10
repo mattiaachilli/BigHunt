@@ -19,13 +19,21 @@ public class FpsObserver implements Observer {
      */
     public FpsObserver(final ComboBox<Integer> fpsComboBox) {
         this.fpsComboBox = fpsComboBox;
-        this.fpsComboBox.getItems().addAll(SettingsImpl.getSettings().getSupportedFPS());
-        this.fpsComboBox.setValue(SettingsImpl.getSettings().getSelectedFPS());
+        this.addItem();
+        this.setDefaultValue();
     }
 
     @Override
     public final void update() {
         SettingsImpl.getSettings().setSelectedFPS(this.fpsComboBox.getValue());
+    }
+
+    private void addItem() {
+        this.fpsComboBox.getItems().addAll(SettingsImpl.getSettings().getSupportedFPS());
+    }
+
+    private void setDefaultValue() {
+        this.fpsComboBox.setValue(SettingsImpl.getSettings().getSelectedFPS());
     }
 
 }

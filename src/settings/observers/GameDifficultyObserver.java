@@ -18,15 +18,23 @@ public class GameDifficultyObserver implements Observer {
      */
     public GameDifficultyObserver(final ComboBox<String> difficultyComboBox) {
         this.difficultyComboBox = difficultyComboBox;
-        for (int i = 0; i < GlobalDifficulty.values().length; i++) {
-            this.difficultyComboBox.getItems().add(GlobalDifficulty.values()[i].getGlobalDifficulty());
-        }
-        this.difficultyComboBox.setValue(SettingsImpl.getSettings().getSelectedDifficulty().toString());
+        this.addItem();
+        this.setDefaultValue();
     }
 
     @Override
     public final void update() {
        SettingsImpl.getSettings().setDifficulty(this.difficultyComboBox.getValue());
+    }
+
+    private void addItem() {
+        for (int i = 0; i < GlobalDifficulty.values().length; i++) {
+            this.difficultyComboBox.getItems().add(GlobalDifficulty.values()[i].getGlobalDifficulty());
+        }
+    }
+
+    private void setDefaultValue() {
+        this.difficultyComboBox.setValue(SettingsImpl.getSettings().getSelectedDifficulty().toString());
     }
 
 }
