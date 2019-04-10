@@ -3,9 +3,10 @@ package model.data;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import model.achievements.Achievement;
 import model.achievements.AchievementImpl;
@@ -43,7 +44,8 @@ public class UserDataImpl implements UserData {
         this.powerUpsUsed = 0;
         this.globalScore = 0;
 
-        this.achievements = this.initAchievements();
+        this.achievements = Arrays.stream(AchievementType.values())
+            .collect(Collectors.toMap(t -> t, t -> new AchievementImpl(t, 0)));
     }
 
     @Override
@@ -52,7 +54,20 @@ public class UserDataImpl implements UserData {
     }
 
     @Override
-    public final void updateAchievements() {
+    public final String getName() {
+        return this.name;
+    }
+
+    @Override
+    public final void addMatchData(final MatchData matchdata) {
+        this.matchesPlayed++;
+        this.killedDucks += matchdata.getKilledDucks();
+        this.globalScore += matchdata.getGlobalScore();
+        this.powerUpsUsed += matchdata.getNumberOfUsedPowerUps();
+        this.updateAchievements();
+    }
+
+    private void updateAchievements() {
         for (AchievementType type : AchievementType.values()) {
             switch (type) {
 
@@ -76,28 +91,6 @@ public class UserDataImpl implements UserData {
                 break;
             }
         }
-    }
-
-    @Override
-    public final String getName() {
-        return this.name;
-    }
-
-    @Override
-    public final void addMatchData(final MatchData matchdata) {
-        this.matchesPlayed++;
-        this.killedDucks += matchdata.getKilledDucks();
-        this.globalScore += matchdata.getGlobalScore();
-        this.powerUpsUsed += matchdata.getNumberOfUsedPowerUps();
-        this.updateAchievements();
-    }
-
-    private Map<AchievementType, Achievement> initAchievements() {
-        Map<AchievementType, Achievement> achievements = new EnumMap<>(AchievementType.class);
-        for (AchievementType type : AchievementType.values()) {
-            achievements.put(type, new AchievementImpl(type, 0));
-        }
-        return achievements;
     }
 
     private void writeObject(final ObjectOutputStream out) throws IOException {
