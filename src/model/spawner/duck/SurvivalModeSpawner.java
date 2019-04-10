@@ -54,6 +54,7 @@ public class SurvivalModeSpawner extends AbstractSpawner {
             this.timeElapsedUpdate -= UPDATE_INCREMENT_DUCK;
             duckround++;
         }
+        super.update(elapsed);
     }
 
     @Override
