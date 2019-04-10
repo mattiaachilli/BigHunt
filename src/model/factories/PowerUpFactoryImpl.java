@@ -1,6 +1,5 @@
 package model.factories;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import javafx.scene.shape.Rectangle;
@@ -27,37 +26,28 @@ public final class PowerUpFactoryImpl implements PowerUpFactory {
 
     private static final double POWER_UP_SIDE = 50.0;
     private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0, 0); 
-    private int randPowerUpCounter = 0;
-    private static PowerUpFactory instance;
-
-    private PowerUpFactoryImpl() {
-        super();
-    }
+    private static int randPowerUpCounter = 0;
 
     /**
-     * 
-     * @return the instance of this object, once.
+     * Constructor of PowerUpFactory.
      */
-    public static PowerUpFactory getInstance() {
-        if (Objects.isNull(instance)) {
-            instance = new PowerUpFactoryImpl();
-        }
-        return instance;
+    public PowerUpFactoryImpl() {
+        super();
     }
 
     @Override
     public Optional<PowerUp> createRandomPowerUp(final Position position) {
         final ItemRarity rarityPowerUp;
-        this.randPowerUpCounter++;
+        randPowerUpCounter++;
 
-        if (this.randPowerUpCounter <= POWER_UP_VERY_COMMON && this.randPowerUpCounter % POWER_UP_VERY_COMMON == 0) {
+        if (randPowerUpCounter <= POWER_UP_VERY_COMMON && randPowerUpCounter % POWER_UP_VERY_COMMON == 0) {
             rarityPowerUp = ItemRarity.VERY_COMMON;
-        } else if (this.randPowerUpCounter <= POWER_UP_COMMON && this.randPowerUpCounter % POWER_UP_COMMON == 0) {
+        } else if (randPowerUpCounter <= POWER_UP_COMMON && randPowerUpCounter % POWER_UP_COMMON == 0) {
             rarityPowerUp = ItemRarity.COMMON;
-        } else if (this.randPowerUpCounter <= POWER_UP_RARE && this.randPowerUpCounter % POWER_UP_RARE == 0) {
+        } else if (randPowerUpCounter <= POWER_UP_RARE && randPowerUpCounter % POWER_UP_RARE == 0) {
             rarityPowerUp = ItemRarity.RARE;
-        } else if (this.randPowerUpCounter <= POWER_UP_VERY_RARE && this.randPowerUpCounter % POWER_UP_VERY_RARE == 0) {
-            this.randPowerUpCounter = 0;
+        } else if (randPowerUpCounter <= POWER_UP_VERY_RARE && randPowerUpCounter % POWER_UP_VERY_RARE == 0) {
+            randPowerUpCounter = 0;
             rarityPowerUp = ItemRarity.VERY_RARE;
         } else {
             return Optional.empty();

@@ -6,6 +6,7 @@ import javafx.scene.shape.Shape;
 import model.ModelImpl;
 import model.entities.powerup.PowerUp;
 import model.entities.utilities.EntityUtilities;
+import model.factories.PowerUpFactory;
 import model.factories.PowerUpFactoryImpl;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
@@ -62,7 +63,8 @@ public class StandardDuck extends AbstractCharacter implements Duck {
      */
     public StandardDuck(final Shape shape, final Velocity velocity, final DuckDirection duckDirection) {
         super(shape, velocity);
-        this.powerUp = PowerUpFactoryImpl.getInstance().createRandomPowerUp(this.getPosition());
+        final PowerUpFactory powUpFactory = new PowerUpFactoryImpl();
+        this.powerUp = powUpFactory.createRandomPowerUp(this.getPosition());
         this.actualDirection = duckDirection;
         this.lastDirectionUpdate = 0;
         this.movement = true;
