@@ -244,11 +244,9 @@ public class ViewImpl implements View {
 
         @Override
         public final void run() {
-            if (!gamePaused) {
                 controller.initGame(gameMode);
                 controller.initGameLoop();
                 controller.startGameLoop();
-            }
 
             while (this.running) {
 

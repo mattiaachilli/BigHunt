@@ -112,9 +112,8 @@ public final class ControllerImpl implements Controller {
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
                     } else if (this.gameLoop.isAlive()) {
-                        this.input.clearCommands();
+                        this.resumeGameLoop();
                         this.view.resumeRender();
-                        this.gameLoop.resumeLoop();
                         this.view.setCursor();
                     }
                     break;

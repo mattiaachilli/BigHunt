@@ -49,13 +49,13 @@ implements AchievementSceneController {
         this.kills.setText(String.valueOf(achievements
             .get(AchievementType.KILLED_DUCKS)
             .getCurrentValueOfAchievement()));
-        this.kills.setText(String.valueOf(achievements
+        this.matchPlayed.setText(String.valueOf(achievements
             .get(AchievementType.MATCHES_PLAYED)
             .getCurrentValueOfAchievement()));
-        this.kills.setText(String.valueOf(achievements
+        this.powerUpUsed.setText(String.valueOf(achievements
             .get(AchievementType.POWERUPS_USED)
             .getCurrentValueOfAchievement()));
-        this.kills.setText(String.valueOf(achievements
+        this.totalScore.setText(String.valueOf(achievements
             .get(AchievementType.SUM_OF_SCORES)
             .getCurrentValueOfAchievement()));
     }
