@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameSceneControllerImpl">
+<StackPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameSceneControllerImpl">
    <children>
-      <BorderPane fx:id="game" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0">
+      <BorderPane fx:id="game" prefHeight="768.0" prefWidth="1366.0">
          <center>
             <Canvas fx:id="canvas" height="768.0" width="1366.0" />
          </center>
@@ -69,7 +69,7 @@
       <Label fx:id="title" text="PAUSE" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <VBox alignment="CENTER" maxHeight="768.0" prefHeight="768.0" prefWidth="1366.0" spacing="30.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="768.0" maxWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="resumeGameBtn" mnemonicParsing="false" onAction="#resumeGame" text="RESUME GAME" />
             <Button fx:id="goToMenuBtn" mnemonicParsing="false" onAction="#backToMenu" text="GO TO MENU" />
