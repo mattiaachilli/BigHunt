@@ -37,18 +37,14 @@ public abstract class AbstractSpawner implements DuckSpawner {
         this.listDucksSpawned = new ArrayList<>();
     }
 
-    @Override
-    public final void update(final int elapsed) {
-        this.timeElapsed += elapsed;
-        this.updateSurvival(elapsed);
-    }
-
     /**
-     * Useful for the survival to change the number of duck in the screen.
      * 
-     * @param elapsed from the last update
+     * @param elapsed
+     *            time elapsed from the previous update.
      */
-    protected void updateSurvival(final int elapsed) { }
+    public void update(final int elapsed) {
+        this.timeElapsed += elapsed;
+    }
 
     /**
      * Reset the time elapsed.
