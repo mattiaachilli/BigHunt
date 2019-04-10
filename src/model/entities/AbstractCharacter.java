@@ -42,8 +42,14 @@ public class AbstractCharacter extends AbstractEntity implements Character {
         return this.status == EntityStatus.ALIVE;
     }
 
+    /**
+     * Change the entity's status.
+     * 
+     * @param status
+     *          to set
+     */
     @Override
-    public final void setStatus(final EntityStatus status) {
+    public void setStatus(final EntityStatus status) {
         ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
         this.status = status;
     }
@@ -61,5 +67,10 @@ public class AbstractCharacter extends AbstractEntity implements Character {
     @Override
     public final void addTimeElapsed(final int timeElapsed) {
         this.timeElapsed += timeElapsed;
+    }
+
+    @Override
+    public final void resetTimeElapsed() {
+        this.timeElapsed = 0;
     }
 }

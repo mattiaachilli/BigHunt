@@ -1,6 +1,7 @@
 package model.test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import model.ModelImpl;
 import model.entities.Dog;
 import model.entities.DogImpl;
 import model.entities.DogStatus;
+import model.entities.EntityStatus;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
 
@@ -26,6 +28,7 @@ public class DogTest {
     private static final int UPDATE_GAME_LOOP = 16;
     private static final Velocity ATTENTION_VELOCITY = new VelocityImpl(0, 0);
     private final Dog dog = new DogImpl();
+    private static final String EXPECTED_ILLEGAL = "Should raise a UnsupportedOperationException";
 
     /**
      * First test, when game starts and dog walks.
@@ -111,5 +114,35 @@ public class DogTest {
         this.testDogInGrass();
         dog.setDogStatus(DogStatus.HAPPY);
         assertFalse(dog.isInGrass());
+    }
+
+    /**
+     * Test dog for not allowed kill.
+     */
+    @Test
+    public void testDogKillException() {
+        try {
+            this.dog.kill();
+            fail(EXPECTED_ILLEGAL);
+        } catch (UnsupportedOperationException e) {
+            System.out.println("DOG KILL NOT ALLOWED: OK");
+        } catch (Exception e) {
+            fail(EXPECTED_ILLEGAL);
+        }
+    }
+
+    /**
+     * Test dog for not allowed change status.
+     */
+    @Test
+    public void testDogChangeStatusException() {
+        try {
+            this.dog.setStatus(EntityStatus.DEAD);
+            fail(EXPECTED_ILLEGAL);
+        } catch (UnsupportedOperationException e) {
+            System.out.println("DOG CHANGE STATUS NOT ALLOWED: OK");
+        } catch (Exception e) {
+            fail(EXPECTED_ILLEGAL);
+        }
     }
 }
