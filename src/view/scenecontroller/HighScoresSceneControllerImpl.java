@@ -1,18 +1,23 @@
 package view.scenecontroller;
 
 import java.net.URL;
+import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import model.data.HighScore;
 import model.data.Podium;
+
 /**
  *
  * Sample Skeleton for 'HighScores.fxml' Controller Class.
  *
  */
-public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController implements HighScoresSceneController {
+public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController
+implements HighScoresSceneController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -54,7 +59,7 @@ public class HighScoresSceneControllerImpl extends AbstractSecondarySceneControl
     private Label survival5; // Value injected by FXMLLoader
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    final void initialize() {
         assert story5 != null : "fx:id=\"story5\" was not injected: check your FXML file 'HighScores.fxml'.";
         assert story1 != null : "fx:id=\"story1\" was not injected: check your FXML file 'HighScores.fxml'.";
         assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'HighScores.fxml'.";
@@ -70,57 +75,28 @@ public class HighScoresSceneControllerImpl extends AbstractSecondarySceneControl
     }
 
     @Override
-    public void setStoryModePodium(final Podium storyPodium) {
+    public final void setStoryModePodium(final Podium storyPodium) {
         if (!storyPodium.getHighScores().isEmpty()) {
-            for (int i = 0; i < storyPodium.getHighScores().size(); i++) {
-                switch (i) {
-                case 0:
-                    story1.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
-                    break;
-                case 1:
-                    story2.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
-                    break;
-                case 2:
-                    story3.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
-                    break;
-                case 3:
-                    story4.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
-                    break;
-                case 4:
-                    story5.setText(String.valueOf(storyPodium.getHighScores().get(i).getScore()));
-                    break;
-                default:
-                    break;
-                }
-            }
+            final Iterator<HighScore> it = storyPodium.getHighScores().iterator();
+            this.storyLabels().forEach(l -> l.setText(String.valueOf(it.next().getScore())));
         }
     }
 
     @Override
-    public void setSurvivalModePodium(final Podium survivalPodium) {
+    public final void setSurvivalModePodium(final Podium survivalPodium) {
         if (!survivalPodium.getHighScores().isEmpty()) {
-            for (int i = 0; i < survivalPodium.getHighScores().size(); i++) {
-                switch (i) {
-                case 0:
-                    survival1.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
-                    break;
-                case 1:
-                    survival2.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
-                    break;
-                case 2:
-                    survival3.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
-                    break;
-                case 3:
-                    survival4.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
-                    break;
-                case 4:
-                    survival5.setText(String.valueOf(survivalPodium.getHighScores().get(i).getScore()));
-                    break;
-                default:
-                    break;
-                }
-            }
+            final Iterator<HighScore> it = survivalPodium.getHighScores().iterator();
+            this.survivalLabels().forEach(l -> l.setText(String.valueOf(it.next().getScore())));
+
         }
+    }
+
+    private Stream<Label> storyLabels() {
+        return Stream.of(story1, story2, story3, story4, story5);
+    }
+
+    private Stream<Label> survivalLabels() {
+        return Stream.of(survival1, survival2, survival3, survival4, survival5);
     }
 
 }

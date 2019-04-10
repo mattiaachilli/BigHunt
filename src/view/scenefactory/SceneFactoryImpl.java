@@ -6,6 +6,7 @@ import javafx.stage.StageStyle;
 import model.matches.GameMode;
 import settings.SettingsImpl;
 import view.View;
+import view.sceneloader.SceneLoader;
 import view.sceneloader.SceneLoaderImpl;
 import view.utilities.Screens;
 
@@ -19,6 +20,7 @@ public class SceneFactoryImpl implements SceneFactory {
     private Stage stage;
     private final View view;
     private GameMode gameMode;
+    private SceneLoader sceneLoader;
 
     /**
      * Constructor of SceneFactory.
@@ -28,6 +30,7 @@ public class SceneFactoryImpl implements SceneFactory {
      */
     public SceneFactoryImpl(final View view) {
         this.view = view;
+        this.sceneLoader = new SceneLoaderImpl(this.view);
     }
 
     @Override
@@ -111,7 +114,8 @@ public class SceneFactoryImpl implements SceneFactory {
 
     private void openNewScene(final Screens screen) {
         this.checkFullScreen();
-        new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
+        //new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
+        this.sceneLoader.loadScene(this.stage, screen, this.gameMode);
     }
 
     private void checkFullScreen() {

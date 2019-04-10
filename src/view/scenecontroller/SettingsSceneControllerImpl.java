@@ -39,9 +39,9 @@ public class SettingsSceneControllerImpl extends AbstractSecondarySceneControlle
 
     @FXML // fx:id="fpsComboBox"
     private ComboBox<Integer> fpsComboBox; // Value injected by FXMLLoader
-    
+
     private final List<Observer> observers = new ArrayList<>();
-    
+
     @FXML
     private void applyChanges() {
         this.observers.forEach(observer -> observer.update());
@@ -50,13 +50,11 @@ public class SettingsSceneControllerImpl extends AbstractSecondarySceneControlle
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     private void initialize() {
-        this.observers.addAll(Arrays.asList(
-            new FpsObserver(this.fpsComboBox),
-            new BackGroundAudioObserver(this.bgAudioCheckBox),
-            new GameDifficultyObserver(this.difficultyComboBox)));
+        this.observers.addAll(Arrays.asList(new FpsObserver(this.fpsComboBox),
+        new BackGroundAudioObserver(this.bgAudioCheckBox), new GameDifficultyObserver(this.difficultyComboBox)));
         this.settingsApplyBtn.setDisable(true);
     }
-    
+
     @FXML
     private void enableApplyBtn() {
         this.settingsApplyBtn.setDisable(false);
