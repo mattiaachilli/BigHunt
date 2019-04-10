@@ -2,8 +2,7 @@ package settings;
 
 /**
  * The difficulty that can be chosen from the main menu.
- * 
- * @author simone
+ *
  *
  */
 public enum GlobalDifficulty {
@@ -21,7 +20,7 @@ public enum GlobalDifficulty {
 
     /**
      * Method to return the difficulty.
-     * 
+     *
      * @return the chosen value for the difficulty.
      */
     public String getGlobalDifficulty() {

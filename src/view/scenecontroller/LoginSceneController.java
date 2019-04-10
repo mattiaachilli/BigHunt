@@ -3,14 +3,13 @@ package view.scenecontroller;
 import view.View;
 
 /**
- * 
- * @author simone
  *
+ *      interface for login scene controller.
  */
-public interface LoginSceneController{
+public interface LoginSceneController {
 
     /**
-     * 
+     *
      * @param view the view to be set in order to charge the scene
      */
     void setView(View view);
