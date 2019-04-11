@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<StackPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameSceneControllerImpl">
+<StackPane maxHeight="768.0" maxWidth="1366.0" minHeight="768.0" minWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scenecontroller.GameSceneControllerImpl">
    <children>
-      <BorderPane fx:id="game" prefHeight="768.0" prefWidth="1366.0">
+      <BorderPane fx:id="game" maxHeight="768.0" maxWidth="1366.0" prefHeight="768.0" prefWidth="1366.0">
          <center>
             <Canvas fx:id="canvas" height="768.0" width="1366.0" />
          </center>
          <bottom>
-            <HBox fx:id="botomHBox" alignment="CENTER" maxHeight="0.0" minHeight="0.0" prefHeight="0.0" BorderPane.alignment="CENTER">
+            <HBox fx:id="botomHBox" alignment="CENTER" maxHeight="0.0" maxWidth="1366.0" minHeight="0.0" minWidth="1366.0" prefHeight="0.0" prefWidth="1366.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="infoLabel" text="">
                      <padding>
@@ -64,12 +64,12 @@
             </HBox>
          </bottom>
       </BorderPane>
-      <BorderPane fx:id="pause" prefHeight="768.0" prefWidth="1366.0" visible="false">
+      <BorderPane fx:id="pause" maxHeight="768.0" maxWidth="1366.0" minHeight="768.0" minWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" visible="false">
    <top>
       <Label fx:id="title" text="PAUSE" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <VBox alignment="CENTER" maxHeight="768.0" maxWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" spacing="30.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="768.0" maxWidth="1366.0" minHeight="768.0" minWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="resumeGameBtn" mnemonicParsing="false" onAction="#resumeGame" text="RESUME GAME" />
             <Button fx:id="goToMenuBtn" mnemonicParsing="false" onAction="#backToMenu" text="GO TO MENU" />

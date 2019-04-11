@@ -3,8 +3,8 @@ package settings.observers;
 
 
 import javafx.scene.control.CheckBox;
+import settings.SettingsAudio;
 import settings.SettingsImpl;
-import settings.utilities.SettingsCheckBox;
 
 /**
  *
@@ -22,9 +22,9 @@ public class BackGroundAudioObserver implements Observer {
      */
     public BackGroundAudioObserver(final CheckBox bgAudioCheckbox) {
         this.bgAudioCheckbox = bgAudioCheckbox;
-        this.bgAudioCheckbox.setSelected(SettingsImpl.getSettings().isBackgroundAudioActivated());
-        this.bgAudioCheckbox.selectedProperty().addListener(e -> this.setText());
-        this.setText();
+        this.setDefaultSelection();
+        this.setDefaultText();
+        this.addActionListener();
     }
 
     @Override
@@ -32,9 +32,18 @@ public class BackGroundAudioObserver implements Observer {
        SettingsImpl.getSettings().setBackgroundAudio(this.bgAudioCheckbox.isSelected());
     }
 
-    private void setText() {
-        this.bgAudioCheckbox.setText(
-            this.bgAudioCheckbox.isSelected() ? SettingsCheckBox.CHECKED.getText() : SettingsCheckBox.UNCHECKED.getText());
+    private void setDefaultSelection() {
+        this.bgAudioCheckbox.setSelected(SettingsImpl.getSettings().isBackgroundAudioOn());
+    }
+
+    private void setDefaultText() {
+        this.bgAudioCheckbox.setText(SettingsImpl.getSettings().isBackgroundAudioOn() ? SettingsAudio.AUDIO_ON.getText() : SettingsAudio.AUDIO_OFF.getText());
+    }
+
+    private void addActionListener() {
+        this.bgAudioCheckbox.selectedProperty().addListener(e -> {
+            this.bgAudioCheckbox.setText(this.bgAudioCheckbox.isSelected() ? SettingsAudio.AUDIO_ON.getText() : SettingsAudio.AUDIO_OFF.getText());
+        });
     }
 
 }

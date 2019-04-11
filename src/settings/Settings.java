@@ -67,9 +67,9 @@ public interface Settings {
 
     /**
      *
-     * @return true if the background audio is active, false otherwise
+     * @return true if the background audio is on, false otherwise
      */
-    boolean isBackgroundAudioActivated();
+    boolean isBackgroundAudioOn();
 
     /**
      * Change the background audio to status on to off.
