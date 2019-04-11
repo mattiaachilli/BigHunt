@@ -14,12 +14,12 @@
          <children>
             <GridPane prefHeight="550.0" prefWidth="1366.0">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="0.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="20.0" prefWidth="200.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints vgrow="SOMETIMES" />
@@ -32,7 +32,8 @@
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columnConstraints>
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-                      <ColumnConstraints hgrow="SOMETIMES" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
@@ -52,6 +53,11 @@
                         <Label text="5." GridPane.rowIndex="4" />
                         <Label text="4." GridPane.rowIndex="3" />
                         <Label text="3." GridPane.rowIndex="2" />
+                        <Label fx:id="storyName1" text="&quot;&quot;" GridPane.columnIndex="2" />
+                        <Label fx:id="storyName2" text="&quot;&quot;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="storyName3" text="&quot;&quot;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label fx:id="storyName4" text="&quot;&quot;" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label fx:id="storyName5" text="&quot;&quot;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                   <GridPane GridPane.columnIndex="4" GridPane.rowIndex="1">
@@ -66,8 +72,14 @@
                         <Label text="5." GridPane.rowIndex="4" />
                         <Label text="4." GridPane.rowIndex="3" />
                         <Label text="3." GridPane.rowIndex="2" />
+                        <Label fx:id="survivalName1" text="&quot;&quot;" GridPane.columnIndex="2" />
+                        <Label fx:id="survivalName2" text="&quot;&quot;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="survivalName3" text="&quot;&quot;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label fx:id="survivalName4" text="&quot;&quot;" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label fx:id="survivalName5" text="&quot;&quot;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                      </children>
                      <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
                         <ColumnConstraints hgrow="SOMETIMES" />
                      </columnConstraints>

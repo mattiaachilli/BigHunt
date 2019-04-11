@@ -1,14 +1,14 @@
 package settings;
 
 /**
- * The difficulty that can be chosen from the main menu.
+ * The difficulty that can be chosen from the settings.
  *
  *
  */
 public enum GlobalDifficulty {
 
     /**
-     * The three difficulties.
+     * The game difficulties.
      */
     EASY("EASY"), MEDIUM("MEDIUM"), HARD("HARD");
 

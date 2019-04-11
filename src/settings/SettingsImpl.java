@@ -97,7 +97,7 @@ public final class SettingsImpl implements Settings {
     }
 
     @Override
-    public boolean isBackgroundAudioActivated() {
+    public boolean isBackgroundAudioOn() {
         return this.backgroundAudio;
     }
 
