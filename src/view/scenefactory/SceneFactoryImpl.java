@@ -18,6 +18,7 @@ import view.utilities.Screens;
 public class SceneFactoryImpl implements SceneFactory {
 
     private Stage stage;
+    private volatile Stage fakeStage;
     private final View view;
     private GameMode gameMode;
     private SceneLoader sceneLoader;
@@ -25,8 +26,7 @@ public class SceneFactoryImpl implements SceneFactory {
     /**
      * Constructor of SceneFactory.
      * 
-     * @param view
-     *          view of the game.
+     * @param view view of the game.
      */
     public SceneFactoryImpl(final View view) {
         this.view = view;
@@ -57,6 +57,7 @@ public class SceneFactoryImpl implements SceneFactory {
     public final void openLoginScene() {
         this.openNewScene(Screens.LOGIN);
     }
+
     @Override
     public final void openMenuScene() {
         this.openNewScene(Screens.MENU);
@@ -114,14 +115,17 @@ public class SceneFactoryImpl implements SceneFactory {
 
     private void openNewScene(final Screens screen) {
         this.checkFullScreen();
-        //new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
+        // new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
         this.sceneLoader.loadScene(this.stage, screen, this.gameMode);
+        this.fakeStage.close();
     }
 
     private void checkFullScreen() {
-        if (SettingsImpl.getSettings().isFullScreen() && this.stage.getStyle().equals(StageStyle.DECORATED)) {
+        if (SettingsImpl.getSettings().isFullScreen()) {
             this.createNewStage();
-            this.stage.initStyle(StageStyle.UNDECORATED);
+            if (this.stage.getStyle().equals(StageStyle.DECORATED)) {
+                this.stage.initStyle(StageStyle.UNDECORATED);
+            }
             this.stage.setMaximized(true);
         } else if (!SettingsImpl.getSettings().isFullScreen() && this.stage.getStyle().equals(StageStyle.UNDECORATED)) {
             this.createNewStage();
@@ -129,8 +133,8 @@ public class SceneFactoryImpl implements SceneFactory {
         }
     }
 
-    private void createNewStage() { 
-        this.stage.close();
+    private void createNewStage() {
+        this.fakeStage = this.stage;
         this.stage = new Stage();
         this.stage.setTitle("BIG HUNT");
         this.stage.setOnCloseRequest(e -> Runtime.getRuntime().exit(0));

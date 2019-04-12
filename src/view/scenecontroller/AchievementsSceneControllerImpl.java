@@ -46,18 +46,34 @@ implements AchievementSceneController {
      */
     @Override
     public final void setAchievements(final Map<AchievementType, Achievement> achievements) {
+
         this.kills.setText(String.valueOf(achievements
             .get(AchievementType.KILLED_DUCKS)
-            .getCurrentValueOfAchievement()));
+            .getCurrentValueOfAchievement())
+            + " / " + (achievements.get(AchievementType.KILLED_DUCKS).getNextTarget().isPresent() 
+            ? String.valueOf(achievements.get(AchievementType.KILLED_DUCKS).getNextTarget().get()) 
+            : "ACHIEVEMENT COMPLETED"));
+
         this.matchPlayed.setText(String.valueOf(achievements
             .get(AchievementType.MATCHES_PLAYED)
-            .getCurrentValueOfAchievement()));
+            .getCurrentValueOfAchievement())
+            + " / " + (achievements.get(AchievementType.MATCHES_PLAYED).getNextTarget().isPresent() 
+            ? String.valueOf(achievements.get(AchievementType.MATCHES_PLAYED).getNextTarget().get()) 
+            : "ACHIEVEMENT COMPLETED"));
+
         this.powerUpUsed.setText(String.valueOf(achievements
             .get(AchievementType.POWERUPS_USED)
-            .getCurrentValueOfAchievement()));
+            .getCurrentValueOfAchievement())
+            + " / " + (achievements.get(AchievementType.POWERUPS_USED).getNextTarget().isPresent() 
+            ? String.valueOf(achievements.get(AchievementType.POWERUPS_USED).getNextTarget().get()) 
+            : "ACHIEVEMENT COMPLETED"));
+
         this.totalScore.setText(String.valueOf(achievements
             .get(AchievementType.SUM_OF_SCORES)
-            .getCurrentValueOfAchievement()));
+            .getCurrentValueOfAchievement()) 
+            + " / " + (achievements.get(AchievementType.SUM_OF_SCORES).getNextTarget().isPresent() 
+            ? String.valueOf(achievements.get(AchievementType.SUM_OF_SCORES).getNextTarget().get()) 
+            : "ACHIEVEMENT COMPLETED"));
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
