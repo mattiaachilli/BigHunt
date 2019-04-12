@@ -13,7 +13,7 @@ import model.properties.VelocityImpl;
  * This class represents the dog, animation etc..
  *
  */
-public final class DogImpl extends AbstractEntity implements Dog {
+public final class DogImpl extends AbstractCharacter implements Dog {
     /**
      * MAX POS Y, USED FOR DOG AND DUCKS.
      */
@@ -33,8 +33,8 @@ public final class DogImpl extends AbstractEntity implements Dog {
     private static final int DOG_HIT = 50;
 
     private DogStatus status;
-    private int waitingTime;
     private Optional<Duck> lastDuck;
+    private boolean firstTime;
 
     /**
      * 
@@ -46,8 +46,8 @@ public final class DogImpl extends AbstractEntity implements Dog {
     public DogImpl(final Shape shape, final Velocity velocity) {
         super(shape, velocity);
         this.status = DogStatus.RIGHT;
-        this.waitingTime = 0;
         this.lastDuck = Optional.empty();
+        this.firstTime = true;
     }
 
     /**
@@ -71,9 +71,9 @@ public final class DogImpl extends AbstractEntity implements Dog {
 
     private void updateDogStatus(final int timeElapsed) {
         if (this.status == DogStatus.RIGHT || this.status == DogStatus.SNIFF) {
-            this.waitingTime += timeElapsed;
-            if (this.waitingTime >= UPDATE_MILLIS) {
-                this.waitingTime -= UPDATE_MILLIS;
+            super.addTimeElapsed(timeElapsed);
+            if (super.getTimeElapsed() >= UPDATE_MILLIS) {
+                super.addTimeElapsed(-UPDATE_MILLIS);
                 this.setDogStatus(this.status == DogStatus.RIGHT ? DogStatus.SNIFF : DogStatus.RIGHT);
             }
         }
@@ -82,45 +82,60 @@ public final class DogImpl extends AbstractEntity implements Dog {
            || this.status == DogStatus.SNIFF)
            && this.getPosition().getX() >= FINAL_POS_X) {
             this.setDogStatus(DogStatus.ATTENTION);
-            this.waitingTime = 0;
+            super.resetTimeElapsed();
         } 
 
         if (this.status == DogStatus.ATTENTION) {
-            this.waitingTime += timeElapsed;
+            super.addTimeElapsed(timeElapsed);
             this.setVelocity(new VelocityImpl(0, 0));
         }
 
-        if (this.status == DogStatus.ATTENTION && this.waitingTime >= WAITING_MILLIS) {
-            this.waitingTime -= WAITING_MILLIS;
+        if (this.status == DogStatus.ATTENTION && super.getTimeElapsed() >= WAITING_MILLIS) {
+            super.addTimeElapsed(timeElapsed);
             this.setVelocity(new VelocityImpl(0, VELOCITY_JUMP_Y));
             this.setDogStatus(DogStatus.JUMP);
         }
 
         if (this.status == DogStatus.JUMP && this.getPosition().getY() <= FINAL_POS_Y) {
             this.setVelocity(new VelocityImpl(0, 0));
-            this.setDogStatus(DogStatus.IN_GRASS);
             this.inGrass();
         }
 
         if (this.status == DogStatus.LAUGH) {
-            this.waitingTime += timeElapsed;
-            if (this.waitingTime >= LAUGH_MILLIS) {
-                this.waitingTime -= LAUGH_MILLIS;
-                this.setDogStatus(DogStatus.IN_GRASS);
+            super.addTimeElapsed(timeElapsed);
+            final int time = this.firstTime ? LAUGH_MILLIS * 2 : LAUGH_MILLIS;
+            if (super.getTimeElapsed() >= time) {
+                super.addTimeElapsed(-time);
                 this.inGrass();
+                if (this.firstTime) {
+                    this.firstTime = false;
+                }
             }
         }
 
         if (this.status == DogStatus.HAPPY) {
-            this.waitingTime += timeElapsed;
-            if (this.waitingTime >= HAPPY_MILLIS) {
-                this.waitingTime -= HAPPY_MILLIS;
+            super.addTimeElapsed(timeElapsed);
+            final int time = this.firstTime ? HAPPY_MILLIS * 2 : HAPPY_MILLIS;
+            if (super.getTimeElapsed() >= time) {
+                super.addTimeElapsed(-time);
                 this.lastDuck = Optional.empty();
-                this.setDogStatus(DogStatus.IN_GRASS);
                 this.setPosition(new PositionImpl(FINAL_POS_X, FINAL_POS_Y));
                 this.inGrass();
+                if (this.firstTime) {
+                    this.firstTime = false;
+                }
             }
         }
+    }
+
+    @Override
+    public void kill() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setStatus(final EntityStatus status) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

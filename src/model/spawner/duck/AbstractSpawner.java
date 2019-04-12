@@ -16,7 +16,7 @@ import model.entities.Duck;
 public abstract class AbstractSpawner implements DuckSpawner {
     private int spawnDelay;
     private int ducksSpawned; //Total in all round
-    private int timeElapsed; 
+    private int timeElapsed;
 
     private Optional<DuckState> actualState;
     private final List<Duck> listDucksSpawned; //List of ducks spawned
@@ -37,18 +37,14 @@ public abstract class AbstractSpawner implements DuckSpawner {
         this.listDucksSpawned = new ArrayList<>();
     }
 
-    @Override
-    public final void update(final int elapsed) {
-        this.timeElapsed += elapsed;
-        this.updateSurvival(elapsed);
-    }
-
     /**
-     * Useful for the survival to change the number of duck in the screen.
      * 
-     * @param elapsed from the last update
+     * @param elapsed
+     *            time elapsed from the previous update.
      */
-    protected void updateSurvival(final int elapsed) { }
+    public void update(final int elapsed) {
+        this.timeElapsed += elapsed;
+    }
 
     /**
      * Reset the time elapsed.
@@ -67,7 +63,7 @@ public abstract class AbstractSpawner implements DuckSpawner {
     }
 
     /**
-     * Clear the list of ducks spawned.
+     * Clear the list of ducks spawned in order to enter the next round.
      */
     protected void clearDucksSpawned() {
         if (this instanceof StoryModeSpawner) {

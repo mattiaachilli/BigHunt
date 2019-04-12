@@ -1,15 +1,14 @@
 package settings;
 
 /**
- * The difficulty that can be chosen from the main menu.
- * 
- * @author simone
+ * The difficulty that can be chosen from the settings.
+ *
  *
  */
 public enum GlobalDifficulty {
 
     /**
-     * The three difficulties.
+     * The game difficulties.
      */
     EASY("EASY"), MEDIUM("MEDIUM"), HARD("HARD");
 
@@ -21,7 +20,7 @@ public enum GlobalDifficulty {
 
     /**
      * Method to return the difficulty.
-     * 
+     *
      * @return the chosen value for the difficulty.
      */
     public String getGlobalDifficulty() {

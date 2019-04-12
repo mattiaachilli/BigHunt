@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import java.util.Optional;
 
 import model.entities.Entity;
+import view.entities.EntityImageType;
 import view.entities.EntityImageTypeImpl;
 import view.entities.ViewEntity;
 import view.entities.ViewEntityImpl;
@@ -14,6 +15,7 @@ import view.entities.ViewEntityImpl;
  *
  */
 public final class EntitiesConverter {
+    private static EntityImageType e = new EntityImageTypeImpl();;
 
     private EntitiesConverter() {
     }
@@ -28,8 +30,8 @@ public final class EntitiesConverter {
      * @return the entity for the view.
      */
     public static Optional<ViewEntity> convertEntity(final Entity entity, final int elapsed) {
-        EntityImageTypeImpl.getInstance().updateEntity(entity, elapsed);
-        Optional<Image> image = EntityImageTypeImpl.getInstance().getImageType(entity);
+        e.updateEntity(entity, elapsed);
+        Optional<Image> image = e.getImageType(entity);
         return image.isPresent() ? Optional.of(new ViewEntityImpl(entity.getShape(), image.get())) : Optional.empty();
     }
 }

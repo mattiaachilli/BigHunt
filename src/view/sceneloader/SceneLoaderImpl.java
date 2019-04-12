@@ -1,9 +1,14 @@
 package view.sceneloader;
 
+import java.util.Optional;
+
+import controller.input.CommandType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import model.matches.GameMode;
@@ -60,8 +65,8 @@ public class SceneLoaderImpl implements SceneLoader {
 
                 root.getChildrenUnmodifiable().stream().forEach(e -> {
                     if (screen == Screens.GAME && e instanceof Label || screen != Screens.GAME) {
-                        e.setScaleX(SettingsImpl.getSettings().getScaleFactory());
-                        e.setScaleY(SettingsImpl.getSettings().getScaleFactory());
+                        e.setScaleX(SettingsImpl.getSettings().getScaleFactor());
+                        e.setScaleY(SettingsImpl.getSettings().getScaleFactor());
                     }
                 });
                 scene = new Scene(root);
@@ -70,6 +75,7 @@ public class SceneLoaderImpl implements SceneLoader {
                 if (screen == Screens.GAME) {
                     gameScreen = scene;
                     gameSceneController = controller;
+                    this.addEventHandlers();
                 }
             } else {
                 scene = gameScreen;
@@ -90,42 +96,64 @@ public class SceneLoaderImpl implements SceneLoader {
             }
 
             switch (screen) {
-                case SELECT_ACCOUNT:
-                    break;
-                case MENU:
-                    break;
-                case LOGIN:
-                    final LoginSceneController log = (LoginSceneController) controller;
-                    log.setView(this.view);
-                    break;
-                case REGISTER:
-                    final RegisterSceneController reg = (RegisterSceneController) controller;
-                    reg.setView(this.view);
-                    break;
-                case GAME:
-                    if (!this.view.isPaused()) {
-                        this.view.startGame((GameSceneController) controller, gameMode);
-                    }
-                    break;
-                case GAME_OVER:
-                    final GameOverSceneController gameOver = (GameOverSceneController) controller;
-                    gameOver.setMatchData(this.view.getMatchData());
-                    break;
-                case ACHIEVEMENTS:
-                    final AchievementSceneController achievementController = (AchievementSceneController) controller;
-                    view.setAchievements(this.view.getController().getUser().get().getAchievements());
-                    achievementController.setAchievements(this.view.getAchievements());
-                    break;
-                case HIGH_SCORES:
-                    final HighScoresSceneController highScores = (HighScoresSceneController) controller;
-                    highScores.setStoryModePodium(this.view.getStoryPodium());
-                    highScores.setSurvivalModePodium(this.view.getSurvivalPodium());
-                    break;
-                default:
-                    break;
+            case LOGIN:
+                final LoginSceneController log = (LoginSceneController) controller;
+                log.setView(this.view);
+                break;
+            case REGISTER:
+                final RegisterSceneController reg = (RegisterSceneController) controller;
+                reg.setView(this.view);
+                break;
+            case GAME:
+                if (!this.view.isPaused()) {
+                    this.view.startGame((GameSceneController) controller, gameMode);
+                }
+                break;
+            case GAME_OVER:
+                final GameOverSceneController gameOver = (GameOverSceneController) controller;
+                gameOver.setMatchData(this.view.getMatchData());
+                break;
+            case ACHIEVEMENTS:
+                final AchievementSceneController achievementController = (AchievementSceneController) controller;
+                view.setAchievements(this.view.getController().getUser().get().getAchievements());
+                achievementController.setAchievements(this.view.getAchievements());
+                break;
+            case HIGH_SCORES:
+                final HighScoresSceneController highScores = (HighScoresSceneController) controller;
+                highScores.setStoryModePodium(this.view.getStoryPodium());
+                highScores.setSurvivalModePodium(this.view.getSurvivalPodium());
+                break;
+            default:
+                break;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void addEventHandlers() {
+        gameScreen.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+
+            Optional<CommandType> commandType = Optional.empty();
+            switch (e.getCode()) {
+            case ESCAPE:
+                commandType = Optional.of(CommandType.PAUSE);
+                break;
+            case R:
+                commandType = Optional.of(CommandType.RECHARGE);
+                break;
+            default:
+                break;
+            }
+            commandType.ifPresent(command -> this.view.getController().notifyCommand(command, 0, 0));
+        });
+
+        gameScreen.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            Optional<CommandType> commandType = Optional.empty();
+            if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+                commandType = Optional.ofNullable(CommandType.SHOOT);
+            }
+            commandType.ifPresent(command -> this.view.getController().notifyCommand(command, e.getX(), e.getY()));
+        });
     }
 }

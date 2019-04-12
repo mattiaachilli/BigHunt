@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import model.cleaner.Cleaner;
@@ -21,10 +20,8 @@ import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
 import model.gun.BulletType;
 import model.gun.Magazine;
-import model.gun.MagazineImpl;
 import model.matches.AbstractMatch;
 import model.matches.GameMode;
-import model.matches.MaxOfRounds;
 import model.matches.StoryMatch;
 import model.matches.SurvivalMatch;
 import model.spawner.duck.DuckSpawner;
@@ -47,11 +44,7 @@ public final class ModelImpl implements Model {
      * Game height.
      */
     public static final int GAME_HEIGHT = SettingsImpl.getSettings().getSelectedResolution().getValue();
-    /**
-     * Maximum number of magazines carriable in story mode.
-     */
-    public static final int MAX_MAGAZINES = 20;
-    private static final int FIRST_MAGAZINE = 1;
+
     private static final long MAX_TIME = 3000;
 
     /**
@@ -65,16 +58,14 @@ public final class ModelImpl implements Model {
     private Dog dog;
     private final List<Duck> ducks;
     private final List<PowerUp> powerUp;
-    private int currentMagazine;
-    private Magazine magazine;
-    private Optional<AbstractMatch> match;
+    private AbstractMatch match;
     private DuckSpawner spawner;
     private GameMode gameMode;
     private GlobalDifficulty difficulty;
     private Cleaner cleaner;
     private int duckPowerUp;
     private Optional<PowerUpType> powerUpActive;
-    private int lastRound;
+    private int currentRound;
     private long powerUpTime;
 
     /**
@@ -85,7 +76,6 @@ public final class ModelImpl implements Model {
         this.ducks = new ArrayList<>();
         this.powerUp = new ArrayList<>();
         this.cleaner = new CleanerImpl();
-        this.match = Optional.empty();
     }
 
     @Override
@@ -95,25 +85,23 @@ public final class ModelImpl implements Model {
         this.dog = new DogImpl();
         ducks.clear();
         powerUp.clear();
-        this.currentMagazine = FIRST_MAGAZINE;
-        this.magazine = new MagazineImpl(this.currentMagazine);
         this.duckPowerUp = 0;
         this.powerUpTime = 0;
         this.powerUpActive = Optional.empty();
         switch (gameMode) {
             case STORY_MODE:
-                this.match = Optional.of(new StoryMatch(this.difficulty));
+                this.match = new StoryMatch(this.difficulty);
                 this.spawner = new StoryModeSpawner();
-                this.lastRound = this.spawner.getActualRound();
                 break;
             case SURVIVAL_MODE:
-                this.match = Optional.of(new SurvivalMatch(this.difficulty));
+                this.match = new SurvivalMatch(this.difficulty);
                 this.spawner = new SurvivalModeSpawner();
-                this.lastRound = this.spawner.getActualRound();
                 break;
             default:
                 break;
         }
+
+        this.currentRound = this.match.getCurrentRound();
     }
 
     @Override
@@ -132,6 +120,8 @@ public final class ModelImpl implements Model {
                     if (duckSpawn.get().hasPowerUp()) {
                         this.powerUp.add(duckSpawn.get().getPowerUp().get());
                     }
+                } else if (this.spawner.getActualRound() > this.currentRound) {
+                    this.match.endRound();
                 }
             }
         }
@@ -158,7 +148,7 @@ public final class ModelImpl implements Model {
                 dog.setDogStatus(DogStatus.LAUGH);
             }
             if (d.getStatus() == EntityStatus.FLOWN_AWAY && d.getPosition().getY() <= 0) {
-                this.match.get().getMatchData().incrementFlownDucks();
+                this.match.getMatchData().incrementFlownDucks();
             } else if (d.getStatus() == EntityStatus.DEAD && d.getPosition().getY() >= DogImpl.FINAL_POS_Y) {
                 this.dog.setLastDuckKilled(d);
             }
@@ -178,11 +168,13 @@ public final class ModelImpl implements Model {
     private void updateRoundNumber() {
         //Only for STORY MODE
         if (this.gameMode == GameMode.STORY_MODE && this.ducks.isEmpty()) {
-            if (this.spawner.getActualRound() != this.lastRound) {
+            if (this.spawner.getActualRound() != this.currentRound) {
                 this.dog = new DogImpl();
                 this.ducks.clear();
                 this.powerUp.clear();
-                this.lastRound = this.spawner.getActualRound();
+                this.match.incrementRound();
+                this.currentRound = this.match.getCurrentRound();
+                this.match.startRound();
                 this.duckPowerUp = 0;
                 this.endPowerUp();
             }
@@ -192,10 +184,7 @@ public final class ModelImpl implements Model {
 
     @Override
     public Pair<Integer, Integer> getRounds() {
-        if (this.gameMode == GameMode.STORY_MODE) {
-            return new ImmutablePair<>(this.lastRound, MaxOfRounds.FIVE_ROUNDS.getRounds());
-        }
-        return new ImmutablePair<>(this.lastRound, this.lastRound);
+        return this.match.getRounds();
     }
 
     @Override
@@ -203,10 +192,10 @@ public final class ModelImpl implements Model {
         int info = 0;
         switch (this.gameMode) {
             case STORY_MODE:
-                info = this.lastRound *  this.match.get().getDifficulty().getLimitOfDifficulty();
+                info = this.currentRound * this.match.getDifficulty().getLimitOfDifficulty();
                 break;
             case SURVIVAL_MODE:
-                info = this.match.get().getDifficulty().getLimitOfDifficulty();
+                info = this.match.getDifficulty().getLimitOfDifficulty();
                 break;
             default:
                 break;
@@ -242,7 +231,7 @@ public final class ModelImpl implements Model {
                               if (this.duckPowerUp > 0) {
                                   d.kill(); 
                                   this.duckPowerUp--;
-                                  this.match.get().getMatchData().incrementScoreOf(d.getScore());
+                                  this.match.getMatchData().incrementScoreOf(d.getScore());
                               }
                           });
                 break;
@@ -269,30 +258,7 @@ public final class ModelImpl implements Model {
 
     @Override
     public boolean isGameOver() {
-        final MatchData matchData = this.match.get().getMatchData();
-        boolean gameOver = false;
-        final int matchScore = this.match.get().getDifficulty().getLimitOfDifficulty() * this.lastRound;
-        switch (this.gameMode) {
-            case STORY_MODE:
-                gameOver = this.spawner.getActualRound() > this.lastRound
-                            && matchData.getGlobalScore() < matchScore
-                            || this.currentMagazine > MAX_MAGAZINES
-                            || this.getBullets() == 0 && this.currentMagazine == MAX_MAGAZINES
-                            || this.spawner.isSpawnFinished();
-            break;
-            case SURVIVAL_MODE:
-                gameOver = matchData.getFlownDucks() >= this.match.get().getDifficulty().getLimitOfDifficulty()
-                            || this.spawner.isSpawnFinished();
-            break;
-            default:
-                break;
-        }
-        return gameOver;
-    }
-
-    @Override
-    public void endMatch() {
-        this.match = Optional.empty();
+        return this.match.isMatchOver() || this.spawner.isSpawnFinished();
     }
 
     @Override
@@ -306,7 +272,7 @@ public final class ModelImpl implements Model {
 
     @Override
     public MatchData getMatchData() {
-        return this.match.get().getMatchData();
+        return this.match.getMatchData();
     }
 
     @Override
@@ -338,30 +304,12 @@ public final class ModelImpl implements Model {
 
     @Override
     public void recharge() {
-        if (this.gameMode != null) {
-
-//            switch (this.gameMode) {
-//            case STORY_MODE:
-//                if (this.currentMagazine < MAX_MAGAZINES) {
-//                    this.currentMagazine++;
-//                    this.magazine = new MagazineImpl(this.currentMagazine);
-//                }
-//                break;
-//            case SURVIVAL_MODE:
-//                this.currentMagazine++;
-//                this.magazine = new MagazineImpl(this.currentMagazine);
-//                break;
-//            default:
-//                break;
-//            }
-            this.currentMagazine++;
-            this.magazine = new MagazineImpl(this.currentMagazine);
-        }
+        this.match.recharge();
     }
 
     @Override
     public Magazine getCurrentMagazine() {
-        return this.magazine;
+        return this.match.getCurrentMagazine();
     }
 
     @Override

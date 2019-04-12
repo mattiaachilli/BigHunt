@@ -19,4 +19,6 @@ public interface GameSceneController {
     Canvas getCanvas();
 
     void setGameData(MatchData gameData, Magazine magazine, int infoLimit);
+    
+    void setPausePanelVisibility(boolean isVisible);
 }

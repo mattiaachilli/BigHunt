@@ -2,7 +2,6 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -47,28 +46,22 @@ implements AchievementSceneController {
      */
     @Override
     public final void setAchievements(final Map<AchievementType, Achievement> achievements) {
-        for (final Entry<AchievementType, Achievement> a : achievements.entrySet()) {
-            switch (a.getKey()) {
-            case KILLED_DUCKS:
-                this.kills.setText(String.valueOf(a.getValue().getCurrentValueOfAchievement()));
-                break;
-            case MATCHES_PLAYED:
-                this.matchPlayed.setText(String.valueOf(a.getValue().getCurrentValueOfAchievement()));
-                break;
-            case POWERUPS_USED:
-                this.powerUpUsed.setText(String.valueOf(a.getValue().getCurrentValueOfAchievement()));
-                break;
-            case SUM_OF_SCORES:
-                this.totalScore.setText(String.valueOf(a.getValue().getCurrentValueOfAchievement()));
-                break;
-                default:
-                    break;
-            }
-        }
+        this.kills.setText(String.valueOf(achievements
+            .get(AchievementType.KILLED_DUCKS)
+            .getCurrentValueOfAchievement()));
+        this.matchPlayed.setText(String.valueOf(achievements
+            .get(AchievementType.MATCHES_PLAYED)
+            .getCurrentValueOfAchievement()));
+        this.powerUpUsed.setText(String.valueOf(achievements
+            .get(AchievementType.POWERUPS_USED)
+            .getCurrentValueOfAchievement()));
+        this.totalScore.setText(String.valueOf(achievements
+            .get(AchievementType.SUM_OF_SCORES)
+            .getCurrentValueOfAchievement()));
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    final void initialize() {
         assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'Achievements.fxml'.";
     }
 

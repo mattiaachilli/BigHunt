@@ -1,7 +1,11 @@
 package model.matches;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import model.data.MatchData;
 import model.data.MatchDataImpl;
+import model.gun.Magazine;
+import model.gun.MagazineImpl;
 
 /**
  * An abstract class representing the common aspects
@@ -10,15 +14,19 @@ import model.data.MatchDataImpl;
  *
  */
 public abstract class AbstractMatch {
+
     /**
      * Common fields among the different match modes.
      */
     private static final int FIRST_ROUND = 1;
-    private static final boolean START_PAUSED = true;
+    private static final int FIRST_MAGAZINE = 1;
 
     private MatchData matchdata;
     private int currentRound;
-    private boolean isMatchPaused;
+    private Magazine magazine;
+    private int currentMagazineNumber;
+
+    private boolean roundEnded;
 
     /**
      * Constructor of an abstract match.
@@ -26,7 +34,9 @@ public abstract class AbstractMatch {
     public AbstractMatch() {
         this.matchdata = new MatchDataImpl();
         this.currentRound = FIRST_ROUND;
-        this.isMatchPaused = START_PAUSED;
+        this.currentMagazineNumber = FIRST_MAGAZINE;
+        this.magazine = new MagazineImpl(this.currentMagazineNumber);
+        this.roundEnded = false;
     }
 
     /**
@@ -46,8 +56,41 @@ public abstract class AbstractMatch {
      * @return the match data of the current match
      */
     public MatchData getMatchData() {
-        // TODO Auto-generated method stub
         return this.matchdata;
+    }
+
+    /**
+     * 
+     * @return the current magazine.
+     */
+    public Magazine getCurrentMagazine() {
+        return this.magazine;
+    }
+
+    /**
+     * 
+     * @return the number of the current magazine.
+     */
+    public int getCurrentMagazineNumber() {
+        return this.currentMagazineNumber;
+    }
+
+    /**
+     * 
+     * Recharges the magazine.
+     */
+    public void recharge() {
+        this.currentMagazineNumber++;
+        this.magazine = new MagazineImpl(this.currentMagazineNumber);
+    }
+
+    /**
+     * Go to the next round.
+     */
+    public void incrementRound() {
+        if (this.currentRound < this.getMaxOfRounds().getRounds()) {
+            this.currentRound++;
+        }
     }
 
     /**
@@ -55,10 +98,30 @@ public abstract class AbstractMatch {
      * @return the number of the current round
      */
     public int getCurrentRound() {
-        // TODO Auto-generated method stub
         return this.currentRound;
     }
 
+    /**
+     * Ends a round, so that the game over control can go on.
+     */
+    public void endRound() {
+        this.roundEnded = true;
+    }
+
+    /**
+     * Restarts the round.
+     */
+    public void startRound() {
+        this.roundEnded = false;
+    }
+
+    /**
+     * 
+     * @return true if the round is ended.
+     */
+    public boolean isRoundEnded() {
+        return this.roundEnded;
+    }
     /**
      * 
      * @return the number of rounds that a match can have.
@@ -66,13 +129,10 @@ public abstract class AbstractMatch {
     public abstract MaxOfRounds getMaxOfRounds();
 
     /**
-     * Go to the next round.
+     * 
+     * @return a pair with the minimum and maximum round.
      */
-    public void incrementRound() {
-        if (this.currentRound < this.getMaxOfRounds().getRounds() && !this.isMatchGoing()) {
-            this.currentRound++;
-        }
-    };
+    public abstract ImmutablePair<Integer, Integer> getRounds();
 
     /**
      * 
@@ -80,32 +140,4 @@ public abstract class AbstractMatch {
      */
     public abstract boolean isMatchOver(); 
 
-    /**
-     * 
-     * @return true if the match is going
-     */
-    public boolean isMatchGoing() {
-        // TODO Auto-generated method stub
-        return !this.isMatchPaused;
-    }
-
-    /**
-     * Pauses the match if it is going.
-     */
-    public void pauseMatch() {
-        // TODO Auto-generated method stub
-        if (this.isMatchGoing()) {
-            this.isMatchPaused = true;
-        }
-    }
-
-    /**
-     * Unpauses the match if it is paused.
-     */
-    public void unpauseMatch() {
-        // TODO Auto-generated method stub
-        if (!this.isMatchGoing()) {
-            this.isMatchPaused = false;
-        }
-    }
 }

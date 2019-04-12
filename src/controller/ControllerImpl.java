@@ -63,6 +63,8 @@ public final class ControllerImpl implements Controller {
         this.podiumManager = new PodiumManagerImpl();
         this.storyPodium = this.podiumManager.loadStoryPodium().get();
         this.survivalPodium = this.podiumManager.loadSurvivalPodium().get();
+        this.view.setStoryPodium(this.storyPodium);
+        this.view.setSurvivalPodium(this.survivalPodium);
         this.userManager = new UserManagerImpl();
         this.user = Optional.empty();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
@@ -70,9 +72,7 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public void initGame(final GameMode gameMode) {
-        // System.out.println("Nuovo model");
         this.model = this.modelSupplier.get();
-        // System.out.println("Nuova partita");
         this.model.initGame(gameMode);
         this.input.clearCommands();
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo(), 
@@ -111,11 +111,8 @@ public final class ControllerImpl implements Controller {
                         this.input.clearCommands();
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
-                        this.view.getSceneFactory().openPauseScene();
                     } else if (this.gameLoop.isAlive()) {
-                        this.input.clearCommands();
-                        this.gameLoop.resumeLoop();
-                        this.view.getSceneFactory().openGameScene();
+                        this.resumeGameLoop();
                         this.view.resumeRender();
                         this.view.setCursor();
                     }
@@ -175,10 +172,11 @@ public final class ControllerImpl implements Controller {
      * (achievements and eventual high scores).
      */
     private void endGame() {
-        this.view.closeGame(this.model.getMatchData(), true);
+        final MatchData matchdata = this.model.getMatchData();
+
+        this.view.closeGame(matchdata, true);
         this.stopGameLoop();
 
-        final MatchData matchdata = this.model.getMatchData();
 
         this.user.get().addMatchData(matchdata);
 
@@ -187,42 +185,51 @@ public final class ControllerImpl implements Controller {
             if (this.storyPodium.isHighScore(matchdata.getGlobalScore())) {
                 this.storyPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
                 this.podiumManager.saveStoryHighScores(this.storyPodium);
+                this.view.setStoryPodium(this.storyPodium);
             }
             break;
         case SURVIVAL_MODE:
             if (this.survivalPodium.isHighScore(matchdata.getGlobalScore())) {
                 this.survivalPodium.addHighScore(matchdata.getGlobalScore(), this.user.get().getName());
                 this.podiumManager.saveSurvivalHighScores(this.survivalPodium);
+                this.view.setSurvivalPodium(this.survivalPodium);
             }
             break;
         default:
             break;
         }
 
-        this.model.endMatch();
         this.userManager.save(this.user.get());
     }
 
     private class GameLoop extends Thread {
         private volatile boolean running;
         private volatile boolean paused;
+        private volatile boolean resumed;
 
         GameLoop() {
             super();
             running = true;
             paused = false;
+            resumed = false;
         }
 
         public void run() {
             long lastTime = System.currentTimeMillis();
             while (running && !model.isGameOver()) {
                 final long current = System.currentTimeMillis();
-                final int elapsed = (int) (current - lastTime);
+                final int elapsed;
+                if (this.resumed) {
+                    elapsed = PERIOD;
+                    this.resumed = false;
+                } else {
+                    elapsed = (int) (current - lastTime);
+                }
                 if (!this.paused) {
                     processInput();
                     model.update(elapsed);
                     view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
-                            model.getInfo(), model.getRounds());
+                    model.getInfo(), model.getRounds());
                 }
                 Utilities.waitForNextFrame(PERIOD, current);
                 lastTime = current;
@@ -244,19 +251,20 @@ public final class ControllerImpl implements Controller {
             }
         }
 
-        public void pauseLoop() {
+        public synchronized void pauseLoop() {
             this.paused = true;
         }
 
-        public void resumeLoop() {
+        public synchronized void resumeLoop() {
             this.paused = false;
+            this.resumed = true;
         }
 
-        public boolean isPaused() {
+        public synchronized boolean isPaused() {
             return this.paused;
         }
 
-        public void stopGameLoop() {
+        public synchronized void stopGameLoop() {
             this.running = false;
         }
 

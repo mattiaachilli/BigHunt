@@ -101,7 +101,7 @@ public class MatchDataImpl implements MatchData {
 
     @Override
     public final UnmodifiableMatchData unmodifiableCopy() {
-        return new UnmodifiableMatchData(new MatchDataImpl());
+        return new UnmodifiableMatchData(this);
     }
 
     private void writeObject(final ObjectOutputStream out) throws IOException {

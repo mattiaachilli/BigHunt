@@ -21,8 +21,9 @@ public class PodiumImpl implements Podium {
      */
     private static final long serialVersionUID = 1L;
     private static final int MAX_OF_HIGH_SCORES = 5;
-    private static final Comparator<HighScore> COMPARATOR = (first, second) -> Integer.compare(second.getScore(),
-    first.getScore());
+    private static final Comparator<HighScore> COMPARATOR = (o1, o2) -> {
+        return o2.getScore() - o1.getScore();
+    };
 
     private List<HighScore> highScores;
 
@@ -41,7 +42,7 @@ public class PodiumImpl implements Podium {
 
     @Override
     public final boolean isHighScore(final int score) {
-        return score > this.highScores.get(MAX_OF_HIGH_SCORES - 1).getScore();
+        return score > this.highScores.stream().max(COMPARATOR).get().getScore();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class PodiumImpl implements Podium {
         if (this.isHighScore(score)) {
             this.highScores.add(new HighScoreImpl(name, score));
             if (this.highScores.size() > MAX_OF_HIGH_SCORES) {
-                this.highScores.remove(this.highScores.stream().min(COMPARATOR).get());
+                this.highScores.remove(this.highScores.stream().max(COMPARATOR).get());
             }
             this.highScores.sort(COMPARATOR);
         }

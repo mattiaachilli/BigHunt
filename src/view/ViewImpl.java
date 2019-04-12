@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import controller.Controller;
-import controller.input.CommandType;
 import javafx.application.Platform;
 import javafx.scene.ImageCursor;
 import javafx.scene.canvas.GraphicsContext;
@@ -23,8 +22,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import model.data.MatchData;
 import settings.SettingsImpl;
 import utility.Utilities;
@@ -59,7 +56,6 @@ public class ViewImpl implements View {
     private int infoLimit;
     private Pair<Integer, Integer> round;
     private GameMode gameMode;
-    private int renderId;
 
     /**
      * Constructor.
@@ -92,7 +88,6 @@ public class ViewImpl implements View {
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
         this.gameMode = gameMode;
-        this.renderId++;
         this.render = new Render(gameSceneController, gameMode);
         this.startRender();
     }
@@ -133,7 +128,7 @@ public class ViewImpl implements View {
         try {
             this.mutex.acquire();
             this.viewEntities = viewEntities;
-            this.matchData = matchData;
+            this.matchData = matchData.unmodifiableCopy();
             this.magazine = magazine;
             this.infoLimit = info;
             this.round = round;
@@ -191,11 +186,11 @@ public class ViewImpl implements View {
         return this.sceneFactory;
     }
 
-
     @Override
     public final void setCursor() {
         this.render.setCursor();
     }
+
     /**
      * 
      * Thread that render graphics independent from game loop.
@@ -229,6 +224,7 @@ public class ViewImpl implements View {
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
             this.gameMode = gameMode;
+
             this.actualRound = 1;
 
             this.cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
@@ -238,45 +234,21 @@ public class ViewImpl implements View {
                                             SettingsImpl.getSettings().getSelectedResolution().getKey(),
                                             SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
             this.lastRoundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/round/finalRound.png"),
-                                            SettingsImpl.getSettings().getSelectedResolution().getKey(),
-                                            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+                                                 SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                                 SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
             this.backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
-                                            SettingsImpl.getSettings().getSelectedResolution().getKey(),
-                                            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
-
-            if (renderId == 1) {
-                ViewImpl.this.sceneFactory.getStage().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-                    Optional<CommandType> commandType = Optional.empty();
-                    switch (e.getCode()) {
-                    case ESCAPE:
-                        commandType = Optional.of(CommandType.PAUSE);
-                        break;
-                    case R:
-                        commandType = Optional.of(CommandType.RECHARGE);
-                        break;
-                    default:
-                        break;
-                    }
-                    commandType.ifPresent(command -> controller.notifyCommand(command, 0, 0));
-                });
-
-                ViewImpl.this.sceneFactory.getStage().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-                    Optional<CommandType> commandType = Optional.empty();
-                    if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-                        commandType = Optional.ofNullable(CommandType.SHOOT);
-                    }
-                    commandType.ifPresent(command -> controller.notifyCommand(command, e.getX(), e.getY()));
-                });
-            }
+                                                 SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                                 SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
         }
 
         @Override
         public final void run() {
-            controller.initGame(gameMode);
-            controller.initGameLoop();
-            controller.startGameLoop();
+                controller.initGame(gameMode);
+                controller.initGameLoop();
+                controller.startGameLoop();
 
             while (this.running) {
+
                 try {
                     mutex.acquire();
                     this.viewEntitiesGame = viewEntities;
@@ -294,6 +266,9 @@ public class ViewImpl implements View {
                 final long currentTime = System.currentTimeMillis();
 
                 Platform.runLater(() -> {
+
+                    this.gameSceneController.setPausePanelVisibility(gamePaused);
+
                     this.updateBackground();
 
                     this.gameSceneController.setGameData(this.currentMatchData, this.currentMagazine, this.info);
@@ -306,7 +281,7 @@ public class ViewImpl implements View {
                             final ViewEntity ve = viewEntity.get();
                             final Rectangle rectangle = (Rectangle) ve.getShape();
                             this.gamecanvas.drawImage(ve.getPicture(), ve.getPosition().getX(), ve.getPosition().getY(),
-                            rectangle.getWidth(), rectangle.getHeight());
+                                                      rectangle.getWidth(), rectangle.getHeight());
                         }
                     }
                 });
@@ -324,15 +299,17 @@ public class ViewImpl implements View {
         }
 
         private void updateBackground() {
-            this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(),
-                 SettingsImpl.getSettings().getSelectedResolution().getValue());
+            this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0,
+                                      SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                      SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
         }
 
         private void updateRoundImage() {
-            final Image image = this.actualRound == this.rounds.getRight() - 1 ? this.lastRoundImage.getImage() : this.roundImage.getImage();
+            final Image image = this.actualRound == this.rounds.getRight() - 1 ? this.lastRoundImage.getImage() 
+                                                 : this.roundImage.getImage();
             this.gamecanvas.drawImage(image, 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(),
-                                            SettingsImpl.getSettings().getSelectedResolution().getValue());
+            SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
             if (System.currentTimeMillis() - this.initTimeBackroundRound > UPDATE_IMAGE_ROUND) {
                 this.actualRound = this.rounds.getLeft();
@@ -355,7 +332,8 @@ public class ViewImpl implements View {
         }
 
         public void setCursor() {
-            this.gamecanvas.getCanvas().setCursor(new ImageCursor(cursorImage, this.cursorImage.getWidth() / 2, this.cursorImage.getHeight() / 2));
+            this.gamecanvas.getCanvas()
+                .setCursor(new ImageCursor(cursorImage, this.cursorImage.getWidth() / 2, this.cursorImage.getHeight() / 2));
         }
     }
 }

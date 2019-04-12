@@ -1,11 +1,8 @@
 package view.scenecontroller;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-import controller.files.UserManager;
-import controller.files.UserManagerImpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,13 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
-import model.data.UserData;
 import view.View;
 
 /**
- * 
- * Sample Skeleton for 'Login.fxml' Controller Class
+ *
+ * Sample Skeleton for 'Login.fxml' Controller Class.
  *
  */
 public class LoginSceneControllerImpl extends AbstractSceneController implements LoginSceneController {
@@ -56,8 +51,8 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
     @FXML
     void quitGame() {
         Runtime.getRuntime().exit(0);
-    }   
-    
+    }
+
     @FXML
     void openRegister() {
         this.getSceneFactory().openRegisterScene();
@@ -74,12 +69,12 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
             this.resetTextField();
         }
     }
-    
+
     private void showAlert(final String text) {
         Alert alert = new Alert(AlertType.ERROR, text, ButtonType.OK);
         alert.showAndWait();
     }
-    
+
     private void resetTextField() {
         this.userTextField.setText("");
         this.passwordTextField.setText("");

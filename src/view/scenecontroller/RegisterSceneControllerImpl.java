@@ -1,27 +1,20 @@
 package view.scenecontroller;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-import controller.Controller;
-import controller.ControllerImpl;
-import controller.files.UserManager;
-import controller.files.UserManagerImpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import model.data.UserData;
 import view.View;
 
 /**
- * 
- * Sample Skeleton for 'Register.fxml' Controller Class
+ *
+ * Sample Skeleton for 'Register.fxml' Controller Class.
  *
  */
 public class RegisterSceneControllerImpl extends AbstractSceneController implements RegisterSceneController {
@@ -43,7 +36,7 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
 
     @FXML // fx:id="pwdTextField"
     private PasswordField pwdTextField; // Value injected by FXMLLoader
-    
+
     @FXML // fx:id="backBtn"
     private Button backBtn; // Value injected by FXMLLoader
 
@@ -59,7 +52,7 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
     void quitGame() {
         Runtime.getRuntime().exit(0);
     }
-    
+
     @FXML
     void goToLogin() {
         this.getSceneFactory().openLoginScene();
@@ -76,12 +69,12 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
             this.resetTextField();
         }
     }
-    
+
     private void showAlert(final String text) {
         Alert alert = new Alert(AlertType.ERROR, text, ButtonType.OK);
         alert.showAndWait();
     }
-    
+
     private void resetTextField() {
         this.userTextField.setText("");
         this.pwdTextField.setText("");
