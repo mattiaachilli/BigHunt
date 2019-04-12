@@ -94,10 +94,7 @@ public class SceneLoaderImpl implements SceneLoader {
                 reg.setView(this.view);
                 break;
             case GAME:
-                if (this.gameScreen == null) {
-                    this.gameScreen = scene;
-                    this.addEventHandlers();
-                }
+                this.addEventHandlers();
                 if (!this.view.isPaused()) {
                     this.view.startGame((GameSceneController) controller, gameMode);
                 }
