@@ -8,7 +8,11 @@ import java.applet.AudioClip;
  * @author giuli
  *
  */
-public class Sound {
+public final class Sound {
+
+    private Sound() {
+        //Not called
+    }
 
     /**
      * All the audio clips.
