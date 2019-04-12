@@ -33,7 +33,6 @@ public class SceneLoaderImpl implements SceneLoader {
     private final View view;
     private static final String STYLE_CSS_PATH = "/view/style/style.css";
     private static final String LOGO_PATH = "/view/logo/logo.png";
-    private Scene gameScreen;
 
     /**
      *
@@ -94,10 +93,7 @@ public class SceneLoaderImpl implements SceneLoader {
                 reg.setView(this.view);
                 break;
             case GAME:
-                if (this.gameScreen == null) {
-                    this.gameScreen = scene;
-                    this.addEventHandlers();
-                }
+                this.addEventHandlers(stage);
                 if (!this.view.isPaused()) {
                     this.view.startGame((GameSceneController) controller, gameMode);
                 }
@@ -124,8 +120,8 @@ public class SceneLoaderImpl implements SceneLoader {
         }
     }
 
-    private void addEventHandlers() {
-        this.gameScreen.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+    private void addEventHandlers(final Stage stage) {
+        stage.getScene().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
 
             Optional<CommandType> commandType = Optional.empty();
             switch (e.getCode()) {
@@ -141,7 +137,7 @@ public class SceneLoaderImpl implements SceneLoader {
             commandType.ifPresent(command -> this.view.getController().notifyCommand(command, 0, 0));
         });
 
-        this.gameScreen.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+        stage.getScene().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             Optional<CommandType> commandType = Optional.empty();
             if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
                 commandType = Optional.ofNullable(CommandType.SHOOT);
