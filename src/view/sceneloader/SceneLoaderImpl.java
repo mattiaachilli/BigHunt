@@ -33,8 +33,7 @@ public class SceneLoaderImpl implements SceneLoader {
     private final View view;
     private static final String STYLE_CSS_PATH = "/view/style/style.css";
     private static final String LOGO_PATH = "/view/logo/logo.png";
-    private static Scene gameScreen;
-    private static SceneController gameSceneController;
+    private Scene gameScreen;
 
     /**
      *
@@ -53,34 +52,24 @@ public class SceneLoaderImpl implements SceneLoader {
 
         try {
 
-            if (screen != Screens.GAME || gameScreen == null) {
-                loader.setLocation(getClass().getResource(screen.getPath()));
-                root = loader.load();
+            loader.setLocation(getClass().getResource(screen.getPath()));
+            root = loader.load();
 
-                controller = loader.getController();
-                controller.setSceneFactory(this.view.getSceneFactory());
+            controller = loader.getController();
+            controller.setSceneFactory(this.view.getSceneFactory());
 
-                root.setPrefSize(SettingsImpl.getSettings().getSelectedResolution().getKey(),
-                SettingsImpl.getSettings().getSelectedResolution().getValue());
+            root.setPrefSize(SettingsImpl.getSettings().getSelectedResolution().getKey(),
+            SettingsImpl.getSettings().getSelectedResolution().getValue());
 
-                root.getChildrenUnmodifiable().stream().forEach(e -> {
-                    if (screen == Screens.GAME && e instanceof Label || screen != Screens.GAME) {
-                        e.setScaleX(SettingsImpl.getSettings().getScaleFactor());
-                        e.setScaleY(SettingsImpl.getSettings().getScaleFactor());
-                    }
-                });
-                scene = new Scene(root);
-                scene.getStylesheets().add(STYLE_CSS_PATH);
-
-                if (screen == Screens.GAME) {
-                    gameScreen = scene;
-                    gameSceneController = controller;
-                    this.addEventHandlers();
+            root.getChildrenUnmodifiable().stream().forEach(e -> {
+                if ((screen == Screens.GAME && e instanceof Label) || screen != Screens.GAME) {
+                    e.setScaleX(SettingsImpl.getSettings().getScaleFactor());
+                    e.setScaleY(SettingsImpl.getSettings().getScaleFactor());
                 }
-            } else {
-                scene = gameScreen;
-                controller = gameSceneController;
-            }
+            });
+            scene = new Scene(root);
+            scene.getStylesheets().add(STYLE_CSS_PATH);
+
             stage.setScene(scene);
 
             stage.setResizable(false);
@@ -105,6 +94,10 @@ public class SceneLoaderImpl implements SceneLoader {
                 reg.setView(this.view);
                 break;
             case GAME:
+                if (this.gameScreen == null) {
+                    this.gameScreen = scene;
+                    this.addEventHandlers();
+                }
                 if (!this.view.isPaused()) {
                     this.view.startGame((GameSceneController) controller, gameMode);
                 }
@@ -132,7 +125,7 @@ public class SceneLoaderImpl implements SceneLoader {
     }
 
     private void addEventHandlers() {
-        gameScreen.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+        this.gameScreen.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
 
             Optional<CommandType> commandType = Optional.empty();
             switch (e.getCode()) {
@@ -148,7 +141,7 @@ public class SceneLoaderImpl implements SceneLoader {
             commandType.ifPresent(command -> this.view.getController().notifyCommand(command, 0, 0));
         });
 
-        gameScreen.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+        this.gameScreen.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             Optional<CommandType> commandType = Optional.empty();
             if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
                 commandType = Optional.ofNullable(CommandType.SHOOT);
