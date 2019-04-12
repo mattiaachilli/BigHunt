@@ -34,6 +34,7 @@ public final class DogImpl extends AbstractCharacter implements Dog {
 
     private DogStatus status;
     private Optional<Duck> lastDuck;
+    private boolean firstTime;
 
     /**
      * 
@@ -46,6 +47,7 @@ public final class DogImpl extends AbstractCharacter implements Dog {
         super(shape, velocity);
         this.status = DogStatus.RIGHT;
         this.lastDuck = Optional.empty();
+        this.firstTime = true;
     }
 
     /**
@@ -96,27 +98,32 @@ public final class DogImpl extends AbstractCharacter implements Dog {
 
         if (this.status == DogStatus.JUMP && this.getPosition().getY() <= FINAL_POS_Y) {
             this.setVelocity(new VelocityImpl(0, 0));
-            this.setDogStatus(DogStatus.IN_GRASS);
             this.inGrass();
         }
 
         if (this.status == DogStatus.LAUGH) {
             super.addTimeElapsed(timeElapsed);
-            if (super.getTimeElapsed() >= LAUGH_MILLIS) {
-                super.addTimeElapsed(-LAUGH_MILLIS);
-                this.setDogStatus(DogStatus.IN_GRASS);
+            final int time = this.firstTime ? LAUGH_MILLIS * 2 : LAUGH_MILLIS;
+            if (super.getTimeElapsed() >= time) {
+                super.addTimeElapsed(-time);
                 this.inGrass();
+                if (this.firstTime) {
+                    this.firstTime = false;
+                }
             }
         }
 
         if (this.status == DogStatus.HAPPY) {
             super.addTimeElapsed(timeElapsed);
-            if (super.getTimeElapsed() >= HAPPY_MILLIS) {
-                super.addTimeElapsed(-HAPPY_MILLIS);
+            final int time = this.firstTime ? HAPPY_MILLIS * 2 : HAPPY_MILLIS;
+            if (super.getTimeElapsed() >= time) {
+                super.addTimeElapsed(-time);
                 this.lastDuck = Optional.empty();
-                this.setDogStatus(DogStatus.IN_GRASS);
                 this.setPosition(new PositionImpl(FINAL_POS_X, FINAL_POS_Y));
                 this.inGrass();
+                if (this.firstTime) {
+                    this.firstTime = false;
+                }
             }
         }
     }

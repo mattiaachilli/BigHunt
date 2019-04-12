@@ -231,15 +231,14 @@ public class ViewImpl implements View {
             this.setCursor();
 
             this.roundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/round/nextRound.png"),
-            SettingsImpl.getSettings().getSelectedResolution().getKey(),
-            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+                                            SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
             this.lastRoundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/round/finalRound.png"),
-            SettingsImpl.getSettings().getSelectedResolution().getKey(),
-            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
-            this.backgroundImage = new ImageView(
-            new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
-            SettingsImpl.getSettings().getSelectedResolution().getKey(),
-            SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+                                                 SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                                 SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+            this.backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
+                                                 SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                                 SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
         }
 
         @Override
@@ -282,7 +281,7 @@ public class ViewImpl implements View {
                             final ViewEntity ve = viewEntity.get();
                             final Rectangle rectangle = (Rectangle) ve.getShape();
                             this.gamecanvas.drawImage(ve.getPicture(), ve.getPosition().getX(), ve.getPosition().getY(),
-                            rectangle.getWidth(), rectangle.getHeight());
+                                                      rectangle.getWidth(), rectangle.getHeight());
                         }
                     }
                 });
@@ -301,14 +300,14 @@ public class ViewImpl implements View {
 
         private void updateBackground() {
             this.gamecanvas.drawImage(this.backgroundImage.getImage(), 0, 0,
-            SettingsImpl.getSettings().getSelectedResolution().getKey(),
-            SettingsImpl.getSettings().getSelectedResolution().getValue());
+                                      SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                      SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
         }
 
         private void updateRoundImage() {
-            final Image image = this.actualRound == this.rounds.getRight() - 1 ? this.lastRoundImage.getImage()
-            : this.roundImage.getImage();
+            final Image image = this.actualRound == this.rounds.getRight() - 1 ? this.lastRoundImage.getImage() 
+                                                 : this.roundImage.getImage();
             this.gamecanvas.drawImage(image, 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(),
             SettingsImpl.getSettings().getSelectedResolution().getValue());
             this.backgroundImage.setPreserveRatio(true);
@@ -334,7 +333,7 @@ public class ViewImpl implements View {
 
         public void setCursor() {
             this.gamecanvas.getCanvas()
-            .setCursor(new ImageCursor(cursorImage, this.cursorImage.getWidth() / 2, this.cursorImage.getHeight() / 2));
+                .setCursor(new ImageCursor(cursorImage, this.cursorImage.getWidth() / 2, this.cursorImage.getHeight() / 2));
         }
     }
 }

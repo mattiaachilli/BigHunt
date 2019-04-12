@@ -15,7 +15,7 @@ import view.entities.ViewEntityImpl;
  *
  */
 public final class EntitiesConverter {
-    private static EntityImageType e = new EntityImageTypeImpl();
+    private static EntityImageType e = new EntityImageTypeImpl();;
 
     private EntitiesConverter() {
     }
