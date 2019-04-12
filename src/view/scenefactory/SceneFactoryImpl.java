@@ -121,11 +121,9 @@ public class SceneFactoryImpl implements SceneFactory {
     }
 
     private void checkFullScreen() {
-        if (SettingsImpl.getSettings().isFullScreen()) {
+        if (SettingsImpl.getSettings().isFullScreen() && this.stage.getStyle().equals(StageStyle.DECORATED)) {
             this.createNewStage();
-            if (this.stage.getStyle().equals(StageStyle.DECORATED)) {
-                this.stage.initStyle(StageStyle.UNDECORATED);
-            }
+            this.stage.initStyle(StageStyle.UNDECORATED);
             this.stage.setMaximized(true);
         } else if (!SettingsImpl.getSettings().isFullScreen() && this.stage.getStyle().equals(StageStyle.UNDECORATED)) {
             this.createNewStage();
