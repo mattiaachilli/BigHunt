@@ -299,6 +299,9 @@ public final class ModelImpl implements Model {
 
     @Override
     public boolean canShoot() {
+        if (this.getCurrentMagazine().getBulletType().equals(BulletType.INFINITE_BULLETS)) {
+            return true;
+        }
         return this.getCurrentMagazine().getAmmo() > 0;
     }
 
