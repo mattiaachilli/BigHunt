@@ -26,8 +26,7 @@ public class SceneFactoryImpl implements SceneFactory {
     /**
      * Constructor of SceneFactory.
      * 
-     * @param view
-     *          view of the game.
+     * @param view view of the game.
      */
     public SceneFactoryImpl(final View view) {
         this.view = view;
@@ -58,6 +57,7 @@ public class SceneFactoryImpl implements SceneFactory {
     public final void openLoginScene() {
         this.openNewScene(Screens.LOGIN);
     }
+
     @Override
     public final void openMenuScene() {
         this.openNewScene(Screens.MENU);
@@ -115,7 +115,7 @@ public class SceneFactoryImpl implements SceneFactory {
 
     private void openNewScene(final Screens screen) {
         this.checkFullScreen();
-        //new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
+        // new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
         this.sceneLoader.loadScene(this.stage, screen, this.gameMode);
         this.fakeStage.close();
     }
@@ -133,7 +133,7 @@ public class SceneFactoryImpl implements SceneFactory {
         }
     }
 
-    private void createNewStage() { 
+    private void createNewStage() {
         this.fakeStage = this.stage;
         this.stage = new Stage();
         this.stage.setTitle("BIG HUNT");

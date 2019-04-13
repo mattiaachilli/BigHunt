@@ -116,17 +116,20 @@ implements HighScoresSceneController {
     @Override
     public final void setStoryModePodium(final Podium storyPodium) {
         if (!storyPodium.getHighScores().isEmpty()) {
-            final Iterator<HighScore> it = storyPodium.getHighScores().iterator();
-            this.storyLabels().forEach(l -> l.setText(String.valueOf(it.next().getScore())));
+            final Iterator<HighScore> itScores = storyPodium.getHighScores().iterator();
+            this.storyLabels().forEach(l -> l.setText(String.valueOf(itScores.next().getScore())));
+            final Iterator<HighScore> itNames = storyPodium.getHighScores().iterator();
+            this.storyNames().forEach(l -> l.setText(itNames.next().getName()));
         }
     }
 
     @Override
     public final void setSurvivalModePodium(final Podium survivalPodium) {
         if (!survivalPodium.getHighScores().isEmpty()) {
-            final Iterator<HighScore> it = survivalPodium.getHighScores().iterator();
-            this.survivalLabels().forEach(l -> l.setText(String.valueOf(it.next().getScore())));
-
+            final Iterator<HighScore> itScores = survivalPodium.getHighScores().iterator();
+            this.survivalLabels().forEach(l -> l.setText(String.valueOf(itScores.next().getScore())));
+            final Iterator<HighScore> itNames = survivalPodium.getHighScores().iterator();
+            this.survivalNames().forEach(l -> l.setText(itNames.next().getName()));
         }
     }
 
@@ -136,6 +139,14 @@ implements HighScoresSceneController {
 
     private Stream<Label> survivalLabels() {
         return Stream.of(survival1, survival2, survival3, survival4, survival5);
+    }
+
+    private Stream<Label> storyNames() {
+        return Stream.of(storyName1, storyName2, storyName3, storyName4, storyName5);
+    }
+
+    private Stream<Label> survivalNames() {
+        return Stream.of(survivalName1, survivalName2, survivalName3, survivalName4, survivalName5);
     }
 
 }
