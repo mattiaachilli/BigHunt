@@ -1,5 +1,6 @@
 package view.sceneloader;
 
+import java.awt.Button;
 import java.util.Optional;
 
 import controller.input.CommandType;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.matches.GameMode;
 import settings.SettingsImpl;
@@ -52,35 +54,24 @@ public class SceneLoaderImpl implements SceneLoader {
         final Scene scene;
 
         try {
+            loader.setLocation(getClass().getResource(screen.getPath()));
+            root = loader.load();
 
-            if (screen != Screens.GAME || gameScreen == null) {
-                loader.setLocation(getClass().getResource(screen.getPath()));
-                root = loader.load();
+            controller = loader.getController();
+            controller.setSceneFactory(this.view.getSceneFactory());
 
-                controller = loader.getController();
-                controller.setSceneFactory(this.view.getSceneFactory());
+            root.setPrefSize(SettingsImpl.getSettings().getSelectedResolution().getKey(),
+            SettingsImpl.getSettings().getSelectedResolution().getValue());
 
-                root.setPrefSize(SettingsImpl.getSettings().getSelectedResolution().getKey(),
-                SettingsImpl.getSettings().getSelectedResolution().getValue());
-
-                root.getChildrenUnmodifiable().stream().forEach(e -> {
-                    if (screen == Screens.GAME && e instanceof Label || screen != Screens.GAME) {
-                        e.setScaleX(SettingsImpl.getSettings().getScaleFactor());
-                        e.setScaleY(SettingsImpl.getSettings().getScaleFactor());
-                    }
-                });
-                scene = new Scene(root);
-                scene.getStylesheets().add(STYLE_CSS_PATH);
-
-                if (screen == Screens.GAME) {
-                    gameScreen = scene;
-                    gameSceneController = controller;
-                    this.addEventHandlers();
+            root.getChildrenUnmodifiable().stream().forEach(e -> {
+                if ((screen == Screens.GAME && e instanceof Label) || screen != Screens.GAME) {
+                    e.setScaleX(SettingsImpl.getSettings().getScaleFactor());
+                    e.setScaleY(SettingsImpl.getSettings().getScaleFactor());
                 }
-            } else {
-                scene = gameScreen;
-                controller = gameSceneController;
-            }
+            });
+            scene = new Scene(root);
+            scene.getStylesheets().add(STYLE_CSS_PATH);
+
             stage.setScene(scene);
 
             stage.setResizable(false);
@@ -105,6 +96,10 @@ public class SceneLoaderImpl implements SceneLoader {
                 reg.setView(this.view);
                 break;
             case GAME:
+                if (gameScreen == null) {
+                    gameScreen = scene;
+                    this.addEventHandlers();
+                }
                 if (!this.view.isPaused()) {
                     this.view.startGame((GameSceneController) controller, gameMode);
                 }
