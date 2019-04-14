@@ -11,7 +11,7 @@ import view.sceneloader.SceneLoaderImpl;
 import view.utilities.Screens;
 
 /**
- * 
+ *
  * Implements factory of the game.
  *
  */
@@ -25,7 +25,7 @@ public class SceneFactoryImpl implements SceneFactory {
 
     /**
      * Constructor of SceneFactory.
-     * 
+     *
      * @param view view of the game.
      */
     public SceneFactoryImpl(final View view) {
