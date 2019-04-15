@@ -46,9 +46,5 @@ public final class Sound {
      * Shooting sound.
      */
     public static final AudioClip SHOOT = Applet.newAudioClip(Sound.class.getResource("/sounds/shoot.wav"));
-    /**
-     * Reloading sound.
-     */
-    public static final AudioClip RELOAD = Applet.newAudioClip(Sound.class.getResource("/sounds/reload.wav"));
 
 }

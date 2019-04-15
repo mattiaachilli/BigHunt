@@ -123,14 +123,10 @@ public final class ControllerImpl implements Controller {
                     }
                     break;
                 case RECHARGE:
-                    if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                        Sound.RELOAD.stop();
-                        Sound.RELOAD.play();
-                    }
                     this.input.setCommand(new Recharge());
                     break;
                 case SHOOT:
-                    if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                    if (!this.view.isPaused() && SettingsImpl.getSettings().isBackgroundAudioOn()) {
                         Sound.SHOOT.stop();
                         Sound.SHOOT.play();
                     }
@@ -249,6 +245,7 @@ public final class ControllerImpl implements Controller {
             }
             if (model.isGameOver()) {
                 if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                    Sound.GAME_INTRO.stop();
                     Sound.GAME_CLEAR.play();
                 }
                 endGame();

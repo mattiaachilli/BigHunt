@@ -5,9 +5,9 @@ import java.util.Optional;
 import controller.input.CommandType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
@@ -96,6 +96,7 @@ public class SceneLoaderImpl implements SceneLoader {
             case GAME:
                 this.addEventHandlers(stage);
                 if (!this.view.isPaused()) {
+                    this.drawBackground((GameSceneController) controller);
                     this.view.startGame((GameSceneController) controller, gameMode);
                 }
                 break;
@@ -145,5 +146,15 @@ public class SceneLoaderImpl implements SceneLoader {
             }
             commandType.ifPresent(command -> this.view.getController().notifyCommand(command, e.getX(), e.getY()));
         });
+    }
+
+    private void drawBackground(final GameSceneController controller) {
+        final ImageView backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
+                                                        SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                                        SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+        controller.getCanvas().getGraphicsContext2D().drawImage(backgroundImage.getImage(), 0, 0,
+                                                        SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                                        SettingsImpl.getSettings().getSelectedResolution().getValue());
+        backgroundImage.setPreserveRatio(true);
     }
 }
