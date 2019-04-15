@@ -5,6 +5,7 @@ import java.util.Optional;
 import controller.input.CommandType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -61,7 +62,7 @@ public class SceneLoaderImpl implements SceneLoader {
             SettingsImpl.getSettings().getSelectedResolution().getValue());
 
             root.getChildrenUnmodifiable().stream().forEach(e -> {
-                if ((screen == Screens.GAME && e instanceof Label || this.view.isPaused()) || screen != Screens.GAME) {
+                if ((screen == Screens.GAME && (e instanceof Label || e instanceof VBox)) || screen != Screens.GAME) {
                     e.setScaleX(SettingsImpl.getSettings().getScaleFactor());
                     e.setScaleY(SettingsImpl.getSettings().getScaleFactor());
                 }

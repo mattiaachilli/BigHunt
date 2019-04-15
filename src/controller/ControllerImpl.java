@@ -123,14 +123,18 @@ public final class ControllerImpl implements Controller {
                     }
                     break;
                 case RECHARGE:
+                    if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                        Sound.RELOAD.stop();
+                        Sound.RELOAD.play();
+                    }
                     this.input.setCommand(new Recharge());
                     break;
                 case SHOOT:
-                    this.input.setCommand(new Shoot(x, y));
                     if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
                         Sound.SHOOT.stop();
                         Sound.SHOOT.play();
                     }
+                    this.input.setCommand(new Shoot(x, y));
                     break;
                 default:
                     break;
