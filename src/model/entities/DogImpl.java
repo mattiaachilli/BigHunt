@@ -146,9 +146,6 @@ public final class DogImpl extends AbstractCharacter implements Dog {
             if (this.lastDuck.get().getPosition().getY() >= FINAL_POS_Y) {
                 this.setPosition(new PositionImpl(this.lastDuck.get().getPosition().getX(), this.getPosition().getY()));
                 this.setDogStatus(DogStatus.HAPPY);
-                if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                    Sound.CAPTURED_DUCK.play();
-                }
             }
         }
         this.updateDogStatus(timeElapsed);
@@ -177,9 +174,6 @@ public final class DogImpl extends AbstractCharacter implements Dog {
 
     @Override
     public int getDogNegativeScore() {
-        if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-            Sound.DOG.play();
-        }
         return DOG_HIT;
     }
 }

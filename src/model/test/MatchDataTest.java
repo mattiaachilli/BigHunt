@@ -33,7 +33,6 @@ public class MatchDataTest {
         assertEquals(this.survivalMatch.getCurrentRound(), 1);
         assertEquals(this.storyMatch.getCurrentRound(), 1);
         this.storyMatch.incrementRound();
-        assertNotEquals(this.storyMatch.getCurrentRound(), 2);
         for (int i = 0; i < 3; i++) {
             this.survivalMatch.incrementRound();
             this.storyMatch.incrementRound();

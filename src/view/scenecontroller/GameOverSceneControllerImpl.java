@@ -43,12 +43,14 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
     private Label timePlayedLabel; // Value injected by FXMLLoader
 
     @FXML
+    final
     void startNewGame() {
         this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().openSelectModeScene();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
+    final
     void initialize() {
         assert scoreLabel != null : "fx:id=\"scoreLabel\" was not injected: check your FXML file 'GameOver.fxml'.";
         assert killsLabel != null : "fx:id=\"killsLabel\" was not injected: check your FXML file 'GameOver.fxml'.";
@@ -67,7 +69,7 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
     }
 
     @Override
-    public void setMatchData(final MatchData matchData) {
+    public final void setMatchData(final MatchData matchData) {
         this.timePlayedLabel.setText(this.getTime(matchData.getTimerFromStart()));
         this.killsLabel.setText(String.valueOf(matchData.getKilledDucks()));
         this.scoreLabel.setText(String.valueOf(matchData.getGlobalScore()));

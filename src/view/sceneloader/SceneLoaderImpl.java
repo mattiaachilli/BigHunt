@@ -1,6 +1,5 @@
 package view.sceneloader;
 
-import java.awt.Button;
 import java.util.Optional;
 
 import controller.input.CommandType;
@@ -11,7 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.matches.GameMode;
 import settings.SettingsImpl;
@@ -62,7 +61,7 @@ public class SceneLoaderImpl implements SceneLoader {
             SettingsImpl.getSettings().getSelectedResolution().getValue());
 
             root.getChildrenUnmodifiable().stream().forEach(e -> {
-                if ((screen == Screens.GAME && e instanceof Label) || screen != Screens.GAME) {
+                if ((screen == Screens.GAME && e instanceof Label || this.view.isPaused()) || screen != Screens.GAME) {
                     e.setScaleX(SettingsImpl.getSettings().getScaleFactor());
                     e.setScaleY(SettingsImpl.getSettings().getScaleFactor());
                 }

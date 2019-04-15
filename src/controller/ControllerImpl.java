@@ -21,9 +21,7 @@ import model.data.MatchData;
 import model.data.Podium;
 import model.data.UserData;
 import model.matches.GameMode;
-import settings.Settings;
 import settings.SettingsImpl;
-import settings.observers.BackGroundAudioObserver;
 import utility.Utilities;
 import view.View;
 import view.entities.ViewEntity;
@@ -130,6 +128,7 @@ public final class ControllerImpl implements Controller {
                 case SHOOT:
                     this.input.setCommand(new Shoot(x, y));
                     if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                        Sound.SHOOT.stop();
                         Sound.SHOOT.play();
                     }
                     break;
