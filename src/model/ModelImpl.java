@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import audio.Sound;
 import model.cleaner.Cleaner;
 import model.cleaner.CleanerImpl;
 import model.data.MatchData;
@@ -117,6 +118,9 @@ public final class ModelImpl implements Model {
                 final Optional<Duck> duckSpawn = spawner.spawnDuck();
                 if (duckSpawn.isPresent()) {
                     this.ducks.add(duckSpawn.get());
+                    if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                        Sound.DUCK_CALL.play();
+                    }
                     if (duckSpawn.get().hasPowerUp()) {
                         this.powerUp.add(duckSpawn.get().getPowerUp().get());
                     }
@@ -148,6 +152,9 @@ public final class ModelImpl implements Model {
                 dog.setDogStatus(DogStatus.LAUGH);
             }
             if (d.getStatus() == EntityStatus.FLOWN_AWAY && d.getPosition().getY() <= 0) {
+                if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                    Sound.DOG_LAUGH.play();
+                }
                 this.match.getMatchData().incrementFlownDucks();
             } else if (d.getStatus() == EntityStatus.DEAD && d.getPosition().getY() >= DogImpl.FINAL_POS_Y) {
                 this.dog.setLastDuckKilled(d);
@@ -299,6 +306,9 @@ public final class ModelImpl implements Model {
 
     @Override
     public boolean canShoot() {
+        if (this.getCurrentMagazine().getBulletType().equals(BulletType.INFINITE_BULLETS)) {
+            return true;
+        }
         return this.getCurrentMagazine().getAmmo() > 0;
     }
 

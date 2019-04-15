@@ -1,5 +1,6 @@
 package controller.input;
 
+import audio.Sound;
 import model.Model;
 import model.ModelImpl;
 import model.entities.Dog;

@@ -1,5 +1,6 @@
 package view.sceneloader;
 
+import java.awt.Button;
 import java.util.Optional;
 
 import controller.input.CommandType;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.matches.GameMode;
 import settings.SettingsImpl;
@@ -50,7 +52,6 @@ public class SceneLoaderImpl implements SceneLoader {
         final Scene scene;
 
         try {
-
             loader.setLocation(getClass().getResource(screen.getPath()));
             root = loader.load();
 
