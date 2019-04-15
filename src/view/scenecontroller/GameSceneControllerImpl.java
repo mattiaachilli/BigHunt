@@ -101,7 +101,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
             } else {
                 this.scoreGameLabel.setTextFill(Color.LIME);
             }
-            this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) 
+            this.ammoLabel.setText(String.valueOf(magazine.getAmmo())
                         + "(" + magazine.getNumber() + ")" + "/" + StoryMatch.MAX_MAGAZINES);
         } else {
             if (!lastLabel) {
