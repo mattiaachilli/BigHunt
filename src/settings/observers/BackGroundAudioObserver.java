@@ -3,6 +3,7 @@ package settings.observers;
 
 
 import javafx.scene.control.CheckBox;
+import settings.Settings;
 import settings.SettingsAudio;
 import settings.SettingsImpl;
 
@@ -43,6 +44,13 @@ public class BackGroundAudioObserver implements Observer {
     private void addActionListener() {
         this.bgAudioCheckbox.selectedProperty().addListener(e -> {
             this.bgAudioCheckbox.setText(this.bgAudioCheckbox.isSelected() ? SettingsAudio.AUDIO_ON.getText() : SettingsAudio.AUDIO_OFF.getText());
+        });
+        this.bgAudioCheckbox.selectedProperty().addListener(e -> {
+            if (this.bgAudioCheckbox.isSelected()) {
+                SettingsImpl.getSettings().setBackgroundAudio(true);
+            } else {
+                SettingsImpl.getSettings().setBackgroundAudio(false);
+            }
         });
     }
 

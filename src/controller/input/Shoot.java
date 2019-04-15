@@ -45,7 +45,6 @@ public class Shoot implements Command {
                         final Duck d = (Duck) entity;
                         if (d.getShape().contains(x, y) && d.getStatus() == EntityStatus.ALIVE) {
                             d.kill();
-                            Sound.DUCK_DEAD.play();
                             score = d.getScore(); 
                             if (model.getPowerUpActive().isPresent() && model.getPowerUpActive().get() == PowerUpType.DOUBLE_SCORE 
                                 && numDuckDoubleScore < ModelImpl.NEXT_DUCKS_POWERUP) {

@@ -21,6 +21,9 @@ import model.data.MatchData;
 import model.data.Podium;
 import model.data.UserData;
 import model.matches.GameMode;
+import settings.Settings;
+import settings.SettingsImpl;
+import settings.observers.BackGroundAudioObserver;
 import utility.Utilities;
 import view.View;
 import view.entities.ViewEntity;
@@ -50,7 +53,6 @@ public final class ControllerImpl implements Controller {
     private Podium storyPodium;
     private Podium survivalPodium;
     private Optional<UserData> user;
-
     /**
      * Constructor of the controller.
      * 
@@ -78,7 +80,9 @@ public final class ControllerImpl implements Controller {
         this.input.clearCommands();
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo(), 
             this.model.getRounds());
-        Sound.GAME_INTRO.play();
+        if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+            Sound.GAME_INTRO.play();
+        }
     }
 
     @Override
@@ -113,6 +117,7 @@ public final class ControllerImpl implements Controller {
                         this.input.clearCommands();
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
+                        Sound.GAME_INTRO.stop();
                     } else if (this.gameLoop.isAlive()) {
                         this.resumeGameLoop();
                         this.view.resumeRender();
@@ -124,6 +129,9 @@ public final class ControllerImpl implements Controller {
                     break;
                 case SHOOT:
                     this.input.setCommand(new Shoot(x, y));
+                    if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                        Sound.SHOOT.play();
+                    }
                     break;
                 default:
                     break;
@@ -237,6 +245,9 @@ public final class ControllerImpl implements Controller {
                 lastTime = current;
             }
             if (model.isGameOver()) {
+                if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                    Sound.GAME_CLEAR.play();
+                }
                 endGame();
             }
         }

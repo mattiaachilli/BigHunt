@@ -2,12 +2,14 @@ package model.entities;
 
 import java.util.Optional;
 
+import audio.Sound;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import model.ModelImpl;
 import model.properties.PositionImpl;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
+import settings.SettingsImpl;
 /**
  * 
  * This class represents the dog, animation etc..
@@ -144,6 +146,9 @@ public final class DogImpl extends AbstractCharacter implements Dog {
             if (this.lastDuck.get().getPosition().getY() >= FINAL_POS_Y) {
                 this.setPosition(new PositionImpl(this.lastDuck.get().getPosition().getX(), this.getPosition().getY()));
                 this.setDogStatus(DogStatus.HAPPY);
+                if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                    Sound.CAPTURED_DUCK.play();
+                }
             }
         }
         this.updateDogStatus(timeElapsed);
@@ -172,6 +177,9 @@ public final class DogImpl extends AbstractCharacter implements Dog {
 
     @Override
     public int getDogNegativeScore() {
+        if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+            Sound.DOG.play();
+        }
         return DOG_HIT;
     }
 }

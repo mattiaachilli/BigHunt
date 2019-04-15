@@ -45,7 +45,10 @@ public final class SettingsImpl implements Settings {
 
     private static SettingsImpl singleton;
 
-    private SettingsImpl() {
+    /**
+     * SettingsImpl constructor.
+     */
+    public SettingsImpl() {
         super();
     }
 
