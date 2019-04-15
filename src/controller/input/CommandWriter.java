@@ -14,9 +14,7 @@ public interface CommandWriter {
     void setCommand(Command command);
 
     /**
-     * 
-     * @param command
-     *          the command to remove.
+     *  Clean all commands.
      */
     void clearCommands();
 

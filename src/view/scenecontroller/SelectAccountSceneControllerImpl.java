@@ -2,18 +2,18 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
-import settings.SettingsImpl;
 
 /**
- * 
- * Sample Skeleton for 'SelecAccount.fxml' Controller Class
+ *
+ * Sample Skeleton for 'SelecAccount.fxml' Controller Class.
  *
  */
 public class SelectAccountSceneControllerImpl extends AbstractSceneController {
-    
+
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
