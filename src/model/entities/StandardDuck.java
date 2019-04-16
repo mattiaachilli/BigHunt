@@ -2,16 +2,16 @@ package model.entities;
 
 import java.util.Optional;
 
-import audio.Sound;
+import audio.SoundUtil;
 import javafx.scene.shape.Shape;
 import model.ModelImpl;
 import model.entities.powerup.PowerUp;
-import model.entities.utilities.EntityUtilities;
+import model.entities.utilities.EntityUtil;
 import model.factories.PowerUpFactory;
 import model.factories.PowerUpFactoryImpl;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
-import model.utilities.ExceptionRuntimeUtility;
+import model.utilities.ExceptionRuntimeUtil;
 import settings.SettingsImpl;
 
 /**
@@ -49,7 +49,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 
     private DuckDirection actualDirection;
     private int lastDirectionUpdate;
-    private Optional<PowerUp> powerUp;
+    private final Optional<PowerUp> powerUp;
     private boolean movement;
     private boolean decelerate;
 
@@ -87,9 +87,9 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     public final void kill() {
         super.kill();
         if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-            Sound.DUCK_DEAD.play();
+            SoundUtil.DUCK_DEAD.play();
         }
-        EntityUtilities.setNewPosition(this, false, DuckDirection.KILLED);
+        EntityUtil.setNewPosition(this, false, DuckDirection.KILLED);
         if (this.hasPowerUp()) {
             this.powerUp.get().setVisible();
         }
@@ -102,9 +102,9 @@ public class StandardDuck extends AbstractCharacter implements Duck {
             this.lastDirectionUpdate += timeElapsed;
             if (this.canChangeDirection()) {
                 this.lastDirectionUpdate -= MILLIS_UPDATE_DIRECTION;
-                EntityUtilities.changeDirection(this);
+                EntityUtil.changeDirection(this);
             }
-            EntityUtilities.checkCollision(this, this.decelerate, this.actualDirection);
+            EntityUtil.checkCollision(this, this.decelerate, this.actualDirection);
             if (this.hasPowerUp()) {
                 this.powerUp.get().setPosition(this.getPosition());
             }
@@ -112,7 +112,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
         } else if (this.getStatus() == EntityStatus.DEAD) {
             this.lastDirectionUpdate += timeElapsed;
             if (this.lastDirectionUpdate >= MILLIS_UPDATE_PRECIPITATE) {
-                EntityUtilities.setNewPosition(this, this.decelerate, DuckDirection.PRECIPITATE);
+                EntityUtil.setNewPosition(this, this.decelerate, DuckDirection.PRECIPITATE);
             }
         }
         super.update(timeElapsed);
@@ -124,7 +124,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 
     @Override
     public final int getScore() {
-        ExceptionRuntimeUtility.checkException(this.isAlive() || this.getStatus() == EntityStatus.FLOWN_AWAY, new IllegalStateException());
+        ExceptionRuntimeUtil.checkException(this.isAlive() || this.getStatus() == EntityStatus.FLOWN_AWAY, new IllegalStateException());
         return DEFAULT_SCORE;
     }
 
@@ -135,9 +135,9 @@ public class StandardDuck extends AbstractCharacter implements Duck {
 
     @Override
     public final void computeFlyAway() {
-        ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
+        ExceptionRuntimeUtil.checkException(!this.isAlive(), new IllegalStateException());
         this.setStatus(EntityStatus.FLOWN_AWAY);
-        EntityUtilities.setNewPosition(this, false, DuckDirection.FLOWN_AWAY);
+        EntityUtil.setNewPosition(this, false, DuckDirection.FLOWN_AWAY);
     }
 
     @Override

@@ -21,6 +21,11 @@ import model.entities.StandardDuck;
 public class DuckAnimation implements EntityImageAnimation {
 
     private static final int UPDATE_DUCK = 500;
+    
+    private static final String STANDARD = "Standard";
+    private static final String YELLOW = "Yellow";
+    private static final String ORANGE = "Orange";
+    private static final String PINK = "PINK";
 
     private int index;
     private int elapsed;
@@ -48,34 +53,34 @@ public class DuckAnimation implements EntityImageAnimation {
     }
 
     private void initializeDuckImages() {
-        this.duckRightImages.put("Standard", StandardDuckImageType.getRight());
-        this.duckRightImages.put("Yellow", YellowDuckImageType.getRight());
-        this.duckRightImages.put("Orange", OrangeDuckImageType.getRight());
-        this.duckRightImages.put("Pink", PinkDuckImageType.getRight());
-        this.duckLeftImages.put("Standard", StandardDuckImageType.getLeft());
-        this.duckLeftImages.put("Yellow", YellowDuckImageType.getLeft());
-        this.duckLeftImages.put("Orange", OrangeDuckImageType.getLeft());
-        this.duckLeftImages.put("Pink", PinkDuckImageType.getLeft());
-        this.duckUpRightImages.put("Standard", StandardDuckImageType.getUpRight());
-        this.duckUpRightImages.put("Yellow", YellowDuckImageType.getUpRight());
-        this.duckUpRightImages.put("Orange", OrangeDuckImageType.getUpRight());
-        this.duckUpRightImages.put("Pink", PinkDuckImageType.getUpRight());
-        this.duckUpLeftImages.put("Standard", StandardDuckImageType.getUpLeft());
-        this.duckUpLeftImages.put("Yellow", YellowDuckImageType.getUpLeft());
-        this.duckUpLeftImages.put("Orange", OrangeDuckImageType.getUpLeft());
-        this.duckUpLeftImages.put("Pink", PinkDuckImageType.getUpLeft());
-        this.duckPrecipitateImages.put("Standard", StandardDuckImageType.DUCK_PRECIPITATE.getPicture());
-        this.duckPrecipitateImages.put("Yellow", YellowDuckImageType.DUCK_PRECIPITATE.getPicture());
-        this.duckPrecipitateImages.put("Orange", OrangeDuckImageType.DUCK_PRECIPITATE.getPicture());
-        this.duckPrecipitateImages.put("Pink", PinkDuckImageType.DUCK_PRECIPITATE.getPicture());
-        this.duckFlyAwayImages.put("Standard", StandardDuckImageType.getFlyAway());
-        this.duckFlyAwayImages.put("Yellow", YellowDuckImageType.getFlyAway());
-        this.duckFlyAwayImages.put("Orange", OrangeDuckImageType.getFlyAway());
-        this.duckFlyAwayImages.put("Pink", PinkDuckImageType.getFlyAway());
-        this.duckKilled.put("Standard", StandardDuckImageType.DUCK_DEAD.getPicture());
-        this.duckKilled.put("Yellow", YellowDuckImageType.DUCK_DEAD.getPicture());
-        this.duckKilled.put("Orange", OrangeDuckImageType.DUCK_DEAD.getPicture());
-        this.duckKilled.put("Pink", PinkDuckImageType.DUCK_DEAD.getPicture());
+        this.duckRightImages.put(STANDARD, StandardDuckImageType.getRight());
+        this.duckRightImages.put(YELLOW, YellowDuckImageType.getRight());
+        this.duckRightImages.put(ORANGE, OrangeDuckImageType.getRight());
+        this.duckRightImages.put(PINK, PinkDuckImageType.getRight());
+        this.duckLeftImages.put(STANDARD, StandardDuckImageType.getLeft());
+        this.duckLeftImages.put(YELLOW, YellowDuckImageType.getLeft());
+        this.duckLeftImages.put(ORANGE, OrangeDuckImageType.getLeft());
+        this.duckLeftImages.put(PINK, PinkDuckImageType.getLeft());
+        this.duckUpRightImages.put(STANDARD, StandardDuckImageType.getUpRight());
+        this.duckUpRightImages.put(YELLOW, YellowDuckImageType.getUpRight());
+        this.duckUpRightImages.put(ORANGE, OrangeDuckImageType.getUpRight());
+        this.duckUpRightImages.put(PINK, PinkDuckImageType.getUpRight());
+        this.duckUpLeftImages.put(STANDARD, StandardDuckImageType.getUpLeft());
+        this.duckUpLeftImages.put(YELLOW, YellowDuckImageType.getUpLeft());
+        this.duckUpLeftImages.put(ORANGE, OrangeDuckImageType.getUpLeft());
+        this.duckUpLeftImages.put(PINK, PinkDuckImageType.getUpLeft());
+        this.duckPrecipitateImages.put(STANDARD, StandardDuckImageType.DUCK_PRECIPITATE.getPicture());
+        this.duckPrecipitateImages.put(YELLOW, YellowDuckImageType.DUCK_PRECIPITATE.getPicture());
+        this.duckPrecipitateImages.put(ORANGE, OrangeDuckImageType.DUCK_PRECIPITATE.getPicture());
+        this.duckPrecipitateImages.put(PINK, PinkDuckImageType.DUCK_PRECIPITATE.getPicture());
+        this.duckFlyAwayImages.put(STANDARD, StandardDuckImageType.getFlyAway());
+        this.duckFlyAwayImages.put(YELLOW, YellowDuckImageType.getFlyAway());
+        this.duckFlyAwayImages.put(ORANGE, OrangeDuckImageType.getFlyAway());
+        this.duckFlyAwayImages.put(PINK, PinkDuckImageType.getFlyAway());
+        this.duckKilled.put(STANDARD, StandardDuckImageType.DUCK_DEAD.getPicture());
+        this.duckKilled.put(YELLOW, YellowDuckImageType.DUCK_DEAD.getPicture());
+        this.duckKilled.put(ORANGE, OrangeDuckImageType.DUCK_DEAD.getPicture());
+        this.duckKilled.put(PINK, PinkDuckImageType.DUCK_DEAD.getPicture());
     }
 
     private void updateIndex() {
@@ -90,13 +95,13 @@ public class DuckAnimation implements EntityImageAnimation {
         Optional<Image> image = Optional.empty();
         String color = "";
         if (this.duck instanceof StandardDuck) {
-            color = "Standard";
+            color = STANDARD;
         } else if (this.duck instanceof YellowDuck) {
-            color = "Yellow";
+            color = YELLOW;
         } else if (this.duck instanceof OrangeDuck) {
-            color = "Orange";
+            color = ORANGE;
         } else if (this.duck instanceof PinkDuck) {
-            color = "Pink";
+            color = PINK;
         } 
 
         switch (this.duck.getActualDirection()) {

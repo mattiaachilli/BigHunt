@@ -1,6 +1,6 @@
 package controller.input;
 
-import audio.Sound;
+import audio.SoundUtil;
 import model.Model;
 import model.ModelImpl;
 import model.entities.Dog;
@@ -20,7 +20,7 @@ public class Shoot implements Command {
     private final double x;
     private final double y;
     private final CommandType type = CommandType.SHOOT;
-    private static int numDuckDoubleScore = 0;
+    private static int numDuckDoubleScore;
 
     /**
      * 
@@ -70,8 +70,8 @@ public class Shoot implements Command {
                         final Dog d = (Dog) entity;
                         if (d.getShape().contains(x, y) && !d.isInGrass()) {
                             if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                                Sound.SHOOT.stop();
-                                Sound.DOG.play();
+                                SoundUtil.SHOOT.stop();
+                                SoundUtil.DOG.play();
                             }
                             hit = true;
                             model.getMatchData().decrementScoreOf(d.getDogNegativeScore());

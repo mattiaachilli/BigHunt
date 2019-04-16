@@ -7,7 +7,7 @@ import model.properties.DuckDirection;
 
 /**
  * 
- * Represents a duck in the game, a Duck may have a Power Up.
+ * Represents a duck in the game.
  *
  */
 public interface Duck extends Character {

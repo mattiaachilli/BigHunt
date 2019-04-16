@@ -5,11 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * 
- * @author simone A class containing constants used to find files in the user
- *         home directory
+ *  Class containing constants used to find files in the user home directory.
  */
-public final class FilesHomeManager {
+public final class FilesHomeManagerUtils {
 
     /**
      * String representing the system separator.
@@ -49,7 +47,7 @@ public final class FilesHomeManager {
     /**
      * Utility classes should not have a public or default constructor.
      */
-    private FilesHomeManager() {
+    private FilesHomeManagerUtils() {
 
     }
 

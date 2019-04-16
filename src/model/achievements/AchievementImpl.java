@@ -18,7 +18,7 @@ public class AchievementImpl implements Achievement {
     private static final long serialVersionUID = 1L;
 
     private final AchievementType type;
-    private int value;
+    private final int value;
 
     /**
      * Constructor of a new achievement.

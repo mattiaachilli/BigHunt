@@ -19,7 +19,7 @@ public class MatchDataImpl implements MatchData {
     private int killedDucks;
     private int flownDucks;
     private int timer;
-    private Map<PowerUpType, Integer> powerUps;
+    private final Map<PowerUpType, Integer> powerUps;
 
     /**
      * 
@@ -35,8 +35,8 @@ public class MatchDataImpl implements MatchData {
     }
 
     private Map<PowerUpType, Integer> initPowerUps() {
-        Map<PowerUpType, Integer> powerUps = new HashMap<PowerUpType, Integer>();
-        for (PowerUpType t : PowerUpType.values()) {
+        final Map<PowerUpType, Integer> powerUps = new HashMap<PowerUpType, Integer>();
+        for (final PowerUpType t : PowerUpType.values()) {
             powerUps.put(t, 0);
         }
         return powerUps;

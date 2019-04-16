@@ -3,7 +3,7 @@ package model.entities;
 import javafx.scene.shape.Shape;
 import model.properties.Position;
 import model.properties.Velocity;
-import model.utilities.ShapeUtility;
+import model.utilities.ShapeUtil;
 
 /**
  * 
@@ -31,12 +31,12 @@ public class AbstractEntity implements Entity {
 
     @Override
     public final Position getPosition() {
-        return ShapeUtility.getPositionbyShape(this.shape);
+        return ShapeUtil.getPositionbyShape(this.shape);
     }
 
     @Override
     public final void setPosition(final Position position) {
-        ShapeUtility.setShapePosition(this.shape, position);
+        ShapeUtil.setShapePosition(this.shape, position);
     }
 
     @Override
@@ -65,6 +65,7 @@ public class AbstractEntity implements Entity {
      * @param timeElapsed
      *          timeElapsed from last update
      */
+    @Override
     public void update(final int timeElapsed) {
         final Velocity velocity = this.getVelocity().mul(MILLISECOND_TO_SECOND * timeElapsed);
         this.setPosition(this.getPosition().sum(velocity));

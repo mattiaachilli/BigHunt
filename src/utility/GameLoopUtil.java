@@ -6,9 +6,9 @@ package utility;
  *
  */
 
-public final class Utilities {
+public final class GameLoopUtil {
 
-    private Utilities() {
+    private GameLoopUtil() {
         super();
     }
 

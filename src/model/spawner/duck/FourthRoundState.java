@@ -35,10 +35,10 @@ public class FourthRoundState extends AbstractDuckState {
     @Override
     public final Duck spawnDuck() {
         super.incDuckSpawned();
-        final DuckDirection direction = SpawnSide.getSpawnSide(); //Init direction
-        int posX = SpawnSide.initPosX(direction);
-        int posY = SpawnSide.getRandomPosY();
-        Velocity velocity = SpawnSide.getVelocity(direction, StandardDuck.VELOCITY);
+        final DuckDirection direction = SpawnSideUtil.getSpawnSide(); //Init direction
+        final int posX = SpawnSideUtil.initPosX(direction);
+        final int posY = SpawnSideUtil.getRandomPosY();
+        Velocity velocity = SpawnSideUtil.getVelocity(direction, StandardDuck.VELOCITY);
         final Shape shape = new Rectangle(posX, posY, StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK);
         Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
         if (super.getDuckSpawned() <= FIRST_WAVE) {
@@ -46,17 +46,17 @@ public class FourthRoundState extends AbstractDuckState {
         } else if (super.getDuckSpawned() > FIRST_WAVE 
                    && 
                    super.getDuckSpawned() <= FIRST_WAVE + SECOND_WAVE) {
-            velocity = SpawnSide.getVelocity(direction, YellowDuck.VELOCITY);
+            velocity = SpawnSideUtil.getVelocity(direction, YellowDuck.VELOCITY);
             standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
             return super.getDuckFactory().createYellowDuck(standardDuck);
         } else if (super.getDuckSpawned() > FIRST_WAVE + SECOND_WAVE 
                    && 
                    super.getDuckSpawned() <= FIRST_WAVE + SECOND_WAVE + THIRD_WAVE) { //Last wave of four ducks
-            velocity = SpawnSide.getVelocity(direction, OrangeDuck.VELOCITY);
+            velocity = SpawnSideUtil.getVelocity(direction, OrangeDuck.VELOCITY);
             standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
             return super.getDuckFactory().createOrangeDuck(standardDuck);
         } else {
-            velocity = SpawnSide.getVelocity(direction, PinkDuck.VELOCITY);
+            velocity = SpawnSideUtil.getVelocity(direction, PinkDuck.VELOCITY);
             standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
             return super.getDuckFactory().createPinkDuck(standardDuck);
         }

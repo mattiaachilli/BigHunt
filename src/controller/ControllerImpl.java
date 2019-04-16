@@ -6,8 +6,8 @@ import java.util.concurrent.Semaphore;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import audio.Sound;
-import controller.converter.EntitiesConverter;
+import audio.SoundUtil;
+import controller.converter.EntitiesConverterUtil;
 import controller.files.PodiumManager;
 import controller.files.PodiumManagerImpl;
 import controller.files.UserManager;
@@ -22,7 +22,7 @@ import model.data.Podium;
 import model.data.UserData;
 import model.matches.GameMode;
 import settings.SettingsImpl;
-import utility.Utilities;
+import utility.GameLoopUtil;
 import view.View;
 import view.entities.ViewEntity;
 
@@ -43,13 +43,13 @@ public final class ControllerImpl implements Controller {
     private GameLoop gameLoop;
     private final Supplier<Model> modelSupplier;
     private Model model;
-    private InputController input;
+    private final InputController input;
     private final Semaphore mutex;
     private final View view;
     private final PodiumManager podiumManager;
     private final UserManager userManager;
-    private Podium storyPodium;
-    private Podium survivalPodium;
+    private final Podium storyPodium;
+    private final Podium survivalPodium;
     private Optional<UserData> user;
     /**
      * Constructor of the controller.
@@ -79,7 +79,7 @@ public final class ControllerImpl implements Controller {
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo(), 
             this.model.getRounds());
         if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-            Sound.GAME_INTRO.play();
+            SoundUtil.GAME_INTRO.play();
         }
     }
 
@@ -115,7 +115,7 @@ public final class ControllerImpl implements Controller {
                         this.input.clearCommands();
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
-                        Sound.GAME_INTRO.stop();
+                        SoundUtil.GAME_INTRO.stop();
                     } else if (this.gameLoop.isAlive()) {
                         this.resumeGameLoop();
                         this.view.resumeRender();
@@ -127,8 +127,8 @@ public final class ControllerImpl implements Controller {
                     break;
                 case SHOOT:
                     if (!this.view.isPaused() && SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                        Sound.SHOOT.stop();
-                        Sound.SHOOT.play();
+                        SoundUtil.SHOOT.stop();
+                        SoundUtil.SHOOT.play();
                     }
                     this.input.setCommand(new Shoot(x, y));
                     break;
@@ -171,7 +171,7 @@ public final class ControllerImpl implements Controller {
     }
 
     private List<Optional<ViewEntity>> getEntitiesForView(final int elapsed) {
-        return this.model.getEntities().stream().map(e -> EntitiesConverter.convertEntity(e, elapsed))
+        return this.model.getEntities().stream().map(e -> EntitiesConverterUtil.convertEntity(e, elapsed))
         .collect(Collectors.toList());
     }
 
@@ -240,13 +240,13 @@ public final class ControllerImpl implements Controller {
                     view.render(getEntitiesForView(elapsed), model.getMatchData(), model.getCurrentMagazine(),
                     model.getInfo(), model.getRounds());
                 }
-                Utilities.waitForNextFrame(PERIOD, current);
+                GameLoopUtil.waitForNextFrame(PERIOD, current);
                 lastTime = current;
             }
             if (model.isGameOver()) {
                 if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                    Sound.GAME_INTRO.stop();
-                    Sound.GAME_CLEAR.play();
+                    SoundUtil.GAME_INTRO.stop();
+                    SoundUtil.GAME_CLEAR.play();
                 }
                 endGame();
             }

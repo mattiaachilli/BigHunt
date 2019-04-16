@@ -5,8 +5,6 @@ import java.util.List;
 
 /**
  * A podium represents the top high scores.
- * 
- * @author simone
  *
  */
 public interface Podium extends Serializable {

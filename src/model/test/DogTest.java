@@ -20,6 +20,8 @@ import model.properties.VelocityImpl;
  *
  */
 public class DogTest {
+    private static final String ERROR_MESSAGE = "Error";
+
     private static final double INIT_POS_X = 0;
     private static final double INIT_POS_Y = ModelImpl.GAME_HEIGHT * 0.85;
     private static final double FINAL_POS_X = ModelImpl.GAME_WIDTH / 2;
@@ -35,10 +37,10 @@ public class DogTest {
      */
     @Test
     public void testDogStart() {
-        assertEquals(INIT_POS_X, dog.getPosition().getX());
-        assertEquals(INIT_POS_Y, dog.getPosition().getY());
-        assertEquals(DogStatus.RIGHT, dog.getDogStatus());
-        assertFalse(dog.isInGrass());
+        assertEquals(INIT_POS_X, dog.getPosition().getX(), ERROR_MESSAGE);
+        assertEquals(INIT_POS_Y, dog.getPosition().getY(), ERROR_MESSAGE);
+        assertEquals(DogStatus.RIGHT, dog.getDogStatus(), ERROR_MESSAGE);
+        assertFalse(ERROR_MESSAGE, dog.isInGrass());
     }
 
     /**
@@ -47,14 +49,14 @@ public class DogTest {
     @Test
     public void testDogMovement() {
         dog.update(UPDATE_MOVEMENT);
-        assertEquals(DogStatus.SNIFF, dog.getDogStatus());
+        assertEquals(DogStatus.SNIFF, dog.getDogStatus(), ERROR_MESSAGE);
         dog.update(UPDATE_MOVEMENT);
-        assertEquals(DogStatus.RIGHT, dog.getDogStatus());
+        assertEquals(DogStatus.RIGHT, dog.getDogStatus(), ERROR_MESSAGE);
         dog.update(UPDATE_MOVEMENT);
-        assertEquals(DogStatus.SNIFF, dog.getDogStatus());
+        assertEquals(DogStatus.SNIFF, dog.getDogStatus(), ERROR_MESSAGE);
         dog.update(UPDATE_MOVEMENT);
-        assertEquals(DogStatus.RIGHT, dog.getDogStatus());
-        assertFalse(dog.isInGrass());
+        assertEquals(DogStatus.RIGHT, dog.getDogStatus(), ERROR_MESSAGE);
+        assertFalse(ERROR_MESSAGE, dog.isInGrass());
     }
 
     /**
@@ -66,9 +68,9 @@ public class DogTest {
             dog.update(UPDATE_GAME_LOOP);
         }
         dog.update(UPDATE_GAME_LOOP);
-        assertEquals(DogStatus.ATTENTION, dog.getDogStatus());
-        assertEquals(dog.getVelocity().getX(), ATTENTION_VELOCITY.getX());
-        assertEquals(dog.getVelocity().getY(), ATTENTION_VELOCITY.getY());
+        assertEquals(DogStatus.ATTENTION, dog.getDogStatus(), ERROR_MESSAGE);
+        assertEquals(dog.getVelocity().getX(), ATTENTION_VELOCITY.getX(), ERROR_MESSAGE);
+        assertEquals(dog.getVelocity().getY(), ATTENTION_VELOCITY.getY(), ERROR_MESSAGE);
     }
 
     /**
@@ -80,7 +82,7 @@ public class DogTest {
         while (dog.getPosition().getY() >= FINAL_POS_Y) {
             dog.update(UPDATE_GAME_LOOP);
         }
-        assertEquals(DogStatus.JUMP, dog.getDogStatus());
+        assertEquals(DogStatus.JUMP, dog.getDogStatus(), ERROR_MESSAGE);
     }
 
     /***
@@ -90,10 +92,10 @@ public class DogTest {
     public void testDogInGrass() {
         this.testDogJump();
         dog.update(UPDATE_GAME_LOOP);
-        assertEquals(DogStatus.IN_GRASS, dog.getDogStatus());
-        assertTrue(dog.isInGrass());
-        assertTrue(dog.getPosition().getX() >= FINAL_POS_X);
-        assertTrue(dog.getPosition().getY() <= FINAL_POS_Y);
+        assertEquals(DogStatus.IN_GRASS, dog.getDogStatus(), ERROR_MESSAGE);
+        assertTrue(ERROR_MESSAGE, dog.isInGrass());
+        assertTrue(ERROR_MESSAGE, dog.getPosition().getX() >= FINAL_POS_X);
+        assertTrue(ERROR_MESSAGE, dog.getPosition().getY() <= FINAL_POS_Y);
     }
 
     /**
@@ -103,7 +105,7 @@ public class DogTest {
     public void testDogLaugh() {
         this.testDogInGrass();
         dog.setDogStatus(DogStatus.LAUGH);
-        assertFalse(dog.isInGrass());
+        assertFalse(ERROR_MESSAGE, dog.isInGrass());
     }
 
     /**
@@ -113,7 +115,7 @@ public class DogTest {
     public void testDogHappy() {
         this.testDogInGrass();
         dog.setDogStatus(DogStatus.HAPPY);
-        assertFalse(dog.isInGrass());
+        assertFalse(ERROR_MESSAGE, dog.isInGrass());
     }
 
     /**
