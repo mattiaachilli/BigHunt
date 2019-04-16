@@ -4,6 +4,7 @@ package view.scenecontroller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import audio.SoundUtil;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -140,6 +141,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
         this.getSceneFactory().getView().getController().resumeGameLoop();
         this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().getView().setCursor();
+        SoundUtil.unpauseAll();
     }
 
     /**

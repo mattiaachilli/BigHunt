@@ -70,8 +70,7 @@ public class Shoot implements Command {
                         final Dog d = (Dog) entity;
                         if (d.getShape().contains(x, y) && !d.isInGrass()) {
                             if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                                SoundUtil.SHOOT.stop();
-                                SoundUtil.DOG.play();
+                                SoundUtil.playSound(SoundUtil.getDogAudio());
                             }
                             hit = true;
                             model.getMatchData().decrementScoreOf(d.getDogNegativeScore());

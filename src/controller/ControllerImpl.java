@@ -79,7 +79,7 @@ public final class ControllerImpl implements Controller {
         this.view.render(getEntitiesForView(0), this.model.getMatchData(), this.model.getCurrentMagazine(), this.model.getInfo(), 
             this.model.getRounds());
         if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-            SoundUtil.GAME_INTRO.play();
+            SoundUtil.playSound(SoundUtil.getGameIntroAudio());
         }
     }
 
@@ -115,8 +115,9 @@ public final class ControllerImpl implements Controller {
                         this.input.clearCommands();
                         this.gameLoop.pauseLoop();
                         this.view.pauseRender();
-                        SoundUtil.GAME_INTRO.stop();
+                        SoundUtil.pauseAllSounds();
                     } else if (this.gameLoop.isAlive()) {
+                        SoundUtil.unpauseAll();
                         this.resumeGameLoop();
                         this.view.resumeRender();
                         this.view.setCursor();
@@ -127,8 +128,7 @@ public final class ControllerImpl implements Controller {
                     break;
                 case SHOOT:
                     if (!this.view.isPaused() && SettingsImpl.getSettings().isBackgroundAudioOn() && this.model.canShoot()) {
-                        SoundUtil.SHOOT.stop();
-                        SoundUtil.SHOOT.play();
+                        SoundUtil.playSound(SoundUtil.getShootAudio());
                     }
                     this.input.setCommand(new Shoot(x, y));
                     break;
@@ -245,8 +245,8 @@ public final class ControllerImpl implements Controller {
             }
             if (model.isGameOver()) {
                 if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                    SoundUtil.GAME_INTRO.stop();
-                    SoundUtil.GAME_CLEAR.play();
+                    SoundUtil.clearAudio();
+                    SoundUtil.playSound(SoundUtil.getGameClearAudio());
                 }
                 endGame();
             }

@@ -87,7 +87,7 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     public final void kill() {
         super.kill();
         if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-            SoundUtil.DUCK_DEAD.play();
+            SoundUtil.playSound(SoundUtil.getDuckDeadAudio());
         }
         EntityUtil.setNewPosition(this, false, DuckDirection.KILLED);
         if (this.hasPowerUp()) {

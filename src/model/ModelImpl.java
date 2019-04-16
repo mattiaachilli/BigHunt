@@ -118,7 +118,7 @@ public final class ModelImpl implements Model {
                 if (duckSpawn.isPresent()) {
                     this.ducks.add(duckSpawn.get());
                     if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                        SoundUtil.DUCK_CALL.play();
+                        SoundUtil.playSound(SoundUtil.getDuckCall());
                     }
                     if (duckSpawn.get().hasPowerUp()) {
                         this.powerUp.add(duckSpawn.get().getPowerUp().get());
@@ -152,14 +152,13 @@ public final class ModelImpl implements Model {
             }
             if (d.getStatus() == EntityStatus.FLOWN_AWAY && d.getPosition().getY() <= 0) {
                 if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                    SoundUtil.DOG_LAUGH.play();
+                    SoundUtil.playSound(SoundUtil.getDogLaughAudio());
                 }
                 this.match.getMatchData().incrementFlownDucks();
             } else if (d.getStatus() == EntityStatus.DEAD && d.getPosition().getY() >= DogImpl.FINAL_POS_Y) {
                 this.dog.setLastDuckKilled(d);
                 if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                    SoundUtil.CAPTURED_DUCK.stop();
-                    SoundUtil.CAPTURED_DUCK.play();
+                    SoundUtil.playSound(SoundUtil.getCaptureDuckAudio());
                 }
             }
         });
@@ -178,14 +177,17 @@ public final class ModelImpl implements Model {
     private void updateRoundNumber() {
         //Only for STORY MODE
         if (this.gameMode == GameMode.STORY_MODE && this.ducks.isEmpty() && this.spawner.getActualRound() != this.currentRound) {
-                this.dog = new DogImpl();
-                this.ducks.clear();
-                this.powerUp.clear();
-                this.match.incrementRound();
-                this.currentRound = this.match.getCurrentRound();
-                this.match.startRound();
-                this.duckPowerUp = 0;
-                this.endPowerUp();
+            this.dog = new DogImpl();
+            this.ducks.clear();
+            this.powerUp.clear();
+            this.match.incrementRound();
+            this.currentRound = this.match.getCurrentRound();
+            this.match.startRound();
+            this.duckPowerUp = 0;
+            this.endPowerUp();
+            if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                SoundUtil.playSound(SoundUtil.getGameIntroAudio());
+            }
         }
     }
 
