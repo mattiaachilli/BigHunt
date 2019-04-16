@@ -1,7 +1,6 @@
 package model.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -32,7 +31,6 @@ public class MatchDataTest {
     public final void testRounds() {
         assertEquals(this.survivalMatch.getCurrentRound(), 1);
         assertEquals(this.storyMatch.getCurrentRound(), 1);
-        this.storyMatch.incrementRound();
         for (int i = 0; i < 3; i++) {
             this.survivalMatch.incrementRound();
             this.storyMatch.incrementRound();
@@ -68,6 +66,15 @@ public class MatchDataTest {
         assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
     }
 
+    /**
+     * Tests the unmodifiable copies of match datas.
+     */
+    @Test
+    public final void testUnmodifiableData() {
+        final MatchData unmodifiable = this.storyMatch.getMatchData().unmodifiableCopy();
+        this.testUnsupported(() -> unmodifiable.incrementScoreOf(FIVE));
+    }
+
     private void testUnsupported(final Runnable runnable) {
         try {
             runnable.run();
@@ -79,13 +86,5 @@ public class MatchDataTest {
         }
     }
 
-    /**
-     * Tests the unmodifiable copies of match datas.
-     */
-    @Test
-    public final void testUnmodifiableData() {
-        final MatchData unmodifiable = this.storyMatch.getMatchData().unmodifiableCopy();
-        this.testUnsupported(() -> unmodifiable.incrementScoreOf(FIVE));
-    }
 
 }
