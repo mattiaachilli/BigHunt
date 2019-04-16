@@ -126,7 +126,7 @@ public final class ControllerImpl implements Controller {
                     this.input.setCommand(new Recharge());
                     break;
                 case SHOOT:
-                    if (!this.view.isPaused() && SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                    if (!this.view.isPaused() && SettingsImpl.getSettings().isBackgroundAudioOn() && this.model.canShoot()) {
                         SoundUtil.SHOOT.stop();
                         SoundUtil.SHOOT.play();
                     }
