@@ -1,6 +1,5 @@
 package view.sceneloader;
 
-import java.awt.Button;
 import java.util.Optional;
 
 import controller.input.CommandType;
@@ -8,10 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.matches.GameMode;
 import settings.SettingsImpl;
@@ -62,7 +62,7 @@ public class SceneLoaderImpl implements SceneLoader {
             SettingsImpl.getSettings().getSelectedResolution().getValue());
 
             root.getChildrenUnmodifiable().stream().forEach(e -> {
-                if ((screen == Screens.GAME && e instanceof Label) || screen != Screens.GAME) {
+                if ((screen == Screens.GAME && (e instanceof Label || e instanceof VBox)) || screen != Screens.GAME) {
                     e.setScaleX(SettingsImpl.getSettings().getScaleFactor());
                     e.setScaleY(SettingsImpl.getSettings().getScaleFactor());
                 }
@@ -96,6 +96,7 @@ public class SceneLoaderImpl implements SceneLoader {
             case GAME:
                 this.addEventHandlers(stage);
                 if (!this.view.isPaused()) {
+                    this.drawBackground((GameSceneController) controller);
                     this.view.startGame((GameSceneController) controller, gameMode);
                 }
                 break;
@@ -145,5 +146,15 @@ public class SceneLoaderImpl implements SceneLoader {
             }
             commandType.ifPresent(command -> this.view.getController().notifyCommand(command, e.getX(), e.getY()));
         });
+    }
+
+    private void drawBackground(final GameSceneController controller) {
+        final ImageView backgroundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/backgrounds/gameBackground.png"),
+                                                        SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                                        SettingsImpl.getSettings().getSelectedResolution().getValue(), false, false));
+        controller.getCanvas().getGraphicsContext2D().drawImage(backgroundImage.getImage(), 0, 0,
+                                                        SettingsImpl.getSettings().getSelectedResolution().getKey(),
+                                                        SettingsImpl.getSettings().getSelectedResolution().getValue());
+        backgroundImage.setPreserveRatio(true);
     }
 }

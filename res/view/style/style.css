@@ -75,10 +75,6 @@ Label{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }
 
-#game{
-    -fx-background-image: url("../backgrounds/gameBackground.png");
-}
-
 #login{
     -fx-background-image: url("../backgrounds/instructionsBackground.png");
 }

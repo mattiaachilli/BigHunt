@@ -3,7 +3,6 @@ package settings.observers;
 
 
 import javafx.scene.control.CheckBox;
-import settings.Settings;
 import settings.SettingsAudio;
 import settings.SettingsImpl;
 

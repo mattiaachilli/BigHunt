@@ -158,6 +158,10 @@ public final class ModelImpl implements Model {
                 this.match.getMatchData().incrementFlownDucks();
             } else if (d.getStatus() == EntityStatus.DEAD && d.getPosition().getY() >= DogImpl.FINAL_POS_Y) {
                 this.dog.setLastDuckKilled(d);
+                if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                    Sound.CAPTURED_DUCK.stop();
+                    Sound.CAPTURED_DUCK.play();
+                }
             }
         });
         // Update PowerUp list

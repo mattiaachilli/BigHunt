@@ -44,23 +44,26 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
     private View view;
 
     @Override
-    public void setView(final View view) {
+    public final void setView(final View view) {
         this.view = view;
     }
 
     @FXML
+    final
     void quitGame() {
         Runtime.getRuntime().exit(0);
     }
 
     @FXML
+    final
     void goToLogin() {
         this.getSceneFactory().openLoginScene();
     }
 
     @FXML
+    final
     void registerBtn() {
-        if(this.pwdTextField.getText().isEmpty() || this.userTextField.getText().isEmpty()) {
+        if (this.pwdTextField.getText().isEmpty() || this.userTextField.getText().isEmpty()) {
             this.showAlert("COMPILARE TUTTI I CAMPI");
         } else if (this.view.getController().registerUser(this.userTextField.getText(), this.pwdTextField.getText())) {
             this.getSceneFactory().openMenuScene();
@@ -81,6 +84,7 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
+    final
     void initialize() {
         assert userTextField != null : "fx:id=\"userTextField\" was not injected: check your FXML file 'Register.fxml'.";
         assert settingsApplyBtn != null : "fx:id=\"settingsApplyBtn\" was not injected: check your FXML file 'Register.fxml'.";
