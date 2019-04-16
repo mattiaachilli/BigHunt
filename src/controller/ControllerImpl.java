@@ -71,7 +71,7 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public void initGame(final GameMode gameMode) {
+    public void initModel(final GameMode gameMode) {
         this.model = this.modelSupplier.get();
         this.model.initGame(gameMode);
         this.input.clearCommands();
