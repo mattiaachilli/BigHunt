@@ -44,21 +44,24 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
     private View view;
 
     @Override
-    public void setView(final View view) {
+    public final void setView(final View view) {
         this.view = view;
     }
 
     @FXML
+    final
     void quitGame() {
         Runtime.getRuntime().exit(0);
     }
 
     @FXML
+    final
     void openRegister() {
         this.getSceneFactory().openRegisterScene();
     }
 
     @FXML
+    final
     void login() {
         if (this.userTextField.getText().isEmpty() || this.passwordTextField.getText().isEmpty()) {
             this.showAlert("COMPILARE CAMPI USER E PASSWORD");
@@ -81,6 +84,7 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
+    final
     void initialize() {
         assert userTextField != null : "fx:id=\"userTextField\" was not injected: check your FXML file 'Login.fxml'.";
         assert settingsApplyBtn != null : "fx:id=\"settingsApplyBtn\" was not injected: check your FXML file 'Login.fxml'.";

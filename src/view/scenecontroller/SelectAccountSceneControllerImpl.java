@@ -2,18 +2,20 @@ package view.scenecontroller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
-import settings.SettingsImpl;
 
 /**
- * 
- * Sample Skeleton for 'SelecAccount.fxml' Controller Class
+ *
+ * Sample Skeleton for 'SelecAccount.fxml' Controller Class.
  *
  */
 public class SelectAccountSceneControllerImpl extends AbstractSceneController {
-    
+
+    private static final int FONT_SIZE = 26;
+
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -27,24 +29,28 @@ public class SelectAccountSceneControllerImpl extends AbstractSceneController {
     private Button exitBtn; // Value injected by FXMLLoader
 
     @FXML
+    final
     void goToLogin() {
         this.getSceneFactory().openLoginScene();
     }
 
     @FXML
+    final
     void goToRegister() {
         this.getSceneFactory().openRegisterScene();
     }
 
     @FXML
+    final
     void quitGame() {
         Runtime.getRuntime().exit(0);
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
+    final
     void initialize() {
         assert loginBtn != null : "fx:id=\"loginBtn\" was not injected: check your FXML file 'SelectAccount.fxml'.";
         assert exitBtn != null : "fx:id=\"exitBtn\" was not injected: check your FXML file 'SelectAccount.fxml'.";
-        this.exitBtn.setFont(new Font(26));
+        this.exitBtn.setFont(new Font(FONT_SIZE));
     }
 }

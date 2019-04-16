@@ -44,6 +44,13 @@ public class BackGroundAudioObserver implements Observer {
         this.bgAudioCheckbox.selectedProperty().addListener(e -> {
             this.bgAudioCheckbox.setText(this.bgAudioCheckbox.isSelected() ? SettingsAudio.AUDIO_ON.getText() : SettingsAudio.AUDIO_OFF.getText());
         });
+        this.bgAudioCheckbox.selectedProperty().addListener(e -> {
+            if (this.bgAudioCheckbox.isSelected()) {
+                SettingsImpl.getSettings().setBackgroundAudio(true);
+            } else {
+                SettingsImpl.getSettings().setBackgroundAudio(false);
+            }
+        });
     }
 
 }

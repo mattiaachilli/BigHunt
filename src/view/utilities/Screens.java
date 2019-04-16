@@ -63,8 +63,8 @@ public enum Screens {
 
     /**
      * Provides the scenes Path.
-     * @return
-     *          the selected game scene path
+     * 
+     * @return the selected game scene path
      */
     public String getPath() {
         return Screens.PATH + this.selecedSceneName;
