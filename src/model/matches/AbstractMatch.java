@@ -140,4 +140,12 @@ public abstract class AbstractMatch {
      */
     public abstract boolean isMatchOver(); 
 
+    /**
+     * Global method for game over.
+     * @return true if the game is over
+     */
+    public boolean isGameOver() {
+        return this.isRoundEnded() && this.isMatchOver();
+    }
+
 }

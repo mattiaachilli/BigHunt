@@ -115,17 +115,14 @@ public class SceneFactoryImpl implements SceneFactory {
 
     private void openNewScene(final Screens screen) {
         this.checkFullScreen();
-        // new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
         this.sceneLoader.loadScene(this.stage, screen, this.gameMode);
         this.fakeStage.close();
     }
 
     private void checkFullScreen() {
-        if (SettingsImpl.getSettings().isFullScreen()) {
+        if (SettingsImpl.getSettings().isFullScreen() && this.stage.getStyle().equals(StageStyle.DECORATED)) {
             this.createNewStage();
-            if (this.stage.getStyle().equals(StageStyle.DECORATED)) {
-                this.stage.initStyle(StageStyle.UNDECORATED);
-            }
+            this.stage.initStyle(StageStyle.UNDECORATED);
             this.stage.setMaximized(true);
         } else if (!SettingsImpl.getSettings().isFullScreen() && this.stage.getStyle().equals(StageStyle.UNDECORATED)) {
             this.createNewStage();
