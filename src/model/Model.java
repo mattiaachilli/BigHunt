@@ -67,7 +67,7 @@ public interface Model {
 
     /**
      * 
-     * @return a map containing magazine and bullets.
+     * @return the number of bullets remaining in the current magazine.
      */
     int getBullets();
 
