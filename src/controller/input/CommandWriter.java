@@ -18,9 +18,4 @@ public interface CommandWriter {
      */
     void clearCommands();
 
-    /**
-     * Remove all commands in queue.
-     */
-    void removeAll();
-
 }

@@ -15,7 +15,7 @@ public final class Sound {
     }
 
     /**
-     * All the audio clips.
+     * Sound made when the dog captures a dead duck.
      */
     public static final AudioClip CAPTURED_DUCK = Applet.newAudioClip(Sound.class.getResource("/sounds/capturedDuck.wav"));
     /**
