@@ -14,11 +14,10 @@ public interface SceneController {
      *          reference to scene factory
      */
     void setSceneFactory(SceneFactory sceneFactory);
-    
+
     /**
      * 
-     * @return  
-     *          factory used to change scenes
+     * @return factory used to change scenes.
      */
     SceneFactory getSceneFactory();
 }

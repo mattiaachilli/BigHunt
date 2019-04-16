@@ -115,7 +115,6 @@ public class SceneFactoryImpl implements SceneFactory {
 
     private void openNewScene(final Screens screen) {
         this.checkFullScreen();
-        // new SceneLoaderImpl(this.view).loadScene(this.stage, screen, this.gameMode);
         this.sceneLoader.loadScene(this.stage, screen, this.gameMode);
         this.fakeStage.close();
     }

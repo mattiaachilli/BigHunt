@@ -12,12 +12,12 @@ public class Recharge implements Command {
     private final CommandType type = CommandType.RECHARGE;
 
     @Override
-    public void execute(final Model model) {
+    public final void execute(final Model model) {
         model.recharge();
     }
 
     @Override
-    public CommandType getType() {
+    public final CommandType getType() {
         return this.type;
     }
 

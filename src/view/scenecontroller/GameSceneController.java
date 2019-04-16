@@ -18,7 +18,22 @@ public interface GameSceneController {
      */
     Canvas getCanvas();
 
+    /**
+     * 
+     * @param gameData
+     *          Data of the game.
+     * @param magazine
+     *          Current magazine.
+     * @param infoLimit
+     *          Info about rounds.
+     */
     void setGameData(MatchData gameData, Magazine magazine, int infoLimit);
-    
+
+    /**
+     * Set pause panel visibility.
+     * 
+     * @param isVisible
+     *          true if is visible.
+     */
     void setPausePanelVisibility(boolean isVisible);
 }

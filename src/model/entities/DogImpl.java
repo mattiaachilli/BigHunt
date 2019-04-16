@@ -2,12 +2,14 @@ package model.entities;
 
 import java.util.Optional;
 
+import audio.Sound;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import model.ModelImpl;
 import model.properties.PositionImpl;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
+import settings.SettingsImpl;
 /**
  * 
  * This class represents the dog, animation etc..

@@ -243,7 +243,7 @@ public class ViewImpl implements View {
 
         @Override
         public final void run() {
-                controller.initGame(gameMode);
+                controller.initModel(gameMode);
                 controller.initGameLoop();
                 controller.startGameLoop();
 

@@ -1,5 +1,6 @@
 package controller.input;
 
+import audio.Sound;
 import model.Model;
 import model.ModelImpl;
 import model.entities.Dog;
@@ -8,6 +9,7 @@ import model.entities.Entity;
 import model.entities.EntityStatus;
 import model.entities.powerup.PowerUp;
 import model.entities.powerup.PowerUpType;
+import settings.SettingsImpl;
 
 /**
  * 
@@ -67,6 +69,10 @@ public class Shoot implements Command {
                     } else if (entity instanceof Dog) {
                         final Dog d = (Dog) entity;
                         if (d.getShape().contains(x, y) && !d.isInGrass()) {
+                            if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                                Sound.SHOOT.stop();
+                                Sound.DOG.play();
+                            }
                             hit = true;
                             model.getMatchData().decrementScoreOf(d.getDogNegativeScore());
                         }
