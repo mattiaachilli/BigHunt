@@ -18,7 +18,7 @@ public interface Controller {
      * 
      * @param gameMode the game mode selected to play
      */
-    void initGame(GameMode gameMode);
+    void initModel(GameMode gameMode);
 
     /**
      * Init the game loop.

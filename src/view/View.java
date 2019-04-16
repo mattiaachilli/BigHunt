@@ -79,7 +79,7 @@ public interface View {
 
     /**
      * 
-     * @return .
+     * @return the scene factory.
      */
     SceneFactory getSceneFactory();
 
