@@ -1,11 +1,7 @@
 package settings;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -30,12 +26,12 @@ public final class SettingsImpl implements Settings {
     private final Pair<Integer, Integer> selectedResolution = new ImmutablePair<>(
         SettingsImpl.SCREEN_RESOLUTION.getKey(), SettingsImpl.SCREEN_RESOLUTION.getValue());
 
-    private static final int DEFAULT_FPS = 60;
-
+    private static final SettingsFPS DEFAULT_FPS = SettingsFPS.HIGH;
+/*
     private final Set<Integer> supportedFPS = new TreeSet<>(Arrays.asList(20, 30, 60, GraphicsEnvironment
         .getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate()));
-
-    private int selectedFPS = DEFAULT_FPS;
+*/
+    private SettingsFPS selectedFPS = DEFAULT_FPS;
 
     private static final GlobalDifficulty DEFAULT_DIFFICULTY = GlobalDifficulty.MEDIUM;
     private GlobalDifficulty selectedDifficulty = DEFAULT_DIFFICULTY;
@@ -63,12 +59,25 @@ public final class SettingsImpl implements Settings {
     }
 
     @Override
-    public void setSelectedFPS(final int selectedFPS) {
-        this.selectedFPS = selectedFPS;
+    public void setSelectedFPS(final String selectedFPS) {
+        switch (selectedFPS) {
+            case "20":
+                this.selectedFPS = SettingsFPS.LOW;
+                break;
+            case "30":
+                this.selectedFPS = SettingsFPS.MEDIUM;
+                break;
+            case "60":
+                this.selectedFPS = SettingsFPS.HIGH;
+                break;
+            default:
+                    this.selectedFPS = DEFAULT_FPS;
+                break;
+            }
     }
 
     @Override
-    public int getSelectedFPS() {
+    public SettingsFPS getSelectedFPS() {
         return this.selectedFPS;
     }
 
@@ -77,12 +86,12 @@ public final class SettingsImpl implements Settings {
         return Math.min((double) this.selectedResolution.getValue() / SettingsImpl.PREF_Y_RESOLUTION,
             (double) this.selectedResolution.getKey() / SettingsImpl.PREF_X_RESOLUTION);
     }
-
+/*
     @Override
     public Set<Integer> getSupportedFPS() {
         return this.supportedFPS;
     }
-
+*/
     @Override
     public void setFullScreen(final boolean fullScreen) {
         this.fullScreen = fullScreen;
@@ -127,7 +136,7 @@ public final class SettingsImpl implements Settings {
     }
 
     @Override
-    public Pair<Integer, Integer> getDefaultResolutions() {
+    public Pair<Integer, Integer> getDefaultResolution() {
         return SettingsImpl.DEFAULT_RESOLUTION;
     }
 
