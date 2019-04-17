@@ -1,8 +1,6 @@
 package settings;
 
 
-import java.util.Set;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
@@ -11,52 +9,40 @@ import org.apache.commons.lang3.tuple.Pair;
  *
  */
 public interface Settings {
-
+    /**
+    *
+    * @return
+    *          default screen resolution.
+    */
+   Pair<Integer, Integer> getDefaultResolution();
     /**
      *
      * @return the current game resolution
      */
     Pair<Integer, Integer> getSelectedResolution();
-
     /**
      * Set the game FPS.
      *
      * @param selectedFPS
      *          the selected FPS
      */
-    void setSelectedFPS(int selectedFPS);
-
+    void setSelectedFPS(String selectedFPS);
     /**
      *
      * @return the current FPS
      */
-    int getSelectedFPS();
-
+    SettingsFPS getSelectedFPS();
     /**
      * Provides the factor by which coordinates are scaled about the center of the object.
      *
      * @return the scale factor
      */
     double getScaleFactor();
-
-    /**
-     *
-     * @return a Set of default FPS
-     */
-    Set<Integer> getSupportedFPS();
-
-    /**
-     *
-     * @return
-     *          default screen resolution.
-     */
-    Pair<Integer, Integer> getDefaultResolutions();
     /**
      *
      * @return true if fullScreenMode is enable, false otherwise
      */
     boolean isFullScreen();
-
     /**
      * Change the resolution to Full Screen.
      *
@@ -64,13 +50,11 @@ public interface Settings {
      *          is true if is full screen active, false otherwise
      */
     void setFullScreen(boolean fullScreen);
-
     /**
      *
      * @return true if the background audio is on, false otherwise
      */
     boolean isBackgroundAudioOn();
-
     /**
      * Change the background audio to status on to off.
      *
@@ -78,7 +62,6 @@ public interface Settings {
      *          is true if background audio is active, false otherwise
      */
     void setBackgroundAudio(boolean backgroundAudio);
-
     /**
      *
      * @param difficulty
