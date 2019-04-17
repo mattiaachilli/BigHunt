@@ -2,7 +2,6 @@ package model.data;
 
 /**
  * The serializable implementation of an high score.
- * @author simone
  */
 public class HighScoreImpl implements HighScore {
 
@@ -10,8 +9,8 @@ public class HighScoreImpl implements HighScore {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private String name;
-    private int score;
+    private final String name;
+    private final int score;
 
     /**
      * Constructor of an high score.

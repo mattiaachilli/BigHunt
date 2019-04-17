@@ -9,7 +9,7 @@ public class MagazineImpl implements Magazine {
 
     private static final int MAX_AMMO = 8;
 
-    private int magNumber;
+    private final int magNumber;
     private int ammo;
     private BulletType bulletType;
 

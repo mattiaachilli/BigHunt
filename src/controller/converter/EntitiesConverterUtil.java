@@ -14,10 +14,10 @@ import view.entities.ViewEntityImpl;
  * This class converts entities from model for the view, give Image, Position, Shape.
  *
  */
-public final class EntitiesConverter {
+public final class EntitiesConverterUtil {
     private static EntityImageType e = new EntityImageTypeImpl();;
 
-    private EntitiesConverter() {
+    private EntitiesConverterUtil() {
     }
 
     /**
@@ -31,7 +31,7 @@ public final class EntitiesConverter {
      */
     public static Optional<ViewEntity> convertEntity(final Entity entity, final int elapsed) {
         e.updateEntity(entity, elapsed);
-        Optional<Image> image = e.getImageType(entity);
+        final Optional<Image> image = e.getImageType(entity);
         return image.isPresent() ? Optional.of(new ViewEntityImpl(entity.getShape(), image.get())) : Optional.empty();
     }
 }

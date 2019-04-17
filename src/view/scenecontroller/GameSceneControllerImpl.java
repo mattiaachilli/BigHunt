@@ -4,6 +4,7 @@ package view.scenecontroller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import audio.SoundUtil;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -67,8 +68,11 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     @FXML // fx:id="pause"
     private BorderPane pause; // Value injected by FXMLLoader
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    final void initialize() {
+    /**
+     * Initialize.
+     */
+    @FXML
+    protected final void initialize() {
         assert infoLabel != null : "fx:id=\"scoreLabel\" was not injected: check your FXML file 'Game.fxml'.";
         assert game != null : "fx:id=\"game\" was not injected: check your FXML file 'Game.fxml'.";
         assert scoreGameLabel != null : "fx:id=\"mainLable\" was not injected: check your FXML file 'Game.fxml'.";
@@ -95,18 +99,17 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
         this.ammoLabel.setTextFill(Color.BLACK);
         if (this.getSceneFactory().getView().getActualGameMode() == GameMode.STORY_MODE) {
             this.infoLabel.setText(STORY);
-            this.scoreGameLabel.setText(String.valueOf(gameData.getGlobalScore()) + "/" + info);
+            this.scoreGameLabel.setText(gameData.getGlobalScore() + "/" + info);
             if (gameData.getGlobalScore() < info) {
                 this.scoreGameLabel.setTextFill(Color.RED);
             } else {
                 this.scoreGameLabel.setTextFill(Color.LIME);
             }
-            this.ammoLabel.setText(String.valueOf(magazine.getAmmo())
-                        + "(" + magazine.getNumber() + ")" + "/" + StoryMatch.MAX_MAGAZINES);
+            this.ammoLabel.setText(magazine.getAmmo() + "(" + magazine.getNumber() + ")" + "/" + StoryMatch.MAX_MAGAZINES);
         } else {
             if (!lastLabel) {
                 this.infoLabel.setText(SURVIVAL);
-                this.scoreGameLabel.setText(String.valueOf(gameData.getFlownDucks()) + "/" + info);
+                this.scoreGameLabel.setText(gameData.getFlownDucks() + "/" + info);
                 if ((System.currentTimeMillis() - time) >= UPDATE_TIME) {
                     time = System.currentTimeMillis();
                     this.lastLabel = true;
@@ -119,7 +122,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
                     this.lastLabel = false;
                 }
             }
-            this.ammoLabel.setText(String.valueOf(magazine.getAmmo()) + "(" + magazine.getNumber() + ")");
+            this.ammoLabel.setText(magazine.getAmmo() + "(" + magazine.getNumber() + ")");
             this.scoreGameLabel.setTextFill(Color.BLACK);
         }
         if (magazine.getAmmo() == 0) {
@@ -130,15 +133,22 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
         }
     }
 
+    /**
+     * Resume the game.
+     */
     @FXML
-    final void resumeGame() {
+    protected final void resumeGame() {
         this.getSceneFactory().getView().getController().resumeGameLoop();
         this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().getView().setCursor();
+        SoundUtil.unpauseAll();
     }
 
+    /**
+     * Back to main menu.
+     */
     @FXML
-    final void backToMenu() {
+    protected final void backToMenu() {
         this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().getView().getController().stopGameLoop();
         this.getSceneFactory().getView().closeGame(this.getSceneFactory().getView().getMatchData(), false);

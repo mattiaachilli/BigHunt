@@ -11,9 +11,9 @@ import model.properties.PositionImpl;
  * 
  * Utilities for shapes.
  */
-public final class ShapeUtility {
+public final class ShapeUtil {
 
-    private ShapeUtility() {
+    private ShapeUtil() {
         super();
     }
     /**

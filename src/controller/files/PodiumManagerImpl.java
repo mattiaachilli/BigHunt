@@ -26,22 +26,22 @@ public class PodiumManagerImpl implements PodiumManager {
 
     @Override
     public final Optional<Podium> loadStoryPodium() {
-        return this.load(FilesHomeManager.STORY_SCORES);
+        return this.load(FilesHomeManagerUtils.STORY_SCORES);
     }
 
     @Override
     public final Optional<Podium> loadSurvivalPodium() {
-        return this.load(FilesHomeManager.SURVIVAL_SCORES);
+        return this.load(FilesHomeManagerUtils.SURVIVAL_SCORES);
     }
 
     @Override
     public final boolean saveStoryHighScores(final Podium podium) {
-        return this.save(podium, FilesHomeManager.STORY_SCORES);
+        return this.save(podium, FilesHomeManagerUtils.STORY_SCORES);
     }
 
     @Override
     public final boolean saveSurvivalHighScores(final Podium podium) {
-        return this.save(podium, FilesHomeManager.SURVIVAL_SCORES);
+        return this.save(podium, FilesHomeManagerUtils.SURVIVAL_SCORES);
     }
 
     private Optional<Podium> load(final String path) {

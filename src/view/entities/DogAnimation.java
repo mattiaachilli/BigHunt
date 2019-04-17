@@ -21,6 +21,7 @@ import model.entities.StandardDuck;
  */
 public class DogAnimation implements EntityImageAnimation {
 
+    private static final int UPDATE_IMAGE = 250;
     private int index;
     private int elapsed;
     private Dog dog;
@@ -56,8 +57,8 @@ public class DogAnimation implements EntityImageAnimation {
 
 
     private void updateIndex() {
-        if (this.elapsed >= EntityImageTypeImpl.UPDATE_IMAGE) {
-            this.elapsed -= EntityImageTypeImpl.UPDATE_IMAGE;
+        if (this.elapsed >= UPDATE_IMAGE) {
+            this.elapsed -= UPDATE_IMAGE;
             this.index++;
         }
     }

@@ -42,11 +42,13 @@ public interface Dog extends Character {
 
     /**
      * Get last duck killed if exist.
+     * 
      * @return last duck killed.
      */
     Optional<Duck> getLastDuckKilled();
 
     /**
+     * Get negative score when hit dog.
      * 
      * @return the negative score for hitting the dog.
      */

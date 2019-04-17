@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import audio.Sound;
+import audio.SoundUtil;
 import model.cleaner.Cleaner;
 import model.cleaner.CleanerImpl;
 import model.data.MatchData;
@@ -62,8 +62,7 @@ public final class ModelImpl implements Model {
     private AbstractMatch match;
     private DuckSpawner spawner;
     private GameMode gameMode;
-    private GlobalDifficulty difficulty;
-    private Cleaner cleaner;
+    private final Cleaner cleaner;
     private int duckPowerUp;
     private Optional<PowerUpType> powerUpActive;
     private int currentRound;
@@ -80,8 +79,8 @@ public final class ModelImpl implements Model {
     }
 
     @Override
-    public void initGame(final GameMode gameMode) {
-        this.difficulty = SettingsImpl.getSettings().getSelectedDifficulty();
+    public void initGame(final GameMode gameMode) { 
+        final GlobalDifficulty difficulty = SettingsImpl.getSettings().getSelectedDifficulty();
         this.gameMode = gameMode;
         this.dog = new DogImpl();
         ducks.clear();
@@ -91,11 +90,11 @@ public final class ModelImpl implements Model {
         this.powerUpActive = Optional.empty();
         switch (gameMode) {
             case STORY_MODE:
-                this.match = new StoryMatch(this.difficulty);
+                this.match = new StoryMatch(difficulty);
                 this.spawner = new StoryModeSpawner();
                 break;
             case SURVIVAL_MODE:
-                this.match = new SurvivalMatch(this.difficulty);
+                this.match = new SurvivalMatch(difficulty);
                 this.spawner = new SurvivalModeSpawner();
                 break;
             default:
@@ -119,7 +118,7 @@ public final class ModelImpl implements Model {
                 if (duckSpawn.isPresent()) {
                     this.ducks.add(duckSpawn.get());
                     if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                        Sound.DUCK_CALL.play();
+                        SoundUtil.playSound(SoundUtil.getDuckCall());
                     }
                     if (duckSpawn.get().hasPowerUp()) {
                         this.powerUp.add(duckSpawn.get().getPowerUp().get());
@@ -153,14 +152,13 @@ public final class ModelImpl implements Model {
             }
             if (d.getStatus() == EntityStatus.FLOWN_AWAY && d.getPosition().getY() <= 0) {
                 if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                    Sound.DOG_LAUGH.play();
+                    SoundUtil.playSound(SoundUtil.getDogLaughAudio());
                 }
                 this.match.getMatchData().incrementFlownDucks();
             } else if (d.getStatus() == EntityStatus.DEAD && d.getPosition().getY() >= DogImpl.FINAL_POS_Y) {
                 this.dog.setLastDuckKilled(d);
                 if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                    Sound.CAPTURED_DUCK.stop();
-                    Sound.CAPTURED_DUCK.play();
+                    SoundUtil.playSound(SoundUtil.getCaptureDuckAudio());
                 }
             }
         });
@@ -178,16 +176,17 @@ public final class ModelImpl implements Model {
 
     private void updateRoundNumber() {
         //Only for STORY MODE
-        if (this.gameMode == GameMode.STORY_MODE && this.ducks.isEmpty()) {
-            if (this.spawner.getActualRound() != this.currentRound) {
-                this.dog = new DogImpl();
-                this.ducks.clear();
-                this.powerUp.clear();
-                this.match.incrementRound();
-                this.currentRound = this.match.getCurrentRound();
-                this.match.startRound();
-                this.duckPowerUp = 0;
-                this.endPowerUp();
+        if (this.gameMode == GameMode.STORY_MODE && this.ducks.isEmpty() && this.spawner.getActualRound() != this.currentRound) {
+            this.dog = new DogImpl();
+            this.ducks.clear();
+            this.powerUp.clear();
+            this.match.incrementRound();
+            this.currentRound = this.match.getCurrentRound();
+            this.match.startRound();
+            this.duckPowerUp = 0;
+            this.endPowerUp();
+            if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                SoundUtil.playSound(SoundUtil.getGameIntroAudio());
             }
         }
     }

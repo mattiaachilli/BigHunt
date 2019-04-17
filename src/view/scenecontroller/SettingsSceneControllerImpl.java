@@ -43,21 +43,30 @@ public class SettingsSceneControllerImpl extends AbstractSecondarySceneControlle
 
     private final List<Observer> observers = new ArrayList<>();
 
+    /**
+     * Apply changes.
+     */
     @FXML
-    private void applyChanges() {
+    protected void applyChanges() {
         this.observers.forEach(observer -> observer.update());
         this.getSceneFactory().openSettingsScene();
     }
 
+    /**
+     * Initialize.
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    private void initialize() {
+    protected void initialize() {
         this.observers.addAll(Arrays.asList(new FpsObserver(this.fpsComboBox),
         new BackGroundAudioObserver(this.bgAudioCheckBox), new GameDifficultyObserver(this.difficultyComboBox)));
         this.settingsApplyBtn.setDisable(true);
     }
 
+    /**
+     * Enable Apply Button.
+     */
     @FXML
-    private void enableApplyBtn() {
+    protected void enableApplyBtn() {
         this.settingsApplyBtn.setDisable(false);
     }
 }

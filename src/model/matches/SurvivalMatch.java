@@ -6,8 +6,6 @@ import settings.GlobalDifficulty;
 
 /**
  * A survival match with continuous spawning ducks.
- * 
- * @author simone
  *
  */
 public class SurvivalMatch extends AbstractMatch {
@@ -15,7 +13,7 @@ public class SurvivalMatch extends AbstractMatch {
     private static final GameMode GAME_MODE = GameMode.SURVIVAL_MODE;
     private static final MaxOfRounds MAX_OF_ROUNDS = MaxOfRounds.UNIQUE_ROUND;
 
-    private MatchDifficulty difficulty;
+    private final MatchDifficulty difficulty;
 
     /**
      * 

@@ -23,7 +23,7 @@ import model.data.Podium;
 import model.gun.Magazine;
 import model.matches.GameMode;
 import settings.SettingsImpl;
-import utility.Utilities;
+import utility.GameLoopUtil;
 import view.entities.ViewEntity;
 import view.scenecontroller.GameSceneController;
 import view.scenefactory.SceneFactory;
@@ -39,14 +39,14 @@ public class ViewImpl implements View {
     private static final int GREEN_SEMAPHORE = 1;
 
     private Controller controller;
-    private Render render;
+    private Render viewRender;
     private List<Optional<ViewEntity>> viewEntities;
     private MatchData matchData;
     private final Semaphore mutex;
     private static final String GAME_TITLE = "BIG HUNT";
 
     private final SceneFactory sceneFactory;
-    private Stage stage;
+    private final Stage stage;
     private Map<AchievementType, Achievement> achievements;
     private Podium storyPodium;
     private Podium survivalPodium;
@@ -87,7 +87,7 @@ public class ViewImpl implements View {
     @Override
     public final void startGame(final GameSceneController gameSceneController, final GameMode gameMode) {
         this.gameMode = gameMode;
-        this.render = new Render(gameSceneController, gameMode);
+        this.viewRender = new Render(gameSceneController, gameMode);
         this.startRender();
     }
 
@@ -98,12 +98,12 @@ public class ViewImpl implements View {
 
     @Override
     public final void startRender() {
-        this.render.start();
+        this.viewRender.start();
     }
 
     @Override
     public final void stopRender() {
-        this.render.stopRender();
+        this.viewRender.stopRender();
     }
 
     @Override
@@ -141,7 +141,7 @@ public class ViewImpl implements View {
     public final void closeGame(final MatchData matchData, final boolean matchCompleted) {
         this.matchData = matchData;
         if (matchCompleted) {
-            this.render.endGame();
+            this.viewRender.endGame();
         }
     }
 
@@ -187,7 +187,7 @@ public class ViewImpl implements View {
 
     @Override
     public final void setCursor() {
-        this.render.setCursor();
+        this.viewRender.setCursor();
     }
 
     /**
@@ -227,7 +227,7 @@ public class ViewImpl implements View {
             this.actualRound = 1;
 
             this.cursorImage = new Image(getClass().getResourceAsStream("/view/weapon/gunsight.png"));
-            this.setCursor();
+            this.gamecanvas.getCanvas().setCursor(new ImageCursor(cursorImage, this.cursorImage.getWidth() / 2, this.cursorImage.getHeight() / 2));
 
             this.roundImage = new ImageView(new Image(getClass().getResourceAsStream("/view/round/nextRound.png"),
                                             SettingsImpl.getSettings().getSelectedResolution().getKey(),
@@ -285,7 +285,7 @@ public class ViewImpl implements View {
                     }
                 });
 
-                Utilities.waitForNextFrame(period, currentTime);
+                GameLoopUtil.waitForNextFrame(period, currentTime);
 
             }
 

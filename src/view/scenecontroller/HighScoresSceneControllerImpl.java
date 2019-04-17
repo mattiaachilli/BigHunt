@@ -88,8 +88,11 @@ implements HighScoresSceneController {
     @FXML // fx:id="survival5"
     private Label survival5; // Value injected by FXMLLoader
 
+    /**
+     * Initialize.
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    final void initialize() {
+    protected final void initialize() {
         assert story1 != null : "fx:id=\"story1\" was not injected: check your FXML file 'HighScores.fxml'.";
         assert storyName4 != null : "fx:id=\"storyName4\" was not injected: check your FXML file 'HighScores.fxml'.";
         assert story2 != null : "fx:id=\"story2\" was not injected: check your FXML file 'HighScores.fxml'.";

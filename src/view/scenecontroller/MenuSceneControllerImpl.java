@@ -22,33 +22,48 @@ public class MenuSceneControllerImpl extends AbstractSceneController {
     @FXML // fx:id="menu"
     private BorderPane menu; // Value injected by FXMLLoader
 
+    /**
+     * Open game mode scene.
+     */
     @FXML
-    private void openGameModeSelection() {
+    protected void openGameModeSelection() {
         this.getSceneFactory().openSelectModeScene();
     }
-
+    /**
+     * Open achievements scene.
+     */
     @FXML
-    private void openAchievements() {
+    protected void openAchievements() {
         this.getSceneFactory().openAchievementsScene();
     }
-
+    /**
+     * Open highscore scene.
+     */
     @FXML
-    private void openHighScores() {
+    protected void openHighScores() {
         this.getSceneFactory().openHighScoresScene();
     }
-
+    /**
+     * Open manual scene.
+     */
     @FXML
-    private void openManual() {
+    protected void openManual() {
         this.getSceneFactory().openManualScene();
     }
 
+    /**
+     * Open setting scene.
+     */
     @FXML
-    private void openSettings() {
+    protected void openSettings() {
         this.getSceneFactory().openSettingsScene();
     }
 
+    /**
+     * QUit game.
+     */
     @FXML
-    private void quitGame() {
+    protected void quitGame() {
         Runtime.getRuntime().exit(0);
     }
 

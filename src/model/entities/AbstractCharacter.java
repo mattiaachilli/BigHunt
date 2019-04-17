@@ -2,7 +2,7 @@ package model.entities;
 
 import javafx.scene.shape.Shape;
 import model.properties.Velocity;
-import model.utilities.ExceptionRuntimeUtility;
+import model.utilities.ExceptionRuntimeUtil;
 
 /**
  * 
@@ -33,7 +33,7 @@ public class AbstractCharacter extends AbstractEntity implements Character {
      */
     @Override
     public void kill() {
-        ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
+        ExceptionRuntimeUtil.checkException(!this.isAlive(), new IllegalStateException());
         this.status = EntityStatus.DEAD;
     }
 
@@ -50,7 +50,7 @@ public class AbstractCharacter extends AbstractEntity implements Character {
      */
     @Override
     public void setStatus(final EntityStatus status) {
-        ExceptionRuntimeUtility.checkException(!this.isAlive(), new IllegalStateException());
+        ExceptionRuntimeUtil.checkException(!this.isAlive(), new IllegalStateException());
         this.status = status;
     }
 

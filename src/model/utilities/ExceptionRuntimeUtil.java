@@ -6,9 +6,9 @@ package model.utilities;
  *
  */
 
-public final class ExceptionRuntimeUtility {
+public final class ExceptionRuntimeUtil {
 
-    private ExceptionRuntimeUtility() {
+    private ExceptionRuntimeUtil() {
         super();
     };
     /**

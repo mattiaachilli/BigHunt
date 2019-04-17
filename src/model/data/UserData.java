@@ -9,8 +9,6 @@ import model.achievements.AchievementType;
 /**
  *
  * Represents the data of a single player's account.
- * 
- * @author simone
  */
 
 public interface UserData extends Serializable {

@@ -30,16 +30,16 @@ public class FirstRoundState extends AbstractDuckState {
     @Override
     public final Duck spawnDuck() {
         super.incDuckSpawned();
-        final DuckDirection direction = SpawnSide.getSpawnSide(); //Init direction
-        int posX = SpawnSide.initPosX(direction);
-        int posY = SpawnSide.getRandomPosY();
+        final DuckDirection direction = SpawnSideUtil.getSpawnSide(); //Init direction
+        final int posX = SpawnSideUtil.initPosX(direction);
+        final int posY = SpawnSideUtil.getRandomPosY();
         final Shape shape = new Rectangle(posX, posY, StandardDuck.WIDTH_DUCK, StandardDuck.HEIGHT_DUCK);
-        Velocity velocity = SpawnSide.getVelocity(direction, StandardDuck.VELOCITY);
+        Velocity velocity = SpawnSideUtil.getVelocity(direction, StandardDuck.VELOCITY);
         Duck standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
         if (super.getDuckSpawned() <= FIRST_WAVE) {
             return standardDuck;
         } else {
-            velocity = SpawnSide.getVelocity(direction, StandardDuck.VELOCITY);
+            velocity = SpawnSideUtil.getVelocity(direction, StandardDuck.VELOCITY);
             standardDuck = super.getDuckFactory().createStandardDuck(shape, velocity, direction);
             return super.getDuckFactory().createYellowDuck(standardDuck);
         }

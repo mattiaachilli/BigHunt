@@ -12,7 +12,7 @@ import model.entities.StandardDuck;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
-import model.spawner.duck.SpawnSide;
+import model.spawner.duck.SpawnSideUtil;
 
 /**
  * 
@@ -20,6 +20,8 @@ import model.spawner.duck.SpawnSide;
  *
  */
 public class DuckTest {
+    private static final String ERROR_MESSAGE = "Error";
+
     private static final double INITIAL_POSITION_X = 200.0;
     private static final double INITIAL_POSITION_Y = 200.0;
     private static final double STANDARD_VELOCITY_X = StandardDuck.VELOCITY;
@@ -28,7 +30,7 @@ public class DuckTest {
     private static final double MODIFIED_VELOCITY_Y = 10.0;
     private static final Velocity STANDARD_VELOCITY = new VelocityImpl(STANDARD_VELOCITY_X, STANDARD_VELOCITY_Y);
     private static final Velocity MODIFIED_VELOCITY = new VelocityImpl(MODIFIED_VELOCITY_X, MODIFIED_VELOCITY_Y);
-    private static final DuckDirection DIRECTION = SpawnSide.getSpawnSide();
+    private static final DuckDirection DIRECTION = SpawnSideUtil.getSpawnSide();
     private static final int SECONDS_ELAPSED = 1000; //For update
 
     private Duck duck;
@@ -50,8 +52,8 @@ public class DuckTest {
     @Test
     public void testInitPosition() {
         resetPosition(new VelocityImpl(0, 0));
-        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X);
-        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y);
+        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X, ERROR_MESSAGE);
+        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y, ERROR_MESSAGE);
     }
 
     /**
@@ -62,17 +64,17 @@ public class DuckTest {
         this.resetPosition(MODIFIED_VELOCITY);
         this.duck.setMovementChange(false);
         this.duck.update(SECONDS_ELAPSED);
-        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X + MODIFIED_VELOCITY_X);
-        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y + MODIFIED_VELOCITY_Y);
+        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X + MODIFIED_VELOCITY_X, ERROR_MESSAGE);
+        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y + MODIFIED_VELOCITY_Y, ERROR_MESSAGE);
         this.duck.update(SECONDS_ELAPSED);
-        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X + (MODIFIED_VELOCITY_X * 2));
-        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y + (MODIFIED_VELOCITY_Y * 2));
+        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X + (MODIFIED_VELOCITY_X * 2), ERROR_MESSAGE);
+        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y + (MODIFIED_VELOCITY_Y * 2), ERROR_MESSAGE);
         this.duck.update(SECONDS_ELAPSED);
-        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X + (MODIFIED_VELOCITY_X * 3));
-        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y + (MODIFIED_VELOCITY_Y * 3));
+        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X + (MODIFIED_VELOCITY_X * 3), ERROR_MESSAGE);
+        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y + (MODIFIED_VELOCITY_Y * 3), ERROR_MESSAGE);
         this.duck.update(SECONDS_ELAPSED);
-        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X + (MODIFIED_VELOCITY_X * 4));
-        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y + (MODIFIED_VELOCITY_Y * 4));
+        assertEquals(this.duck.getPosition().getX(), INITIAL_POSITION_X + (MODIFIED_VELOCITY_X * 4), ERROR_MESSAGE);
+        assertEquals(this.duck.getPosition().getY(), INITIAL_POSITION_Y + (MODIFIED_VELOCITY_Y * 4), ERROR_MESSAGE);
     }
 
     /**
@@ -83,9 +85,9 @@ public class DuckTest {
         this.resetPosition(STANDARD_VELOCITY);
         this.duck.setMovementChange(true);
         //Test initMovement
-        assertEquals(this.duck.getActualDirection(), DIRECTION);
-        assertEquals(this.duck.getStatus(), EntityStatus.ALIVE);
-        assertTrue(this.duck.isAlive());
+        assertEquals(this.duck.getActualDirection(), DIRECTION, ERROR_MESSAGE);
+        assertEquals(this.duck.getStatus(), EntityStatus.ALIVE, ERROR_MESSAGE);
+        assertTrue(ERROR_MESSAGE, this.duck.isAlive());
     }
 
     /**
@@ -95,10 +97,10 @@ public class DuckTest {
     public void testFlyAway() {
         this.resetPosition(STANDARD_VELOCITY);
         this.duck.setMovementChange(true);
-        assertFalse(this.duck.canFlyAway());
+        assertFalse(ERROR_MESSAGE, this.duck.canFlyAway());
         this.flyAwayDuck();
-        assertEquals(this.duck.getStatus(), EntityStatus.FLOWN_AWAY);
-        assertEquals(this.duck.getActualDirection(), DuckDirection.FLOWN_AWAY);
+        assertEquals(this.duck.getStatus(), EntityStatus.FLOWN_AWAY, ERROR_MESSAGE);
+        assertEquals(this.duck.getActualDirection(), DuckDirection.FLOWN_AWAY, ERROR_MESSAGE);
     }
 
     /**
@@ -108,9 +110,9 @@ public class DuckTest {
     public void testKill() {
         this.resetPosition(STANDARD_VELOCITY);
         this.duck.setMovementChange(true);
-        assertTrue(this.duck.isAlive());
+        assertTrue(ERROR_MESSAGE, this.duck.isAlive());
         this.duck.kill();
-        assertEquals(this.duck.getStatus(), EntityStatus.DEAD);
-        assertEquals(this.duck.getActualDirection(), DuckDirection.KILLED);
+        assertEquals(this.duck.getStatus(), EntityStatus.DEAD, ERROR_MESSAGE);
+        assertEquals(this.duck.getActualDirection(), DuckDirection.KILLED, ERROR_MESSAGE);
     }
 }

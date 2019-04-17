@@ -13,7 +13,7 @@ import model.factories.DuckFactoryImpl;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
 import model.properties.VelocityImpl;
-import model.spawner.duck.SpawnSide;
+import model.spawner.duck.SpawnSideUtil;
 
 /**
  * 
@@ -27,7 +27,7 @@ public class DuckExceptionTest {
     private static final double VELOCITY_X = 0.0;
     private static final double VELOCITY_Y = 0.0;
     private static final Velocity VELOCITY = new VelocityImpl(VELOCITY_X, VELOCITY_Y);
-    private static final DuckDirection DIRECTION = SpawnSide.getSpawnSide();
+    private static final DuckDirection DIRECTION = SpawnSideUtil.getSpawnSide();
 
     private static final String EXPECTED_ILLEGAL = "Should raise a IllegalStateException";
     private static final String NOT_EXPECTED = "Shouldn't raise any Exception";

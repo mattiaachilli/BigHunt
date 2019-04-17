@@ -4,7 +4,6 @@ import model.entities.powerup.PowerUpType;
 
 /**
  * Represents the information of the current match.
- * @author simone
  */
 
 public interface MatchData {

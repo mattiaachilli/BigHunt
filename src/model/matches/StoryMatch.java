@@ -6,8 +6,6 @@ import settings.GlobalDifficulty;
 
 /**
  * A story match.
- * 
- * @author simone
  *
  */
 public class StoryMatch extends AbstractMatch {
@@ -20,7 +18,7 @@ public class StoryMatch extends AbstractMatch {
      */
     public static final int MAX_MAGAZINES = 20;
 
-    private MatchDifficulty difficulty;
+    private final MatchDifficulty difficulty;
 
     /**
      * 

@@ -28,27 +28,37 @@ public class SelectAccountSceneControllerImpl extends AbstractSceneController {
     @FXML // fx:id="exitBtn"
     private Button exitBtn; // Value injected by FXMLLoader
 
+
+    /**
+     * Go to login scene.
+     */
     @FXML
-    final
-    void goToLogin() {
+    protected final void goToLogin() {
         this.getSceneFactory().openLoginScene();
     }
 
+
+    /**
+     * Go to register scene.
+     */
     @FXML
-    final
-    void goToRegister() {
+    protected final void goToRegister() {
         this.getSceneFactory().openRegisterScene();
     }
 
+    /**
+     * Quit game.
+     */
     @FXML
-    final
-    void quitGame() {
+    protected final void quitGame() {
         Runtime.getRuntime().exit(0);
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    final
-    void initialize() {
+    /**
+     * Initialize.
+     */
+    @FXML
+    protected final void initialize() {
         assert loginBtn != null : "fx:id=\"loginBtn\" was not injected: check your FXML file 'SelectAccount.fxml'.";
         assert exitBtn != null : "fx:id=\"exitBtn\" was not injected: check your FXML file 'SelectAccount.fxml'.";
         this.exitBtn.setFont(new Font(FONT_SIZE));

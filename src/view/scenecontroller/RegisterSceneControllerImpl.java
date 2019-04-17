@@ -48,21 +48,27 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
         this.view = view;
     }
 
+    /**
+     * Quit game.
+     */
     @FXML
-    final
-    void quitGame() {
+    protected final void quitGame() {
         Runtime.getRuntime().exit(0);
     }
 
+    /**
+     * Go to login scene.
+     */
     @FXML
-    final
-    void goToLogin() {
+    protected final void goToLogin() {
         this.getSceneFactory().openLoginScene();
     }
 
+    /**
+     * Register button.
+     */
     @FXML
-    final
-    void registerBtn() {
+    protected final void registerBtn() {
         if (this.pwdTextField.getText().isEmpty() || this.userTextField.getText().isEmpty()) {
             this.showAlert("COMPILARE TUTTI I CAMPI");
         } else if (this.view.getController().registerUser(this.userTextField.getText(), this.pwdTextField.getText())) {
@@ -74,7 +80,7 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
     }
 
     private void showAlert(final String text) {
-        Alert alert = new Alert(AlertType.ERROR, text, ButtonType.OK);
+        final Alert alert = new Alert(AlertType.ERROR, text, ButtonType.OK);
         alert.showAndWait();
     }
 
@@ -83,9 +89,11 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
         this.pwdTextField.setText("");
     }
 
+    /**
+     * Initialize.
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    final
-    void initialize() {
+    protected final void initialize() {
         assert userTextField != null : "fx:id=\"userTextField\" was not injected: check your FXML file 'Register.fxml'.";
         assert settingsApplyBtn != null : "fx:id=\"settingsApplyBtn\" was not injected: check your FXML file 'Register.fxml'.";
         assert exitBtn != null : "fx:id=\"exitBtn\" was not injected: check your FXML file 'Register.fxml'.";

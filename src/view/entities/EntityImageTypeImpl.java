@@ -16,7 +16,6 @@ public final class EntityImageTypeImpl implements EntityImageType {
     /**
      * MILLIS UPDATE FRAME.
      */
-    protected static final int UPDATE_IMAGE = 250;
     private final EntityImageAnimation dogAnimation;
     private final EntityImageAnimation duckAnimation;
 

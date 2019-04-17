@@ -29,7 +29,7 @@ public class UserDataImpl implements UserData {
     private int powerUpsUsed;
     private int globalScore;
 
-    private Map<AchievementType, Achievement> achievements;
+    private final Map<AchievementType, Achievement> achievements;
 
     /**
      * Constructor to be used when a new account is created.
@@ -68,7 +68,7 @@ public class UserDataImpl implements UserData {
     }
 
     private void updateAchievements() {
-        for (AchievementType type : AchievementType.values()) {
+        for (final AchievementType type : AchievementType.values()) {
             switch (type) {
 
             case KILLED_DUCKS:
