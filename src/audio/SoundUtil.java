@@ -124,6 +124,7 @@ public final class SoundUtil {
      * Pause all sounds.
      */
     public static void pauseAllSounds() {
+        framePosition.clear();
         for (final Pair<Clip, Optional<AudioInputStream>> audioStream: listClip) {
             if (audioStream.getRight().isPresent() && audioStream.getLeft().isRunning()) {
                 framePosition.add(new ImmutablePair<>(audioStream.getRight(), audioStream.getLeft().getFramePosition()));
@@ -144,16 +145,6 @@ public final class SoundUtil {
             }
         }
         framePosition.clear();
-    }
-
-    /**
-     * Clear all sounds.
-     */
-    public static void clearAudio() {
-        for (final Pair<Clip, Optional<AudioInputStream>> audioStream: listClip) {
-            audioStream.getLeft().stop();
-        }
-        listClip.clear();
     }
 
     /**
