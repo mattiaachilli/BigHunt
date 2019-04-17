@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
@@ -89,6 +90,11 @@ public class SceneLoaderImpl implements SceneLoader {
             case LOGIN:
                 final LoginSceneController log = (LoginSceneController) controller;
                 log.setView(this.view);
+                stage.getScene().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                    if (e.getCode().equals(KeyCode.ENTER)) {
+                        log.callLogin();
+                    }
+                });
                 break;
             case REGISTER:
                 final RegisterSceneController reg = (RegisterSceneController) controller;

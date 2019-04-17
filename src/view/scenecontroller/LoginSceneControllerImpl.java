@@ -79,6 +79,11 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
         }
     }
 
+    @Override
+    public final void callLogin() {
+        this.login();
+    }
+
     private void showAlert(final String text) {
         final Alert alert = new Alert(AlertType.ERROR, text, ButtonType.OK);
         alert.showAndWait();
