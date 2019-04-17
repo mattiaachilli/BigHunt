@@ -7,10 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -78,9 +76,11 @@ public class UserManagerImpl implements UserManager {
     }
 
     private UserData load(final String userName) throws IOException {
-        try (InputStream file = new FileInputStream(FilesHomeManagerUtils.getUserFile(userName));
-        InputStream buffStream = new BufferedInputStream(file);
-        ObjectInputStream objectStream = new ObjectInputStream(buffStream);) {
+        try (
+        ObjectInputStream objectStream = new ObjectInputStream(
+            new BufferedInputStream(new FileInputStream(
+            FilesHomeManagerUtils.getUserFile(userName))))
+        ) {
             return (UserData) objectStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
 
@@ -89,9 +89,11 @@ public class UserManagerImpl implements UserManager {
     }
 
     private void write(final UserData user) throws IOException {
-        try (OutputStream file = new FileOutputStream(FilesHomeManagerUtils.getUserFile(user.getName()));
-        OutputStream buffStream = new BufferedOutputStream(file);
-        ObjectOutputStream objectStream = new ObjectOutputStream(buffStream);) {
+        try (
+        ObjectOutputStream objectStream = new ObjectOutputStream(
+            new BufferedOutputStream(new FileOutputStream(
+            FilesHomeManagerUtils.getUserFile(user.getName()))))
+        ) {
             objectStream.writeObject(user);
         } catch (IOException e) {
             throw new IOException();

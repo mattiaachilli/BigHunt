@@ -1,8 +1,5 @@
 package model.data;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +28,6 @@ public class MatchDataImpl implements MatchData {
         this.flownDucks = 0;
         this.timer = 0;
         this.powerUps = this.initPowerUps();
-        //this.powerUp = Optional.empty();
     }
 
     private Map<PowerUpType, Integer> initPowerUps() {
@@ -102,14 +98,6 @@ public class MatchDataImpl implements MatchData {
     @Override
     public final UnmodifiableMatchData unmodifiableCopy() {
         return new UnmodifiableMatchData(this);
-    }
-
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-    }
-
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
     }
 
 }
