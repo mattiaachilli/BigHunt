@@ -7,7 +7,10 @@
   <local-check-config name="Config" location="style-updated.xml" type="project" description="">
     <additional-data name="protect-config-file" value="false"/>
   </local-check-config>
-  <fileset name="all" enabled="true" check-config-name="Config" local="true">
+  <local-check-config name="ConfigCheckstyle" location="style-updated.xml" type="project" description="">
+    <additional-data name="protect-config-file" value="false"/>
+  </local-check-config>
+  <fileset name="all" enabled="true" check-config-name="ConfigCheckstyle" local="true">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
 </fileset-config>

@@ -99,6 +99,11 @@ public class SceneLoaderImpl implements SceneLoader {
             case REGISTER:
                 final RegisterSceneController reg = (RegisterSceneController) controller;
                 reg.setView(this.view);
+                stage.getScene().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                    if (e.getCode().equals(KeyCode.ENTER)) {
+                        reg.callRegister();
+                    }
+                });
                 break;
             case GAME:
                 this.addEventHandlers(stage);

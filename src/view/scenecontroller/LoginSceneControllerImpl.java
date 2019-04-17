@@ -48,6 +48,11 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
         this.view = view;
     }
 
+    @Override
+    public final void callLogin() {
+        this.login();
+    }
+
     /**
      * Quit game.
      */
@@ -77,11 +82,6 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
             this.showAlert("USER E/O PASSWORD ERRATI");
             this.resetTextField();
         }
-    }
-
-    @Override
-    public final void callLogin() {
-        this.login();
     }
 
     private void showAlert(final String text) {
