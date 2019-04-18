@@ -7,7 +7,6 @@ import model.entities.powerup.PowerUpType;
 
 /**
  * The implementation of the data of a match.
- * @author simone
  *
  */
 public class MatchDataImpl implements MatchData {

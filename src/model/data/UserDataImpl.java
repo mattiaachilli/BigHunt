@@ -11,8 +11,6 @@ import model.achievements.AchievementType;
 
 /**
  * The serializable data of a single user.
- * 
- * @author simone
  *
  */
 public class UserDataImpl implements UserData {

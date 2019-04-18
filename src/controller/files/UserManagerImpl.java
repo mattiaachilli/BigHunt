@@ -19,7 +19,7 @@ import model.data.UserDataImpl;
 
 /**
  * Class that loads and saves users in the File System.
- * @author simone
+ *
  */
 public class UserManagerImpl implements UserManager {
 

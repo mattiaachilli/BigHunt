@@ -76,7 +76,6 @@ public class StoryMatch extends AbstractMatch {
      */
     public boolean isMatchOver() {
         return this.isRoundEnded() && this.getMatchData().getGlobalScore() < this.difficulty.getLimitOfDifficulty() * this.getCurrentRound()
-        || this.getCurrentRound() > this.getMaxOfRounds().getRounds()
         || this.getCurrentMagazineNumber() > MAX_MAGAZINES
         || this.getCurrentMagazine().getAmmo() == 0 && this.getCurrentMagazineNumber() == MAX_MAGAZINES;
     }

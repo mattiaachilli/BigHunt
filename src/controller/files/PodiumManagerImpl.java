@@ -16,8 +16,6 @@ import model.data.PodiumImpl;
 
 /**
  * The manager of the podium.
- * 
- * @author simone
  *
  */
 public class PodiumManagerImpl implements PodiumManager {

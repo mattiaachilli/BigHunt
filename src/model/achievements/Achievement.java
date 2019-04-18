@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * An interface of an achievement.
- * @author simone
+ * 
  */
 public interface Achievement extends Serializable {
 
