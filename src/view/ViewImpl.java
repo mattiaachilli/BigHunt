@@ -1,28 +1,27 @@
 package view;
 
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import controller.Controller;
-import javafx.application.Platform;
-import javafx.scene.ImageCursor;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-import model.achievements.Achievement;
-import model.achievements.AchievementType;
-import model.data.Podium;
-import model.gun.Magazine;
-import model.matches.GameMode;
 import java.util.concurrent.Semaphore;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import controller.Controller;
+import javafx.application.Platform;
+import javafx.scene.ImageCursor;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import model.achievements.Achievement;
+import model.achievements.AchievementType;
 import model.data.MatchData;
+import model.data.Podium;
+import model.gun.Magazine;
+import model.matches.GameMode;
 import settings.SettingsImpl;
 import utility.GameLoopUtil;
 import view.entities.ViewEntity;
@@ -31,7 +30,7 @@ import view.scenefactory.SceneFactory;
 import view.scenefactory.SceneFactoryImpl;
 
 /**
- * 
+ *
  * Implements starting game methods.
  *
  */
@@ -59,7 +58,7 @@ public class ViewImpl implements View {
 
     /**
      * Constructor.
-     * 
+     *
      * @param primaryStage the stage received from the application launcher
      */
     public ViewImpl(final Stage primaryStage) {
@@ -192,7 +191,7 @@ public class ViewImpl implements View {
     }
 
     /**
-     * 
+     *
      * Thread that render graphics independent from game loop.
      *
      */
@@ -219,7 +218,7 @@ public class ViewImpl implements View {
 
         Render(final GameSceneController gameSceneController, final GameMode gameMode) {
             super();
-            this.period = MILLIS_FROM_SECOND / SettingsImpl.getSettings().getSelectedFPS();
+            this.period = MILLIS_FROM_SECOND / Integer.parseInt(SettingsImpl.getSettings().getSelectedFPS().getFPS());
             this.gameSceneController = gameSceneController;
             this.gamecanvas = this.gameSceneController.getCanvas().getGraphicsContext2D();
             this.running = true;
@@ -306,7 +305,7 @@ public class ViewImpl implements View {
         }
 
         private void updateRoundImage() {
-            final Image image = this.actualRound == this.rounds.getRight() - 1 ? this.lastRoundImage.getImage() 
+            final Image image = this.actualRound == this.rounds.getRight() - 1 ? this.lastRoundImage.getImage()
                                                  : this.roundImage.getImage();
             this.gamecanvas.drawImage(image, 0, 0, SettingsImpl.getSettings().getSelectedResolution().getKey(),
             SettingsImpl.getSettings().getSelectedResolution().getValue());

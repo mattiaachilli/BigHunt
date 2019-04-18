@@ -1,6 +1,7 @@
 package settings.observers;
 
 import javafx.scene.control.ComboBox;
+import settings.SettingsFPS;
 import settings.SettingsImpl;
 
 /**
@@ -10,14 +11,14 @@ import settings.SettingsImpl;
  */
 public class FpsObserver implements Observer {
 
-    private final ComboBox<Integer> fpsComboBox;
+    private final ComboBox<String> fpsComboBox;
 
     /**
      *
      * @param fpsComboBox
      *          comboBox list of game rate
      */
-    public FpsObserver(final ComboBox<Integer> fpsComboBox) {
+    public FpsObserver(final ComboBox<String> fpsComboBox) {
         this.fpsComboBox = fpsComboBox;
         this.addItem();
         this.setDefaultValue();
@@ -29,11 +30,13 @@ public class FpsObserver implements Observer {
     }
 
     private void addItem() {
-        this.fpsComboBox.getItems().addAll(SettingsImpl.getSettings().getSupportedFPS());
+        for (int i = 0; i < SettingsFPS.values().length; i++) {
+            this.fpsComboBox.getItems().add(SettingsFPS.values()[i].getFPS());
+        }
     }
 
     private void setDefaultValue() {
-        this.fpsComboBox.setValue(SettingsImpl.getSettings().getSelectedFPS());
+        this.fpsComboBox.setValue(SettingsImpl.getSettings().getSelectedFPS().getFPS());
     }
 
 }

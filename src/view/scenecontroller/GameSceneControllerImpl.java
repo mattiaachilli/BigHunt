@@ -71,7 +71,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     /**
      * Initialize.
      */
-    @FXML 
+    @FXML
     protected final void initialize() {
         assert infoLabel != null : "fx:id=\"scoreLabel\" was not injected: check your FXML file 'Game.fxml'.";
         assert game != null : "fx:id=\"game\" was not injected: check your FXML file 'Game.fxml'.";

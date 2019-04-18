@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -38,7 +39,7 @@ public class SettingsSceneControllerImpl extends AbstractSecondarySceneControlle
     private Button backBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="fpsComboBox"
-    private ComboBox<Integer> fpsComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> fpsComboBox; // Value injected by FXMLLoader
 
     private final List<Observer> observers = new ArrayList<>();
 

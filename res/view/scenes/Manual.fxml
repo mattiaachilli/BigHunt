@@ -65,24 +65,24 @@
                       <RowConstraints vgrow="SOMETIMES" />
                       <RowConstraints vgrow="SOMETIMES" />
                         <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
                         <RowConstraints vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="scores x4" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="scores x4" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="scores x1" GridPane.columnIndex="1" />
                         <ImageView fx:id="yellowducklogo" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
                         <Label text="scores x2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="scores x3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <ImageView fx:id="orangeducklogo" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
                         <ImageView fx:id="standardducklogo" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="pinkducklogo" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
+                        <ImageView fx:id="pinkducklogo" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <children>
                         <Label text="Don't let the duck escape" />
                         <Label text="Kill the duck with the mouse" />
+                        <Label text="Press R to recharge ammo" />
                      </children>
                   </VBox>
                </children>

@@ -245,7 +245,6 @@ public final class ControllerImpl implements Controller {
             }
             if (model.isGameOver()) {
                 if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-                    SoundUtil.clearAudio();
                     SoundUtil.playSound(SoundUtil.getGameClearAudio());
                 }
                 endGame();
