@@ -10,7 +10,6 @@ import model.gun.MagazineImpl;
 /**
  * An abstract class representing the common aspects
  * among the different match modes.
- * @author simone
  *
  */
 public abstract class AbstractMatch {
@@ -21,7 +20,7 @@ public abstract class AbstractMatch {
     private static final int FIRST_ROUND = 1;
     private static final int FIRST_MAGAZINE = 1;
 
-    private MatchData matchdata;
+    private final MatchData matchdata;
     private int currentRound;
     private Magazine magazine;
     private int currentMagazineNumber;

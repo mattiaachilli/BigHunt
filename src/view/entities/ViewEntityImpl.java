@@ -3,7 +3,7 @@ package view.entities;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Shape;
 import model.properties.Position;
-import model.utilities.ShapeUtility;
+import model.utilities.ShapeUtil;
 
 /**
  * Implementation of ViewEntity.
@@ -21,13 +21,13 @@ public final class ViewEntityImpl implements ViewEntity {
      *          of the entity.
      */
     public ViewEntityImpl(final Shape shape, final Image image) {
-        this.shape = ShapeUtility.getShapeCopy(shape).get();
+        this.shape = ShapeUtil.getShapeCopy(shape).get();
         this.image = image;
     }
 
     @Override
     public Position getPosition() {
-        return ShapeUtility.getPositionbyShape(this.shape);
+        return ShapeUtil.getPositionbyShape(this.shape);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
     private static final Velocity POWER_UP_VELOCITY = new VelocityImpl(0.0, ModelImpl.GAME_HEIGHT / 5);
     private final PowerUpType type;
     private boolean visible;
-    private boolean hit;
+    private boolean isHitPowerUp;
 
     /**
      * Constructor of the power up.
@@ -32,7 +32,7 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
         super(shape, velocity);
         this.type = type;
         this.visible = false;
-        this.hit = false;
+        this.isHitPowerUp = false;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
 
     @Override
     public final void update(final int timeElapsed) { 
-        if (this.visible && !this.hit) {
+        if (this.visible && !this.isHitPowerUp) {
             this.setVelocity(POWER_UP_VELOCITY);
             super.update(timeElapsed);
         }
@@ -60,11 +60,11 @@ public class PowerUpImpl extends AbstractEntity implements PowerUp {
 
     @Override
     public final boolean isHit() {
-        return this.hit;
+        return this.isHitPowerUp;
     }
 
     @Override
     public final void hit() {
-        this.hit = true;
+        this.isHitPowerUp = true;
     }
 }

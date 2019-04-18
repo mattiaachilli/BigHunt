@@ -13,14 +13,14 @@ import model.properties.VelocityImpl;
  * Class for initial spawn.
  *
  */
-public final class SpawnSide {
+public final class SpawnSideUtil {
     private static final int SIDE = 2;
     /**
      * SPAWN_Y = Y COORDINATE FOR DUCK.
      */
     private static final int SPAWN_Y = 200;
 
-    private SpawnSide() {
+    private SpawnSideUtil() {
         super();
     }
     /**

@@ -12,12 +12,11 @@ import settings.GlobalDifficulty;
 
 /**
  * Test for match data classes.
- * 
- * @author simone
  *
  */
 public class MatchDataTest {
 
+    private static final String ERROR_MESSAGE = "Error";
     private static final int FIVE = 5;
     private static final int FIFTY = 50;
     private static final int TWENTY = 20;
@@ -29,20 +28,20 @@ public class MatchDataTest {
      */
     @Test
     public final void testRounds() {
-        assertEquals(this.survivalMatch.getCurrentRound(), 1);
-        assertEquals(this.storyMatch.getCurrentRound(), 1);
+        assertEquals(ERROR_MESSAGE, this.survivalMatch.getCurrentRound(), 1);
+        assertEquals(ERROR_MESSAGE, this.storyMatch.getCurrentRound(), 1);
         for (int i = 0; i < 3; i++) {
             this.survivalMatch.incrementRound();
             this.storyMatch.incrementRound();
         }
-        assertEquals(this.survivalMatch.getCurrentRound(), 1);
-        assertEquals(this.storyMatch.getCurrentRound(), 4);
+        assertEquals(ERROR_MESSAGE, this.survivalMatch.getCurrentRound(), 1);
+        assertEquals(ERROR_MESSAGE, this.storyMatch.getCurrentRound(), 4);
         for (int i = 0; i < 3; i++) {
             this.survivalMatch.incrementRound();
             this.storyMatch.incrementRound();
         }
-        assertEquals(this.survivalMatch.getCurrentRound(), 1);
-        assertEquals(this.storyMatch.getCurrentRound(), FIVE);
+        assertEquals(ERROR_MESSAGE, this.survivalMatch.getCurrentRound(), 1);
+        assertEquals(ERROR_MESSAGE, this.storyMatch.getCurrentRound(), FIVE);
     }
 
     /**
@@ -53,17 +52,17 @@ public class MatchDataTest {
         int score = 100;
         int deltaScore = FIFTY;
         this.storyMatch.getMatchData().incrementScoreOf(score);
-        assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
+        assertEquals(ERROR_MESSAGE, this.storyMatch.getMatchData().getGlobalScore(), score);
         score += deltaScore;
         this.storyMatch.getMatchData().incrementScoreOf(deltaScore);
-        assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
+        assertEquals(ERROR_MESSAGE, this.storyMatch.getMatchData().getGlobalScore(), score);
         deltaScore = TWENTY;
         score -= deltaScore;
         this.storyMatch.getMatchData().decrementScoreOf(deltaScore);
-        assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
+        assertEquals(ERROR_MESSAGE, this.storyMatch.getMatchData().getGlobalScore(), score);
         score += deltaScore;
         this.storyMatch.getMatchData().incrementScoreOf(deltaScore);
-        assertEquals(this.storyMatch.getMatchData().getGlobalScore(), score);
+        assertEquals(ERROR_MESSAGE, this.storyMatch.getMatchData().getGlobalScore(), score);
     }
 
     /**
@@ -71,8 +70,10 @@ public class MatchDataTest {
      */
     @Test
     public final void testUnmodifiableData() {
+        final int lastRound = this.storyMatch.getCurrentRound();
         final MatchData unmodifiable = this.storyMatch.getMatchData().unmodifiableCopy();
         this.testUnsupported(() -> unmodifiable.incrementScoreOf(FIVE));
+        assertEquals(ERROR_MESSAGE, this.storyMatch.getCurrentRound(), lastRound);
     }
 
     private void testUnsupported(final Runnable runnable) {

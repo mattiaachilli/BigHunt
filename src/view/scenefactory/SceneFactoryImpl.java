@@ -21,7 +21,7 @@ public class SceneFactoryImpl implements SceneFactory {
     private volatile Stage fakeStage;
     private final View view;
     private GameMode gameMode;
-    private SceneLoader sceneLoader;
+    private final SceneLoader sceneLoader;
 
     /**
      * Constructor of SceneFactory.

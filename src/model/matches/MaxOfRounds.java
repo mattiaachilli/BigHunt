@@ -1,8 +1,6 @@
 package model.matches;
 
 /**
- * 
- * @author simone
  * Enumeration that shows how many rounds can a match have 
  * related to his game mode.
  */

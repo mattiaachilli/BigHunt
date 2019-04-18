@@ -45,9 +45,11 @@ public class ManualSceneControllerImpl extends AbstractSecondarySceneController 
     @FXML // fx:id="standardducklogo"
     private ImageView standardducklogo; // Value injected by FXMLLoader
 
+    /**
+     * Initialize.
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    final
-    void initialize() {
+    protected final void initialize() {
         assert infiniteammologo != null : "fx:id=\"infiniteammologo\" was not injected: check your FXML file 'Manual.fxml'.";
         assert doublescorelogo != null : "fx:id=\"doublescorelogo\" was not injected: check your FXML file 'Manual.fxml'.";
         assert yellowducklogo != null : "fx:id=\"yellowducklogo\" was not injected: check your FXML file 'Manual.fxml'.";

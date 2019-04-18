@@ -10,8 +10,6 @@ import java.util.stream.Stream;
 
 /**
  * Implementation of a podium.
- * 
- * @author simone
  *
  */
 public class PodiumImpl implements Podium {
@@ -25,7 +23,7 @@ public class PodiumImpl implements Podium {
         return o2.getScore() - o1.getScore();
     };
 
-    private List<HighScore> highScores;
+    private final List<HighScore> highScores;
 
     /**
      * Constructor of a podium.

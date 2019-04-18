@@ -42,16 +42,20 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
     @FXML // fx:id="timePlayedLabel"
     private Label timePlayedLabel; // Value injected by FXMLLoader
 
+    /**
+     * Open select mode scene.
+     */
     @FXML
-    final
-    void startNewGame() {
+    protected final void startNewGame() {
         this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().openSelectModeScene();
     }
 
+    /**
+     * Initialize elements.
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    final
-    void initialize() {
+    protected final void initialize() {
         assert scoreLabel != null : "fx:id=\"scoreLabel\" was not injected: check your FXML file 'GameOver.fxml'.";
         assert killsLabel != null : "fx:id=\"killsLabel\" was not injected: check your FXML file 'GameOver.fxml'.";
         assert newgame != null : "fx:id=\"newgame\" was not injected: check your FXML file 'GameOver.fxml'.";

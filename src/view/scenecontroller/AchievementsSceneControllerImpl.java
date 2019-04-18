@@ -18,6 +18,9 @@ import model.achievements.AchievementType;
 public class AchievementsSceneControllerImpl extends AbstractSecondarySceneController
 implements AchievementSceneController {
 
+    private static final String SEPARATOR = " / ";
+    private static final String ACHIEVEMENT_COMPLETE = "ACHIEVEMENT COMPLETED";
+
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -47,37 +50,40 @@ implements AchievementSceneController {
     @Override
     public final void setAchievements(final Map<AchievementType, Achievement> achievements) {
 
-        this.kills.setText(String.valueOf(achievements
+        this.kills.setText(achievements
             .get(AchievementType.KILLED_DUCKS)
-            .getCurrentValueOfAchievement())
-            + " / " + (achievements.get(AchievementType.KILLED_DUCKS).getNextTarget().isPresent() 
+            .getCurrentValueOfAchievement()
+            + SEPARATOR + (achievements.get(AchievementType.KILLED_DUCKS).getNextTarget().isPresent() 
             ? String.valueOf(achievements.get(AchievementType.KILLED_DUCKS).getNextTarget().get()) 
-            : "ACHIEVEMENT COMPLETED"));
+            : ACHIEVEMENT_COMPLETE));
 
-        this.matchPlayed.setText(String.valueOf(achievements
+        this.matchPlayed.setText(achievements
             .get(AchievementType.MATCHES_PLAYED)
-            .getCurrentValueOfAchievement())
-            + " / " + (achievements.get(AchievementType.MATCHES_PLAYED).getNextTarget().isPresent() 
+            .getCurrentValueOfAchievement()
+            + SEPARATOR + (achievements.get(AchievementType.MATCHES_PLAYED).getNextTarget().isPresent() 
             ? String.valueOf(achievements.get(AchievementType.MATCHES_PLAYED).getNextTarget().get()) 
-            : "ACHIEVEMENT COMPLETED"));
+            : ACHIEVEMENT_COMPLETE));
 
-        this.powerUpUsed.setText(String.valueOf(achievements
+        this.powerUpUsed.setText(achievements
             .get(AchievementType.POWERUPS_USED)
-            .getCurrentValueOfAchievement())
-            + " / " + (achievements.get(AchievementType.POWERUPS_USED).getNextTarget().isPresent() 
+            .getCurrentValueOfAchievement()
+            + SEPARATOR + (achievements.get(AchievementType.POWERUPS_USED).getNextTarget().isPresent() 
             ? String.valueOf(achievements.get(AchievementType.POWERUPS_USED).getNextTarget().get()) 
-            : "ACHIEVEMENT COMPLETED"));
+            : ACHIEVEMENT_COMPLETE));
 
-        this.totalScore.setText(String.valueOf(achievements
+        this.totalScore.setText(achievements
             .get(AchievementType.SUM_OF_SCORES)
-            .getCurrentValueOfAchievement()) 
-            + " / " + (achievements.get(AchievementType.SUM_OF_SCORES).getNextTarget().isPresent() 
+            .getCurrentValueOfAchievement()
+            + SEPARATOR + (achievements.get(AchievementType.SUM_OF_SCORES).getNextTarget().isPresent() 
             ? String.valueOf(achievements.get(AchievementType.SUM_OF_SCORES).getNextTarget().get()) 
-            : "ACHIEVEMENT COMPLETED"));
+            : ACHIEVEMENT_COMPLETE));
     }
 
+    /**
+     * Initialize.
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    final void initialize() {
+    protected final void initialize() {
         assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'Achievements.fxml'.";
     }
 

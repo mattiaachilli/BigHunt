@@ -2,7 +2,7 @@ package model.entities;
 
 /**
  * 
- * This enum represents the current status of the dog in all phases.
+ * This enum represents the current status of the dog in all movements.
  *
  */
 public enum DogStatus {
