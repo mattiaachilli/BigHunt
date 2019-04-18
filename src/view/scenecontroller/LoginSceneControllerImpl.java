@@ -48,6 +48,11 @@ public class LoginSceneControllerImpl extends AbstractSceneController implements
         this.view = view;
     }
 
+    @Override
+    public final void callLogin() {
+        this.login();
+    }
+
     /**
      * Quit game.
      */
