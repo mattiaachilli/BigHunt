@@ -2,7 +2,6 @@ package model.matches;
 
 /**
  * 
- *
  * Enumeration that contains all the game modes.
  */
 public enum GameMode {

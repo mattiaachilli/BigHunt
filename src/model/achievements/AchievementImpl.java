@@ -1,14 +1,11 @@
 package model.achievements;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Optional;
 import java.util.Set;
 
 /**
  * The class representing achievements.
- * @author simone
+ * 
  */
 public class AchievementImpl implements Achievement {
 
@@ -44,7 +41,7 @@ public class AchievementImpl implements Achievement {
 
     @Override
     public final Optional<Integer> getNextTarget() {
-        return this.getAllTargets().stream().filter(t -> t > this.value).findFirst();
+        return this.getAllTargets().stream().filter(t -> t > this.value).min((a, b) -> a - b);
     }
 
     @Override
@@ -52,11 +49,4 @@ public class AchievementImpl implements Achievement {
         return this.value;
     }
 
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-    }
-
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-    }
 }

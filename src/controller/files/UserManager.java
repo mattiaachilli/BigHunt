@@ -6,8 +6,7 @@ import model.data.UserData;
 
 /**
  * 
- * @author simone
- * Interface that manages the login, the registration and the saving of a user
+ * Interface that manages the login, the registration and the saving of a user.
  */
 public interface UserManager {
 

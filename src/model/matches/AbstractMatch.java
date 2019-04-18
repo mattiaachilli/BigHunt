@@ -84,10 +84,11 @@ public abstract class AbstractMatch {
     }
 
     /**
-     * Go to the next round.
+     * Go to the next round only if the match has more than one round 
+     * and if the current round is not the last one.
      */
     public void incrementRound() {
-        if (this.currentRound < this.getMaxOfRounds().getRounds()) {
+        if (this.getMaxOfRounds().getRounds() > 1 && this.currentRound < this.getMaxOfRounds().getRounds()) {
             this.currentRound++;
         }
     }
@@ -137,14 +138,6 @@ public abstract class AbstractMatch {
      * 
      * @return true if the match is over (winning or losing)
      */
-    public abstract boolean isMatchOver(); 
-
-    /**
-     * Global method for game over.
-     * @return true if the game is over
-     */
-    public boolean isGameOver() {
-        return this.isRoundEnded() && this.isMatchOver();
-    }
+    public abstract boolean isMatchOver();
 
 }

@@ -5,8 +5,6 @@ import model.entities.powerup.PowerUpType;
 /**
  * 
  * Represents the data of an unmodifiable match.
- * 
- * @author simone
  */
 public class UnmodifiableMatchData implements MatchData {
 

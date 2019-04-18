@@ -6,7 +6,6 @@ import model.data.Podium;
 
 /**
  * An interface of the file manager for podium (high scores) files.
- * @author simone
  *
  */
 public interface PodiumManager {

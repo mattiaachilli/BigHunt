@@ -21,7 +21,7 @@ import model.entities.StandardDuck;
 public class DuckAnimation implements EntityImageAnimation {
 
     private static final int UPDATE_DUCK = 500;
-    
+
     private static final String STANDARD = "Standard";
     private static final String YELLOW = "Yellow";
     private static final String ORANGE = "Orange";

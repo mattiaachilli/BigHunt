@@ -5,10 +5,8 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -18,8 +16,6 @@ import model.data.PodiumImpl;
 
 /**
  * The manager of the podium.
- * 
- * @author simone
  *
  */
 public class PodiumManagerImpl implements PodiumManager {
@@ -48,9 +44,8 @@ public class PodiumManagerImpl implements PodiumManager {
         if (!Files.exists(Paths.get(path))) {
             return Optional.of(new PodiumImpl());
         }
-        try (InputStream file = new FileInputStream(path);
-        InputStream buffStream = new BufferedInputStream(file);
-        ObjectInputStream objectStream = new ObjectInputStream(buffStream);) {
+        try (
+        ObjectInputStream objectStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(path)))) {
             return Optional.of((Podium) objectStream.readObject());
         } catch (IOException | ClassNotFoundException e) {
             return Optional.empty();
@@ -58,9 +53,8 @@ public class PodiumManagerImpl implements PodiumManager {
     }
 
     private boolean save(final Podium podium, final String path) {
-        try (OutputStream file = new FileOutputStream(path);
-        OutputStream buffStream = new BufferedOutputStream(file);
-        ObjectOutputStream objectStream = new ObjectOutputStream(buffStream);) {
+        try (
+        ObjectOutputStream objectStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path)))) {
             objectStream.writeObject(podium);
             return true;
         } catch (IOException e) {

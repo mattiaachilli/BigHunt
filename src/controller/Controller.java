@@ -8,7 +8,7 @@ import model.matches.GameMode;
 
 /**
  * 
- * @author mattia Controller of the application, interacts with model and view.
+ * Controller of the application, interacts with model and view.
  */
 
 public interface Controller {

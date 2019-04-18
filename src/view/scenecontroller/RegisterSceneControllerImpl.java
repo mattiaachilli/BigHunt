@@ -48,6 +48,10 @@ public class RegisterSceneControllerImpl extends AbstractSceneController impleme
         this.view = view;
     }
 
+    @Override
+    public final void callRegister() {
+        this.registerBtn();
+    }
     /**
      * Quit game.
      */
