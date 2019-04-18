@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * An enumeration containing the different achievement types and their targets.
  * 
- * @author simone
+ * 
  */
 public enum AchievementType {
 

@@ -24,6 +24,32 @@ public class MatchDataTest {
     private final StoryMatch storyMatch = new StoryMatch(GlobalDifficulty.EASY);
 
     /**
+     * Tests the unmodifiable copies of match data.
+     */
+    @Test
+    public final void testUnmodifiableData() {
+        final MatchData unmodifiable = this.storyMatch.getMatchData().unmodifiableCopy();
+        final MatchData copy = unmodifiable;
+        this.testUnsupported(() -> unmodifiable.incrementScoreOf(FIVE));
+        this.testUnsupported(() -> unmodifiable.incrementKilledDucks());
+        this.testUnsupported(() -> unmodifiable.incrementFlownDucks());
+        assertEquals(ERROR_MESSAGE, unmodifiable.getGlobalScore(), copy.getGlobalScore());
+        assertEquals(ERROR_MESSAGE, unmodifiable.getKilledDucks(), copy.getKilledDucks());
+        assertEquals(ERROR_MESSAGE, unmodifiable.getFlownDucks(), copy.getFlownDucks());
+    }
+
+    private void testUnsupported(final Runnable runnable) {
+        try {
+            runnable.run();
+            fail("UnsupportedOperationException not catched");
+        } catch (UnsupportedOperationException exception) {
+            System.out.print("");
+        } catch (Exception e) {
+            fail("UnsupportedOperationException not catched");
+        }
+    }
+
+    /**
      * Tests the rounds related to the game mode.
      */
     @Test
@@ -64,28 +90,5 @@ public class MatchDataTest {
         this.storyMatch.getMatchData().incrementScoreOf(deltaScore);
         assertEquals(ERROR_MESSAGE, this.storyMatch.getMatchData().getGlobalScore(), score);
     }
-
-    /**
-     * Tests the unmodifiable copies of match datas.
-     */
-    @Test
-    public final void testUnmodifiableData() {
-        final int lastRound = this.storyMatch.getCurrentRound();
-        final MatchData unmodifiable = this.storyMatch.getMatchData().unmodifiableCopy();
-        this.testUnsupported(() -> unmodifiable.incrementScoreOf(FIVE));
-        assertEquals(ERROR_MESSAGE, this.storyMatch.getCurrentRound(), lastRound);
-    }
-
-    private void testUnsupported(final Runnable runnable) {
-        try {
-            runnable.run();
-            fail("UnsupportedOperationException not catched");
-        } catch (UnsupportedOperationException exception) {
-            System.out.print("");
-        } catch (Exception e) {
-            fail("UnsupportedOperationException not catched");
-        }
-    }
-
 
 }

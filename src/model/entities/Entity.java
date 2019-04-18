@@ -6,7 +6,7 @@ import model.properties.Velocity;
 
 /**
  * 
- * Represents the entity in game, a entity have a position and a velocity and a shape.
+ * Represents the entity in game, a entity have a position, velocity and a shape.
  *
  */
 public interface Entity {
