@@ -2,7 +2,7 @@ package utility;
 
 /**
  * 
- * Class utilities for some operation, like waitForNextFrame in GameLoop.
+ * Class util for GameLoop.
  *
  */
 

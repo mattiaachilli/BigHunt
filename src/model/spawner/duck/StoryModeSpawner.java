@@ -8,7 +8,7 @@ import model.matches.MaxOfRounds;
 
 /**
  * 
- * This abstract class represents the story mode spawner in rounds.
+ * This class represents the story mode spawner in rounds.
  *
  */
 public class StoryModeSpawner extends AbstractSpawner {

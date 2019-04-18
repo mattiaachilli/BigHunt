@@ -3,8 +3,6 @@ package model.spawner.duck;
 /**
  * 
  * This enum represents the delay between two ducks in a round in milliseconds.
- * 
- * Each time we get the delay, it will generate a new again.
  *
  */
 

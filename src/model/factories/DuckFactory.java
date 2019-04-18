@@ -11,7 +11,7 @@ import model.properties.Velocity;
 
 /**
  * 
- * Interface that represents a duck factory.
+ * Interface for creating ducks.
  * 
  */
 public interface DuckFactory {
