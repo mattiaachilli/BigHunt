@@ -1,10 +1,8 @@
 package view.scenecontroller;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,12 +17,6 @@ import settings.observers.Observer;
  * Sample Skeleton for 'Settings.fxml' Controller Class.
  */
 public class SettingsSceneControllerImpl extends AbstractSecondarySceneController {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
 
     @FXML // fx:id="settingsApplyBtn"
     private Button settingsApplyBtn; // Value injected by FXMLLoader
@@ -57,6 +49,7 @@ public class SettingsSceneControllerImpl extends AbstractSecondarySceneControlle
      */
     @FXML // This method is called by the FXMLLoader when initialization is complete
     protected void initialize() {
+        assert backBtn != null : "fx:id=\"backBtn\" was not injected: check your FXML file 'Settings.fxml'.";
         this.observers.addAll(Arrays.asList(new FpsObserver(this.fpsComboBox),
         new BackGroundAudioObserver(this.bgAudioCheckBox), new GameDifficultyObserver(this.difficultyComboBox)));
         this.settingsApplyBtn.setDisable(true);

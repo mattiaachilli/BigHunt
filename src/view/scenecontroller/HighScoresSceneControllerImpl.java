@@ -1,8 +1,6 @@
 package view.scenecontroller;
 
-import java.net.URL;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 import javafx.fxml.FXML;
@@ -18,12 +16,6 @@ import model.data.Podium;
  */
 public class HighScoresSceneControllerImpl extends AbstractSecondarySceneController
 implements HighScoresSceneController {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
 
     @FXML // fx:id="story1"
     private Label story1; // Value injected by FXMLLoader

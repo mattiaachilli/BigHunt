@@ -1,26 +1,14 @@
 
 
 package view.scenecontroller;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.scene.layout.BorderPane;
 
 /**
- * 
+ *
  * Sample Skeleton for 'Menu.fxml' Controller Class.
  *
  */
 public class MenuSceneControllerImpl extends AbstractSceneController {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
-    @FXML // fx:id="menu"
-    private BorderPane menu; // Value injected by FXMLLoader
 
     /**
      * Open game mode scene.
