@@ -1,9 +1,6 @@
 package view.scenecontroller;
 
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import audio.SoundUtil;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -28,12 +25,6 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     private static final int UPDATE_TIME = 5000;
     private long time = System.currentTimeMillis();
     private boolean lastLabel;
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
 
     @FXML // fx:id="infoLabel"
     private Label infoLabel; // Value injected by FXMLLoader
@@ -139,7 +130,6 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     @FXML
     protected final void resumeGame() {
         this.getSceneFactory().getView().getController().resumeGameLoop();
-        this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().getView().setCursor();
         SoundUtil.unpauseAll();
     }
@@ -149,7 +139,6 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
      */
     @FXML
     protected final void backToMenu() {
-        this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().getView().getController().stopGameLoop();
         this.getSceneFactory().getView().closeGame(this.getSceneFactory().getView().getMatchData(), false);
         this.getSceneFactory().openMenuScene();

@@ -1,8 +1,6 @@
 package view.scenecontroller;
 
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXML;
@@ -17,12 +15,6 @@ import model.data.MatchData;
  *
  */
 public class GameOverSceneControllerImpl extends AbstractSecondarySceneController implements GameOverSceneController {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
 
     @FXML // fx:id="scoreLabel"
     private Label scoreLabel; // Value injected by FXMLLoader
@@ -47,7 +39,6 @@ public class GameOverSceneControllerImpl extends AbstractSecondarySceneControlle
      */
     @FXML
     protected final void startNewGame() {
-        this.getSceneFactory().getView().resumeRender();
         this.getSceneFactory().openSelectModeScene();
     }
 

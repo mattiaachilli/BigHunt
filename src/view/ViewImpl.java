@@ -50,7 +50,6 @@ public class ViewImpl implements View {
     private Map<AchievementType, Achievement> achievements;
     private Podium storyPodium;
     private Podium survivalPodium;
-    private boolean gamePaused;
     private Magazine magazine;
     private int infoLimit;
     private Pair<Integer, Integer> round;
@@ -67,7 +66,6 @@ public class ViewImpl implements View {
         this.achievements = new HashMap<>();
         this.mutex = new Semaphore(GREEN_SEMAPHORE);
         this.sceneFactory = new SceneFactoryImpl(this);
-        this.gamePaused = false;
     }
 
     @Override
@@ -104,21 +102,6 @@ public class ViewImpl implements View {
     @Override
     public final void stopRender() {
         this.viewRender.stopRender();
-    }
-
-    @Override
-    public final void pauseRender() {
-        this.gamePaused = true;
-    }
-
-    @Override
-    public final void resumeRender() {
-        this.gamePaused = false;
-    }
-
-    @Override
-    public final boolean isPaused() {
-        return this.gamePaused;
     }
 
     @Override
@@ -266,7 +249,7 @@ public class ViewImpl implements View {
 
                 Platform.runLater(() -> {
 
-                    this.gameSceneController.setPausePanelVisibility(gamePaused);
+                    this.gameSceneController.setPausePanelVisibility(getController().isGameLoopPaused());
 
                     this.updateBackground();
 

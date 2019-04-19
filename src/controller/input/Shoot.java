@@ -57,6 +57,9 @@ public class Shoot implements Command {
                             model.getMatchData().incrementScoreOf(score);
                             model.getMatchData().incrementKilledDucks();
                             hit = true;
+                            if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                                SoundUtil.playSound(SoundUtil.getDuckDeadAudio());
+                            }
                         }
                     } else if (entity instanceof PowerUp) {
                         final PowerUp p = (PowerUp) entity;

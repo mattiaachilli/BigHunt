@@ -133,22 +133,6 @@ public interface View {
     GameMode getCurrentGameMode();
 
     /**
-     * 
-     * @return true if the game is paused. 
-     */
-    boolean isPaused();
-
-    /**
-     * Pauses the view's loop.
-     */
-    void pauseRender();
-
-    /**
-     * Resumes the view's loop.
-     */
-    void resumeRender();
-
-    /**
      * Set image cursor.
      */
     void setCursor();
