@@ -51,6 +51,7 @@ public final class ControllerImpl implements Controller {
     private final Podium storyPodium;
     private final Podium survivalPodium;
     private Optional<UserData> user;
+
     /**
      * Constructor of the controller.
      * 
@@ -106,6 +107,11 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
+    public boolean isGameLoopPaused() {
+        return this.gameLoop.isPaused();
+    }
+
+    @Override
     public void notifyCommand(final CommandType command, final double x, final double y) {
         try {
             mutex.acquire();
@@ -114,12 +120,10 @@ public final class ControllerImpl implements Controller {
                     if (!this.gameLoop.isPaused()) {
                         this.input.clearCommands();
                         this.gameLoop.pauseLoop();
-                        this.view.pauseRender();
                         SoundUtil.pauseAllSounds();
                     } else if (this.gameLoop.isAlive()) {
                         SoundUtil.unpauseAll();
                         this.resumeGameLoop();
-                        this.view.resumeRender();
                         this.view.setCursor();
                     }
                     break;
@@ -127,7 +131,7 @@ public final class ControllerImpl implements Controller {
                     this.input.setCommand(new Recharge());
                     break;
                 case SHOOT:
-                    if (!this.view.isPaused() && SettingsImpl.getSettings().isBackgroundAudioOn() && this.model.canShoot()) {
+                    if (!this.gameLoop.isPaused() && SettingsImpl.getSettings().isBackgroundAudioOn() && this.model.canShoot()) {
                         SoundUtil.playSound(SoundUtil.getShootAudio());
                     }
                     this.input.setCommand(new Shoot(x, y));

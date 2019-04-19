@@ -107,10 +107,8 @@ public class SceneLoaderImpl implements SceneLoader {
                 break;
             case GAME:
                 this.addEventHandlers(stage);
-                if (!this.view.isPaused()) {
-                    this.drawBackground((GameSceneController) controller);
-                    this.view.startGame((GameSceneController) controller, gameMode);
-                }
+                this.drawBackground((GameSceneController) controller);
+                this.view.startGame((GameSceneController) controller, gameMode);
                 break;
             case GAME_OVER:
                 final GameOverSceneController gameOver = (GameOverSceneController) controller;
