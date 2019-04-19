@@ -1,8 +1,6 @@
 package view.scenecontroller;
 
-import java.net.URL;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,12 +18,6 @@ implements AchievementSceneController {
 
     private static final String SEPARATOR = " / ";
     private static final String ACHIEVEMENT_COMPLETE = "ACHIEVEMENT COMPLETED";
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
 
     @FXML // fx:id="kills"
     private Label kills; // Value injected by FXMLLoader
@@ -53,29 +45,29 @@ implements AchievementSceneController {
         this.kills.setText(achievements
             .get(AchievementType.KILLED_DUCKS)
             .getCurrentValueOfAchievement()
-            + SEPARATOR + (achievements.get(AchievementType.KILLED_DUCKS).getNextTarget().isPresent() 
-            ? String.valueOf(achievements.get(AchievementType.KILLED_DUCKS).getNextTarget().get()) 
+            + SEPARATOR + (achievements.get(AchievementType.KILLED_DUCKS).getNextTarget().isPresent()
+            ? String.valueOf(achievements.get(AchievementType.KILLED_DUCKS).getNextTarget().get())
             : ACHIEVEMENT_COMPLETE));
 
         this.matchPlayed.setText(achievements
             .get(AchievementType.MATCHES_PLAYED)
             .getCurrentValueOfAchievement()
-            + SEPARATOR + (achievements.get(AchievementType.MATCHES_PLAYED).getNextTarget().isPresent() 
-            ? String.valueOf(achievements.get(AchievementType.MATCHES_PLAYED).getNextTarget().get()) 
+            + SEPARATOR + (achievements.get(AchievementType.MATCHES_PLAYED).getNextTarget().isPresent()
+            ? String.valueOf(achievements.get(AchievementType.MATCHES_PLAYED).getNextTarget().get())
             : ACHIEVEMENT_COMPLETE));
 
         this.powerUpUsed.setText(achievements
             .get(AchievementType.POWERUPS_USED)
             .getCurrentValueOfAchievement()
-            + SEPARATOR + (achievements.get(AchievementType.POWERUPS_USED).getNextTarget().isPresent() 
-            ? String.valueOf(achievements.get(AchievementType.POWERUPS_USED).getNextTarget().get()) 
+            + SEPARATOR + (achievements.get(AchievementType.POWERUPS_USED).getNextTarget().isPresent()
+            ? String.valueOf(achievements.get(AchievementType.POWERUPS_USED).getNextTarget().get())
             : ACHIEVEMENT_COMPLETE));
 
         this.totalScore.setText(achievements
             .get(AchievementType.SUM_OF_SCORES)
             .getCurrentValueOfAchievement()
-            + SEPARATOR + (achievements.get(AchievementType.SUM_OF_SCORES).getNextTarget().isPresent() 
-            ? String.valueOf(achievements.get(AchievementType.SUM_OF_SCORES).getNextTarget().get()) 
+            + SEPARATOR + (achievements.get(AchievementType.SUM_OF_SCORES).getNextTarget().isPresent()
+            ? String.valueOf(achievements.get(AchievementType.SUM_OF_SCORES).getNextTarget().get())
             : ACHIEVEMENT_COMPLETE));
     }
 

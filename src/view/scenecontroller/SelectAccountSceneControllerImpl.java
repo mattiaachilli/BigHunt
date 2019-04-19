@@ -1,8 +1,5 @@
 package view.scenecontroller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
@@ -15,12 +12,6 @@ import javafx.scene.text.Font;
 public class SelectAccountSceneControllerImpl extends AbstractSceneController {
 
     private static final int FONT_SIZE = 26;
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
 
     @FXML // fx:id="loginBtn"
     private Button loginBtn; // Value injected by FXMLLoader
