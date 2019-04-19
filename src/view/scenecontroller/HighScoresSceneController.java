@@ -4,7 +4,7 @@ import model.data.Podium;
 
 /**
  * 
- *  Interface that represents the scene for game high scores.
+ *  Interface that represents the scene for the high scores of the game.
  */
 public interface HighScoresSceneController {
     /**

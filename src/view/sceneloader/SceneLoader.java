@@ -6,7 +6,7 @@ import view.utilities.Screens;
 
 /**
  * 
- * Interface that provides methods for load game scenes.
+ * Interface that provides the methods to load the game scenes.
  *
  */
 public interface SceneLoader {

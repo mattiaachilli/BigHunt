@@ -54,7 +54,7 @@ public final class ModelImpl implements Model {
     public static final int NEXT_DUCKS_POWERUP = 3;
 
     /**
-     * All objects of the game world.
+     * All the objects of the game world.
      */
     private Dog dog;
     private final List<Duck> ducks;
@@ -123,7 +123,7 @@ public final class ModelImpl implements Model {
                     if (duckSpawn.get().hasPowerUp()) {
                         this.powerUp.add(duckSpawn.get().getPowerUp().get());
                     }
-                } else if (this.spawner.getActualRound() > this.currentRound) {
+                } else if (this.spawner.getCurrentRound() > this.currentRound) {
                     this.match.endRound();
                 }
             }
@@ -176,7 +176,7 @@ public final class ModelImpl implements Model {
 
     private void updateRoundNumber() {
         //Only for STORY MODE
-        if (this.gameMode == GameMode.STORY_MODE && this.ducks.isEmpty() && this.spawner.getActualRound() != this.currentRound) {
+        if (this.gameMode == GameMode.STORY_MODE && this.ducks.isEmpty() && this.spawner.getCurrentRound() != this.currentRound) {
             this.dog = new DogImpl();
             this.ducks.clear();
             this.powerUp.clear();

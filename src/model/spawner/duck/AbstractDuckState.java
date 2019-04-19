@@ -39,7 +39,7 @@ public abstract class AbstractDuckState implements DuckState {
     }
 
     /**
-     * Reset the number of duck spawned in each round.
+     * Resets the number of ducks spawned in each round.
      */
     public final void resetDuckSpawned() {
         this.duckSpawned = 0;
@@ -47,14 +47,14 @@ public abstract class AbstractDuckState implements DuckState {
 
     /**
      * 
-     * @return the number of duck spawned
+     * @return the number of ducks spawned
      */
     public final int getDuckSpawned() {
         return this.duckSpawned;
     }
 
     /**
-     * Increment the number of duck spawned when we spawn(create) it.
+     * Increments the number of ducks spawned when necessary.
      */
     public final void incDuckSpawned() {
         this.duckSpawned++;

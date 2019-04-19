@@ -4,10 +4,8 @@ import java.util.Queue;
 
 import model.Model;
 
-/**
- * 
- * @author giuli
- *
+/** 
+ * Interface that handles the commands in output. 
  */
 public interface CommandReader {
 

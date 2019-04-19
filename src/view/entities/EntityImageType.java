@@ -6,13 +6,13 @@ import javafx.scene.image.Image;
 import model.entities.Entity;
 
 /**
- * Interface that represents entity in view.
+ * Interface that represents an entity in view.
  *
  */
 public interface EntityImageType {
 
     /**
-     * Get entity type based on input entity.
+     * Gets the entity's type based on the input entity.
      * 
      * @param entity
      *          entity to get image
@@ -22,7 +22,7 @@ public interface EntityImageType {
     Optional<Image> getImageType(Entity entity);
 
     /**
-     * Update entity.
+     * Updates the entity.
      * 
      * @param entity
      *          update entity

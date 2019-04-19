@@ -6,9 +6,7 @@ import java.util.Queue;
 import model.Model;
 
 /**
- * 
- * @author giuli
- *
+ * Class implementing both CommandReader and CommandWriter.
  */
 public class InputController implements CommandReader, CommandWriter {
 

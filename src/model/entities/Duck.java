@@ -13,47 +13,47 @@ import model.properties.DuckDirection;
 public interface Duck extends Character {
 
     /**
-     * Get the PowerUp if is present. 
+     * Gets the PowerUp if it is present. 
      * 
      * @return optional of PowerUp
      */
     Optional<PowerUp> getPowerUp();
 
     /**
-     * Check if this duck has a PowerUp.
+     * Checks if this duck has a PowerUp.
      * 
      * @return true if this duck has a PowerUp.
      */
     boolean hasPowerUp();
 
     /**
-     * Get the score that can be obtained killing this duck.
+     * Gets the score that can be obtained killing this duck.
      * 
      * @return score of this duck.
      */
     int getScore();
 
     /**
-     * Check if duck can fly away.
+     * Checks if the duck can fly away.
      * 
-     * @return true if duck can fly away.
+     * @return true if the duck can fly away.
      */
     boolean canFlyAway();
 
     /**
-     * Change duck's status, from alive to flownAway.
+     * Changes duck's status, from alive to flownAway.
      */
     void computeFlyAway();
 
     /**
-     * Get the actual direction of the duck.
+     * Gets the actual direction of the duck.
      * 
      * @return duck's direction
      */
     DuckDirection getActualDirection();
 
     /**
-     * Set the new direction of the duck.
+     * Sets the new direction of the duck.
      * 
      * @param direction
      *          new direction
@@ -69,7 +69,7 @@ public interface Duck extends Character {
     void setMovementChange(boolean change);
 
     /**
-     * Set the velocity of this duck decelerate.
+     * Sets the velocity of this duck decelerate.
      */
     void setDecelerate();
 

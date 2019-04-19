@@ -84,7 +84,7 @@ public abstract class AbstractMatch {
     }
 
     /**
-     * Go to the next round only if the match has more than one round 
+     * Goes to the next round only if the match has more than one round 
      * and if the current round is not the last one.
      */
     public void incrementRound() {

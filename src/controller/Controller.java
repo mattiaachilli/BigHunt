@@ -14,18 +14,18 @@ import model.matches.GameMode;
 public interface Controller {
 
     /**
-     * Initialize game model and start the game loop.
+     * Initializes the game model and starts the game loop.
      * 
      * @param gameMode the game mode selected to play
      */
     void initModel(GameMode gameMode);
 
     /**
-     * Init the game loop.
+     * Initializes the game loop.
      */
     void initGameLoop();
     /**
-     * Start the game loop.
+     * Starts the game loop.
      */
     void startGameLoop();
 
@@ -36,7 +36,7 @@ public interface Controller {
     void resumeGameLoop();
 
     /**
-     * Stop the game loop.
+     * Stops the game loop.
      */
     void stopGameLoop();
 

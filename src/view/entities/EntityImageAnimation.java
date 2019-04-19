@@ -7,20 +7,20 @@ import model.entities.Entity;
 
 /**
  * 
- * Represents the image of this entity, his animation.
+ * Represents the image of this entity, its animation.
  *
  */
 public interface EntityImageAnimation {
 
     /**
-     * Get the current image of this entity.
+     * Gets the current image of this entity.
      * 
      * @return the image
      */
     Optional<Image> getImage();
 
     /**
-     * Add elapsed.
+     * Adds elapsed.
      * 
      * @param entity
      *          entity to update.

@@ -12,7 +12,7 @@ import model.properties.Velocity;
 
 /**
  * 
- * Duck decorator for various type of duck.
+ * Duck decorator for the various types of duck.
  *
  */
 

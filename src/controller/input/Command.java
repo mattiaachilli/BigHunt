@@ -3,9 +3,7 @@ package controller.input;
 import model.Model;
 
 /**
- * 
- * @author giuli
- *
+ * Interface representing the commands to be executed after a certain input.
  */
 public interface Command {
 

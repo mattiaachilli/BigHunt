@@ -4,7 +4,7 @@ import model.data.MatchData;
 
 /**
  * 
- *represents the scene to be load after end game.
+ *represents the scene to be loaded after the end of a game.
  *
  */
 public interface GameOverSceneController {

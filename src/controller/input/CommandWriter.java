@@ -1,7 +1,7 @@
 package controller.input;
 /**
  * 
- * @author giuli
+ * Interface that handles the input commands.
  *
  */
 public interface CommandWriter {

@@ -12,14 +12,14 @@ import view.View;
 public interface SceneFactory {
 
     /**
-     * Set a new game stage.
+     * Sets a new game stage.
      * 
      * @param stage
      *          the stage to must be loaded
      */
     void setStage(Stage stage);
     /**
-     * get the current stage.
+     * gets the current stage.
      * 
      * @return 
      *          the current stage
@@ -31,11 +31,11 @@ public interface SceneFactory {
      */
     void openAccountSelectionScene();
     /**
-     * open registration scene.
+     * opens the registration scene.
      */
     void openRegisterScene();
     /**
-     * open login scene.
+     * opens the login scene.
      */
     void openLoginScene();
     /**
@@ -59,11 +59,11 @@ public interface SceneFactory {
      */
     void openManualScene();
     /**
-     * Open the game scene.
+     * Opens the game scene.
      */
     void openGameScene();
     /**
-     * Open the game mode selection scene.
+     * Opens the game mode selection scene.
      */
     void openSelectModeScene();
     /**
@@ -72,11 +72,11 @@ public interface SceneFactory {
     void openGameOverScene();
 
     /**
-     * Open pause scene menu.
+     * Opens the pause scene menu.
      */
     void openPauseScene();
     /**
-     * Set the game over scene.
+     * Sets the game over scene.
      * 
      * @param gameMode
      *          the game mode must be loaded
@@ -84,7 +84,7 @@ public interface SceneFactory {
     void setGameMode(GameMode gameMode);
 
     /**
-     * Get view.
+     * Gets view.
      * 
      * @return view
      */

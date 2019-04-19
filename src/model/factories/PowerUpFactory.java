@@ -4,7 +4,7 @@ import model.entities.powerup.PowerUp;
 import model.properties.Position;
 /**
  * 
- * Interface that represent PowerUp Factory.
+ * Interface that represents the PowerUp Factory.
  *
  */
 
@@ -15,7 +15,7 @@ public interface PowerUpFactory {
      * @param position
      *          initial position to assign to the Power Up
      * @return
-     *          a Optional and random Power Up
+     *          an Optional and random Power Up
      */
     Optional<PowerUp> createRandomPowerUp(Position position);
 }

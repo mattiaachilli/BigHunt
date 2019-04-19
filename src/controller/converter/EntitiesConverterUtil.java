@@ -11,7 +11,7 @@ import view.entities.ViewEntityImpl;
 
 /**
  * 
- * This class converts entities from model for the view, give Image, Position, Shape.
+ * This class converts entities from the model for the view, giving back an Image, a Position and a Shape.
  *
  */
 public final class EntitiesConverterUtil {
@@ -21,7 +21,7 @@ public final class EntitiesConverterUtil {
     }
 
     /**
-     * Convert entity from model to view.
+     * Converts an entity from the model for the view.
      * 
      * @param entity
      *          entity to convert.

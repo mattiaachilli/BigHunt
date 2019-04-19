@@ -6,7 +6,7 @@ import model.entities.EntityStatus;
 
 /**
  * 
- * This class represents a orange duck.
+ * This class represents an orange duck.
  *
  */
 public final class OrangeDuck extends DuckDecorator {

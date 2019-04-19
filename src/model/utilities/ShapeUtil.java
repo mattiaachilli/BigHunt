@@ -32,7 +32,7 @@ public final class ShapeUtil {
     }
 
     /**
-     * Set the new entity's position.
+     * Sets the new entity's position.
      * 
      * @param shape
      *          entity's shape.

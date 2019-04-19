@@ -1,7 +1,7 @@
 package model.properties;
 
 /**
- * Class that represent the entity's velocity in the game.
+ * Class that represents the entity's velocity in the game.
  */
 public class VelocityImpl implements Velocity {
 

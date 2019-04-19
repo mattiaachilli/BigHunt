@@ -16,7 +16,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 
 /**
- * Class about sound of the game.
+ * Class about the sounds of the game.
  */
 public final class SoundUtil {
 
@@ -51,7 +51,6 @@ public final class SoundUtil {
      * Game intro music.
      */
     private static AudioInputStream gameIntro;
-
     /**
      * Shooting sound.
      */

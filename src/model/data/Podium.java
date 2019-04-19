@@ -11,7 +11,7 @@ public interface Podium extends Serializable {
 
     /**
      * 
-     * @return the actual podium
+     * @return the entire podium
      */
     List<HighScore> getHighScores();
 
