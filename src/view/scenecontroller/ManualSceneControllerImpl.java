@@ -1,8 +1,5 @@
 package view.scenecontroller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -11,12 +8,6 @@ import javafx.scene.image.ImageView;
  * Sample Skeleton for 'Manual.fxml' Controller Class.
  */
 public class ManualSceneControllerImpl extends AbstractSecondarySceneController {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
 
     @FXML // fx:id="infiniteammologo"
     private ImageView infiniteammologo; // Value injected by FXMLLoader

@@ -18,7 +18,7 @@ import model.properties.VelocityImpl;
 
 /**
  * 
- * Utilities for the entities, ducks for example.
+ * Utilities for the entities.
  *
  */
 public final class EntityUtil {
@@ -27,13 +27,6 @@ public final class EntityUtil {
     private static final double KILLED_VELOCITY = ModelImpl.GAME_WIDTH / 4;
     private static final double MAX_DOWN_Y = ModelImpl.GAME_HEIGHT * 0.60;
 
-    /**
-     * Check if fly away is possible.
-     * 
-     * @param duck
-     *          duck's type
-     * @return true if duck can fly away.
-     */
     private EntityUtil() {
         super();
     }

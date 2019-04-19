@@ -28,7 +28,7 @@
                   <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="arcadeBtn" mnemonicParsing="false" onAction="#startArcadeGame" text="ARCADE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="arcadeBtn" mnemonicParsing="false" onAction="#startArcadeGame" text="STORY" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Button fx:id="survivalBtn" mnemonicParsing="false" onAction="#startSurvivalGame" text="SURVIVAL" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>

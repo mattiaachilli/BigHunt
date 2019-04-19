@@ -4,9 +4,6 @@
 
 package view.scenecontroller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 //import utility.GameMode;
@@ -17,12 +14,6 @@ import model.matches.GameMode;
  *
  */
 public class SelectModeSceneControllerImpl extends AbstractSecondarySceneController {
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
 
     @FXML // fx:id="backBtn"
     private Button backBtn; // Value injected by FXMLLoader

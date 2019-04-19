@@ -2,7 +2,6 @@ package model.entities;
 
 import java.util.Optional;
 
-import audio.SoundUtil;
 import javafx.scene.shape.Shape;
 import model.ModelImpl;
 import model.entities.powerup.PowerUp;
@@ -12,7 +11,6 @@ import model.factories.PowerUpFactoryImpl;
 import model.properties.DuckDirection;
 import model.properties.Velocity;
 import model.utilities.ExceptionRuntimeUtil;
-import settings.SettingsImpl;
 
 /**
  * 
@@ -86,9 +84,6 @@ public class StandardDuck extends AbstractCharacter implements Duck {
     @Override
     public final void kill() {
         super.kill();
-        if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
-            SoundUtil.playSound(SoundUtil.getDuckDeadAudio());
-        }
         EntityUtil.setNewPosition(this, false, DuckDirection.KILLED);
         if (this.hasPowerUp()) {
             this.powerUp.get().setVisible();
