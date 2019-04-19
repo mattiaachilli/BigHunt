@@ -62,7 +62,7 @@ public class SurvivalMatch extends AbstractMatch {
      * @return the number of rounds that a match can have.
      */
     public MaxOfRounds getMaxOfRounds() {
-        return SurvivalMatch.MAX_OF_ROUNDS;
+        return MAX_OF_ROUNDS;
     }
 
     /**

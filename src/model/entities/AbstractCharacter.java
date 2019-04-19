@@ -7,7 +7,6 @@ import model.utilities.ExceptionRuntimeUtil;
 /**
  * 
  * Abstract character of the entity.
- *
  */
 public class AbstractCharacter extends AbstractEntity implements Character {
 
