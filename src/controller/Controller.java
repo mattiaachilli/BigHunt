@@ -24,7 +24,7 @@ public interface Controller {
      * Init the game loop.
      */
     void initGameLoop();
-    
+
     /**
      * Start the game loop.
      */
@@ -40,7 +40,7 @@ public interface Controller {
      * Stop the game loop.
      */
     void stopGameLoop();
-    
+
     /**
      * 
      * @return true if the game loop is paused.
