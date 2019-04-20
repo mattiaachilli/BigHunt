@@ -242,6 +242,9 @@ public final class ModelImpl implements Model {
                                   d.kill(); 
                                   this.duckPowerUp--;
                                   this.match.getMatchData().incrementScoreOf(d.getScore());
+                                  if (SettingsImpl.getSettings().isBackgroundAudioOn()) {
+                                      SoundUtil.playSound(SoundUtil.getDuckDeadAudio());
+                                  }
                               }
                           });
                 break;
