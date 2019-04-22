@@ -1,7 +1,7 @@
 package controller.input;
 /**
  * 
- * @author giuli
+ * Interface that handles the input commands.
  *
  */
 public interface CommandWriter {
@@ -17,10 +17,5 @@ public interface CommandWriter {
      *  Clean all commands.
      */
     void clearCommands();
-
-    /**
-     * Remove all commands in queue.
-     */
-    void removeAll();
 
 }

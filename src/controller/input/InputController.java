@@ -6,9 +6,7 @@ import java.util.Queue;
 import model.Model;
 
 /**
- * 
- * @author giuli
- *
+ * Class implementing both CommandReader and CommandWriter.
  */
 public class InputController implements CommandReader, CommandWriter {
 
@@ -28,11 +26,6 @@ public class InputController implements CommandReader, CommandWriter {
 
     @Override
     public final void clearCommands() {
-        this.commands.clear();
-    }
-
-    @Override
-    public final void removeAll() {
         this.commands.clear();
     }
 

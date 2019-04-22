@@ -16,7 +16,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 
 /**
- * Class about sound of the game.
+ * Class about the sounds of the game.
  */
 public final class SoundUtil {
 
@@ -24,9 +24,9 @@ public final class SoundUtil {
     private static List<Pair<Optional<AudioInputStream>, Integer>> framePosition;
 
     /**
-     * All the audio clips.
+     * Sound made when a dead duck is captured by the dog.
      */
-    private static AudioInputStream captureDuck;
+    private static AudioInputStream capturedDuck;
     /**
      * Dog's bark.
      */
@@ -51,7 +51,6 @@ public final class SoundUtil {
      * Game intro music.
      */
     private static AudioInputStream gameIntro;
-
     /**
      * Shooting sound.
      */
@@ -68,7 +67,7 @@ public final class SoundUtil {
         try {
             listClip = new ArrayList<>();
             framePosition = new ArrayList<>();
-            captureDuck = AudioSystem.getAudioInputStream(SoundUtil.class.getResource("/sounds/capturedDuck.wav"));
+            capturedDuck = AudioSystem.getAudioInputStream(SoundUtil.class.getResource("/sounds/capturedDuck.wav"));
             dog = AudioSystem.getAudioInputStream(SoundUtil.class.getResource("/sounds/dog.wav"));
             dogLaugh = AudioSystem.getAudioInputStream(SoundUtil.class.getResource("/sounds/dogLaugh.wav"));
             duckCall = AudioSystem.getAudioInputStream(SoundUtil.class.getResource("/sounds/duckCall.wav"));
@@ -152,7 +151,7 @@ public final class SoundUtil {
      * @return duckCapture audio.
      */
     public static AudioInputStream getCaptureDuckAudio() {
-        return captureDuck;
+        return capturedDuck;
     }
 
     /**

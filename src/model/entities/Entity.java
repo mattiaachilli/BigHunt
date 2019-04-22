@@ -6,20 +6,20 @@ import model.properties.Velocity;
 
 /**
  * 
- * Represents the entity in game, a entity have a position, velocity and a shape.
+ * Represents an entity in game that has a position, a velocity and a shape.
  *
  */
 public interface Entity {
 
     /**
-     * Get position.
+     * Gets the position.
      * 
      * @return entity's position
      */
     Position getPosition();
 
     /**
-     * Set new position.
+     * Sets a new position.
      * 
      * @param position
      *          new entity's position
@@ -28,14 +28,14 @@ public interface Entity {
     void setPosition(Position position);
 
     /**
-     * Get velocity.
+     * Gets velocity.
      * 
      * @return entity's velocity
      */
     Velocity getVelocity();
 
     /**
-     * Set new velocity.
+     * Sets new velocity.
      * 
      * @param velocity
      *          new entity's velocity
@@ -43,14 +43,14 @@ public interface Entity {
     void setVelocity(Velocity velocity);
 
     /**
-     * Get shape.
+     * Gets shape.
      * 
      * @return entity's shape
      */
     Shape getShape();
 
     /**
-     * Set new shape.
+     * Sets new shape.
      * 
      * @param shape
      *          new entity's shape
@@ -58,7 +58,7 @@ public interface Entity {
     void setShape(Shape shape);
 
     /**
-     * Update entity's state.
+     * Updates the entity's state.
      * 
      * @param timeElapsed 
      *          is the time elapsed from the last update

@@ -14,14 +14,14 @@ public interface DuckState {
 
     /**
      * 
-     * Method that spawn ducks.
+     * Method that spawns ducks.
      * 
      * @return the ducks spawned.
      */
     Duck spawnDuck();
 
     /**
-     * Reset the number of duck spawned.
+     * Resets the number of spawned ducks.
      */
     void resetDuckSpawned();
 

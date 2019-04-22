@@ -47,14 +47,14 @@ public abstract class AbstractSpawner implements DuckSpawner {
     }
 
     /**
-     * Reset the time elapsed.
+     * Resets the time elapsed.
      */
     protected void resetTimeElapsed() {
         this.timeElapsed = 0;
     }
 
     /**
-     * Get time elapsed.
+     * Gets time elapsed.
      * 
      * @return timeElapsed.
      */
@@ -63,7 +63,7 @@ public abstract class AbstractSpawner implements DuckSpawner {
     }
 
     /**
-     * Clear the list of ducks spawned in order to enter the next round.
+     * Clears the list of ducks spawned in order to enter the next round.
      */
     protected void clearDucksSpawned() {
         if (this instanceof StoryModeSpawner) {
@@ -72,7 +72,7 @@ public abstract class AbstractSpawner implements DuckSpawner {
     }
 
     /**
-     * Get the list of ducks spawned.
+     * Gets the list of ducks spawned.
      * @return the list of ducks spawned
      */
     protected List<Duck> getListDuckSpawned() {
@@ -116,7 +116,7 @@ public abstract class AbstractSpawner implements DuckSpawner {
     }
 
     /**
-     * Increment the duck spawned.
+     * Increments the duck spawned.
      */
     protected void incDuckSpawned() {
         this.ducksSpawned++;
@@ -133,9 +133,9 @@ public abstract class AbstractSpawner implements DuckSpawner {
     }
 
     /**
-     * Get max duck to spawn.
+     * Gets the maximum number of ducks to spawn at a time.
      * 
-     * @return number of duck to spawn max
+     * @return max number of duck to spawn
      */
     protected abstract int getDuckMax();
 
@@ -146,5 +146,5 @@ public abstract class AbstractSpawner implements DuckSpawner {
     public abstract boolean isSpawnFinished();
 
     @Override
-    public abstract int getActualRound();
+    public abstract int getCurrentRound();
 }

@@ -60,7 +60,7 @@ public class AbstractEntity implements Entity {
     }
 
     /**
-     * Update entity.
+     * Updates an entity.
      * 
      * @param timeElapsed
      *          timeElapsed from last update

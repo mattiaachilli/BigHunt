@@ -4,7 +4,7 @@ import view.View;
 
 /**
  *
- *      interface for login scene controller.
+ * interface for login scene controller.
  */
 public interface LoginSceneController {
 

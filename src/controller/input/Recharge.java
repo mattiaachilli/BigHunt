@@ -3,9 +3,7 @@ package controller.input;
 import model.Model;
 
 /**
- * 
- * @author giuli
- *
+ * Class that handles the recharge command ('R').
  */
 public class Recharge implements Command {
 

@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import javafx.scene.image.Image;
 
 /**
- * Enumeration used to pink duck images.
+ * Enumeration used for pink duck images.
  */
 public enum PinkDuckImageType {
     /**

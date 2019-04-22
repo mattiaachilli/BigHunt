@@ -8,20 +8,20 @@ package model.entities;
 public interface Status extends Entity {
 
     /**
-     * Indicate if an entity is alive or died.
+     * Indicates if an entity is alive or dead.
      * 
      * @return true if the entity is alive.
      */
     boolean isAlive();
 
    /**
-    * Kill this entity.
+    * Kills this entity.
     * 
     */
     void kill();
 
     /**
-     * Change the entity's status.
+     * Changes the entity's status.
      * 
      * @param status
      *          to set
@@ -29,7 +29,7 @@ public interface Status extends Entity {
     void setStatus(EntityStatus status);
 
     /**
-     * Get the current entity's status.
+     * Gets the current entity's status.
      * 
      * @return current entity's status.
      */

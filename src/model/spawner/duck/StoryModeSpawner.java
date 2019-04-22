@@ -74,7 +74,7 @@ public class StoryModeSpawner extends AbstractSpawner {
     }
 
     @Override
-    public final int getActualRound() {
+    public final int getCurrentRound() {
         return this.round;
     }
 

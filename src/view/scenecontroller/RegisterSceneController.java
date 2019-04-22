@@ -4,7 +4,7 @@ import view.View;
 
 /**
  * 
- *
+ * Interface for register scene controller.
  */
 public interface RegisterSceneController {
 

@@ -3,7 +3,7 @@ package view.scenecontroller;
 import view.scenefactory.SceneFactory;
 
 /**
- * this class factories the shared methods of the scenes.
+ * this class factorises the shared methods of the scenes.
  *
  */
 public abstract class AbstractSceneController implements SceneController {

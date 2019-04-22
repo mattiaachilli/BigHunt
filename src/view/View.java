@@ -102,7 +102,7 @@ public interface View {
     void render(List<Optional<ViewEntity>> viewEntities, MatchData matchData, Magazine magazine, int info, Pair<Integer, Integer> round);
 
     /**
-     * Start a new match.
+     * Starts a new match.
      * 
      * @param gameSceneController .
      * @param gameMode            the match's game mode
@@ -110,12 +110,12 @@ public interface View {
     void startGame(GameSceneController gameSceneController, GameMode gameMode);
 
     /**
-     * Start the view thread.
+     * Starts the view's thread.
      */
     void startRender();
 
     /**
-     * Stop the view thread.
+     * Stops the view's thread.
      */
     void stopRender();
 
@@ -126,11 +126,11 @@ public interface View {
     Controller getController();
 
     /**
-     * Get actual game mode.
+     * Gets the current game mode.
      * 
-     * @return the actual game mode.
+     * @return the current game mode.
      */
-    GameMode getActualGameMode();
+    GameMode getCurrentGameMode();
 
     /**
      * Set image cursor.

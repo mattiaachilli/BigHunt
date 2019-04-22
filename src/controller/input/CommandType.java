@@ -1,7 +1,7 @@
 package controller.input;
 /**
  * 
- * @author giuli
+ * Enumeration containing every existing type of command. 
  *
  */
 public enum CommandType {

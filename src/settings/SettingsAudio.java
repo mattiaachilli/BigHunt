@@ -2,7 +2,7 @@ package settings;
 
 /**
  *
- * the audio that can be active from game setting.
+ * the audio that can be activated from the game setting.
  *
  */
 public enum SettingsAudio {
@@ -13,7 +13,7 @@ public enum SettingsAudio {
     AUDIO_ON("ON"),
 
     /**
-     * test to display when audio is off.
+     * text to display when audio is off.
      */
     AUDIO_OFF("OFF");
 

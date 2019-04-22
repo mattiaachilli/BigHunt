@@ -74,7 +74,7 @@ public interface MatchData {
 
     /**
      * 
-     * @return the number of powerups used int the match
+     * @return the number of powerups used in the match
      */
     int getNumberOfUsedPowerUps();
 

@@ -6,7 +6,7 @@ import model.achievements.Achievement;
 import model.achievements.AchievementType;
 
 /**
- * interface for update achievements.
+ * interface that updates the achievements.
  *
  */
 public interface AchievementSceneController {

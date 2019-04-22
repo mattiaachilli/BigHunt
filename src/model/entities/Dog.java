@@ -17,7 +17,7 @@ public interface Dog extends Character {
     boolean isInGrass();
 
     /**
-     * Get the actual dog status.
+     * Gets the current dog status.
      * 
      * @return dog's status.
      * 
@@ -25,7 +25,7 @@ public interface Dog extends Character {
     DogStatus getDogStatus();
 
     /**
-     * Set new dog status.
+     * Sets a new dog status.
      * 
      * @param status
      *          of the dog
@@ -33,7 +33,7 @@ public interface Dog extends Character {
     void setDogStatus(DogStatus status);
 
     /**
-     * Set last duck killed.
+     * Sets the last duck killed.
      * 
      * @param duck
      *          last duck killed.
@@ -41,14 +41,14 @@ public interface Dog extends Character {
     void setLastDuckKilled(Duck duck);
 
     /**
-     * Get last duck killed if exist.
+     * Gets the last duck killed if exist.
      * 
      * @return last duck killed.
      */
     Optional<Duck> getLastDuckKilled();
 
     /**
-     * Get negative score when hit dog.
+     * Gets negative score when hit dog.
      * 
      * @return the negative score for hitting the dog.
      */

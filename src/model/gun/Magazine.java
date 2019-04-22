@@ -2,7 +2,7 @@ package model.gun;
 
 /**
  * 
- * Interface that represents the gun's scope, with which you can aim to shoot.
+ * Interface that represents a magazine of a gun, with bullets and a serial number.
  *
  */
 public interface Magazine {

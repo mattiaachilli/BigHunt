@@ -3,7 +3,7 @@ package view.entities;
 import javafx.scene.image.Image;
 
 /**
- * Enumeration used to powerUp images.
+ * Enumeration used for powerUp's images.
  */
 public enum PowerUpImages {
     /**

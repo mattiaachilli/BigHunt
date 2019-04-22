@@ -2,7 +2,7 @@ package settings;
 
 /**
  *
- * the FPS of the game that can be choose from the settings.
+ * the FPS of the game that can be chosen from the settings.
  */
 public enum SettingsFPS {
 
@@ -26,7 +26,7 @@ public enum SettingsFPS {
     }
 
     /**
-     * method for return FPS.
+     * method that returns the FPS.
      *
      * @return
      *  the frames per second

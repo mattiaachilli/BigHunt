@@ -21,14 +21,14 @@ import model.matches.GameMode;
 public interface Model {
 
     /**
-     * Initialize state of model to start the game.
+     * Initializes the state of the model to start the game.
      * @param gameMode
      *          gameMode chosen at start
      */
     void initGame(GameMode gameMode);
 
     /**
-     * Update the state of the application.
+     * Updates the state of the application.
      * 
      * @param timeElapsed
      *            time elapsed from last update
@@ -37,7 +37,7 @@ public interface Model {
 
     /**
      * 
-     * @return true if game is over
+     * @return true if the game is over
      */
     boolean isGameOver();
 
@@ -61,7 +61,7 @@ public interface Model {
 
     /**
      * 
-     * @return data of the actual match
+     * @return the data of the actual match
      */
     MatchData getMatchData();
 
@@ -73,6 +73,7 @@ public interface Model {
 
     /**
      * 
+     * Decrements the number of bullets if possible.
      */
     void shoot();
 
@@ -95,9 +96,8 @@ public interface Model {
     Magazine getCurrentMagazine();
 
     /**
-     * Get powerUp active at the moment.
      * 
-     * @return if exist the power up active.
+     * @return the active powerUp if present.
      */
     Optional<PowerUpType> getPowerUpActive();
 
@@ -108,24 +108,23 @@ public interface Model {
     GameMode getGameMode();
 
     /**
-     * End actual powerUp.
+     * Ends the current powerUp.
      */
     void endPowerUp();
 
     /**
-     * @return the point to pass the round or max number flown away ducks.
+     * @return the point to pass the round or max number of flown away ducks.
      */
     int getInfo();
 
     /**
-     * Get dog of the game.
      * 
-     * @return dog
+     * @return the dog of the current game.
      */
     Dog getDog();
 
     /**
-     * @return the actual round and max round to reach.
+     * @return the current round and max round to reach.
      */
     Pair<Integer, Integer> getRounds();
 }

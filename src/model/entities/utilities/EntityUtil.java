@@ -34,7 +34,7 @@ public final class EntityUtil {
     /**
      * Change direction of the duck.
      * @param duck
-     *          duck to change direction.
+     *          duck to change direction to.
      */
     public static void changeDirection(final Duck duck) {
         final int randomDirection = new Random().nextInt(POSSIBLE_DIRECTION) + 1;
@@ -66,7 +66,7 @@ public final class EntityUtil {
 
 
     /**
-     * Set new position of the duck about its direction and velocity.
+     * Set a new position according to the duck's direction and velocity.
      * 
      * @param duck
      *          duck to set new position
@@ -124,7 +124,7 @@ public final class EntityUtil {
         }
     }
     /**
-     * Check duck collision with the window, if there are, change duck's position.
+     * Checks duck collision with the window, if there are, change duck's position.
      * 
      * @param duck
      *          duck.

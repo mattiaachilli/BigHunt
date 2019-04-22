@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import javafx.scene.image.Image;
 
 /**
- * Enumeration used to orange duck images.
+ * Enumeration used for orange duck images.
  */
 public enum OrangeDuckImageType {
     /**

@@ -37,7 +37,7 @@ public enum AchievementType {
     private final Set<Integer> targets;
 
     /**
-     * Initialize the steps of the achievement.
+     * Initializes the steps of the achievement.
      * 
      * @param steps
      *          values of the achievement

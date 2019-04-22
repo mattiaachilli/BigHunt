@@ -1,7 +1,7 @@
 package settings;
 
 /**
- * The difficulty that can be chosen from the settings.
+ * The difficulties that can be chosen from the settings.
  *
  *
  */

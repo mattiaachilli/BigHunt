@@ -88,7 +88,7 @@ public class GameSceneControllerImpl extends AbstractSceneController implements 
     @Override
     public final void setGameData(final MatchData gameData, final Magazine magazine, final int info) {
         this.ammoLabel.setTextFill(Color.BLACK);
-        if (this.getSceneFactory().getView().getActualGameMode() == GameMode.STORY_MODE) {
+        if (this.getSceneFactory().getView().getCurrentGameMode() == GameMode.STORY_MODE) {
             this.infoLabel.setText(STORY);
             this.scoreGameLabel.setText(gameData.getGlobalScore() + "/" + info);
             if (gameData.getGlobalScore() < info) {

@@ -12,8 +12,7 @@ import model.entities.powerup.PowerUpType;
 import settings.SettingsImpl;
 
 /**
- * 
- *
+ * Class that handles the shooting command.
  */
 public class Shoot implements Command {
 

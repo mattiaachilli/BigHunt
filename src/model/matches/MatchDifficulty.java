@@ -1,7 +1,7 @@
 package model.matches;
 
 /**
- * An enumeration with the different values that represent the score to surpass
+ * An enumeration with the different values that represents the score to surpass
  * or the ducks that cannot fly away to allow the player to get to the next
  * round. These values are the essence of the difficulty of a match.
  *
@@ -34,7 +34,7 @@ public enum MatchDifficulty {
     SURVIVAL_MEDIUM(3),
 
     /**
-     * The match ends when 1 ducks have flown away.
+     * The match ends when 1 duck has flown away.
      */
     SURVIVAL_HARD(1);
 

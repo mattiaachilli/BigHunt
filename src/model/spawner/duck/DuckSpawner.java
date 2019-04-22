@@ -19,9 +19,9 @@ public interface DuckSpawner {
     void update(int elapsed);
 
     /**
-     * Check if duck can be spawned.
+     * Checks if a duck can be spawned.
      * 
-     * @return true if duck can be spawned.
+     * @return true if ducks can be spawned.
      */
     boolean canSpawnDuck();
 
@@ -33,7 +33,7 @@ public interface DuckSpawner {
     void setSpawnDelay(int delay);
 
     /**
-     * Spawn a duck.
+     * Spawns a duck.
      * 
      * @return Optional of duck.
      */
@@ -41,12 +41,12 @@ public interface DuckSpawner {
 
     /**
      * 
-     * @return the number of duck spawned.
+     * @return the number of spawned ducks.
      */
     int getNumberDuckSpawned();
 
     /**
-     * Check if all ducks are spawned.
+     * Checks if all ducks are spawned.
      * 
      * @return true if all ducks are already spawned.
      */
@@ -67,9 +67,9 @@ public interface DuckSpawner {
     void setState(Optional<DuckState> state);
 
     /**
-     * Get actual round.
+     * Gets the current round.
      * 
      * @return the actual round.
      */
-    int getActualRound();
+    int getCurrentRound();
 }

@@ -2,7 +2,7 @@ package model.rarity;
 
 /**
  *
- * Enumeration used to associate the rarity.
+ * Enumeration used to give entities a level of rarity.
  *
  */
 public enum ItemRarity {

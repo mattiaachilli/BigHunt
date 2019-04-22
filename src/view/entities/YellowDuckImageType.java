@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import javafx.scene.image.Image;
 
 /**
- * Enumeration used to yellow duck images.
+ * Enumeration used for yellow duck images.
  */
 public enum YellowDuckImageType {
     /**

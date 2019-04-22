@@ -1,7 +1,7 @@
 package model.properties;
 
 /**
- * Class that represent the velocity in the game.
+ * Class that represents the velocity in the game.
  */
 public interface Velocity {
 
@@ -19,7 +19,7 @@ public interface Velocity {
 
     /**
      * @param fact
-     *          use to compute a new velocity
+     *          used to compute a new velocity
      * @return new velocity
      */
     Velocity mul(double fact);
@@ -39,11 +39,11 @@ public interface Velocity {
     double getY();
 
     /**
-     * Check if are equals.
+     * Checks if velocities are equal.
      *
      * @param velocity
      *          velocity to compare
-     * @return true if are equals.
+     * @return true if they are equal.
      */
     boolean compareTo(Velocity velocity);
 

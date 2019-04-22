@@ -2,7 +2,7 @@ package model.utilities;
 
 /**
  * 
- * This simple class, throws exception if necessary.
+ * This simple class, throws an exception if necessary.
  *
  */
 

@@ -3,7 +3,7 @@ package view.entities;
 import javafx.scene.image.Image;
 
 /**
- * Enumeration used to dog images.
+ * Enumeration used for dog images.
  */
 public enum DogImageType {
     /**

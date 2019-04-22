@@ -90,7 +90,7 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final GameMode getActualGameMode() {
+    public final GameMode getCurrentGameMode() {
         return this.gameMode;
     }
 
