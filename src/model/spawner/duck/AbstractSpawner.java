@@ -9,7 +9,7 @@ import model.entities.Duck;
 
 /**
  * 
- * AbstractSpwanwer: Survival and story. I was inspired by the MagnumChaos project for this implementation.
+ * AbstractSpwanwer: Survival and story.
  *
  */
 
